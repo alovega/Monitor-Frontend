@@ -1,0 +1,317 @@
+<!-- Heading -->
+<mdb-card class="card mb-4 wow animated fadeIn">
+
+  <!--Card content-->
+  <mdb-body class="card-body d-sm-flex justify-content-between">
+    
+    <h5 class="mb-2 mb-sm-0 pt-1">
+      <a href="https://mdbootstrap.com/docs/jquery/" target="_blank">Home Page</a>
+      <span>/</span>
+      <span>Dashboard</span>
+    </h5>
+
+    <form class="d-flex justify-content-center">
+      <!-- Default input -->
+      <input type="search" placeholder="Type your query" aria-label="Search" class="form-control">
+      <button class="btn btn-primary btn-sm my-0 p" type="submit">
+        <i class="fas fa-search"></i>
+      </button>
+    </form>
+
+  </mdb-body>
+
+</mdb-card>
+<!-- Heading -->
+
+<!--Grid Row-->
+<div class="row wow animated fadeIn" data-wow-delay="0.3s">
+    <!-- Grid column -->
+    <div class="col-md-9 mb-4">
+        <!-- Card-->
+        <mdb-card>
+            <!-- Card body -->
+            <mdb-card-body>
+                <app-bar-graph height="500"></app-bar-graph>
+            </mdb-card-body>
+        </mdb-card>
+        <!-- Card -->
+    </div>
+    <!-- Grid column -->
+
+    <!-- Grid column -->
+    <div class="col-md-3 mb-4">
+        <!-- Card -->
+        <mdb-card class="mb-4">
+            <!-- Card title -->
+            <mdb-card-title class="card-header text-center">Pie Chart</mdb-card-title>
+            <mdb-card-body>
+                <app-pie-chart></app-pie-chart>
+            </mdb-card-body>  
+        </mdb-card>
+        <!-- Card -->
+
+        <!--Card-->
+        <mdb-card class="mb-4" height="50px">
+            <!--Card content-->
+            <mdb-card-body class="card-body">
+              <!-- List group links -->
+              <div class="list-group list-group-flush">
+                <a class="list-group-item list-group-item-action waves-effect">Sales
+                  <span class="badge badge-success badge-pill pull-right">22%
+                    <i class="fas fa-arrow-up ml-1"></i>
+                  </span>
+                </a>
+                <a class="list-group-item list-group-item-action waves-effect">Traffic
+                  <span class="badge badge-danger badge-pill pull-right">5%
+                    <i class="fas fa-arrow-down ml-1"></i>
+                  </span>
+                </a>
+                <a class="list-group-item list-group-item-action waves-effect">Orders
+                  <span class="badge badge-primary badge-pill pull-right">14</span>
+                </a>
+                <a class="list-group-item list-group-item-action waves-effect">Issues
+                  <span class="badge badge-primary badge-pill pull-right">123</span>
+                </a>
+                <a class="list-group-item list-group-item-action waves-effect">Messages
+                  <span class="badge badge-primary badge-pill pull-right">8</span>
+                </a>
+              </div>
+              <!-- List group links -->
+            </mdb-card-body>
+          </mdb-card>
+          <!--/.Card-->
+    </div>
+    <!-- Grid column -->
+</div>
+<!-- Grid row -->
+
+<!-- Grid row -->
+<div class="row wow animated fadeIn" data-wow-delay="0.3s">
+    <!-- Grid column -->
+    <div class="col-md-6 mb-4">
+
+        <!-- Card -->
+        <mdb-card>
+
+            <!-- Card body -->
+            <mdb-card-body>
+                <!-- Table -->
+                <table class="table">
+                    <thead class="blue-grey lighten-4">
+                        <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">First</th>
+                        <th scope="col">Last</th>
+                        <th scope="col">Handle</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                        <th scope="row">1</th>
+                        <td>Cell 1</td>
+                        <td>Cell 2</td>
+                        <td>Cell 3</td>
+                        </tr>
+                        <tr>
+                        <th scope="row">2</th>
+                        <td>Cell 4</td>
+                        <td>Cell 5</td>
+                        <td>Cell 6</td>
+                        </tr>
+                        <tr>
+                        <th scope="row">3</th>
+                        <td>Cell 7</td>
+                        <td>Cell 8</td>
+                        <td>Cell 9s</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <!-- Table end -->
+            </mdb-card-body>
+        </mdb-card>
+    </div>
+    <!-- Grid column -->
+
+    <!-- Grid column -->
+    <div class="col-md-6 mb-4">
+        <!-- Card -->
+        <mdb-card>
+
+            <!-- Card body -->
+            <mdb-card-body>
+                <!-- Table -->
+                    <table class="table">
+                    <thead class="blue lighten-4">
+                        <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Lorem</th>
+                        <th scope="col">Ipsum</th>
+                        <th scope="col">Dolor</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                        <th scope="row">1</th>
+                        <td>Cell 1</td>
+                        <td>Cell 2</td>
+                        <td>Cell 3</td>
+                        </tr>
+                        <tr>
+                        <th scope="row">2</th>
+                        <td>Cell 4</td>
+                        <td>Cell 5</td>
+                        <td>Cell 6</td>
+                        </tr>
+                        <tr>
+                        <th scope="row">3</th>
+                        <td>Cell 7</td>
+                        <td>Cell 8</td>
+                        <td>Cell 9</td>
+                        </tr>
+                    </tbody>
+                    </table>
+            </mdb-card-body>
+        </mdb-card>
+        <!-- Card -->
+    </div>
+    <!-- Grid column -->
+</div>
+<!-- Grid row -->
+
+
+<!-- Grid row -->
+<div class="row wow animated fadeIn" data-wow-delay="0.3s">
+    <!-- Grid column -->
+    <div class="col-lg-6 col-md-6 mb-4">
+        <!-- Card -->
+        <mdb-card>
+            <!-- Card header -->
+            <mdb-header class="card-header text-center">Line Chart</mdb-header>
+            <!-- Card content -->
+            <mdb-card-body>
+                <app-line-graph></app-line-graph>
+            </mdb-card-body>
+            <!-- Card content -->
+        </mdb-card>
+        <!-- Card -->
+    </div>
+    <!-- Grid column -->
+
+    <!-- Grid column -->
+    <div class="col-lg-6 col-md-6 mb-4">
+        <!-- Card -->
+        <mdb-card>
+            <!-- Card header -->
+            <mdb-header class="card-header text-center">Radar Chart</mdb-header>
+            <!-- Card content -->
+            <mdb-card-body>
+                <app-radar-chart></app-radar-chart>
+            </mdb-card-body>
+            <!-- Card content -->
+        </mdb-card>
+        <!-- Card -->
+    </div>
+    <!-- Grid column -->
+
+    <!-- Grid column -->
+    <div class="col-lg-6 col-md-6 mb-4">
+        <!-- Card -->
+        <mdb-card>
+            <!-- Card header -->
+            <mdb-header class="card-header text-center">Doughnut Chart</mdb-header>
+            <!-- Card content -->
+            <mdb-card-body>
+                <app-doughnut-chart></app-doughnut-chart>
+            </mdb-card-body>
+            <!-- Card content -->
+        </mdb-card>
+        <!-- Card -->
+    </div>
+    <!-- Grid column -->
+
+    <!-- Grid column -->
+    <div class="col-lg-6 col-md-6 mb-4">
+        <!-- Card -->
+        <mdb-card>
+            <!-- Card header -->
+            <mdb-header class="card-header text-center">Horizontal Bar Chart</mdb-header>
+            <!-- Card content -->
+            <mdb-card-body>
+                <app-horizontal-bar-chart></app-horizontal-bar-chart>
+            </mdb-card-body>
+            <!-- Card content -->
+        </mdb-card>
+        <!-- Card -->
+    </div>
+    <!-- Grid column -->
+</div>
+<!-- Grid row -->
+
+<!--Grid row-->
+<div class="row wow fadeIn">
+
+    <!--Grid column-->
+    <div class="col-md-6 mb-4">
+
+        <!--Card-->
+        <mdb-card>
+
+            <!-- Card header -->
+            <div class="card-header">Google map</div>
+
+            <!--Card content-->
+            <mdb-card-body>
+
+                <!--Google map-->
+                <div class="card-body text-center">
+                    <agm-map [latitude]="map.lat" [longitude]="map.lng" [mapTypeId]="'roadmap'" style="height: 300px">
+                        <agm-marker [latitude]="map.lat" [longitude]="map.lng"></agm-marker>
+                    </agm-map>
+
+                </div>
+            </mdb-card-body>
+
+        </mdb-card>
+        <!--/.Card-->
+
+    </div>
+    <!--Grid column-->
+
+    <!--Grid column-->
+    <div class="col-md-6 mb-4">
+
+        <!--Card-->
+        <mdb-card>
+
+
+            <div class="card-header">Modals</div>
+            <!--Card content-->
+            <mdb-card-body>
+                <!--Section: Position & Sizes-->
+                <section class="px-4">
+                    <h4 class="mb-5 mt-4 dark-grey-text text-center font-bold">
+                        <strong>Position & Sizes</strong>
+                    </h4>
+
+                    <div class="text-center mb-5">
+                        <p class="lead">Click buttons below to launch modals demo</p>
+                    </div>
+
+                    <!-- First row-->
+
+                    <!-- /.First row-->
+
+                </section>
+                <!--/Section: Position & Sizes-->
+
+            </mdb-card-body>
+            <!--/Card content-->
+        </mdb-card>
+        <!--/.Card-->
+
+
+    </div>
+    <!--Grid column-->
+
+</div>
+<!--Grid row-->

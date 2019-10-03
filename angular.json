@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "helamonitor": {
+    "angular-mdb-dashboard": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -12,12 +12,12 @@
       },
       "root": "",
       "sourceRoot": "src",
-      "prefix": "hm",
+      "prefix": "app",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/helamonitor",
+            "outputPath": "dist/angular-mdb-dashboard",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -28,9 +28,19 @@
               "src/assets"
             ],
             "styles": [
+              "node_modules/@fortawesome/fontawesome-free/scss/fontawesome.scss",
+              "node_modules/@fortawesome/fontawesome-free/scss/solid.scss",
+              "node_modules/@fortawesome/fontawesome-free/scss/regular.scss",
+              "node_modules/@fortawesome/fontawesome-free/scss/brands.scss",
+              "node_modules/animate.css/animate.css",
+              "node_modules/angular-bootstrap-md/assets/scss/bootstrap/bootstrap.scss",
+              "node_modules/angular-bootstrap-md/assets/scss/mdb.scss",
               "src/styles.scss"
             ],
-            "scripts": []
+            "scripts": [
+              "node_modules/chart.js/dist/Chart.js",
+              "node_modules/hammerjs/hammer.min.js"
+            ]
           },
           "configurations": {
             "production": {
@@ -67,18 +77,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "helamonitor:build"
+            "browserTarget": "angular-mdb-dashboard:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "helamonitor:build:production"
+              "browserTarget": "angular-mdb-dashboard:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "helamonitor:build"
+            "browserTarget": "angular-mdb-dashboard:build"
           }
         },
         "test": {
@@ -115,15 +125,15 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "helamonitor:serve"
+            "devServerTarget": "angular-mdb-dashboard:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "helamonitor:serve:production"
+              "devServerTarget": "angular-mdb-dashboard:serve:production"
             }
           }
         }
       }
     }},
-  "defaultProject": "helamonitor"
+  "defaultProject": "angular-mdb-dashboard"
 }

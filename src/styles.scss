@@ -1,1 +1,14 @@
-/* You can add global styles to this file, and also import other style files */
+body{
+  font-size: 14px !important; 
+}
+@media (min-width: 1200px) {
+  .navbar,
+  .page-footer,
+  main {
+    padding-left: 250px; 
+  }
+}
+
+@media (max-width: 1199.98px) {
+  .sidebar-fixed {
+    display: none; } }

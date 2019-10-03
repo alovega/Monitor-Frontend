@@ -1,0 +1,39 @@
+<mdb-navbar SideClass="navbar fixed-top navbar-expand-lg navbar-light white scrolling-navbar"
+    [containerInside]="false">
+    <!-- Navbar brand -->
+      <a class="navbar-brand ml-2" mdbWavesEffect href="https://mdbootstrap.com/docs/jquery/" target="_blank">
+        <strong class="blue-text">HM</strong>
+      </a>
+      <!-- Links -->
+      <links>
+        <!-- Left -->
+        <ul class="navbar-nav mr-auto">
+
+          <li class="nav-item active">
+            <div class="dropdown" mdbDropdown>
+              <a mdbDropdownToggle color="primary" class="dropdown-toggle nav-link waves-light"
+                mdbWavesEffect>
+                System 1
+              </a>
+              <div class="dropdown-menu dropdown-primary">
+                <a class="dropdown-item" href="#">System 2</a>
+                <a class="dropdown-item" href="#">System 3</a>
+                <a class="dropdown-item" href="#">System 4</a>
+                <a class="dropdown-item" href="#"> + Add System</a>
+              </div>
+            </div>
+          </li>
+        </ul>
+
+        <!-- Right -->
+        <ul class="navbar-nav nav-flex-icons">
+          <li class="nav-item">
+            <a href="#"
+              class="nav-link border border-light rounded waves-effect" target="_blank">
+              <i class="fab fa-user-alt mr-2" mdbIcon></i>Logout
+            </a>
+          </li>
+        </ul>
+      </links>
+  </mdb-navbar>
+  <!--/.Navbar-->
