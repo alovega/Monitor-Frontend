@@ -1,0 +1,88 @@
+<div class="row">
+    <div class="col-md-6">
+        <!--Card-->
+        <mdb-card class="mt-5">
+
+            <!--Card image-->
+            <div class="view gradient-card-header blue darken-2 ">
+                <h4 class="h4-responsive card-header text-center text-white">Regular map</h4>
+            </div>
+            <!--/Card image-->
+
+            <!--Card content-->
+            <mdb-card-body class="text-center">
+                <agm-map [latitude]="map.lat" [longitude]="map.lng" [mapTypeId]="'roadmap'" style="height: 300px">
+                    <agm-marker [latitude]="map.lat" [longitude]="map.lng"></agm-marker>
+                </agm-map>
+
+            </mdb-card-body>
+            <!--/.Card content-->
+        </mdb-card>
+        <!--/.Card-->
+    </div>
+    <div class="col-md-6">
+        <!--Card-->
+        <mdb-card class="mt-5">
+
+            <!--Card image-->
+            <div class="view gradient-card-header  blue darken-2">
+                <h4 class="h4-responsive card-header text-center text-white">Hybrid map</h4>
+            </div>
+            <!--/Card image-->
+
+            <!--Card content-->
+            <mdb-card-body class="text-center">
+                <agm-map [latitude]="map.lat" [longitude]="map.lng" [mapTypeId]="'hybrid'" style="height: 300px">
+                    <agm-marker [latitude]="map.lat" [longitude]="map.lng"></agm-marker>
+                </agm-map>
+
+            </mdb-card-body>
+            <!--/.Card content-->
+        </mdb-card>
+        <!--/.Card-->
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <!--Card-->
+        <mdb-card class="mt-5">
+
+            <!--Card image-->
+            <div class="view gradient-card-header  blue darken-2">
+                <h4 class="h4-responsive card-header text-center text-white">Satelite map</h4>
+            </div>
+            <!--/Card image-->
+
+            <!--Card content-->
+            <mdb-card-body class="text-center">
+                <agm-map [latitude]="map.lat" [longitude]="map.lng" [mapTypeId]="'satellite'" style="height: 300px">
+                    <agm-marker [latitude]="map.lat" [longitude]="map.lng"></agm-marker>
+                </agm-map>
+
+            </mdb-card-body>
+            <!--/.Card content-->
+        </mdb-card>
+        <!--/.Card-->
+    </div>
+    <div class="col-md-6">
+        <!--Card-->
+        <mdb-card class="mt-5">
+
+            <!--Card image-->
+            <div class="view gradient-card-header  blue darken-2">
+                <h4 class="h4-responsive card-header text-center text-white">Terrains map</h4>
+            </div>
+            <!--/Card image-->
+
+            <!--Card content-->
+            <mdb-card-body class="text-center">
+                <agm-map [latitude]="map.lat" [longitude]="map.lng" [mapTypeId]="'terrain'" style="height: 300px">
+                    <agm-marker [latitude]="map.lat" [longitude]="map.lng"></agm-marker>
+                </agm-map>
+
+            </mdb-card-body>
+            <!--/.Card content-->
+        </mdb-card>
+        <!--/.Card-->
+    </div>
+</div>
