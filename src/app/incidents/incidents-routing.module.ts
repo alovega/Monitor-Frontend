@@ -3,6 +3,8 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { IncidentsComponent } from './incidents.component';
 import { OpenIncidentsComponent } from './open-incidents/open-incidents.component';
+import { RealtimeIncidentsComponent } from './realtime-incidents/realtime-incidents.component';
+import { MaintenanceComponent } from './maintenance/maintenance.component';
 
 const routes: Routes = [
   {
@@ -17,6 +19,14 @@ const routes: Routes = [
       {
         path: 'open',
         component: OpenIncidentsComponent
+      },
+      {
+        path: 'realtime',
+        component: RealtimeIncidentsComponent
+      },
+      {
+        path: 'maintenance',
+        component: MaintenanceComponent
       }
     ]
   }

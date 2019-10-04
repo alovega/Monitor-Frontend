@@ -1,0 +1,38 @@
+#incident-list {
+    margin-top: 0px;
+}
+
+table th, .table td {
+    padding-left: 0px;
+}
+
+#incident-list tr:nth-child(1){
+    margin-top: 0px;
+}
+
+#incident-list tr:nth-child(1) td{
+    border-top: none;
+    margin-top: 0px;
+    padding-top: 0px;
+}
+
+.incident-view-link {
+    font-size: 16px;
+    font-weight: 500;
+    opacity: 0.9;
+}
+
+.last-updated {
+    font-size: 16px;
+    text-transform: uppercase;
+    font-weight: 1000;
+    opacity: 0.6;
+}
+
+.action-buttons a{
+    font-size: 16px;
+    font-weight: 500;
+    opacity: 0.9;
+    color: blue;
+
+}

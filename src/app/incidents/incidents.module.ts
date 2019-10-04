@@ -6,10 +6,12 @@ import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { IncidentsRoutingModule } from './incidents-routing.module';
 import { IncidentsComponent } from './incidents.component';
 import { OpenIncidentsComponent } from './open-incidents/open-incidents.component';
+import { RealtimeIncidentsComponent } from './realtime-incidents/realtime-incidents.component';
+import { MaintenanceComponent } from './maintenance/maintenance.component';
 
 
 @NgModule({
-  declarations: [IncidentsComponent, OpenIncidentsComponent],
+  declarations: [IncidentsComponent, OpenIncidentsComponent, RealtimeIncidentsComponent, MaintenanceComponent],
   imports: [
     CommonModule,
     IncidentsRoutingModule,
