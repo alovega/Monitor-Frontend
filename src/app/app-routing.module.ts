@@ -11,7 +11,7 @@ const routes: Routes = [
   { path: 'maps', loadChildren: () => import('./maps/maps.module').then(m => m.MapsModule) },
   { path: 'orders', loadChildren: () => import('./orders/orders.module').then(m => m.OrdersModule) },
   { path: '**', component: PagenotfoundComponent },
-  {path: 'view',loadChildren: () => import('./view/view.module').then(m => m.ViewModule)}
+  { path: 'endpoint', loadChildren: () => import('./endpoint/endpoint.module').then(m => m.EndpointModule) }
 ];
 
 @NgModule({
