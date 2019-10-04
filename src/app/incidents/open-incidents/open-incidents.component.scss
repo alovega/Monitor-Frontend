@@ -1,0 +1,32 @@
+.open-icident {
+    padding: 40px;
+}
+
+.incident-status {
+    font-size: 12px;
+    font-weight: 400;
+    text-transform: uppercase;
+    color: rgb(11, 11, 80);
+    background-color: rgb(184, 228, 228);
+    padding: 3px;
+}
+
+.last-update-time {
+    text-transform: uppercase;
+    opacity: 0.5;
+    margin-left: 5px;
+}
+
+.affected-systems {
+    margin-top: 20px;
+    list-style: none;
+}
+
+.affected-systems-title {
+    text-transform: uppercase;
+    margin-right: 2px;
+}
+
+.system{
+    display: inline;
+}
