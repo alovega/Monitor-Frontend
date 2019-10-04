@@ -20,7 +20,7 @@
 
 .switch-tabs {
     border-bottom: 2px solid rgba(9,30,66,0.08);
-    padding: 0 0 9px 0;
+    padding: 0 0 4px 0;
     margin-bottom: 30px;
 }
 
@@ -40,14 +40,16 @@
     margin: 0px;
 }
 
-#create-button a {
-    padding-bottom: 10px;
-    padding-right: 0px;
-    margin-right: 0px;
-    margin-left: 25rem;
-    color: blue;
+#create-button{
+    display: absolute;
+    font-size: 14px;
+    background-color: #0052CC !important;
+    border: 1px solid #0052CC;
+    border-radius: 4px;
+    color: #ffffff;
+    right: 0;
+    padding: 3px 7px 3px 7px;
     font-weight: 500;
-    opacity: 0.8;
 }
 
 .clearfix {
