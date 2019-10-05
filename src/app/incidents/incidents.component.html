@@ -20,10 +20,10 @@
 
     <li class="tab-item" >
         <span >
-        <a href="" *ngIf="router.url != '/incidents/maintenance'">
+        <a routerLink = "/incidents/create/realtime" routerLinkActive="active" *ngIf="router.url != '/incidents/maintenance'">
            <button class="float-right" id="create-button">Create incident</button>
         </a>
-        <a href="" *ngIf="router.url === '/incidents/maintenance'">
+        <a routerLink = "/incidents/create/maintenance" routerLinkActive="active" *ngIf="router.url === '/incidents/maintenance'">
             <button class="float-right" id="create-button" >Schedule Maintenance</button>
         </a>
         </span>

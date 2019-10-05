@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'hm-create-incident',
@@ -6,10 +7,13 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./create-incident.component.scss']
 })
 export class CreateIncidentComponent implements OnInit {
-
-  constructor() { }
+  sub: any;
+  constructor(private route: ActivatedRoute) { }
 
   ngOnInit() {
+    this.sub = this.route.params.subscribe(params => {
+      console.log(params);
+    });
   }
 
 }

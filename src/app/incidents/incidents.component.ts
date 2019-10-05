@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
   templateUrl: './incidents.component.html',
   styleUrls: ['./incidents.component.scss']
 })
+
 export class IncidentsComponent implements OnInit {
 
   constructor(
