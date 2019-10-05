@@ -12,8 +12,9 @@ const routes: Routes = [
   { path: 'dashboard', component: DashboardComponent},
   { path: 'maps', loadChildren: () => import('./maps/maps.module').then(m => m.MapsModule) },
   { path: 'orders', loadChildren: () => import('./orders/orders.module').then(m => m.OrdersModule) },
+  { path: 'endpoint', loadChildren: () => import('./endpoint/endpoint.module').then(m => m.EndpointModule) },
   { path: 'incidents', loadChildren: () => import('./incidents/incidents.module').then(m => m.IncidentsModule) },
-  { path: '**', component: PagenotfoundComponent }
+  { path: '**', component: PagenotfoundComponent },
 ];
 
 @NgModule({
