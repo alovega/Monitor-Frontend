@@ -3,6 +3,11 @@
     font-weight: 500;
 }
 
+.priority-level{
+    float: right;
+    font-size: 16px;
+    font-weight: 500;
+}
 
 .update-history-header, .update-history-header{
     font-size: 16px;
@@ -10,11 +15,9 @@
     margin: 40px 0px 10px 0px;
 }
 
-.update-history mdb-card, .new-update mdb-card{
-    padding: 20px;
-}
 
-.new-update mdb-card{
+.new-incident mdb-card{
+    padding: 20px;
     margin-bottom: 50px;
 }
 
