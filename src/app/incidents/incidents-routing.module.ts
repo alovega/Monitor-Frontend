@@ -6,6 +6,7 @@ import { OpenIncidentsComponent } from './open-incidents/open-incidents.componen
 import { RealtimeIncidentsComponent } from './realtime-incidents/realtime-incidents.component';
 import { MaintenanceComponent } from './maintenance/maintenance.component';
 import { UpdateIncidentComponent } from './update-incident/update-incident.component';
+import { CreateIncidentComponent } from './create-incident/create-incident.component';
 
 const routes: Routes = [
   {
@@ -31,7 +32,8 @@ const routes: Routes = [
       }
     ]
   },
-  { path: 'update', component: UpdateIncidentComponent }
+  { path: 'update', component: UpdateIncidentComponent },
+  { path: 'new/:incident-type', component: CreateIncidentComponent }
 ];
 
 @NgModule({
