@@ -13,6 +13,7 @@ import { TopNavComponent } from './layout/navigation/top-nav/top-nav.component';
 import { SideNavComponent } from './layout/navigation/side-nav/side-nav.component';
 import { EndpointModule } from './endpoint/endpoint.module';
 import { ReactiveFormsModule } from '@angular/forms';
+import { RecipientsModule } from './recipients/recipients.module';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { ReactiveFormsModule } from '@angular/forms';
       apiKey: 'AIzaSyBBCMBffWFPoWuR8mMDe56nDKI4A9mf55k'
     }),
     EndpointModule,
+    RecipientsModule,
     AppRoutingModule,
     DashboardModule,
     ErrorsModule
