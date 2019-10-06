@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { ReactiveFormsModule } from '@angular/forms';
+import {MatTableModule} from '@angular/material/table';
 
 import { RecipientsRoutingModule } from './recipients-routing.module';
 import { RecipientsComponent } from './recipients.component';
@@ -15,6 +16,7 @@ import { EmailRecipientsComponent } from './email-recipients/email-recipients.co
     CommonModule,
     ReactiveFormsModule,
     RecipientsRoutingModule,
+    MatTableModule,
     MDBBootstrapModule.forRoot()
   ],
   exports: [RecipientFormComponent, EmailRecipientsComponent]

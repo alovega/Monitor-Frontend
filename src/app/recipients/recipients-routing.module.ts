@@ -3,18 +3,19 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { RecipientsComponent } from './recipients.component';
 import { RecipientFormComponent } from './recipient-form/recipient-form.component';
+import { EmailRecipientsComponent } from './email-recipients/email-recipients.component';
 
 const routes: Routes = [{ path: '', component: RecipientsComponent, 
 children: [
       {
         path: '',
         pathMatch: 'full',
-        redirectTo: 'recipient-form'
+        redirectTo: 'email-recipient'
       },
-      // {
-      //   path: 'endpoint',
-      //   component: RecipientViewComponent
-      // },
+      {
+        path: 'email-recipient',
+        component: EmailRecipientsComponent
+      },
       {
         path: 'recipient-form',
         component: RecipientFormComponent

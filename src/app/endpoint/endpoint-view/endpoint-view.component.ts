@@ -10,6 +10,8 @@ import {GetEndpointsService} from './get-endpoints.service'
 export class EndpointViewComponent implements OnInit {
   @ViewChild(MdbTablePaginationComponent, { static: true }) mdbTablePagination: MdbTablePaginationComponent;
   @ViewChild(MdbTableDirective, { static: true }) mdbTable: MdbTableDirective;
+  firstItemIndex: any;
+  lastItemIndex: any;
   elements: any[];
   previous: any = [];
 
