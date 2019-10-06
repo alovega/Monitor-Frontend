@@ -11,6 +11,7 @@ import { ErrorsModule } from './errors/errors.module';
 import { FooterComponent } from './layout/footer/footer.component';
 import { TopNavComponent } from './layout/navigation/top-nav/top-nav.component';
 import { SideNavComponent } from './layout/navigation/side-nav/side-nav.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { SideNavComponent } from './layout/navigation/side-nav/side-nav.componen
     }),
     AppRoutingModule,
     DashboardModule,
-    ErrorsModule
+    ErrorsModule,
+    BrowserAnimationsModule
   ],
   providers: [],
   schemas: [
