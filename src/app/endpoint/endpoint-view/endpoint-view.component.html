@@ -9,7 +9,7 @@
             </div>
         </div>
         
-        <table mdbTable>
+        <table mdbTable class="dt-basic-checbox" >
                 <thead class="white-text">
                     <tr>
                     <th *ngFor="let head of headElements" scope="col">{{head}} </th>
@@ -19,7 +19,11 @@
                     <tr mdbTableCol *ngFor="let el of elements">
                     <th scope="row">{{el.id}}</th>
                     <td>{{el.first}}</td>
-                    <td>{{el.last}}</td>
+                    <td>
+    
+                        <button mdbBtn color="primary" size="sm" mdbWavesEffect type="button">Update</button>
+                        <button mdbBtn color="primary" size="sm" mdbWavesEffect type="button">Delete</button>
+                    </td>
                     </tr>
                 </tbody>
         </table>
