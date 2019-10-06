@@ -9,23 +9,33 @@
             </div>
         </div>
         
-        <table mdbTable class="dt-basic-checbox" >
+        <table mdbTable #tableEl="mdbTable" class="z-depth-1" >
                 <thead class="white-text">
                     <tr>
                     <th *ngFor="let head of headElements" scope="col">{{head}} </th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr mdbTableCol *ngFor="let el of elements">
-                    <th scope="row">{{el.id}}</th>
-                    <td>{{el.first}}</td>
-                    <td>
+                    <tr mdbTableCol *ngFor="let el of elements; let i = index ">
+                    <th *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex" scope="row">
+                        {{el.name}}
+                        <p>{{el.name}} is active</p>
+                    </th>
+                    <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{el.date_created}}</td>
+                    <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">
     
                         <button mdbBtn color="primary" size="sm" mdbWavesEffect type="button">Update</button>
                         <button mdbBtn color="primary" size="sm" mdbWavesEffect type="button">Delete</button>
                     </td>
                     </tr>
                 </tbody>
+                <tfoot class="grey lighten-5 w-100">
+                        <tr>
+                          <td colspan="4">
+                            <mdb-table-pagination [tableEl]="tableEl" [searchDataSource]="elements"></mdb-table-pagination>
+                          </td>
+                        </tr>
+                    </tfoot>
         </table>
     </mdb-card-body>     
 </mdb-card>
