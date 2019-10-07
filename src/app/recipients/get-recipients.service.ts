@@ -67,10 +67,76 @@ export class GetRecipientsService {
       date_created: '2019-09-30T10:13:51 -03:00'
     }
   ];
+  public sms: any[] = [
+    {
+      name: '+254773xxxxxx',
+      date_created: '2019-09-30T10:13:51 -03:00'
+    },
+    {
+      name: '+254722xxxxxx',
+      date_created: '2019-09-30T10:13:51 -03:00'
+    },
+    {
+      name: '+254711xxxxxx',
+      date_created: '2019-09-30T10:13:51 -03:00'
+    },
+    {
+      name: '+254733xxxxxx',
+      date_created: '2019-09-30T10:13:51 -03:00'
+    },
+    {
+      name: '+254773xxxxxx',
+      date_created: '2019-09-30T10:13:51 -03:00'
+    },
+    {
+      name: '+254724xxxxxx',
+      date_created: '2019-09-30T10:13:51 -03:00'
+    },
+    {
+      name: '+254713xxxxxx',
+      date_created: '2019-09-30T10:13:51 -03:00'
+    },
+    {
+      name: '+254773xxxxxx',
+      date_created: '2019-09-30T10:13:51 -03:00'
+    },
+    {
+      name: '+254773xxxxxx',
+      date_created: '2019-09-30T10:13:51 -03:00'
+    },
+    {
+      name: '+254773xxxxxx',
+      date_created: '2019-09-30T10:13:51 -03:00'
+    },
+    {
+      name: '+254773xxxxxx',
+      date_created: '2019-09-30T10:13:51 -03:00'
+    },
+    {
+      name: '+254773xxxxxx',
+      date_created: '2019-09-30T10:13:51 -03:00'
+    },
+    {
+      name: '+254773xxxxxx',
+      date_created: '2019-09-30T10:13:51 -03:00'
+    },
+    {
+      name: '+254773xxxxxx',
+      date_created: '2019-09-30T10:13:51 -03:00'
+    },
+    {
+      name: '+254773xxxxxx',
+      date_created: '2019-09-30T10:13:51 -03:00'
+    }
+  ];
   constructor() { }
 
   getEmail() {
     return this.email;
+  }
+
+  getSms(){
+    return this.sms
   }
 }
 

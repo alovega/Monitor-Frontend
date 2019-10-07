@@ -4,6 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { RecipientsComponent } from './recipients.component';
 import { RecipientFormComponent } from './recipient-form/recipient-form.component';
 import { EmailRecipientsComponent } from './email-recipients/email-recipients.component';
+import { SmsRecipientsComponent } from './sms-recipients/sms-recipients.component';
 
 const routes: Routes = [{ path: '', component: RecipientsComponent, 
 children: [
@@ -20,6 +21,10 @@ children: [
         path: 'recipient-form',
         component: RecipientFormComponent
       },
+      {
+        path: 'sms-recipient',
+        component: SmsRecipientsComponent
+      }
     ] }];
 
 @NgModule({
