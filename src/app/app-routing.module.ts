@@ -16,6 +16,7 @@ const routes: Routes = [
   { path: 'incidents', loadChildren: () => import('./incidents/incidents.module').then(m => m.IncidentsModule) },
   { path: 'recipients', loadChildren: () => import('./recipients/recipients.module').then(m => m.RecipientsModule) },
   { path: '**', component: PagenotfoundComponent },
+  { path: 'notifications', loadChildren: () => import('./notifications/notifications.module').then(m => m.NotificationsModule) },
 ];
 
 @NgModule({
