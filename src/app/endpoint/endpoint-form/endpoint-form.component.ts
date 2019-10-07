@@ -1,4 +1,4 @@
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,19 +7,25 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./endpoint-form.component.scss']
 })
 export class EndpointFormComponent implements OnInit {
-
-  endpointForm = new FormGroup({
-    EndpointName: new FormControl(''),
-    Description: new FormControl(''),
-    Endpoint: new FormControl(''),
-    OptimalResponseTime: new FormControl(''),
-    EndpointType: new FormControl(''),
-    State: new FormControl(''),
-  })
-
+  endpointForm: FormGroup
+  
   constructor() { }
 
   ngOnInit() {
+    this.endpointForm = new FormGroup({
+      EndpointName: new FormControl(null, [Validators.required, Validators.minLength(5)]),
+      Description: new FormControl(''),
+      Endpoint: new FormControl(''),
+      OptimalResponseTime: new FormControl(''),
+      EndpointType: new FormControl(''),
+      State: new FormControl(''),
+    },  { updateOn: 'submit' })
+  }
+
+  get input() { return this.endpointForm.get('minLength'); }
+
+  onSubmit() {
+    this.endpointForm.controls.input.markAsTouched();
   }
 
 }
