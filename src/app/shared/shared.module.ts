@@ -12,6 +12,7 @@ import { HorizontalBarChartComponent } from './graphs/horizontal-bar-chart/horiz
 import { RadarChartComponent } from './graphs/radar-chart/radar-chart.component';
 import { DatePickerComponent } from './datetimepicker/datepicker/date.picker.component';
 import { TimePickerComponent } from './datetimepicker/timepicker/time.picker.component';
+import { EmptyDataComponent } from './empty-data/empty-data.component';
 
 
 @NgModule({
@@ -23,7 +24,8 @@ import { TimePickerComponent } from './datetimepicker/timepicker/time.picker.com
     HorizontalBarChartComponent,
     RadarChartComponent,
     DatePickerComponent,
-    TimePickerComponent
+    TimePickerComponent,
+    EmptyDataComponent
   ],
   imports: [
     CommonModule,
@@ -40,7 +42,8 @@ import { TimePickerComponent } from './datetimepicker/timepicker/time.picker.com
     HorizontalBarChartComponent,
     RadarChartComponent,
     DatePickerComponent,
-    TimePickerComponent
+    TimePickerComponent,
+    EmptyDataComponent
   ]
 })
 export class SharedModule { }
