@@ -18,19 +18,19 @@
 <mdb-card>
     <mdb-card-body>
         <table mdbTable>
-                <thead class="">
+                <thead class="text-center">
                     <tr>
                     <th *ngFor="let head of headElements" scope="col">{{head}} </th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody class="text-center">
                     <tr mdbTableCol *ngFor="let el of elements">
                     <th scope="row">{{el.username}}</th>
-                    <td>{{el.email}}</td>
                     <td>{{el.date_created}}</td>
+                    <td>{{el.email}}</td>
                     <td>
                         <div class="remove-button">
-                            <a id="update-p2jg8qhdzs4k" (click)="basicModal.show()" mdbWavesEffect>Remove</a>
+                            <a id="update-p2jg8qhdzs4k" (click)="basicModal.show()" >Remove</a>
                         </div>
                         <div class="update-button">
                             <a id="update-p2jg8qhdzs4k" routerLink="/users/update" routerLinkActive="active">Update</a>
@@ -50,10 +50,10 @@
         <button type="button" class="close pull-right" aria-label="Close" (click)="basicModal.hide()">
           <span aria-hidden="true">×</span>
         </button>
-        <h4 class="modal-title w-100" id="myModalLabel">Confirm Remove Escalation Rule</h4>
+        <h4 class="modal-title w-100" id="myModalLabel">Confirm Remove User</h4>
       </div>
       <div class="modal-body">
-        Are you sure you want to remove this escalation rule?
+        Are you sure you want to remove this user?
       </div>
       <div class="modal-footer">
         <span class="update-button">
