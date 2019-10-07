@@ -1,30 +1,27 @@
 import { MdbTablePaginationComponent, MdbTableDirective } from 'angular-bootstrap-md';
 import { Component, OnInit, ViewChild, AfterViewInit, ChangeDetectorRef } from '@angular/core';
-import {GetEndpointsService} from './get-endpoints.service'
- 
+import {GetRecipientsService} from '../get-recipients.service'
+
 @Component({
-  selector: 'app-endpoint-view',
-  templateUrl: './endpoint-view.component.html',
-  styleUrls: ['./endpoint-view.component.scss']
+  selector: 'app-email-recipients',
+  templateUrl: './email-recipients.component.html',
+  styleUrls: ['./email-recipients.component.scss']
 })
-export class EndpointViewComponent implements OnInit {
+export class EmailRecipientsComponent implements OnInit {
   @ViewChild(MdbTablePaginationComponent, { static: true }) mdbTablePagination: MdbTablePaginationComponent;
   @ViewChild(MdbTableDirective, { static: true }) mdbTable: MdbTableDirective;
   firstItemIndex: any;
   lastItemIndex: any;
   elements: any[];
   previous: any = [];
+  headElements: string[] = [ 'email', 'date-created', 'action'];
 
+  constructor(private getRecipients: GetRecipientsService, private cdRef: ChangeDetectorRef) {
 
-  headElements = ['Endpoint', 'Date Created', 'Action'];
+   }
 
-  constructor(
-    private getEndpoints: GetEndpointsService,
-    private cdRef: ChangeDetectorRef
-    ) {}
-
-  ngOnInit() {
-    this.elements = this.getEndpoints.getEndpoint();
+   ngOnInit() {
+    this.elements = this.getRecipients.getEmail()
     this.mdbTable.setDataSource(this.elements);
     this.elements = this.mdbTable.getDataSource();
     this.previous = this.mdbTable.getDataSource();
@@ -51,3 +48,4 @@ export class EndpointViewComponent implements OnInit {
     }
   }
 }
+

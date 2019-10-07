@@ -14,6 +14,7 @@ const routes: Routes = [
   { path: 'orders', loadChildren: () => import('./orders/orders.module').then(m => m.OrdersModule) },
   { path: 'endpoint', loadChildren: () => import('./endpoint/endpoint.module').then(m => m.EndpointModule) },
   { path: 'incidents', loadChildren: () => import('./incidents/incidents.module').then(m => m.IncidentsModule) },
+  { path: 'recipients', loadChildren: () => import('./recipients/recipients.module').then(m => m.RecipientsModule) },
   { path: '**', component: PagenotfoundComponent },
 ];
 
