@@ -11,7 +11,11 @@ import { ErrorsModule } from './errors/errors.module';
 import { FooterComponent } from './layout/footer/footer.component';
 import { TopNavComponent } from './layout/navigation/top-nav/top-nav.component';
 import { SideNavComponent } from './layout/navigation/side-nav/side-nav.component';
+<<<<<<< HEAD
 import { ViewModule } from './view/view.module';
+=======
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+>>>>>>> HM-80
 
 @NgModule({
   declarations: [
@@ -26,8 +30,13 @@ import { ViewModule } from './view/view.module';
     ViewModule,
     AppRoutingModule,
     DashboardModule,
+<<<<<<< HEAD
     ErrorsModule
     
+=======
+    ErrorsModule,
+    BrowserAnimationsModule
+>>>>>>> HM-80
   ],
   providers: [],
   schemas: [

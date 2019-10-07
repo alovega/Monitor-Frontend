@@ -1,0 +1,140 @@
+<!-- Grid Row -->
+<div class="row wow animate fadeIn" data-wow-delay="0.3s">
+  <!-- Grid column -->
+  <div class="col-md-1"></div>
+
+  <!-- Grid column -->
+  <div class="col-md-10" *ngIf="router.url === '/incidents/new/realtime'">
+    <div class="page-header">
+      Create Realtime Incident
+      <div class="priority-level">
+        <label for="">Priority Level</label>
+        <select class="browser-default custom-select">
+          <option selected value="1">Level 1</option>
+          <option value="2">Level 2</option>
+          <option value="3">Level 3</option>
+          <option value="4">Level 4</option>
+          <option value="4">Level 5</option>
+        </select>
+      </div>
+    </div>
+    <div class="clearfix"></div>
+    <hr>
+    <div class="page-body">
+      <div class="new-incident">
+        <mdb-card>
+          <form [formGroup]="realtimeIncidentForm" class="text-center">
+            <!-- Name -->
+            <label class="form-label">Incident Name</label>
+            <input type="text" id="incidentName" formControlName="incidentName" class="grey lighten-5 form-control mb-4"
+              placeholder="Incident name">
+
+            <!-- Incident Status -->
+            <label class="form-label">Incident status</label>
+            <select formControlName="incidentStatus" class="grey lighten-5 browser-default custom-select form-control mb-4">
+              <option selected value="Investigating">Investigating</option>
+              <option value="Identified">Identified</option>
+              <option value="Monitoring">Monitoring</option>
+              <option value="Resolved">Resolved</option>
+            </select>
+
+            <!-- Message -->
+            <label class="form-label">Message</label>
+            <textarea class="grey lighten-5 form-control rounded-0 mb-4" formControlName="message"
+                id="exampleFormControlTextarea2" rows="3" placeholder="We are currently investigating this incident">
+            </textarea>
+
+            <!-- Create button -->
+            <div class="create-button">
+                <button mdbBtn mdbWavesEffect class="float-right" color="primary" size="md">Create</button>
+            </div>
+          </form>
+        </mdb-card>
+      </div>
+    </div>
+  </div>
+
+    <!-- Grid column -->
+  <div class="col-md-10" *ngIf="router.url === '/incidents/new/maintenance'">
+    <div class="page-header">
+      Create Scheduled Maintenance
+      <div class="priority-level">
+        <label for="">Priority Level</label>
+        <select class="browser-default custom-select">
+          <option selected value="1">Level 1</option>
+          <option value="2">Level 2</option>
+          <option value="3">Level 3</option>
+          <option value="4">Level 4</option>
+          <option value="4">Level 5</option>
+        </select>
+      </div>
+    </div>
+    <div class="clearfix"></div>
+    <hr>
+    <div class="page-body">
+      <div class="new-incident">
+        <div class="card">
+          <form [formGroup]="scheduledMaintenanceForm" class="text-center">
+            <!-- Name -->
+            <label class="form-label">Incident Name</label>
+            <input type="text" id="incidentName" formControlName="maintenanceName" class="grey lighten-5 form-control mb-4"
+              placeholder="Maintenance name">
+
+            <!-- Scheduled Date -->
+            <div class="row form-group">
+              <!-- Scheduled Start Time -->
+              <div class="col-md-6">
+                <label class="form-label">Scheduled Start Time</label>
+                <div class="clearfix"></div>
+                <div class="row">
+                  <div class="col-md-6 date-input">
+                    <hm-date-picker></hm-date-picker>
+                  </div>
+                  <div class="col-md-6 time-input">
+                     <hm-time-picker></hm-time-picker>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Scheduled End Time -->
+              <div class="col-md-6">
+                  <label class="form-label">Scheduled End Time</label>
+                  <div class="clearfix"></div>
+                  <div class="row">
+                    <div class="col-md-6 date-input">
+                        <hm-date-picker></hm-date-picker>
+                    </div>
+                    <div class="col-md-6 time-input">
+                       <hm-time-picker></hm-time-picker>
+                    </div>
+                  </div>
+                </div>
+            </div>
+            <!-- Incident Status -->
+            <label class="form-label">Maintenance status</label>
+            <select formControlName="maintenanceStatus" class="grey lighten-5 browser-default custom-select form-control mb-4">
+              <option selected value="Scheduled">Scheduled</option>
+              <option value="InProgress">In Progress</option>
+              <option value="Completed">Completed</option>
+            </select>
+
+            <!-- Message -->
+            <label class="form-label">Message</label>
+            <textarea class="grey lighten-5 form-control rounded-0 mb-4" formControlName="message"
+                id="exampleFormControlTextarea2" rows="3" placeholder="We are currently investigating this incident">
+            </textarea>
+
+            <!-- Create button -->
+            <div class="create-button">
+                <button mdbBtn mdbWavesEffect class="float-right" color="primary" size="md">Schedule</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Grid column -->
+  <div class="col-md-1"></div>
+</div>
+<!-- Grid Row -->
