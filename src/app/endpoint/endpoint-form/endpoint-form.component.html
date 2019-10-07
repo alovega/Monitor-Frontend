@@ -17,9 +17,11 @@
     <label>Endpoint Name</label>
     <input mdbInput MdbValidate type="text" id="defaultContactFormName" class="form-control mb-4"
      placeholder="Name" formControlName="EndpointName">
-    <label for="defaultContactFormName">EndpointName validator</label>
-    <mdb-error *ngIf="input.invalid && (input.dirty || input.touched)">Input invalid</mdb-error>
-    <mdb-success *ngIf="input.valid && (input.dirty || input.touched)">Input valid</mdb-success>
+     <div *ngIf="endpointForm.controls['EndpointName'].invalid && (endpointForm.controls['EndpointName'].dirty || endpointForm.controls['EndpointName'].touched)" class="alert alert-danger">
+        <div *ngIf="endpointForm.controls['EndpointName'].errors.required">
+            Endpoint Name is required.
+        </div>
+      </div>
     <!-- Message -->
     <label>Description</label>
     <div class="form-group">
@@ -50,7 +52,8 @@
     
     <!-- Send button -->
     <button mdbBtn type="button" class="btn btn-primary waves-light" 
-        color="primary" mdbWavesEffect (click)="onSubmit()">
+        color="primary" mdbWavesEffect 
+        >
       Save
     </button>
   

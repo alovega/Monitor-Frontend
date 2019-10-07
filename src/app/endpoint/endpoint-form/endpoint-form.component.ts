@@ -1,4 +1,4 @@
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -9,23 +9,22 @@ import { Component, OnInit } from '@angular/core';
 export class EndpointFormComponent implements OnInit {
   endpointForm: FormGroup
   
-  constructor() { }
+  constructor( private fb: FormBuilder) {
+    this.createForm()
+   }
 
   ngOnInit() {
-    this.endpointForm = new FormGroup({
-      EndpointName: new FormControl(null, [Validators.required, Validators.minLength(5)]),
-      Description: new FormControl(''),
-      Endpoint: new FormControl(''),
-      OptimalResponseTime: new FormControl(''),
-      EndpointType: new FormControl(''),
-      State: new FormControl(''),
-    },  { updateOn: 'submit' })
+    
   }
-
-  get input() { return this.endpointForm.get('minLength'); }
-
-  onSubmit() {
-    this.endpointForm.controls.input.markAsTouched();
+  createForm(){
+    this.endpointForm = this.fb.group({
+        EndpointName: ['', Validators.required],
+        Description: ['', Validators.required],
+        Endpoint: ['', Validators.required],
+        OptimalResponseTime: ['', Validators.required],
+        EndpointType: ['', Validators.required],
+        State: ['', Validators.required]
+    })
   }
 
 }
