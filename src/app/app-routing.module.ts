@@ -10,8 +10,10 @@ const routes: Routes = [
   { path: 'dashboard', component: DashboardComponent},
   { path: 'maps', loadChildren: () => import('./maps/maps.module').then(m => m.MapsModule) },
   { path: 'orders', loadChildren: () => import('./orders/orders.module').then(m => m.OrdersModule) },
+  {path: 'view', loadChildren: () => import('./view/view.module').then(m => m.ViewModule)},
+  { path: 'users', loadChildren: () => import('./users/users.module').then(m => m.UsersModule) },
   { path: '**', component: PagenotfoundComponent },
-  {path: 'view',loadChildren: () => import('./view/view.module').then(m => m.ViewModule)}
+
 ];
 
 @NgModule({
