@@ -16,7 +16,9 @@
                     <div class="last-update-time"><strong>
                            <small>1 HOUR AGO (9: 46 UTC)</small>
                     </strong></div>
+                    <div>
                     <div class="update-status">IN PROGRESS</div>
+                    </div>
                     <div class="update-description">
                         Scheduled maintenance is currently in progress. We will provide updates as necessary.
                     </div>
@@ -32,7 +34,9 @@
                     <div class="last-update-time"><strong>
                            <small>1 HOUR AGO (9: 46 UTC)</small>
                     </strong></div>
+                    <div>
                     <div class="update-status">IN PROGRESS</div>
+                    </div>
                     <div class="update-description">
                         Scheduled maintenance is currently in progress. We will provide updates as necessary.
                     </div>
@@ -49,20 +53,24 @@
                     Add new update
                 </div>
                 <mdb-card class="grey lighten-5 update-form">
-                    <select class="browser-default custom-select">
-                        <option selected value="1">Investigating</option>
-                        <option value="2">Identified</option>
-                        <option value="3">Monitoring</option>
-                        <option value="4">Resolved</option>
-                    </select>
-                    <div class="md-form">
-                        <textarea type="text" id="form7" class="md-textarea md-textarea-auto form-control" mdbInput></textarea>
-                        <label for="form7">Update Message</label>
-                    </div>
+                    <form [formGroup]="updateIncidentForm">
+                        <label class="form-label">Incident status</label>
+                        <select formControlName="incidentStatus" class="browser-default custom-select">
+                            <option selected value="Investigating">Investigating</option>
+                            <option value="Identified">Identified</option>
+                            <option value="Monitoring">Monitoring</option>
+                            <option value="Resolved">Resolved</option>
+                        </select>
 
-                    <div class="update-button">
-                        <button mdbBtn mdbWavesEffect class="float-right" color="primary" size="md">update</button>
-                    </div>
+                        <label class="form-label">Message</label>
+                        <textarea class="grey lighten-5 form-control rounded-0 mb-4" formControlName="message"
+                            id="exampleFormControlTextarea2" rows="3" placeholder="We are currently investigating this incident">
+                        </textarea>
+
+                        <div class="update-button">
+                            <button mdbBtn mdbWavesEffect class="float-right" color="primary" size="md">update</button>
+                        </div>
+                    </form>
                 </mdb-card>
             </div>
 

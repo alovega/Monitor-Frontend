@@ -11,9 +11,14 @@ import { ErrorsModule } from './errors/errors.module';
 import { FooterComponent } from './layout/footer/footer.component';
 import { TopNavComponent } from './layout/navigation/top-nav/top-nav.component';
 import { SideNavComponent } from './layout/navigation/side-nav/side-nav.component';
+<<<<<<< HEAD
 import { EndpointModule } from './endpoint/endpoint.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RecipientsModule } from './recipients/recipients.module';
+=======
+import { ViewModule } from './view/view.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+>>>>>>> 340b876fc43d7302cdcc7f2d641c1e6bfd0756ed
 
 @NgModule({
   declarations: [
@@ -29,7 +34,12 @@ import { RecipientsModule } from './recipients/recipients.module';
     RecipientsModule,
     AppRoutingModule,
     DashboardModule,
+<<<<<<< HEAD
     ErrorsModule
+=======
+    ErrorsModule,
+    BrowserAnimationsModule
+>>>>>>> 340b876fc43d7302cdcc7f2d641c1e6bfd0756ed
   ],
   providers: [],
   schemas: [
