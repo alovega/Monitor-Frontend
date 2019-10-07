@@ -24,8 +24,8 @@
                     <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{el.date_created}}</td>
                     <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">
     
-                        <button mdbBtn color="primary" size="sm" mdbWavesEffect type="button">Update</button>
-                        <button mdbBtn color="primary" size="sm" mdbWavesEffect type="button">Delete</button>
+                        <a href=""><mdb-badge primary="true" class="link1">Update</mdb-badge></a>
+                        <a href=""><mdb-badge danger="true" class="links">Delete</mdb-badge></a>
                     </td>
                     </tr>
                 </tbody>
