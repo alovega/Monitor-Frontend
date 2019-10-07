@@ -13,7 +13,6 @@ const routes: Routes = [
   {path: 'view', loadChildren: () => import('./view/view.module').then(m => m.ViewModule)},
   { path: 'rules', loadChildren: () => import('./escalation-rules/escalation-rules.module').then(m => m.EscalationRulesModule) },
   { path: '**', component: PagenotfoundComponent },
-
 ];
 
 @NgModule({
