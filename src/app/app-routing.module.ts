@@ -12,6 +12,7 @@ const routes: Routes = [
   { path: 'orders', loadChildren: () => import('./orders/orders.module').then(m => m.OrdersModule) },
   {path: 'view', loadChildren: () => import('./view/view.module').then(m => m.ViewModule)},
   { path: 'users', loadChildren: () => import('./users/users.module').then(m => m.UsersModule) },
+  { path: 'rules', loadChildren: () => import('./escalation-rules/escalation-rules.module').then(m => m.EscalationRulesModule) },
   { path: '**', component: PagenotfoundComponent },
 
 ];
