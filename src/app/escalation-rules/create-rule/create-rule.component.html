@@ -1,0 +1,61 @@
+<!-- Grid Row -->
+<div class="row wow animate fadeIn" data-wow-delay="0.1s">
+    <!-- Grid column -->
+    <div class="col-md-1"></div>
+      <!-- Grid column -->
+    <div class="col-md-10">
+      <div class="page-header">
+        Add Escalation Rule
+      </div>
+      <hr>
+      <div class="page-body">
+        <div class="new-rule">
+          <mdb-card class="card">
+            <form [formGroup]="escalationRuleForm" class="text-center">
+              <!-- Name -->
+              <label class="form-label">Rule Name</label>
+              <input type="text" id="incidentName" formControlName="ruleName" class="grey lighten-5 form-control mb-4"
+                placeholder="Rule name">
+  
+            <!-- Rule Description -->
+              <label class="form-label">Rule description</label>
+              <textarea class="grey lighten-5 form-control rounded-0 mb-4" formControlName="ruleDescription"
+                  id="exampleFormControlTextarea2" rows="3" placeholder="Elevated error occurrence">
+              </textarea>
+
+              <!-- Rule Configuration -->
+              <div class="form-group">
+                  <div class="form-inline">                  
+                    <span class="rule-text">Escalate If: </span>
+                    <!-- Nth Event -->
+                    <input type="number" id="nthEvent" formControlName="nEvent" class="grey lighten-5 form-control mb-4 inline-rule"
+                    placeholder="10">
+
+                    <!-- Event Type -->
+                    <select formControlName="eventType" class="grey lighten-5 browser-default custom-select form-control mb-4 inline-rule">
+                        <option selected value="Error">Error</option>
+                        <option value="Warning">Warning</option>
+                        <option value="Critical">Critical</option>
+                        <option value="Info">Info</option>
+                    </select>
+                    <span class="rule-text">Event(s) occur within</span>
+                    <!-- Duration -->
+                    <input type="number" formControlName="duration" class="grey lighten-5 form-control mb-4 inline-rule"
+                    placeholder="3600"> 
+                    <span class="rule-text">Seconds</span>
+                  </div>
+              </div>
+              <!-- Create button -->
+              <div class="create-button">
+                  <button mdbBtn mdbWavesEffect class="float-right" color="primary" size="md">Add</button>
+              </div>
+            </form>
+          </mdb-card>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Grid column -->
+    <div class="col-md-1"></div>
+  </div>
+  <!-- Grid Row -->
