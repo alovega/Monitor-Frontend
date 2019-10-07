@@ -1,0 +1,31 @@
+<div class="page-header">
+    <h3 class="page-header-title float-left">Recipients</h3>
+    <div class="float-right"> 
+        <input class="form-control" type="text" placeholder="Search">
+    </div>
+    <div class="clearfix"></div> 
+</div>
+
+<ul class="list-group switch-tabs">
+    <div>
+    <li class="tab-item">
+        <a routerLink="email-recipient" routerLinkActive="active">Email</a>
+    </li>
+    <li class="tab-item">
+        <a routerLink="sms-recipient" routerLinkActive="active">Sms</a>        
+    </li>
+
+    <li class="tab-item" >
+        <span >
+        <a routerLink="recipient-form" *ngIf="router.url != '/email-recipient'">
+           <button  class="float-right" id="create-button">Add Recipient</button>
+        </a>
+        <a href="" *ngIf="router.url === '/incidents/maintenance'">
+            <button class="float-right" id="create-button" >Schedule Maintenance</button>
+        </a>
+        </span>
+    </li>
+    <div class="clearfix"></div>
+    </div>
+</ul>
+<router-outlet></router-outlet>

@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule, NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core'; 
+import { NgModule, NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { AgmCoreModule } from '@agm/core';
 
@@ -11,8 +11,9 @@ import { ErrorsModule } from './errors/errors.module';
 import { FooterComponent } from './layout/footer/footer.component';
 import { TopNavComponent } from './layout/navigation/top-nav/top-nav.component';
 import { SideNavComponent } from './layout/navigation/side-nav/side-nav.component';
-import { ViewModule } from './view/view.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { EndpointModule } from './endpoint/endpoint.module';
+import { RecipientsModule } from './recipients/recipients.module';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyBBCMBffWFPoWuR8mMDe56nDKI4A9mf55k'
     }),
-    ViewModule,
+    EndpointModule,
+    RecipientsModule,
     AppRoutingModule,
     DashboardModule,
     ErrorsModule,
