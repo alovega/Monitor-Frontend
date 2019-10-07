@@ -1,6 +1,5 @@
-import {MatTableDataSource} from '@angular/material';
-import {SelectionModel} from '@angular/cdk/collections';
-import { Component, OnInit } from '@angular/core';
+import { MdbTablePaginationComponent, MdbTableDirective } from 'angular-bootstrap-md';
+import { Component, OnInit, ViewChild, AfterViewInit, ChangeDetectorRef } from '@angular/core';
 import {GetRecipientsService} from '../get-recipients.service'
 
 @Component({
@@ -9,37 +8,44 @@ import {GetRecipientsService} from '../get-recipients.service'
   styleUrls: ['./email-recipients.component.scss']
 })
 export class EmailRecipientsComponent implements OnInit {
-  displayedColumns: string[] = ['select', 'email', 'date-created', 'action'];
+  @ViewChild(MdbTablePaginationComponent, { static: true }) mdbTablePagination: MdbTablePaginationComponent;
+  @ViewChild(MdbTableDirective, { static: true }) mdbTable: MdbTableDirective;
+  firstItemIndex: any;
+  lastItemIndex: any;
   elements: any[];
-  dataSource: any;
-  selection: any;
+  previous: any = [];
+  headElements: string[] = [ 'email', 'date-created', 'action'];
 
-  constructor(private getRecipients: GetRecipientsService) {
+  constructor(private getRecipients: GetRecipientsService, private cdRef: ChangeDetectorRef) {
 
    }
 
-  ngOnInit() {
-    this.elements = this.getRecipients.getEmail();
-    this.dataSource = new MatTableDataSource<any>(this.elements)
-    this.selection = new SelectionModel<any>(true, [])
+   ngOnInit() {
+    this.elements = this.getRecipients.getEmail()
+    this.mdbTable.setDataSource(this.elements);
+    this.elements = this.mdbTable.getDataSource();
+    this.previous = this.mdbTable.getDataSource();
   }
 
-  isAllSelected() {
-    const numSelected = this.selection.selected.length;
-    const numRows = this.dataSource.data.length;
-    return numSelected === numRows;
-  }
-  masterToggle() {
-    this.isAllSelected() ?
-        this.selection.clear() :
-        this.dataSource.data.forEach(row => this.selection.select(row));
+  ngAfterViewInit() {
+    this.mdbTablePagination.setMaxVisibleItemsNumberTo(5);
+    this.mdbTablePagination.calculateFirstItemIndex();
+    this.mdbTablePagination.calculateLastItemIndex();
+    this.cdRef.detectChanges();
   }
 
-  checkboxLabel(row?: any): string {
-    if (!row) {
-      return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
+  searchItems(search: string) {
+    const prev = this.mdbTable.getDataSource();
+
+    if (!search) {
+      this.mdbTable.setDataSource(this.previous);
+      this.elements = this.mdbTable.getDataSource();
     }
-    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.position + 1}`;
-  }
 
+    if (search) {
+      this.elements = this.mdbTable.searchLocalDataBy(search);
+      this.mdbTable.setDataSource(prev);
+    }
+  }
 }
+
