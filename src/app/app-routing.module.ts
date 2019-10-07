@@ -16,6 +16,7 @@ const routes: Routes = [
   { path: 'rules', loadChildren: () => import('./escalation-rules/escalation-rules.module').then(m => m.EscalationRulesModule) },
   { path: 'incidents', loadChildren: () => import('./incidents/incidents.module').then(m => m.IncidentsModule) },
   { path: 'recipients', loadChildren: () => import('./recipients/recipients.module').then(m => m.RecipientsModule) },
+  { path: 'notifications', loadChildren: () => import('./notifications/notifications.module').then(m => m.NotificationsModule) },
   { path: '**', component: PagenotfoundComponent },
 ];
 
