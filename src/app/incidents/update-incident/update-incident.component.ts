@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {  FormGroup, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'hm-update-incident',
@@ -6,6 +7,10 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./update-incident.component.scss']
 })
 export class UpdateIncidentComponent implements OnInit {
+  updateIncidentForm = new FormGroup ({
+    incidentStatus: new FormControl('Investigating'),
+    message: new FormControl('')
+  });
 
   constructor() { }
 
