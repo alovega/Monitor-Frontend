@@ -1,12 +1,13 @@
 
 <!-- Default form contact -->
-<form [formGroup]="endpointForm" class="text-center border  p-5">
+<form [formGroup]="endpointForm" class="text-center border  p-5" (ngSubmit) = "onSubmit()">
   <div class="row">
     <div class="col col-md-auto">
-        <select class="browser-default custom-select">
-            <option selected>System 1</option>
-            <option value="1">System 2</option>
-            <option value="2">System 3</option>
+        <select class="browser-default custom-select" formControlName="SystemId" [(ngModel)]="data.system_id"  >
+            <option value=""></option>
+            <option value="1">System 1</option>
+            <option value="2">System 2</option>
+            <option value="3">System 3</option>
         </select>
     </div>
     <div class="col col-6"><p class="h4 mb-4">Add an Endpoint </p></div>
@@ -16,7 +17,8 @@
     <!-- Name -->
     <label>Endpoint Name</label>
     <input mdbInput MdbValidate type="text" id="defaultContactFormName" class="form-control mb-4"
-     placeholder="Name" formControlName="EndpointName">
+    [ngClass]="{ 'is-invalid': submitted && f.EnpointName.errors }"
+     placeholder="Name" formControlName="EndpointName" [(ngModel)]="data.name" >
      <div *ngIf="endpointForm.controls['EndpointName'].invalid && (endpointForm.controls['EndpointName'].dirty || endpointForm.controls['EndpointName'].touched)" class="alert alert-danger">
         <div *ngIf="endpointForm.controls['EndpointName'].errors.required">
             Endpoint Name is required.
@@ -25,34 +27,60 @@
     <!-- Message -->
     <label>Description</label>
     <div class="form-group">
-            <textarea class="form-control rounded-0" id="exampleFormControlTextarea2" rows="3" placeholder="Description"></textarea>
+            <textarea class="form-control rounded-0" id="exampleFormControlTextarea2" rows="3" placeholder="Description" formControlName="Description" [(ngModel)]="data.description" ></textarea>
     </div>
-  
+    <div *ngIf="endpointForm.controls['Description'].invalid && (endpointForm.controls['Description'].dirty || endpointForm.controls['Description'].touched)" class="alert alert-danger">
+      <div *ngIf="endpointForm.controls['Description'].errors.required">
+          Description is required.
+      </div>
+    </div>
     <!-- Endpoint -->
     <label>Endpoint</label>
-    <input type="text" id="defaultContactFormEndpoint" class="form-control mb-4" placeholder="Endpoint">
+    <input type="text" id="defaultContactFormEndpoint" class="form-control mb-4" placeholder="Endpoint" formControlName="Endpoint" [(ngModel)]="data.endpoint" >
+    <div *ngIf="endpointForm.controls['Endpoint'].invalid && (endpointForm.controls['Endpoint'].dirty || endpointForm.controls['Endpoint'].touched)" class="alert alert-danger">
+      <div *ngIf="endpointForm.controls['Endpoint'].errors.required">
+          Endpoint is required.
+      </div>
+    </div>
 
     <!-- Optimal response time -->
     <label>Optimal response time</label>
-    <input type="text" id="defaultContactFormEndpoint" class="form-control mb-4" placeholder="Endpoint">
+    <input type="text" id="defaultContactFormEndpoint" class="form-control mb-4" placeholder="Optimal response time" formControlName="OptimalResponseTime" [(ngModel)]="data.optimal_response_time" >
+    <div *ngIf="endpointForm.controls['OptimalResponseTime'].invalid && (endpointForm.controls['OptimalResponseTime'].dirty || endpointForm.controls['OptimalResponseTime'].touched)" class="alert alert-danger">
+      <div *ngIf="endpointForm.controls['OptimalResponseTime'].errors.required">
+          Optimal response time is required.
+      </div>
+    </div>
   
     <!-- Endpoint type -->
     <label>Endpoint type</label>
-    <select class="browser-default custom-select mb-4">
-      <option value="1" selected>Healthcheck</option>
+    <select class="browser-default custom-select mb-4" formControlName="EndpointType" [(ngModel)]="data.endpoint_type">
+      <option value="" selected></option>
+      <option value="1">Healthcheck</option>
       <option value="2">Authentication</option>
     </select>
+    <div *ngIf="endpointForm.controls['EndpointType'].invalid && (endpointForm.controls['EndpointType'].dirty || endpointForm.controls['EndpointType'].touched)" class="alert alert-danger">
+        <div *ngIf="endpointForm.controls['EndpointType'].errors.required">
+            EnpointType is required.
+        </div>
+      </div>
     
     <!-- State -->
     <label>State</label>
-    <select class="browser-default custom-select mb-4">
-      <option value="1" selected>Active</option>
+    <select class="browser-default custom-select mb-4" formControlName="State" [(ngModel)]="data.status">
+      <option value="" selected></option>
+      <option value="1">Active</option>
       <option value="2">Disabled</option>
     </select>
+    <div *ngIf="endpointForm.controls['State'].invalid && (endpointForm.controls['State'].dirty || endpointForm.controls['State'].touched)" class="alert alert-danger">
+        <div *ngIf="endpointForm.controls['State'].errors.required">
+            State is required.
+        </div>
+      </div>
     
     <!-- Send button -->
     <button mdbBtn type="button" class="btn btn-primary waves-light" 
-        color="primary" mdbWavesEffect 
+        color="primary" mdbWavesEffect  [disabled]="!endpointForm.valid" (click)="addEndpoint()"
         >
       Save
     </button>

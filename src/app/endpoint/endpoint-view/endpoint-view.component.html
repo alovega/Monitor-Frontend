@@ -24,7 +24,7 @@
                     <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">
     
                         <a href=""><mdb-badge primary="true" class="link link1">Update</mdb-badge></a>
-                        <a href=""><mdb-badge danger="true" class="link">Delete</mdb-badge></a>
+                        <a href=""><mdb-badge danger="true" class="link" (click)="delete(el)">Delete</mdb-badge></a>
                     </td>
                     </tr>
                 </tbody>
