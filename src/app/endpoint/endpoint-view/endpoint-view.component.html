@@ -8,7 +8,7 @@
             </div>
         </div>
         
-        <table mdbTable #tableEl="mdbTable" class="z-depth-1" >
+        <table mdbTable #tableEl="mdbTable" class="z-depth-1"  *ngIf="elements.length > 1; else noElements" >
                 <thead class="white-text">
                     <tr>
                     <th *ngFor="let head of headElements" scope="col">{{head}} </th>
@@ -36,4 +36,9 @@
                         </tr>
                     </tfoot>
         </table>
+        <ng-template #noElements>
+            <hm-empty-data header="No Existing System Endpoints" description="New Endpoints  displayed here">
+              <button action-button type="button" mdbBtn size="sm" color="primary">Add Endpoint</button>
+            </hm-empty-data>
+          </ng-template>
 <router-outlet></router-outlet>

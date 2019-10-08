@@ -7,6 +7,7 @@ import { EndpointComponent } from './endpoint.component';
 import { EndpointFormComponent } from './endpoint-form/endpoint-form.component';
 import { EndpointViewComponent } from './endpoint-view/endpoint-view.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { SharedModule } from '../shared/shared.module';
 
 
 @NgModule({
@@ -15,7 +16,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     CommonModule,
     ReactiveFormsModule,
     EndpointRoutingModule,
-    MDBBootstrapModule.forRoot()
+    MDBBootstrapModule.forRoot(),
+    SharedModule
   ]
 })
 export class EndpointModule { }

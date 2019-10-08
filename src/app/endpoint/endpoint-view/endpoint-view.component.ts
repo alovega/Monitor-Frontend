@@ -1,6 +1,8 @@
 import { MdbTablePaginationComponent, MdbTableDirective } from 'angular-bootstrap-md';
+import {json} from 'json';
 import { Component, OnInit, ViewChild, AfterViewInit, ChangeDetectorRef } from '@angular/core';
-import {GetEndpointsService} from './get-endpoints.service'
+import {EndpointService} from '../endpoint.service'
+import {Endpoint} from '../endpoint'
  
 @Component({
   selector: 'app-endpoint-view',
@@ -19,12 +21,12 @@ export class EndpointViewComponent implements OnInit {
   headElements = ['Endpoint', 'Date Created', 'Action'];
 
   constructor(
-    private getEndpoints: GetEndpointsService,
+    private getEndpoints: EndpointService,
     private cdRef: ChangeDetectorRef
     ) {}
 
   ngOnInit() {
-    this.elements = this.getEndpoints.getEndpoint();
+    this.showEndpoints()
     this.mdbTable.setDataSource(this.elements);
     this.elements = this.mdbTable.getDataSource();
     this.previous = this.mdbTable.getDataSource();
@@ -49,5 +51,11 @@ export class EndpointViewComponent implements OnInit {
       this.elements = this.mdbTable.searchLocalDataBy(search);
       this.mdbTable.setDataSource(prev);
     }
+  }
+  showEndpoints() {
+    this.getEndpoints.getEndpoints()
+      .subscribe((data: Endpoint[]) => {
+        this.elements = data
+      });
   }
 }
