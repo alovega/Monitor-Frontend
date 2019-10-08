@@ -13,6 +13,7 @@ import { MaintenanceComponent } from './maintenance/maintenance.component';
 import { UpdateIncidentComponent } from './update-incident/update-incident.component';
 import { CreateIncidentComponent } from './create-incident/create-incident.component';
 import { SharedModule } from '../shared/shared.module';
+import { SearchIncidentsComponent } from './search-incidents/search-incidents.component';
 
 
 @NgModule({
@@ -22,7 +23,8 @@ import { SharedModule } from '../shared/shared.module';
     RealtimeIncidentsComponent,
     MaintenanceComponent,
     UpdateIncidentComponent,
-    CreateIncidentComponent
+    CreateIncidentComponent,
+    SearchIncidentsComponent
   ],
   imports: [
     CommonModule,

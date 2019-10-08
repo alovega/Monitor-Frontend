@@ -128,8 +128,13 @@
                       </div>
                   </div>
                   <div class="col-md-6 time-input">
-                     <hm-time-picker></hm-time-picker>
-                  </div>
+                     <hm-time-picker [parentForm]="scheduledMaintenanceForm" time="startTime"></hm-time-picker>
+                     <div *ngIf="submitted && scheduledMaintenanceForm.controls.startTime.errors">
+                        <div *ngIf="scheduledMaintenanceForm.controls.startTime.errors.required" class="invalid-feedback-inline">
+                            Scheduled start time is required
+                        </div>
+                      </div>
+                    </div>
                 </div>
               </div>
 
@@ -140,7 +145,6 @@
                   <div class="row">
                     <div class="col-md-6 date-input">
                         <hm-date-picker [parentForm]="scheduledMaintenanceForm" submitted={{submitted}} date="endDate"></hm-date-picker> 
-                        
                         <div *ngIf="submitted && scheduledMaintenanceForm.controls.endDate.errors">
                           <div *ngIf="scheduledMaintenanceForm.controls.endDate.errors.required" class="invalid-feedback-inline">
                              Scheduled end date is required
@@ -148,7 +152,7 @@
                         </div>
                     </div>
                     <div class="col-md-6 time-input">
-                       <hm-time-picker></hm-time-picker>
+                       <hm-time-picker [parentForm]="scheduledMaintenanceForm" submitted={{submitted}} time="endTime"></hm-time-picker>
                     </div>
                   </div>
                 </div>

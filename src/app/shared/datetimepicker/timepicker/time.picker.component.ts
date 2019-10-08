@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'hm-time-picker',
@@ -6,7 +7,10 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./time.picker.component.scss']
 })
 export class TimePickerComponent implements OnInit {
-  time = {hour: 13, minute: 30};
+  now = {hour: 13, minute: 30};
+  @Input() parentForm: FormGroup;
+  @Input() submitted: string;
+  @Input() time: string;
   constructor() { }
 
   ngOnInit() {
