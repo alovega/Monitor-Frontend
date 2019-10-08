@@ -1,4 +1,4 @@
-<div *ngIf="incidents.length > 1; else noIncidents">
+<div *ngIf="incidents && incidents.length > 1; else noIncidents">
       <a *ngFor="let incident of incidents" routerLink="/incidents/update/{{incident.incident_id}}" routerLinkActive="active">
         <mdb-card class="open-incident mb-4">
             <mdb-card-body>

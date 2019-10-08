@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import {  FormGroup, FormControl } from '@angular/forms';
+import {  FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'hm-create-incident',
@@ -9,24 +9,42 @@ import {  FormGroup, FormControl } from '@angular/forms';
   styleUrls: ['./create-incident.component.scss']
 })
 export class CreateIncidentComponent implements OnInit {
-  realtimeIncidentForm = new FormGroup ({
-    incidentName: new FormControl(''),
-    incidentStatus: new FormControl('Investigating'),
-    message: new FormControl('')
-  });
-  scheduledMaintenanceForm = new FormGroup ({
-    maintenanceName: new FormControl(''),
-    maintenanceStatus: new FormControl('Scheduled'),
-    message: new FormControl('')
-  });
-  date  =  new  FormControl(new  Date());
-  time = {hour: 13, minute: 30};
-  model;
+  realtimeIncidentForm: FormGroup;
+  scheduledMaintenanceForm: FormGroup;
+  submitted: boolean = false;
+  datePicker: any;
   constructor(
     public router: Router,
-  ) { }
+    private formBuilder: FormBuilder) {
+    this.createRealtimeIncidentForm();
+    this.createScheduledMaintenanceForm();
+   }
 
   ngOnInit() {
+  }
+
+  createRealtimeIncidentForm() {
+    this.realtimeIncidentForm = this.formBuilder.group ({
+      incidentName: ['', Validators.required],
+      incidentStatus: ['Investigating', Validators.required],
+      message: ['', Validators.required]
+    });
+  }
+
+  createScheduledMaintenanceForm() {
+    this.scheduledMaintenanceForm = this.formBuilder.group ({
+      maintenanceName: ['', Validators.required],
+      maintenanceStatus: ['Scheduled', Validators.required],
+      startDate: [this.datePicker, Validators.required],
+      endDate: [this.datePicker, Validators.required],
+      message: ['', Validators.required]
+    });
+  }
+
+  onSubmit() {
+    console.log(`Your form data : ${JSON.stringify(this.scheduledMaintenanceForm.value)}`);
+    // console.log(this.scheduledMaintenanceForm.controls.date.errors.required);
+    this.submitted = true;
   }
 
 }

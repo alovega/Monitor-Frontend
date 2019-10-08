@@ -1,4 +1,4 @@
-<table mdbTable id="incident-list" *ngIf="incidents.length > 1; else noIncidents">
+<table mdbTable id="incident-list" *ngIf="incidents && incidents.length > 1; else noIncidents">
   <tbody>
     <!-- Incident Item -->
     <tr mdbTableCol class="incident-item" *ngFor="let incident of incidents">
