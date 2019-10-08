@@ -1,25 +1,33 @@
-<a href="" routerLink="/incidents/update" routerLinkActive="active">
-  <mdb-card class="open-incident mb-4">
-      <mdb-card-body>
-      <a href="#" class="update-incident-button float-right">
-          <button mdbBtn mdbWavesEffect color="info" size="sm">Update</button>
-      </a>
-      <h5 class="open-incident-title">Data Processing Delays - Reporting Tools Affected</h5>
-      <div class="incident-info">
-          <span class="incident-status" color="info">Investigating</span>
-        <span class="last-update-time"><small>about 1 hour ago (06:37 UTC)</small></span>
-      </div>
-        <div class="affected-systems">
-            <span class="affected-systems-title"><small>Affected System : </small></span> 
-              <div class="system">
-                  Mobile APIs <mdb-icon fas icon="check-circle" class="green-text pr-3"></mdb-icon>
+<div *ngIf="incidents.length > 1; else noIncidents">
+      <a *ngFor="let incident of incidents" routerLink="/incidents/update/{{incident.incident_id}}" routerLinkActive="active">
+        <mdb-card class="open-incident mb-4">
+            <mdb-card-body>
+            <a routerLink="/incidents/update/{{incident.incident_id}}" routerLinkActive="active" class="update-incident-button float-right">
+                <button mdbBtn mdbWavesEffect color="info" size="sm">Update</button>
+            </a>
+            <h5 class="open-incident-title">{{ incident.name }}</h5>
+            <div class="incident-info">
+                <span class="incident-status" color="info">{{ incident.status }}</span>
+              <span class="last-update-time"><small>about 1 hour ago (06:37 UTC)</small></span>
+            </div>
+              <div class="affected-systems">
+                  <span class="affected-systems-title"><small>Affected System : </small></span> 
+                    <div class="system">
+                      {{ incident.affected_system }} 
+                      <mdb-icon fas icon="check-circle" class="green-text pr-3"></mdb-icon>
+                    </div>
               </div>
-        </div>
-      </mdb-card-body>
-  </mdb-card>
-</a>
+            </mdb-card-body>
+        </mdb-card>
+      </a>
+</div>
 
-<a href="" routerLink="/incidents/update" routerLinkActive="active">
+<ng-template #noIncidents>
+  <hm-empty-data header="No open incidents" description="New incidents and scheduled maintenances will be displayed here">
+    <button action-button type="button" mdbBtn size="sm" color="primary">Create new incident</button>
+  </hm-empty-data>
+</ng-template>
+<!-- <a href="" routerLink="/incidents/update" routerLinkActive="active">
   <mdb-card class="open-incident mb-4">
       <mdb-card-body>
       <a href="#" class="update-incident-button float-right" >
@@ -38,4 +46,4 @@
         </div>
       </mdb-card-body>
   </mdb-card>
-</a>
+</a> -->

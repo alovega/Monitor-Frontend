@@ -1,12 +1,12 @@
 <!-- Grid Row -->
-<div class="row wow animate fadeIn" data-wow-delay="0.3s">
+<div class="row wow animate fadeIn" data-wow-delay="0.1s">
     <!-- Grid column -->
     <div class="col-md-1"></div>
 
     <!-- Grid column -->
     <div class="col-md-10">
         <div class="page-header">
-            Data Processing Delays - Reporting Tools Affected
+            {{ incident.name }}
         </div>
         <hr>
         <div class="page-body">
@@ -14,41 +14,45 @@
                 <div class="update-history-header">Update History</div>
                 <mdb-card class="mb-4">
                     <div class="last-update-time"><strong>
-                           <small>1 HOUR AGO (9: 46 UTC)</small>
+                           <small>{{ incident.date_modified }}</small>
                     </strong></div>
                     <div>
-                    <div class="update-status">IN PROGRESS</div>
+                    <div class="update-status">{{ incident.status }}</div>
                     </div>
                     <div class="update-description">
-                        Scheduled maintenance is currently in progress. We will provide updates as necessary.
+                        {{ incident.description }}
                     </div>
                     <div class="affected-systems">
                         <span class="affected-systems-title"><small>Affected System : </small></span> 
                         <div class="system">
-                            Mobile APIs <mdb-icon fas icon="check-circle" class="green-text pr-3"></mdb-icon>
+                            {{ incident.affected_system }} <mdb-icon fas icon="check-circle" class="green-text pr-3"></mdb-icon>
                         </div>
                     </div>
                 </mdb-card>
 
-                <mdb-card class="mb-4">
-                    <div class="last-update-time"><strong>
-                           <small>1 HOUR AGO (9: 46 UTC)</small>
-                    </strong></div>
-                    <div>
-                    <div class="update-status">IN PROGRESS</div>
-                    </div>
-                    <div class="update-description">
-                        Scheduled maintenance is currently in progress. We will provide updates as necessary.
-                    </div>
-                    <div class="affected-systems">
-                        <span class="affected-systems-title"><small>Affected System : </small></span> 
-                        <div class="system">
-                            Mobile APIs <mdb-icon fas icon="check-circle" class="green-text pr-3"></mdb-icon>
+                <div *ngIf="incident.incident_updates.length > 1">
+                    <mdb-card class="mb-4" *ngFor="let incident_update of incident.incident_updates">
+                        <div class="last-update-time">
+                            <strong>
+                            <small>{{ incident_update.date_created }}</small>
+                            </strong>
                         </div>
-                    </div>
-                </mdb-card>
+                        <div>
+                        <div class="update-status">{{ incident_update.status }}</div>
+                        </div>
+                        <div class="update-description">
+                            {{ incident_update.description }}
+                        </div>
+                        <div class="affected-systems">
+                            <span class="affected-systems-title"><small>Affected System : </small></span> 
+                            <div class="system">
+                                {{ incident.affected_system }}<mdb-icon fas icon="check-circle" class="green-text pr-3"></mdb-icon>
+                            </div> 
+                        </div>
+                    </mdb-card>
+                </div>
             </div>
-            <div class="new-update">
+            <div class="new-update" *ngIf="incident.status !== 'Resolved' && incident.status !== 'Completed'; else Closed">
                 <div class="update-history-header">
                     Add new update
                 </div>
@@ -73,7 +77,6 @@
                     </form>
                 </mdb-card>
             </div>
-
             <hr>
             <div class="delete-button">
                 <button mdbBtn mdbWavesEffect class="float-right" color="danger" size="md">Delete Incident</button>

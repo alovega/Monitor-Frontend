@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-
+import { HttpClientModule } from '@angular/common/http';
 
 import { IncidentsRoutingModule } from './incidents-routing.module';
 import { IncidentsComponent } from './incidents.component';
@@ -31,6 +31,7 @@ import { SharedModule } from '../shared/shared.module';
     IncidentsRoutingModule,
     MDBBootstrapModule,
     NgbModule,
+    HttpClientModule,
     SharedModule
   ],
   schemas: [

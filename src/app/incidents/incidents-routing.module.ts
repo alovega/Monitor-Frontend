@@ -32,7 +32,7 @@ const routes: Routes = [
       }
     ]
   },
-  { path: 'update', component: UpdateIncidentComponent },
+  { path: 'update/:incident-id', component: UpdateIncidentComponent },
   { path: 'new/:incident-type', component: CreateIncidentComponent }
 ];
 

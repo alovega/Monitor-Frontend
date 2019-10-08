@@ -1,33 +1,20 @@
-<table mdbTable id="incident-list">
+<table mdbTable id="incident-list" *ngIf="incidents.length > 1; else noIncidents">
   <tbody>
     <!-- Incident Item -->
-    <tr mdbTableCol class="incident-item">
+    <tr mdbTableCol class="incident-item" *ngFor="let incident of incidents">
       <td scope="row">
           <div class="incident-description">
             <div class="action-buttons float-right">
-                <a id="update-p2jg8qhdzs4k" routerLink="/incidents/update" routerLinkActive="active">Update</a>
+                <a id="update-{{incident.incident_id}}" routerLink="/incidents/update/{{incident.incident_id}}" 
+                routerLinkActive="active" *ngIf="incident.status !== 'Completed'; else Open">Update</a>
+                <ng-template #Open>
+                    <a id="update-{{incident.incident_id}}" routerLink="/incidents/update/{{incident.incident_id}}" routerLinkActive="active">View</a>
+                </ng-template>
             </div>
             <strong>
-                <a class="incident-view-link" routerLink="/incidents/update" routerLinkActive="active">[Scheduled] Versioning Upgrade</a></strong><br>
+                <a class="incident-view-link" routerLink="/incidents/update/{{incident.incident_id}}" routerLinkActive="active">[Scheduled] {{ incident.name }}</a></strong><br>
             <div class="last-updated">
-                <small>Beginning <span>4 Oct 2019 (06:37 UTC)</span>
-                </small>
-            </div>
-          </div>
-      </td>      
-    </tr>
-
-    <!-- Incident Item -->
-    <tr mdbTableCol class="incident-item">
-      <td scope="row">
-          <div class="incident-description">
-            <div class="action-buttons float-right">
-                <a id="update-p2jg8qhdzs4k" routerLink="/incidents/update" routerLinkActive="active">View</a>
-            </div>
-            <strong>
-                <a class="incident-view-link" routerLink="/incidents/update" routerLinkActive="active">[Scheduled] Scheduled system upgrade</a></strong><br>
-            <div class="last-updated">
-                <small>Completed 30 Sept 2019 (10:40 UTC)
+                <small>Beginning <span>({{ incident.scheduled_for }})</span>
                 </small>
             </div>
           </div>
@@ -35,6 +22,14 @@
     </tr>
   </tbody>
 </table>
+
+<!-- Zero Scheduled Incidents For the system -->
+<ng-template #noIncidents>
+    <hm-empty-data header="No Scheduled Maintenances" description="You will see all scheduled maintenances here">
+      <button action-button type="button" mdbBtn size="sm" color="primary">New maintenance</button>
+    </hm-empty-data>
+</ng-template>
+
 <div class="pagination-container">
 
 </div>

@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {  FormGroup, FormControl } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
+import { IncidentService } from '../incident.service';
+
+import { Incident } from '../incident';
 
 @Component({
   selector: 'hm-update-incident',
@@ -11,10 +15,24 @@ export class UpdateIncidentComponent implements OnInit {
     incidentStatus: new FormControl('Investigating'),
     message: new FormControl('')
   });
-
-  constructor() { }
+  incidents: Incident[];
+  incident: Incident;
+  constructor(
+    private route: ActivatedRoute,
+    private incidentService: IncidentService
+  ) { }
 
   ngOnInit() {
+    this.showIncident();
   }
 
+  public showIncident(): void {
+    const id = this.route.snapshot.paramMap.get('incident-id');
+    this.incidentService.getIncident(id)
+      .subscribe((data: Incident[]) => {
+        this.incidents = data.filter(incident => incident.incident_id === id);
+        // console.log(this.incidents);
+        this.incident = this.incidents[0];
+      });
+  }
 }
