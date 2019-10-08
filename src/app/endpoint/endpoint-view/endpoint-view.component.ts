@@ -14,7 +14,7 @@ export class EndpointViewComponent implements OnInit {
   @ViewChild(MdbTableDirective, { static: true }) mdbTable: MdbTableDirective;
   firstItemIndex: any;
   lastItemIndex: any;
-  elements: any[];
+  elements: Endpoint[];
   previous: any = [];
 
 

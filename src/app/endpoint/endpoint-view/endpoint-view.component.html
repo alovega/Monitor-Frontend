@@ -6,9 +6,9 @@
             <div class="col-6 col-md-4 d-flex justify-content-end">
                 <button type="button" routerLink="/endpoint-form" mdbBtn color="primary" mdbWavesEffect>Add Endpoint</button>
             </div>
-        </div>
+         </div>
         
-        <table mdbTable #tableEl="mdbTable" class="z-depth-1"  *ngIf="elements.length > 1; else noElements" >
+        <table mdbTable #tableEl="mdbTable" class="z-depth-1">
                 <thead class="white-text">
                     <tr>
                     <th *ngFor="let head of headElements" scope="col">{{head}} </th>
@@ -36,7 +36,7 @@
                         </tr>
                     </tfoot>
         </table>
-        <ng-template #noElements>
+        <ng-template #noelements>
             <hm-empty-data header="No Existing System Endpoints" description="New Endpoints  displayed here">
               <button action-button type="button" mdbBtn size="sm" color="primary">Add Endpoint</button>
             </hm-empty-data>

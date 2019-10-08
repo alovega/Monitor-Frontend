@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
 
@@ -18,6 +18,7 @@ import { SharedModule } from '../shared/shared.module';
     EndpointRoutingModule,
     MDBBootstrapModule.forRoot(),
     SharedModule
-  ]
+  ],
+  schemas:[NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA]
 })
 export class EndpointModule { }
