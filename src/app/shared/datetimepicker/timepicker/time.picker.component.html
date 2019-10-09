@@ -1,1 +1,3 @@
-<ngb-timepicker [(ngModel)]="time"></ngb-timepicker>
+<div [formGroup]="parentForm">
+<ngb-timepicker [formControlName]="time" [(ngModel)]="now"></ngb-timepicker>
+</div>
