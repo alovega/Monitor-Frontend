@@ -44,8 +44,22 @@ export class EndpointService {
       catchError(this.handleError)
     );
   }
-  deleteItem(id):Observable<Endpoint>{
+  public deleteItem(id):Observable<Endpoint>{
     return this.http.delete<Endpoint>(this.endpointUrl + '/' + id, this.httpOptions).pipe(
+      retry(2),
+      catchError(this.handleError)
+    )
+  }
+
+  public getItem(id):Observable<Endpoint>{
+    return this.http.get<Endpoint>(this.endpointUrl + '/' + id).pipe(
+      retry(2),
+      catchError(this.handleError)
+    )
+  }
+
+  public updateItem(id, item): Observable<Endpoint>{
+    return this.http.put<Endpoint>(this.endpointUrl + '/' + id, JSON.stringify(item), this.httpOptions).pipe(
       retry(2),
       catchError(this.handleError)
     )
