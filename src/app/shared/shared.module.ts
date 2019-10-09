@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ChartsModule, WavesModule } from 'angular-bootstrap-md';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { LineGraphComponent } from './graphs/line-graph/line-graph.component';
 import { BarGraphComponent } from './graphs/bar-graph/bar-graph.component';
@@ -12,6 +12,7 @@ import { HorizontalBarChartComponent } from './graphs/horizontal-bar-chart/horiz
 import { RadarChartComponent } from './graphs/radar-chart/radar-chart.component';
 import { DatePickerComponent } from './datetimepicker/datepicker/date.picker.component';
 import { TimePickerComponent } from './datetimepicker/timepicker/time.picker.component';
+import { EmptyDataComponent } from './empty-data/empty-data.component';
 
 
 @NgModule({
@@ -23,14 +24,16 @@ import { TimePickerComponent } from './datetimepicker/timepicker/time.picker.com
     HorizontalBarChartComponent,
     RadarChartComponent,
     DatePickerComponent,
-    TimePickerComponent
+    TimePickerComponent,
+    EmptyDataComponent
   ],
   imports: [
     CommonModule,
     ChartsModule,
     WavesModule,
     NgbModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ],
   exports: [
     LineGraphComponent,
@@ -40,7 +43,8 @@ import { TimePickerComponent } from './datetimepicker/timepicker/time.picker.com
     HorizontalBarChartComponent,
     RadarChartComponent,
     DatePickerComponent,
-    TimePickerComponent
+    TimePickerComponent,
+    EmptyDataComponent
   ]
 })
 export class SharedModule { }
