@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
+import { HttpClientModule } from '@angular/common/http';
 
 import { EscalationRulesRoutingModule } from './escalation-rules-routing.module';
 import { EscalationRulesComponent } from './escalation-rules.component';
@@ -16,7 +17,8 @@ import { UpdateRuleComponent } from './update-rule/update-rule.component';
     EscalationRulesRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    MDBBootstrapModule.forRoot()
+    MDBBootstrapModule.forRoot(),
+    HttpClientModule
   ]
 })
 export class EscalationRulesModule { }

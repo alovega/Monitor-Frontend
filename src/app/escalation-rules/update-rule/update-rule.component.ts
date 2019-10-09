@@ -8,11 +8,15 @@ import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms'
 })
 export class UpdateRuleComponent implements OnInit {
   escalationRuleForm: FormGroup;
-
+  submitted = false;
   constructor(private formBuilder: FormBuilder) { }
 
   ngOnInit() {
     this.createEscalationRulesForm();
+  }
+
+  get form() {
+    return this.escalationRuleForm.controls;
   }
 
   createEscalationRulesForm() {
@@ -21,13 +25,31 @@ export class UpdateRuleComponent implements OnInit {
       ruleDescription: ['', Validators.required],
       nEvents: ['', Validators.required],
       duration: ['', Validators.required],
-      esalationLevel: ['', Validators.required],
+      escalationLevel: ['High', Validators.required],
       eventType: ['Error', Validators.required]
     });
   }
 
   onSubmit() {
-    console.log(this.escalationRuleForm.value);
+    this.submitted = true;
+    // console.log(this.escalationRuleForm.value);
+    if (this.escalationRuleForm.invalid) {
+      console.log('Invalid');
+      return;
+    }
+
+    let formData: any = new FormData();
+    formData.append('name', this.escalationRuleForm.get('ruleName').value);
+    formData.append('description', this.escalationRuleForm.get('ruleDescription').value);
+    formData.append('nth_event', this.escalationRuleForm.get('nEvents').value);
+    formData.append('duration', this.escalationRuleForm.get('duration').value);
+    formData.append('escalation_level', this.escalationRuleForm.get('escalationLevel').value);
+    formData.append('event_type', this.escalationRuleForm.get('eventType').value);
+
+    for (let key of formData.entries()){
+      console.log(key[0] + ', ' + key[1]);
+    }
+    // console.log(formData.getAll());
   }
 
 }

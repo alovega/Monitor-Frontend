@@ -64,7 +64,7 @@
 }
 
 .inline-rule{
-    width: 150px;
+    width: 100px;
     margin: 0px 10px;
 }
 
@@ -72,6 +72,10 @@
     font-size: 13px;
     opacity: 0.7;
     font-weight: 500;
-    margin-bottom: 20px !important;
+    // margin-bottom: 20px !important;
     margin-bottom: 5px;
+}
+
+.invalid-feedback {
+    text-align: left;
 }
