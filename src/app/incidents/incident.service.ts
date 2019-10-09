@@ -22,7 +22,7 @@ export class IncidentService {
     const createIncidentUrl = 'http://127.0.0.1:8000/api/create_incident/';
     formData.append('system', 'Helaplan');
     formData.append('client_id', '3cd49364-721a-4d3f-8bfa-141d93d6a8f7');
-    formData.append('token', 'Y2Y0MGYyMDJkOTg1NmE1OTE3YjliZTMyZWEwMWM1');
+    formData.append('token', 'ZWRkMDIwNDk4MTQ0ODI3N2EzNzM2ZTQ0MTcyYjUx');
 
     for (let key of formData.entries()) {
       console.log(key[0] + ', ' + key[1]);
@@ -53,14 +53,14 @@ export class IncidentService {
       client_id: '3cd49364-721a-4d3f-8bfa-141d93d6a8f7',
       system: 'Helaplan',
       incident_id: '3ec2e845-cf48-41c7-96bc-739342973480',
-      token: 'ODNkNDQyNzJhZmQ1NTdkOWU5NWUzMWFjZDU4NzM2'
+      token: 'ZWRkMDIwNDk4MTQ0ODI3N2EzNzM2ZTQ0MTcyYjUx'
     }).pipe(
       map(incident => incident.data),
       tap(incident => console.log(incident))
     );
   }
 
-  deleteIncident(IncidentId: string): Observable<Incident[]>{
+  deleteIncident(IncidentId: string): Observable<Incident[]> {
     return this.http.get<Incident[]>(this.incidentsUrl).pipe(
 
     );
