@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Location } from '@angular/common';
+import { Incident } from '../incident';
+import { IncidentService } from '../incident.service';
 
 import { AbstractControl, FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 
@@ -14,21 +17,26 @@ export class CreateIncidentComponent implements OnInit {
   submitted = false;
   datePicker: any;
   timePicker: any;
+
   constructor(
     public router: Router,
+    private location: Location,
+    private incidentService: IncidentService,
     private formBuilder: FormBuilder) {
-    this.createRealtimeIncidentForm();
-    this.createScheduledMaintenanceForm();
    }
 
   ngOnInit() {
+    this.createRealtimeIncidentForm();
+    this.createScheduledMaintenanceForm();
   }
 
   createRealtimeIncidentForm() {
     this.realtimeIncidentForm = this.formBuilder.group ({
       incidentName: ['', Validators.required],
       incidentStatus: ['Investigating', Validators.required],
-      message: ['', Validators.required]
+      message: ['', Validators.required],
+      escalationLevel: ['High', Validators.required],
+      priorityLevel: ['1', Validators.required]
     });
   }
 
@@ -56,15 +64,81 @@ export class CreateIncidentComponent implements OnInit {
       endDate: [this.datePicker, Validators.required],
       startTime: [this.timePicker, Validators.required],
       endTime: [this.timePicker, Validators.required],
-      message: ['', Validators.required]
+      message: ['', Validators.required],
+      escalationLevel: ['High', Validators.required],
+      priorityLevel: ['1', Validators.required]
     });
   }
 
-  onSubmit() {
-    console.log(`Your form data : ${JSON.stringify(this.scheduledMaintenanceForm.value)}`);
-    console.log(this.scheduledMaintenanceForm.controls.startTime.value.hour);
-    // console.log(this.scheduledMaintenanceForm.controls.startDate.errors);
+  onSubmitRealtime() {
     this.submitted = true;
+    if (this.realtimeIncidentForm.invalid) {
+      console.log('Invalid');
+      return;
+    }
+
+    let formData: any = new FormData();
+    formData.append('name', this.realtimeIncidentForm.get('incidentName').value);
+    formData.append('state', this.realtimeIncidentForm.get('incidentStatus').value);
+    formData.append('description', this.realtimeIncidentForm.get('message').value);
+    formData.append('escalation_level', this.realtimeIncidentForm.get('escalationLevel').value);
+    formData.append('priority_level', this.realtimeIncidentForm.get('priorityLevel').value);
+    formData.append('incident_type', 'Realtime');
+
+    for (let key of formData.entries()) {
+      console.log(key[0] + ', ' + key[1]);
+    }
+
+    return this.incidentService.createIncident(formData).subscribe(
+      (incident => {
+        if (incident.code === '800.200.001') {
+          this.location.back();
+        }
+      })
+    );
   }
 
+  onSubmitScheduled() {
+    this.submitted = true;
+    if (this.scheduledMaintenanceForm.invalid) {
+      console.log('Invalid');
+      return;
+    }
+
+    let scheduledFor = new Date(
+      this.scheduledMaintenanceForm.controls.startDate.value.year,
+      this.scheduledMaintenanceForm.controls.startDate.value.month - 1,
+      this.scheduledMaintenanceForm.controls.startDate.value.day,
+      this.scheduledMaintenanceForm.controls.startTime.value.hour,
+      this.scheduledMaintenanceForm.controls.startTime.value.minute
+    ).toISOString();
+
+    let scheduledUntil = new Date(
+      this.scheduledMaintenanceForm.controls.endDate.value.year,
+      this.scheduledMaintenanceForm.controls.endDate.value.month - 1,
+      this.scheduledMaintenanceForm.controls.endDate.value.day,
+      this.scheduledMaintenanceForm.controls.endTime.value.hour,
+      this.scheduledMaintenanceForm.controls.endTime.value.minute
+    ).toISOString();
+    // console.log(scheduledFor);
+    // console.log(scheduledUntil);
+
+    let formData: any = new FormData();
+    formData.append('name', this.scheduledMaintenanceForm.get('maintenanceName').value);
+    formData.append('state', this.scheduledMaintenanceForm.get('maintenanceStatus').value);
+    formData.append('description', this.scheduledMaintenanceForm.get('message').value);
+    formData.append('scheduled_for', scheduledFor);
+    formData.append('scheduled_until', scheduledUntil);
+    formData.append('escalation_level', this.scheduledMaintenanceForm.get('escalationLevel').value);
+    formData.append('priority_level', this.scheduledMaintenanceForm.get('priorityLevel').value);
+    formData.append('incident_type', 'Scheduled');
+
+    return this.incidentService.createIncident(formData).subscribe(
+      (incident => {
+        if (incident.code === '800.200.001') {
+          this.location.back();
+        }
+      })
+    );
+  }
 }
