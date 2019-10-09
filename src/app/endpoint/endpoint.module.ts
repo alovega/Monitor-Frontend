@@ -12,7 +12,7 @@ import { EndpointUpdateComponent } from './endpoint-update/endpoint-update.compo
 
 
 @NgModule({
-  declarations: [EndpointComponent, EndpointViewComponent, EndpointFormComponent, EndpointUpdateComponent],
+  declarations: [EndpointComponent, EndpointViewComponent, EndpointFormComponent,EndpointUpdateComponent],
   imports: [
     CommonModule,
     ReactiveFormsModule,
