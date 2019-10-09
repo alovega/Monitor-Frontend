@@ -21,6 +21,7 @@ export class EndpointViewComponent implements OnInit {
     private endpointService: EndpointService,
     private cdRef: ChangeDetectorRef
     ) {
+      this.elements = []
     }
 
   ngOnInit() {

@@ -102,10 +102,10 @@
     },
     {
       "system_id": "3",
-      "name": "Endpoint 67",
-      "description": "Sample Endpoint 67",
+      "name": "Endpoint 66",
+      "description": "Sample Endpoint will be checked later",
       "endpoint": "http://localhost:8000/endpoints/1",
-      "optimal_response_time": "40",
+      "optimal_response_time": "49",
       "endpoint_type": "1",
       "status": "1",
       "date_created": 9,

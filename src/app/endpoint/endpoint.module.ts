@@ -8,10 +8,11 @@ import { EndpointFormComponent } from './endpoint-form/endpoint-form.component';
 import { EndpointViewComponent } from './endpoint-view/endpoint-view.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';
+import { EndpointUpdateComponent } from './endpoint-update/endpoint-update.component';
 
 
 @NgModule({
-  declarations: [EndpointComponent, EndpointViewComponent, EndpointFormComponent],
+  declarations: [EndpointComponent, EndpointViewComponent, EndpointFormComponent, EndpointUpdateComponent],
   imports: [
     CommonModule,
     ReactiveFormsModule,
@@ -19,6 +20,7 @@ import { SharedModule } from '../shared/shared.module';
     MDBBootstrapModule.forRoot(),
     SharedModule
   ],
-  schemas:[NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA]
+  schemas:[NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA],
+  exports: []
 })
 export class EndpointModule { }
