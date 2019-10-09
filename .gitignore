@@ -9,7 +9,6 @@
 
 # dependencies
 /node_modules
-/src/assets/demo-endpoints
 
 # profiling files
 chrome-profiler-events*.json
@@ -46,3 +45,4 @@ testem.log
 .DS_Store
 Thumbs.db
 src/assets/demo-endpoints.json
+src/assets/demo-recipients.json

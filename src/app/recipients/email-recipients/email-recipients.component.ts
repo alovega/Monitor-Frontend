@@ -1,6 +1,6 @@
 import { MdbTablePaginationComponent, MdbTableDirective } from 'angular-bootstrap-md';
+import { RecipientService } from '../recipient.service';
 import { Component, OnInit, ViewChild, AfterViewInit, ChangeDetectorRef } from '@angular/core';
-import {GetRecipientsService} from '../get-recipients.service'
 
 @Component({
   selector: 'app-email-recipients',
@@ -12,16 +12,16 @@ export class EmailRecipientsComponent implements OnInit {
   @ViewChild(MdbTableDirective, { static: true }) mdbTable: MdbTableDirective;
   firstItemIndex: any;
   lastItemIndex: any;
-  elements: any[];
+  elements: any;
   previous: any = [];
   headElements: string[] = [ 'email', 'date-created', 'action'];
 
-  constructor(private getRecipients: GetRecipientsService, private cdRef: ChangeDetectorRef) {
-
+  constructor(private recipientService:RecipientService, private cdRef: ChangeDetectorRef) {
+    this.elements = []
    }
 
    ngOnInit() {
-    this.elements = this.getRecipients.getEmail()
+    this.elements = this.showRecipients()
     this.mdbTable.setDataSource(this.elements);
     this.elements = this.mdbTable.getDataSource();
     this.previous = this.mdbTable.getDataSource();
@@ -47,5 +47,12 @@ export class EmailRecipientsComponent implements OnInit {
       this.mdbTable.setDataSource(prev);
     }
   }
+  showRecipients() {
+    return this.recipientService.getEndpoints()
+       .subscribe((data) => {
+         console.log(data)
+         this.elements = data
+       });
+   }
 }
 
