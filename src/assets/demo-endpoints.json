@@ -88,6 +88,17 @@
       "status": "1",
       "date_created": 9,
       "id": 8
+    },
+    {
+      "system_id": "2",
+      "name": "Sample System2",
+      "description": "This is another sample system",
+      "endpoint": "http://localhost:8000/endpoints",
+      "optimal_response_time": "30",
+      "endpoint_type": "1",
+      "status": "1",
+      "date_created": 9,
+      "id": 9
     }
   ]
 }

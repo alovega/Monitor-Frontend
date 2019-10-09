@@ -49,7 +49,7 @@ onReset() {
 }
 
 addEndpoint() {
-  this.data.date_created = new Date().getDate()
+  this.data.date_created = new Date().getUTCDate()
   
   this.add.addEndpoints(this.data).subscribe(response => {
     this.router.navigate(['endpoint'])
