@@ -14,7 +14,7 @@
                     <th *ngFor="let head of headElements" scope="col">{{head}} </th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody *ngIf="elements.length > 1; else noElements">
                     <tr mdbTableCol *ngFor="let el of elements; let i = index ">
                     <th *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex" scope="row">
                         {{el.name}}
@@ -36,7 +36,7 @@
                         </tr>
                     </tfoot>
         </table>
-        <ng-template #noelements>
+        <ng-template #noElements>
             <hm-empty-data header="No Existing System Endpoints" description="New Endpoints  displayed here">
               <button action-button type="button" mdbBtn size="sm" color="primary">Add Endpoint</button>
             </hm-empty-data>

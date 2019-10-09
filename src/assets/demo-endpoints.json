@@ -87,6 +87,17 @@
       "endpoint_type": "1",
       "status": "1",
       "id": 7
+    },
+    {
+      "system_id": "1",
+      "name": "new Endpoint",
+      "description": "This is a new Endpoint",
+      "endpoint": "Http/127.0.0.1/admin",
+      "optimal_response_time": "0.14",
+      "endpoint_type": "1",
+      "status": "1",
+      "date_created": 9,
+      "id": 8
     }
   ]
 }

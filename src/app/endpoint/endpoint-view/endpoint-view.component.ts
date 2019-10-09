@@ -24,8 +24,7 @@ export class EndpointViewComponent implements OnInit {
     }
 
   ngOnInit() {
-    this.showEndpoints()
-    this.elements
+    this.elements = this.showEndpoints()
     this.mdbTable.setDataSource(this.elements);
     this.elements = this.mdbTable.getDataSource();
     this.previous = this.mdbTable.getDataSource();
@@ -39,7 +38,7 @@ export class EndpointViewComponent implements OnInit {
   }
 
   showEndpoints() {
-    this.endpointService.getEndpoints()
+   return this.endpointService.getEndpoints()
       .subscribe((data) => {
         console.log(data)
         this.elements = data

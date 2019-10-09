@@ -8,6 +8,6 @@ export class Endpoint {
     optimal_response_time: number;
     endpoint_type: string;
     status: string;
-    date_created?: string;
+    date_created?: number;
     date_modified?: string;
 }
