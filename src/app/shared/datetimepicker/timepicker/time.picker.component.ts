@@ -7,7 +7,8 @@ import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms'
   styleUrls: ['./time.picker.component.scss']
 })
 export class TimePickerComponent implements OnInit {
-  now = {hour: 13, minute: 30};
+  now = new Date();
+  currentTime = {hour: this.now.getHours(), minute: this.now.getMinutes()};
   @Input() parentForm: FormGroup;
   @Input() submitted: string;
   @Input() time: string;

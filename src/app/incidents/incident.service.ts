@@ -10,14 +10,27 @@ import { Incident } from './incident';
 })
 export class IncidentService {
   incidentsUrl = 'assets/demo-incidents.json';
-  httpHeaders = new HttpHeaders({
-    'Content-Type' : 'application/json',
-    'Cache-Control': 'no-cache'
-  });
+  httpOptions = {
+    headers: new HttpHeaders({'Content-Type' : 'application/x-www-form-urlencoded'})
+  };
 
   constructor(
     private http: HttpClient
   ) { }
+
+  createIncident(formData: any): Observable<Incident> {
+    const createIncidentUrl = 'http://127.0.0.1:8000/api/create_incident/';
+    formData.append('system', 'Helaplan');
+    formData.append('client_id', '3cd49364-721a-4d3f-8bfa-141d93d6a8f7');
+    formData.append('token', 'Y2Y0MGYyMDJkOTg1NmE1OTE3YjliZTMyZWEwMWM1');
+
+    for (let key of formData.entries()) {
+      console.log(key[0] + ', ' + key[1]);
+    }
+    return this.http.post<Incident>(createIncidentUrl, formData).pipe(
+      tap(incident => console.log(incident))
+    );
+  }
 
   getIncidents(): Observable<Incident[]> {
     return this.http.get<Incident[]>(this.incidentsUrl);
@@ -50,6 +63,6 @@ export class IncidentService {
   deleteIncident(IncidentId: string): Observable<Incident[]>{
     return this.http.get<Incident[]>(this.incidentsUrl).pipe(
 
-    )
+    );
   }
 }
