@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {  FormGroup, FormControl } from '@angular/forms';
+import {  FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { IncidentService } from '../incident.service';
 
@@ -10,27 +10,30 @@ import { Incident } from '../incident';
   templateUrl: './update-incident.component.html',
   styleUrls: ['./update-incident.component.scss']
 })
-export class UpdateIncidentComponent implements OnInit{
-  updateIncidentForm = new FormGroup ({
-    incidentStatus: new FormControl('Investigating'),
-    message: new FormControl('')
-  });
+export class UpdateIncidentComponent implements OnInit {
+  updateIncidentForm: FormGroup;
+  submitted = false;
   incidents: Incident[];
   incident: Incident;
+  initialPriorityLevel: string;
+
   constructor(
     private route: ActivatedRoute,
-    private incidentService: IncidentService
+    private incidentService: IncidentService,
+    private formBuilder: FormBuilder
   ) { }
 
-  // ngOnChanges() {
-  //   console.log("Changes");
-  //   this.showIncident();
-  // }
-
   ngOnInit() {
-    console.log("Init");
     this.showIncident();
+    this.createUpdateIncidentForm();
+  }
 
+  createUpdateIncidentForm() {
+    this.updateIncidentForm = this.formBuilder.group({
+      incidentStatus: ['Investigating', Validators.required],
+      message: ['', Validators.required],
+      priorityLevel: ['', Validators.required]
+    });
   }
 
   // public showIncident(): void {
@@ -43,13 +46,37 @@ export class UpdateIncidentComponent implements OnInit{
   //     });
   // }
 
-
   public showIncident(): void {
     const id = this.route.snapshot.paramMap.get('incident-id');
     this.incidentService.getIncident(id).subscribe(
       (data: Incident) => {
         this.incident = data;
+        this.updateIncidentForm.patchValue({
+          priorityLevel: this.incident.priority_level.toString(),
+          incidentStatus: this.incident.status.toString(),
+        });
+        // this.initialPriorityLevel = this.incident.priority_level.toString();
+        console.log(this.incident.priority_level.toString());
       }
     );
+  }
+
+  onSubmit() {
+    this.submitted = true;
+    console.log(this.updateIncidentForm.value);
+
+    if (this.updateIncidentForm.invalid) {
+      console.log('Invalid');
+      return ;
+    }
+
+    // let formData: any = new FormData();
+    // formData.append('name', this.realtimeIncidentForm.get('incidentName').value);
+    // formData.append('state', this.realtimeIncidentForm.get('incidentStatus').value);
+    // formData.append('description', this.realtimeIncidentForm.get('message').value);
+    // formData.append('escalation_level', this.realtimeIncidentForm.get('escalationLevel').value);
+    // formData.append('priority_level', this.realtimeIncidentForm.get('priorityLevel').value);
+    // formData.append('incident_type', 'Realtime');
+
   }
 }
