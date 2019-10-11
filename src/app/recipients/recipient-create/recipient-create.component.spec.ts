@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { RecipientFormComponent } from './recipient-form.component';
+import { RecipientFormComponent } from './recipient-create.component';
 
 describe('RecipientFormComponent', () => {
   let component: RecipientFormComponent;
