@@ -27,7 +27,7 @@ export class EscalationRuleService {
   getRules(): Observable<EscalationRule[]> {
     const getRulesUrl = 'http://127.0.0.1:8000/api/get_rules/';
     return this.http.post<EscalationRule[]>(getRulesUrl, this.httpOptions).pipe(
-
+      
     );
   }
 
