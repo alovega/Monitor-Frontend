@@ -5,6 +5,7 @@ import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 
 import { Incident } from './incident';
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -22,7 +23,7 @@ export class IncidentService {
     const createIncidentUrl = 'http://127.0.0.1:8000/api/create_incident/';
     formData.append('system', 'Helaplan');
     formData.append('client_id', '3cd49364-721a-4d3f-8bfa-141d93d6a8f7');
-    formData.append('token', 'ZWRkMDIwNDk4MTQ0ODI3N2EzNzM2ZTQ0MTcyYjUx');
+    formData.append('token', 'ZTllM2RkMjBiY2VkZDJkZTE5ZTlkODAyM2JhNmZl');
 
     for (let key of formData.entries()) {
       console.log(key[0] + ', ' + key[1]);
@@ -33,29 +34,79 @@ export class IncidentService {
   }
 
   getIncidents(): Observable<Incident[]> {
+    return this.http.post<any>('http://127.0.0.1:8000/api/get_incidents/', {
+      client_id: '3cd49364-721a-4d3f-8bfa-141d93d6a8f7',
+      system: 'Helaplan',
+      token: 'MmUzOGQ5ODVlMDNlZjA0YTdiY2NmNjI4NTM1MjRj',
+      start_date: '2019-9-1',
+      end_date: '2019-10-10'
+    }).pipe(
+      map(incidents => incidents.data),
+      tap(incidents => console.log(incidents))
+    );
+  }
+
+  getOpenIncidents(): Observable<Incident[]> {
+    return this.http.post<any>('http://127.0.0.1:8000/api/get_incidents/', {
+      client_id: '3cd49364-721a-4d3f-8bfa-141d93d6a8f7',
+      system: 'Helaplan',
+      token: 'MmUzOGQ5ODVlMDNlZjA0YTdiY2NmNjI4NTM1MjRj',
+      start_date: '2019-9-1',
+      end_date: '2019-10-10'
+    }).pipe(
+      map(incidents => incidents.data.filter(incident => incident.status !== 'Resolved' && 'Completed')),
+      tap(incidents => console.log(incidents))
+    );
+  }
+
+  searchIncidents(searchKey: string): Observable<any> {
     return this.http.get<Incident[]>(this.incidentsUrl);
   }
 
-  searchIncidents(searchKey: string): Observable<Incident[]> {
-    return this.http.get<Incident[]>(this.incidentsUrl);
-  }
-
-  getRealtimeIncidents(): Observable<Incident[]> {
-    return this.http.get<Incident[]>(this.incidentsUrl);
+  getRealtimeIncidents(): Observable<any> {
+    return this.http.post<any>('http://127.0.0.1:8000/api/get_incidents/', {
+      client_id: '3cd49364-721a-4d3f-8bfa-141d93d6a8f7',
+      system: 'Helaplan',
+      token: 'MmUzOGQ5ODVlMDNlZjA0YTdiY2NmNjI4NTM1MjRj',
+      start_date: '2019-12-12',
+      end_date: '2019-10-10'
+    }).pipe(
+      map(incidents => incidents.data.filter(incident => incident.type === 'Realtime')),
+      tap(incidents => console.log(incidents))
+    );
   }
 
   getScheduledIncidents(): Observable<Incident[]> {
-    return this.http.get<Incident[]>(this.incidentsUrl);
+    return this.http.post<any>('http://127.0.0.1:8000/api/get_incidents/', {
+      client_id: '3cd49364-721a-4d3f-8bfa-141d93d6a8f7',
+      system: 'Helaplan',
+      token: 'MmUzOGQ5ODVlMDNlZjA0YTdiY2NmNjI4NTM1MjRj',
+      start_date: '2019-11-10',
+      end_date: '2019-10-11'
+    }).pipe(
+      map(incidents => incidents.data.filter(incident => incident.type === 'Scheduled')),
+      tap(incidents => console.log(incidents))
+    );
   }
 
   getIncident(incidentId: string): Observable<any> {
     return this.http.post<any>('http://127.0.0.1:8000/api/get_incident/', {
       client_id: '3cd49364-721a-4d3f-8bfa-141d93d6a8f7',
       system: 'Helaplan',
-      incident_id: '3ec2e845-cf48-41c7-96bc-739342973480',
-      token: 'ZWRkMDIwNDk4MTQ0ODI3N2EzNzM2ZTQ0MTcyYjUx'
+      incident_id: incidentId,
+      token: 'MmUzOGQ5ODVlMDNlZjA0YTdiY2NmNjI4NTM1MjRj'
     }).pipe(
       map(incident => incident.data),
+      tap(incident => console.log(incident))
+    );
+  }
+
+  updateIncident(formData: any): Observable<any> {
+    formData.append('system', 'Helaplan');
+    formData.append('client_id', '3cd49364-721a-4d3f-8bfa-141d93d6a8f7');
+    formData.append('token', 'MmUzOGQ5ODVlMDNlZjA0YTdiY2NmNjI4NTM1MjRj');
+    return this.http.post<any>('http://127.0.0.1:8000/api/update_incident/', formData).pipe(
+      map(incident => incident),
       tap(incident => console.log(incident))
     );
   }

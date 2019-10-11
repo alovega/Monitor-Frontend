@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {  FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { IncidentService } from '../incident.service';
+import { Location } from '@angular/common';
 
+import { IncidentService } from '../incident.service';
 import { Incident } from '../incident';
 
 @Component({
@@ -16,12 +17,16 @@ export class UpdateIncidentComponent implements OnInit {
   incidents: Incident[];
   incident: Incident;
   initialPriorityLevel: string;
+  id: string;
 
   constructor(
     private route: ActivatedRoute,
     private incidentService: IncidentService,
-    private formBuilder: FormBuilder
-  ) { }
+    private formBuilder: FormBuilder,
+    private location: Location
+  ) {
+    this.id = this.route.snapshot.paramMap.get('incident-id');
+  }
 
   ngOnInit() {
     this.showIncident();
@@ -47,8 +52,7 @@ export class UpdateIncidentComponent implements OnInit {
   // }
 
   public showIncident(): void {
-    const id = this.route.snapshot.paramMap.get('incident-id');
-    this.incidentService.getIncident(id).subscribe(
+    this.incidentService.getIncident(this.id).subscribe(
       (data: Incident) => {
         this.incident = data;
         this.updateIncidentForm.patchValue({
@@ -70,13 +74,24 @@ export class UpdateIncidentComponent implements OnInit {
       return ;
     }
 
-    // let formData: any = new FormData();
-    // formData.append('name', this.realtimeIncidentForm.get('incidentName').value);
-    // formData.append('state', this.realtimeIncidentForm.get('incidentStatus').value);
-    // formData.append('description', this.realtimeIncidentForm.get('message').value);
-    // formData.append('escalation_level', this.realtimeIncidentForm.get('escalationLevel').value);
-    // formData.append('priority_level', this.realtimeIncidentForm.get('priorityLevel').value);
-    // formData.append('incident_type', 'Realtime');
+    let formData: any = new FormData();
+    formData.append('name', 'Increased Errors in HP');
+    formData.append('state', this.updateIncidentForm.get('incidentStatus').value);
+    formData.append('description', this.updateIncidentForm.get('message').value);
+    formData.append('escalation_level', 'High');
+    formData.append('priority_level', this.updateIncidentForm.get('priorityLevel').value);
+    formData.append('incident_id', this.incident.incident_id);
 
+    for (let key of formData.entries()) {
+      console.log(key[0] + ', ' + key[1]);
+    }
+
+    return this.incidentService.updateIncident(formData).subscribe(
+      (incident => {
+        if (incident.code === '800.200.001') {
+          this.location.back();
+        }
+      })
+    );
   }
 }
