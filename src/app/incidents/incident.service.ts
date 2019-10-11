@@ -54,7 +54,9 @@ export class IncidentService {
       start_date: '2019-9-1',
       end_date: '2019-10-15'
     }).pipe(
-      map(incidents => incidents.data.filter(incident => incident.status !== 'Resolved' && 'Completed')),
+      map(incidents => incidents.data.filter(incident => incident.status !== 'Completed').filter(
+        incident => incident.status !== 'Resolved'
+      )),
       tap(incidents => console.log(incidents))
     );
   }
