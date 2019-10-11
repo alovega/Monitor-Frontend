@@ -5,7 +5,7 @@
 
     <!-- Grid column -->
     <div class="col-md-10">
-        <div class="page-header" *ngIf="incident.status !== 'Resolved' && 'Completed'">
+        <div class="page-header" *ngIf="incident.status !== 'Resolved' && incident.status !== 'Completed'; else Open">
             {{ incident.name }}
             <div class="priority-level">
                 <form [formGroup]="updateIncidentForm" (ngSubmit)="onSubmit()" class="text-center" >
@@ -19,9 +19,11 @@
                     </select>
                 </form>
             </div>
-        <div class="clearfix"></div>
-
+            <div class="clearfix"></div>
         </div>
+        <ng-template #Open>
+            <div class="page-header">{{ incident.name }}</div>
+        </ng-template>
         <div class="clearfix"></div>
         <hr>
         <div class="page-body">

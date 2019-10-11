@@ -84,7 +84,7 @@ export class IncidentService {
       system: 'Helaplan',
       token: 'MmUzOGQ5ODVlMDNlZjA0YTdiY2NmNjI4NTM1MjRj',
       start_date: '2019-9-1',
-      end_date: '2019-10-11'
+      end_date: '2019-10-15'
     }).pipe(
       map(incidents => incidents.data.filter(incident => incident.type === 'Scheduled')),
       tap(incidents => console.log(incidents))

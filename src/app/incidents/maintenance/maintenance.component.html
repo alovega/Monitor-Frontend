@@ -13,7 +13,19 @@
                 </ng-template>
             </div>
             <strong>
-                <a class="incident-view-link" routerLink="/incidents/update/{{incident.incident_id}}" routerLinkActive="active">[Scheduled] {{ incident.name }}</a></strong><br>
+                <a class="incident-view-link" routerLink="/incidents/update/{{incident.incident_id}}" routerLinkActive="active">
+                  <span *ngIf="incident.incident_updates.length; else noUpdates">
+                      <span *ngFor="let update of incident.incident_updates; let i=index">
+                        <span *ngIf="update.status && i<1" class="incident-status" color="info">[{{ update.status }}] {{ incident.name }}</span>
+                      </span> 
+                  </span>               
+                  <ng-template #noUpdates>
+                    <span class="incident-status" color="info">
+                        [{{ incident.status }}] {{ incident.name }}
+                    </span>
+                  </ng-template>
+                </a>
+            </strong><br>
             <div class="last-updated">
                 <small>Beginning <span>({{ incident.scheduled_for | date: 'MMM d, y, h:mm:ss a'}})</span>
                 </small>
