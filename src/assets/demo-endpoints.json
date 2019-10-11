@@ -248,6 +248,82 @@
       "date_created": "2018-05-24T09:49:31 -03:00",
       "date_modified": "2018-02-14T10:00:28 -03:00"
     }
+  ],
+  "systems":[
+    {
+      "id": 1,
+      "name": "system 1",
+      "description": "system 1",
+      "status": "Active",
+      "date_created": "2018-05-24T09:49:31 -03:00",
+      "date_modified": "2018-02-14T10:00:28 -03:00"
+    },
+    {
+      "id": 2,
+      "name": "system 2",
+      "description": "system 2",
+      "status": "Active",
+      "date_created": "2018-05-24T09:49:31 -03:00",
+      "date_modified": "2018-02-14T10:00:28 -03:00"
+    },
+    {
+      "id": 3,
+      "system": "system 3",
+      "description": "system 3",
+      "status": "Active",
+      "date_created": "2018-05-24T09:49:31 -03:00",
+      "date_modified": "2018-02-14T10:00:28 -03:00"
+    },
+    {
+      "id": 4,
+      "name": "system 4",
+      "description": "system 4",
+      "status": "Active",
+      "date_created": "2018-05-24T09:49:31 -03:00",
+      "date_modified": "2018-02-14T10:00:28 -03:00"
+    },
+    {
+      "id": 5,
+      "name": "system 5",
+      "description": "system 5",
+      "status": "Active",
+      "date_created": "2018-05-24T09:49:31 -03:00",
+      "date_modified": "2018-02-14T10:00:28 -03:00"
+    }
+
+  ],
+  "levels":[
+    {
+      "id": 1,
+      "name": "Level 1",
+      "description": "Lowest Escalation Level",
+      "status": "Active"
+    },
+    {
+      "id": 2,
+      "name": "Level 2",
+      "description": "Low Escalation level",
+      "status": "Active"
+    },
+    {
+      "id": 3,
+      "name": "Level 3",
+      "description": "Mid level escalation Level",
+      "status": "Active"
+    },
+    {
+      "id": 4,
+      "name": "Level 4",
+      "description": "High level escalation level",
+      "status": "Active"
+    },
+    {
+      "id": 5,
+      "name": "Level 5",
+      "description": "Highest level of escalation level",
+      "status": "Active"
+    }
+
   ]
 }
 

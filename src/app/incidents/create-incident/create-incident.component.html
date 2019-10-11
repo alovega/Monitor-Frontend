@@ -8,14 +8,16 @@
     <div class="page-header">
       Create Realtime Incident
       <div class="priority-level">
+        <form [formGroup]="realtimeIncidentForm" (ngSubmit)="onSubmitRealtime()" class="text-center">
         <label for="">Priority Level</label>
-        <select class="browser-default custom-select">
+        <select formControlName="priorityLevel" [ngClass]="{ 'is-invalid': submitted && realtimeIncidentForm.controls.priorityLevel.errors }" class="browser-default custom-select">
           <option selected value="1">Level 1</option>
           <option value="2">Level 2</option>
           <option value="3">Level 3</option>
           <option value="4">Level 4</option>
-          <option value="4">Level 5</option>
+          <option value="5">Level 5</option>
         </select>
+        </form>
       </div>
     </div>
     <div class="clearfix"></div>
@@ -23,7 +25,7 @@
     <div class="page-body">
       <div class="new-incident">
         <mdb-card>
-          <form [formGroup]="realtimeIncidentForm" (ngSubmit)="onSubmit()" class="text-center">
+          <form [formGroup]="realtimeIncidentForm" (ngSubmit)="onSubmitRealtime()" class="text-center">
             <!-- Name -->
             <div class="form-group mb-4">
               <label class="form-label">Incident Name</label>
@@ -39,18 +41,35 @@
             </div>
 
             <!-- Incident Status -->
-            <div class="form-group mb-4">
-              <label class="form-label">Incident status</label>
-              <select formControlName="incidentStatus" [ngClass]="{ 'is-invalid': submitted && realtimeIncidentForm.controls.incidentStatus.errors}"
-              class="grey lighten-5 browser-default custom-select form-control">
-                <option selected value="Investigating">Investigating</option>
-                <option value="Identified">Identified</option>
-                <option value="Monitoring">Monitoring</option>
-                <option value="Resolved">Resolved</option>
-              </select>
-              <!-- Incident status validation errors -->
-              <div *ngIf="submitted && realtimeIncidentForm.controls.incidentStatus.errors" class="invalid-feedback">
-                  <div *ngIf="realtimeIncidentForm.controls.incidentStatus.errors.required">Incident status is required</div>
+            <div class="form-group mb-4 row">
+              <div class="col-md-6">
+                  <label class="form-label">Incident status</label>
+                  <select formControlName="incidentStatus" [ngClass]="{ 'is-invalid': submitted && realtimeIncidentForm.controls.incidentStatus.errors}"
+                  class="grey lighten-5 browser-default custom-select form-control">
+                    <option selected value="Investigating">Investigating</option>
+                    <option value="Identified">Identified</option>
+                    <option value="Monitoring">Monitoring</option>
+                    <option value="Resolved">Resolved</option>
+                  </select>
+                  <!-- Incident status validation errors -->
+                  <div *ngIf="submitted && realtimeIncidentForm.controls.incidentStatus.errors" class="invalid-feedback">
+                      <div *ngIf="realtimeIncidentForm.controls.incidentStatus.errors.required">Incident status is required</div>
+                  </div>
+              </div>
+
+              <div class="col-md-6">
+                <!-- Escalation Levels -->
+                <label class="form-label">Escalation level</label>
+                <select formControlName="escalationLevel" class="grey lighten-5 browser-default custom-select form-control inline-rule"
+                [ngClass]="{ 'is-invalid': submitted && realtimeIncidentForm.controls.escalationLevel.errors }">
+                    <option selected value="High">High</option>
+                    <option value="Medium">Medium</option>
+                    <option value="Low">Low</option>
+                </select>
+                  <!-- Escalation level validation errors -->
+                  <div *ngIf="submitted && realtimeIncidentForm.controls.escalationLevel.errors" class="invalid-feedback">
+                      <div *ngIf="realtimeIncidentForm.controls.escalationLevel.errors.required">Escalation Level is required</div>
+                  </div>
               </div>
             </div>
 
@@ -81,14 +100,16 @@
     <div class="page-header">
       Create Scheduled Maintenance
       <div class="priority-level">
+        <form [formGroup]="scheduledMaintenanceForm" (ngSubmit)="onSubmitScheduled()" class="text-center">
         <label for="">Priority Level</label>
-        <select class="browser-default custom-select">
+        <select formControlName="priorityLevel" [ngClass]="{ 'is-invalid': submitted && scheduledMaintenanceForm.controls.priorityLevel.errors }" class="browser-default custom-select">
           <option selected value="1">Level 1</option>
           <option value="2">Level 2</option>
           <option value="3">Level 3</option>
           <option value="4">Level 4</option>
-          <option value="4">Level 5</option>
+          <option value="5">Level 5</option>
         </select>
+        </form>
       </div>
     </div>
     <div class="clearfix"></div>
@@ -96,7 +117,7 @@
     <div class="page-body">
       <div class="new-incident">
         <div class="card">
-          <form [formGroup]="scheduledMaintenanceForm" (ngSubmit)="onSubmit()" class="text-center">
+          <form [formGroup]="scheduledMaintenanceForm" (ngSubmit)="onSubmitScheduled()" class="text-center">
             <div class="form-group mb-4">
               <!-- Name -->
               <label class="form-label">Maintenance Name</label>
@@ -158,22 +179,41 @@
                 </div>
             </div>
 
-            <div class="form-group mb-4">
-              <!-- Maintenance Status -->
-              <label class="form-label">Maintenance status</label>
-              <select formControlName="maintenanceStatus" class="grey lighten-5 browser-default custom-select form-control"
-                [ngClass]="{'is-invalid': submitted && scheduledMaintenanceForm.controls.maintenanceStatus.errors}">
-                <option value="Scheduled">Scheduled</option>
-                <option value="InProgress">In Progress</option>
-                <option value="Completed">Completed</option>
-              </select>
+            <div class="form-group mb-4 row">
 
-              <!-- Maintenance Status Validation Errors -->
-              <div *ngIf="submitted && scheduledMaintenanceForm.controls.maintenanceStatus.errors" class="invalid-feedback">
-                <div *ngIf="scheduledMaintenanceForm.controls.maintenanceStatus.errors.required">
-                    Maintenance status is required
-                </div>
-              </div>  
+              <div class="col-md-6">
+                <!-- Maintenance Status -->
+                <label class="form-label">Maintenance status</label>
+                <select formControlName="maintenanceStatus" class="grey lighten-5 browser-default custom-select form-control"
+                  [ngClass]="{'is-invalid': submitted && scheduledMaintenanceForm.controls.maintenanceStatus.errors}">
+                  <option value="Scheduled">Scheduled</option>
+                  <option value="InProgress">In Progress</option>
+                  <option value="Completed">Completed</option>
+                </select>
+
+                <!-- Maintenance Status Validation Errors -->
+                <div *ngIf="submitted && scheduledMaintenanceForm.controls.maintenanceStatus.errors" class="invalid-feedback">
+                  <div *ngIf="scheduledMaintenanceForm.controls.maintenanceStatus.errors.required">
+                      Maintenance status is required
+                  </div>
+                </div> 
+              </div>
+
+              <div class="col-md-6">
+                <!-- Escalation Levels -->
+                <label class="form-label">Escalation level</label>
+                <select formControlName="escalationLevel" class="grey lighten-5 browser-default custom-select form-control inline-rule"
+                [ngClass]="{ 'is-invalid': submitted && scheduledMaintenanceForm.controls.escalationLevel.errors }">
+                    <option selected value="High">High</option>
+                    <option value="Medium">Medium</option>
+                    <option value="Low">Low</option>
+                </select>
+                  <!-- Escalation level validation errors -->
+                  <div *ngIf="submitted && scheduledMaintenanceForm.controls.escalationLevel.errors" class="invalid-feedback">
+                      <div *ngIf="scheduledMaintenanceForm.controls.escalationLevel.errors.required">Escalation Level is required</div>
+                  </div>
+                  {{ scheduledMaintenanceForm.controls.escalationLevel.errors | json}}
+              </div>
             </div>
 
             <div class="form-group mb-4">
