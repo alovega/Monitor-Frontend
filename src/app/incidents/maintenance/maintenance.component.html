@@ -1,6 +1,5 @@
 <div class="full-page">
 <table mdbTable id="incident-list" *ngIf="(incidents$ | async).length > 0; else noIncidents">
-  {{ incidents }}
   <tbody>
     <!-- Incident Item -->
     <tr mdbTableCol class="incident-item" *ngFor="let incident of incidents$ | async">

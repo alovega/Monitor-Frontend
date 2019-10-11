@@ -13,9 +13,10 @@
                 </ng-template>
             </div>
             <strong>
-                <a class="incident-view-link"routerLink="/incidents/update/{{incident.incident_id}}" routerLinkActive="active">
+                <a class="incident-view-link" routerLink="/incidents/update/{{incident.incident_id}}" routerLinkActive="active">
                 {{ incident.name }}
-                </a></strong><br>
+                </a>
+            </strong><br>
             <div class="last-updated">
                 <small>Last updated <span class="ago">on <span>{{ incident.date_modified | date: 'MMM d, y, h:mm:ss a' }}</span>. 
                 </span>

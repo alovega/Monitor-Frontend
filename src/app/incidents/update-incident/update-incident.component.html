@@ -8,7 +8,7 @@
         <div class="page-header">
             {{ incident.name }}
             <div class="priority-level">
-                <form [formGroup]="updateIncidentForm" (ngSubmit)="onSubmit()" class="text-center">
+                <form [formGroup]="updateIncidentForm" (ngSubmit)="onSubmit()" class="text-center" *ngIf="incident.status !== 'Resolved' && 'Completed'">
                     <label for="">Priority Level</label>
                     <select formControlName="priorityLevel" (ngModel)="initialPriorityLevel" [ngClass]="{ 'is-invalid': submitted && updateIncidentForm.controls.priorityLevel.errors }" class="browser-default custom-select">
                     <option selected value="1">Level 1</option>
@@ -47,22 +47,22 @@
                     </mdb-card>
                 </div>
                 <mdb-card class="mb-4">
-                        <div class="last-update-time"><strong>
-                               <small>{{ incident.date_modified  | date: 'MMMM d, y' }}</small>
-                        </strong></div>
-                        <div>
-                        <div class="update-status">{{ incident.status }}</div>
+                    <div class="last-update-time"><strong>
+                        <small>{{ incident.date_modified  | date: 'MMMM d, y' }}</small>
+                    </strong></div>
+                    <div>
+                    <div class="update-status">{{ incident.status }}</div>
+                    </div>
+                    <div class="update-description">
+                        {{ incident.description }}
+                    </div>
+                    <div class="affected-systems">
+                        <span class="affected-systems-title"><small>Affected System : </small></span> 
+                        <div class="system">
+                            {{ incident.affected_system }} <mdb-icon fas icon="check-circle" class="green-text pr-3"></mdb-icon>
                         </div>
-                        <div class="update-description">
-                            {{ incident.description }}
-                        </div>
-                        <div class="affected-systems">
-                            <span class="affected-systems-title"><small>Affected System : </small></span> 
-                            <div class="system">
-                                {{ incident.affected_system }} <mdb-icon fas icon="check-circle" class="green-text pr-3"></mdb-icon>
-                            </div>
-                        </div>
-                    </mdb-card>
+                    </div>
+                </mdb-card>
             </div>
             <div class="new-update" *ngIf="incident.status !== 'Resolved' && incident.status !== 'Completed'">
                 <div class="update-history-header">

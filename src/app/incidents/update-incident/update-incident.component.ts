@@ -75,7 +75,7 @@ export class UpdateIncidentComponent implements OnInit {
     }
 
     let formData: any = new FormData();
-    formData.append('name', 'Increased Errors in HP');
+    formData.append('name', this.incident.name);
     formData.append('state', this.updateIncidentForm.get('incidentStatus').value);
     formData.append('description', this.updateIncidentForm.get('message').value);
     formData.append('escalation_level', 'High');

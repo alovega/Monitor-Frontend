@@ -23,7 +23,7 @@ export class IncidentService {
     const createIncidentUrl = 'http://127.0.0.1:8000/api/create_incident/';
     formData.append('system', 'Helaplan');
     formData.append('client_id', '3cd49364-721a-4d3f-8bfa-141d93d6a8f7');
-    formData.append('token', 'ZTllM2RkMjBiY2VkZDJkZTE5ZTlkODAyM2JhNmZl');
+    formData.append('token', 'MmUzOGQ5ODVlMDNlZjA0YTdiY2NmNjI4NTM1MjRj');
 
     for (let key of formData.entries()) {
       console.log(key[0] + ', ' + key[1]);
@@ -39,7 +39,7 @@ export class IncidentService {
       system: 'Helaplan',
       token: 'MmUzOGQ5ODVlMDNlZjA0YTdiY2NmNjI4NTM1MjRj',
       start_date: '2019-9-1',
-      end_date: '2019-10-10'
+      end_date: '2019-10-15'
     }).pipe(
       map(incidents => incidents.data),
       tap(incidents => console.log(incidents))
@@ -52,7 +52,7 @@ export class IncidentService {
       system: 'Helaplan',
       token: 'MmUzOGQ5ODVlMDNlZjA0YTdiY2NmNjI4NTM1MjRj',
       start_date: '2019-9-1',
-      end_date: '2019-10-10'
+      end_date: '2019-10-15'
     }).pipe(
       map(incidents => incidents.data.filter(incident => incident.status !== 'Resolved' && 'Completed')),
       tap(incidents => console.log(incidents))
@@ -68,8 +68,8 @@ export class IncidentService {
       client_id: '3cd49364-721a-4d3f-8bfa-141d93d6a8f7',
       system: 'Helaplan',
       token: 'MmUzOGQ5ODVlMDNlZjA0YTdiY2NmNjI4NTM1MjRj',
-      start_date: '2019-12-12',
-      end_date: '2019-10-10'
+      start_date: '2019-9-1',
+      end_date: '2019-10-15'
     }).pipe(
       map(incidents => incidents.data.filter(incident => incident.type === 'Realtime')),
       tap(incidents => console.log(incidents))
@@ -81,7 +81,7 @@ export class IncidentService {
       client_id: '3cd49364-721a-4d3f-8bfa-141d93d6a8f7',
       system: 'Helaplan',
       token: 'MmUzOGQ5ODVlMDNlZjA0YTdiY2NmNjI4NTM1MjRj',
-      start_date: '2019-11-10',
+      start_date: '2019-9-1',
       end_date: '2019-10-11'
     }).pipe(
       map(incidents => incidents.data.filter(incident => incident.type === 'Scheduled')),
