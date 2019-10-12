@@ -14,10 +14,12 @@ const routes: Routes = [
   { path: 'orders', loadChildren: () => import('./orders/orders.module').then(m => m.OrdersModule) },
   { path: 'users', loadChildren: () => import('./users/users.module').then(m => m.UsersModule) },
   { path: 'rules', loadChildren: () => import('./escalation-rules/escalation-rules.module').then(m => m.EscalationRulesModule) },
-  { path: 'incidents', loadChildren: () => import('./incidents/incidents.module').then(m => m.IncidentsModule) },
+  // { path: 'incidents', loadChildren: () => import('./incidents/incidents.module').then(m => m.IncidentsModule) },
   { path: 'recipients', loadChildren: () => import('./recipients/recipients.module').then(m => m.RecipientsModule) },
   { path: 'notifications', loadChildren: () => import('./notifications/notifications.module').then(m => m.NotificationsModule) },
+  { path: 'system', loadChildren: () => import('./systems/systems.module').then(m => m.SystemsModule) },
   { path: '**', component: PagenotfoundComponent },
+
 ];
 
 @NgModule({
