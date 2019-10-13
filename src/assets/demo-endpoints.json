@@ -302,6 +302,16 @@
       "status": "active",
       "date_created": "Fri, 11 Oct 2019 12:43:19 GMT",
       "id": 20
+    },
+    {
+      "email": "ekaky.ek@gmail.com",
+      "phone_number": "0725354624",
+      "user": "1",
+      "escalation_level": "Level 5",
+      "notification_type": "Email",
+      "status": "active",
+      "date_created": "Sun, 13 Oct 2019 10:59:11 GMT",
+      "id": 21
     }
   ],
   "systems": [
@@ -396,6 +406,98 @@
       "name": "Email and SMS",
       "description": "Should recieve both sms and email notification",
       "status": "Active"
+    }
+  ],
+  "notifications":[
+    {
+      "name": "This sample email",
+      "date_created": "2019-09-30T10:13:51 -03:00",
+      "status": "sent",
+      "notification_type":"Email"
+    },
+    {
+      "name": "this sample SMS 2",
+      "date_created": "2019-09-30T10:13:51 -03:00",
+      "status": "sent",
+      "notification_type":"SMS"
+    },
+    {
+      "name": "this sample email 3",
+      "date_created": "2019-09-30T10:13:51 -03:00",
+      "status": "sent",
+      "notification_type":"Email"
+    },
+    {
+      "name": "this sample SMS 4",
+      "date_created": "2019-09-30T10:13:51 -03:00",
+      "status": "sent",
+      "notification_type":"SMS"
+    },
+    {
+      "name": "this sample email 5",
+      "date_created": "2019-09-30T10:13:51 -03:00",
+      "status": "sent",
+      "notification_type":"Email"
+    },
+    {
+      "name": "this sample Sms 6",
+      "date_created": "2019-09-30T10:13:51 -03:00",
+      "status": "sent",
+      "notification_type":"SMS"
+    },
+    {
+      "name": "this sample email 7",
+      "date_created": "2019-09-30T10:13:51 -03:00",
+      "status": "sent",
+      "notification_type":"Email"
+    },
+    {
+      "name": "this sample SMS 8",
+      "date_created": "2019-09-30T10:13:51 -03:00",
+      "status": "sent",
+      "notification_type":"SMS"
+    },
+    {
+      "name": "this sample email 9",
+      "date_created": "2019-09-30T10:13:51 -03:00",
+      "status": "sent",
+      "notification_type":"Email"
+    },
+    {
+      "name": "this sample SMS 10",
+      "date_created": "2019-09-30T10:13:51 -03:00",
+      "status": "sent",
+      "notification_type":"SMS"
+    },
+    {
+      "name": "this sample email 11",
+      "date_created": "2019-09-30T10:13:51 -03:00",
+      "status": "sent",
+      "notification_type":"Email"
+    },
+    {
+      "name": "this sample SMS 12",
+      "date_created": "2019-09-30T10:13:51 -03:00",
+      "status": "sent",
+      "notification_type":"SMS"
+    },
+    {
+      "name": "this sample email 13",
+      "date_created": "2019-09-30T10:13:51 -03:00",
+      "status": "sent",
+      "notification_type":"Email"
+    },
+    {
+      "name": "this sample SMS 14",
+      "date_created": "2019-09-30T10:13:51 -03:00",
+      "status": "sent",
+      "notification_type":"SMS"
+    },
+    {
+      "name": "this sample Sms 15",
+      "date_created": "2019-09-30T10:13:51 -03:00",
+      "status": "sent",
+      "notification_type":"SMS"
     }
   ]
 }
