@@ -12,8 +12,8 @@ import { FooterComponent } from './layout/footer/footer.component';
 import { TopNavComponent } from './layout/navigation/top-nav/top-nav.component';
 import { SideNavComponent } from './layout/navigation/side-nav/side-nav.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { EndpointModule } from './endpoint/endpoint.module';
-import { RecipientsModule } from './recipients/recipients.module';
+// import { EndpointModule } from './endpoint/endpoint.module';
+// import { RecipientsModule } from './recipients/recipients.module';
 
 @NgModule({
   declarations: [
@@ -25,8 +25,8 @@ import { RecipientsModule } from './recipients/recipients.module';
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyBBCMBffWFPoWuR8mMDe56nDKI4A9mf55k'
     }),
-    EndpointModule,
-    RecipientsModule,
+    // EndpointModule,
+    // RecipientsModule,
     HttpClientModule,
     AppRoutingModule,
     DashboardModule,

@@ -31,6 +31,11 @@ export class IncidentsComponent implements OnInit {
   }
 
   ngOnInit() {
+    let currentSystem = JSON.parse(localStorage.getItem('currentSystem'));
+    console.log(currentSystem.id);
+    if (this.systemId !== currentSystem.id) {
+      this.router.navigate(['/errors']);
+    }
     // console.log(this.router.url === '/system/' + this.systemId + '/incidents/maintenance');
     // this.incidents$ = this.searchTerms.pipe(
     //   debounceTime(300),

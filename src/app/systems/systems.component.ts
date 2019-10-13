@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { SystemService } from './system.service';
+import { SystemService } from '../shared/system.service';
 
 @Component({
   selector: 'hm-systems',

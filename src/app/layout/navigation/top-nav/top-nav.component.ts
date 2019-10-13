@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { SystemService } from '../../../systems/system.service';
+import { SystemService } from '../../../shared/system.service';
 
 @Component({
   selector: 'hm-top-nav',
@@ -16,9 +16,9 @@ export class TopNavComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.systems = this.systemService.getSystems();
-    console.log(this.systems);
-    this.currentSystem = localStorage.getitem('currentSystem');
+    this.systemService.getSystems().subscribe(
+      (result => this.systems = result)
+    );
+    this.currentSystem = localStorage.getItem('currentSystem');
   }
-
 }

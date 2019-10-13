@@ -18,6 +18,11 @@ const routes: Routes = [
         component: OpenIncidentsComponent
       },
       {
+        path: '',
+        pathMatch: 'full',
+        redirectTo: 'open'
+      },
+      {
         path: 'realtime',
         component: RealtimeIncidentsComponent
       },

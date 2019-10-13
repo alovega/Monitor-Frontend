@@ -9,24 +9,17 @@
         <!-- Left -->
         <ul class="navbar-nav mr-auto">
           <li class="nav-item">
-            <select name="" id="" class="dropdown-toggle nav-link">
-              <option class="dropdown-item" value="">sa</option>
-              <option class="dropdown-item" value="">sf</option>
-              <option class="dropdown-item" value="">sf</option>
-              <option class="dropdown-item" value="">sf</option>
-              <option class="dropdown-item" value="">sf</option>
-            </select>
-            <!-- <div class="dropdown" mdbDropdown *ngIf="(systems | async).length">
+            <div class="dropdown" mdbDropdown *ngIf="systems">
               <a mdbDropdownToggle color="primary" class="dropdown-toggle nav-link waves-light"
                 mdbWavesEffect>dsf
               </a>
               <div class="dropdown-menu dropdown-primary">
-                <a class="dropdown-item" href="#" *ngFor="let system of systems | async">{{ system.name }}</a>
+                <a class="dropdown-item" href="#" *ngFor="let system of systems">{{ system.name }}</a>
                 <a class="dropdown-item" href="#">sads</a>
                 <a class="dropdown-item" href="#">System 4</a>
                 <a class="dropdown-item" href="#"> + Add System</a>
               </div>
-            </div> -->
+            </div>
           </li>
         </ul>
 

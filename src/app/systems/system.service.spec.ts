@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { SystemService } from './system.service';
+import { SystemService } from '../shared/system.service';
 
 describe('SystemService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));

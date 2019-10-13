@@ -14,6 +14,7 @@ import { DatePickerComponent } from './datetimepicker/datepicker/date.picker.com
 import { TimePickerComponent } from './datetimepicker/timepicker/time.picker.component';
 import { EmptyDataComponent } from './empty-data/empty-data.component';
 
+import { SystemService } from './system.service';
 
 @NgModule({
   declarations: [
@@ -45,6 +46,7 @@ import { EmptyDataComponent } from './empty-data/empty-data.component';
     DatePickerComponent,
     TimePickerComponent,
     EmptyDataComponent
-  ]
+  ],
+  providers: [SystemService]
 })
 export class SharedModule { }

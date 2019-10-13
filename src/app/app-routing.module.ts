@@ -6,7 +6,7 @@ import { IncidentsComponent } from './incidents/incidents.component';
 import { OpenIncidentsComponent } from './incidents/open-incidents/open-incidents.component';
 
 const routes: Routes = [
-  {path: '', pathMatch: 'full', redirectTo: 'dashboard'},
+  {path: '', pathMatch: 'full', redirectTo: 'system'},
   { path: 'profile', loadChildren: () => import('./profile/profile.module').then(m => m.ProfileModule) },
   { path: 'tables', loadChildren: () => import('./tables/tables.module').then(m => m.TablesModule) },
   { path: 'dashboard', component: DashboardComponent},
