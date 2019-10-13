@@ -55,5 +55,11 @@ export class EmailRecipientsComponent implements OnInit {
          this.elements = data.filter(data => data.notification_type === 'Email')
        });
    }
+
+   delete(item){
+    this.recipientService.deleteItem(item.id).subscribe(response => {
+      this.showRecipients();
+    })
+  }
 }
 

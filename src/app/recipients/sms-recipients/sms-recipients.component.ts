@@ -54,5 +54,11 @@ export class SmsRecipientsComponent implements OnInit {
          this.elements = data.filter(data => data.notification_type === 'SMS')
        });
    }
+
+   delete(item){
+    this.recipientService.deleteItem(item.id).subscribe(response => {
+      this.showRecipients();
+    })
+  }
   
 }
