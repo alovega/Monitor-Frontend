@@ -5,6 +5,7 @@ import { RecipientsComponent } from './recipients.component';
 import { RecipientFormComponent } from './recipient-create/recipient-create.component';
 import { EmailRecipientsComponent } from './email-recipients/email-recipients.component';
 import { SmsRecipientsComponent } from './sms-recipients/sms-recipients.component';
+import { RecipientUpdateComponent } from './recipient-update/recipient-update.component';
 
 const routes: Routes = [{ path: '', component: RecipientsComponent, 
 children: [
@@ -18,8 +19,12 @@ children: [
         component: EmailRecipientsComponent
       },
       {
-        path: 'recipient-form',
+        path: 'recipient-create',
         component: RecipientFormComponent
+      },
+      {
+        path: 'recipient-update',
+        component: RecipientUpdateComponent
       },
       {
         path: 'sms-recipient',

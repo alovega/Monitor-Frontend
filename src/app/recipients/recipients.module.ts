@@ -9,10 +9,11 @@ import { RecipientsComponent } from './recipients.component';
 import { RecipientFormComponent } from './recipient-create/recipient-create.component';
 import { EmailRecipientsComponent } from './email-recipients/email-recipients.component';
 import { SmsRecipientsComponent } from './sms-recipients/sms-recipients.component';
+import { RecipientUpdateComponent } from './recipient-update/recipient-update.component';
 
 
 @NgModule({
-  declarations: [RecipientsComponent, RecipientFormComponent, EmailRecipientsComponent, SmsRecipientsComponent],
+  declarations: [RecipientsComponent, RecipientFormComponent, EmailRecipientsComponent, SmsRecipientsComponent, RecipientUpdateComponent],
   imports: [
     CommonModule,
     ReactiveFormsModule,
@@ -20,6 +21,6 @@ import { SmsRecipientsComponent } from './sms-recipients/sms-recipients.componen
     MatTableModule,
     MDBBootstrapModule.forRoot()
   ],
-  exports: [RecipientFormComponent, EmailRecipientsComponent, SmsRecipientsComponent]
+  exports: [RecipientFormComponent, EmailRecipientsComponent, SmsRecipientsComponent, RecipientUpdateComponent]
 })
 export class RecipientsModule { }

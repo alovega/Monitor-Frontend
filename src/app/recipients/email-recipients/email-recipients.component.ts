@@ -1,6 +1,7 @@
 import { MdbTablePaginationComponent, MdbTableDirective } from 'angular-bootstrap-md';
 import { RecipientService } from '../recipient.service';
 import { Component, OnInit, ViewChild, AfterViewInit, ChangeDetectorRef } from '@angular/core';
+import { Recipient } from '../recipient';
 
 @Component({
   selector: 'app-email-recipients',
@@ -49,9 +50,9 @@ export class EmailRecipientsComponent implements OnInit {
   }
   showRecipients() {
     return this.recipientService.getEndpoints()
-       .subscribe((data) => {
+       .subscribe((data:Recipient[]) => {
          console.log(data)
-         this.elements = data
+         this.elements = data.filter(data => data.notification_type === 'Email')
        });
    }
 }

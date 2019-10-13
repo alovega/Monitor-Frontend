@@ -1,26 +1,27 @@
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import {RecipientService} from '../recipient.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import {Recipient} from '../recipient';
 import { of } from 'rxjs';
 import { EscalationLevel } from 'src/app/shared/models/escalation-level';
 import { NotificationType } from 'src/app/shared/models/notification-type';
- 
-@Component({
-  selector: 'app-recipient-form',
-  templateUrl: './recipient-create.component.html',
-  styleUrls: ['./recipient-create.component.scss']
-})
-export class RecipientFormComponent implements OnInit {
 
-  recipientForm:FormGroup;
+@Component({
+  selector: 'hm-recipient-update',
+  templateUrl: './recipient-update.component.html',
+  styleUrls: ['./recipient-update.component.scss']
+})
+export class RecipientUpdateComponent implements OnInit {
+  updateForm:FormGroup;
+  id:number;
   submitted:boolean = false;
   recipient:Recipient
   EscalationLevels:EscalationLevel[]
   NotificationTypes:NotificationType[]
 
-  constructor(private fb: FormBuilder, private recipientService:RecipientService, public router: Router) {
+  constructor(private fb: FormBuilder, private recipientService:RecipientService, public router: Router,
+    public activatedRoute: ActivatedRoute,) {
     this.createForm()
     this.recipient = new Recipient()
     of(this.getEscalationLevels()).subscribe((data:any) => {
@@ -36,12 +37,17 @@ export class RecipientFormComponent implements OnInit {
   ngOnInit() {
     this.getEscalationLevels()
     this.getNotificationTypes()
+    this.id = this.activatedRoute.snapshot.params["id"];
+    console.log(this.id)
+    this.recipientService.getItem(this.id).subscribe(response => {
+      console.log(response);
+      this.recipient = response
+  })
   }
   createForm(){
-    this.recipientForm = this.fb.group({
+    this.updateForm = this.fb.group({
         Email: ['', [Validators.required, Validators.email]],
         PhoneNumber: ['', [Validators.required, Validators.minLength(10)]],
-        User: ['', Validators.required],
         NotificationType: ['', Validators.required],
         EscalationLevel:['', Validators.required],
         State: ['', Validators.required]
@@ -60,23 +66,23 @@ export class RecipientFormComponent implements OnInit {
       this.NotificationTypes = data
     })
   }
-  get f() { return this.recipientForm.controls; }
+  get f() { return this.updateForm.controls; }
   onSubmit() {
     this.submitted = true;
 
     // stop here if form is invalid
-    if (this.recipientForm.invalid) {
+    if (this.updateForm.invalid) {
         return;
     }
   }
-
-  addRecipient() {
-    this.recipient.date_created = new Date(Date.now()).toUTCString()
-
-    console.log(this.recipientForm.value)
-    
-    this.recipientService.addEndpoints(this.recipient).subscribe(response => {
-      this.router.navigate(['recipients'])
-    });
+  onReset() {
+    this.submitted = false;
+    this.updateForm.reset();
+  }
+  update() {
+    this.recipient.date_modified = new Date(Date.now()).toUTCString()
+    this.recipientService.updateItem(this.id, this.recipient).subscribe(response => {
+      this.router.navigate(['recipient']);
+    })
   }
 }

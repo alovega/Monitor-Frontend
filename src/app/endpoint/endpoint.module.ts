@@ -4,7 +4,7 @@ import { MDBBootstrapModule } from 'angular-bootstrap-md';
 
 import { EndpointRoutingModule } from './endpoint-routing.module';
 import { EndpointComponent } from './endpoint.component';
-import { EndpointFormComponent } from './endpoint-form/endpoint-form.component';
+import { EndpointFormComponent } from './endpoint-create/endpoint-create.component';
 import { EndpointViewComponent } from './endpoint-view/endpoint-view.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';

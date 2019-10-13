@@ -4,13 +4,15 @@ import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http
 import { catchError, tap, retry} from 'rxjs/operators';
 import { System } from './models/system';
 import { EscalationLevel } from './models/escalation-level';
+import { NotificationType } from './models/notification-type';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SharedService {
   systemUrl = 'http://localhost:8000/systems';
-  levelUrl = 'http://localhost:8000/levels'
+  levelUrl = 'http://localhost:8000/levels';
+  notificationTypeUrl = 'http://localhost:8000/notification-type';
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
@@ -34,17 +36,25 @@ handleError(error: HttpErrorResponse) {
     'Something bad happened; please try again later.');
 };
 
-public getSystems(): Observable<System> {
+public getSystems(){
 
-  return this.http.get<System>(this.systemUrl).pipe(
+  return this.http.get<System[]>(this.systemUrl).pipe(
     retry(2),
     catchError(this.handleError)
   );
 }
 
-public getEscalationLevels(): Observable<EscalationLevel> {
+public getEscalationLevels(){
 
-  return this.http.get<EscalationLevel>(this.levelUrl).pipe(
+  return this.http.get<EscalationLevel[]>(this.levelUrl).pipe(
+    retry(2),
+    catchError(this.handleError)
+  );
+}
+
+public getNotificationTypes(){
+
+  return this.http.get<NotificationType[]>(this.notificationTypeUrl).pipe(
     retry(2),
     catchError(this.handleError)
   );

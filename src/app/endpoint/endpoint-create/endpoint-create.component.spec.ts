@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { EndpointFormComponent } from './endpoint-form.component';
+import { EndpointFormComponent } from './endpoint-create.component';
 
 describe('EndpointFormComponent', () => {
   let component: EndpointFormComponent;

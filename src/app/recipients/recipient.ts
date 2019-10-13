@@ -4,7 +4,10 @@ export class Recipient {
     phone_number: string;
     system_id:string;
     status:string;
-    date_created?: Date;
-    date_modified?: Date;
+    escalation_level:string;
+    notification_type:string;
+    user:string;
+    date_created?: String;
+    date_modified?: String;
 }
 

@@ -119,6 +119,7 @@
       "phone_number": "07ZSSSSSS",
       "system_id": "5d9aeb7e4fd126e267a125b9",
       "status": "Active",
+      "notification_type": "SMS",
       "date_created": "2018-05-24T09:49:31 -03:00",
       "date_modified": "2018-02-14T10:00:28 -03:00"
     },
@@ -128,6 +129,7 @@
       "phone_number": "07xxxxxxx",
       "system_id": "5d9aeb7e4fd126e267a125b9",
       "status": "Active",
+      "notification_type": "Email",
       "date_created": "2018-05-24T09:49:31 -03:00",
       "date_modified": "2018-02-14T10:00:28 -03:00"
     },
@@ -137,6 +139,7 @@
       "phone_number": "07xxxxxxx",
       "system_id": "5d9aeb7e4fd126e267a125b9",
       "status": "Active",
+      "notification_type": "SMS",
       "date_created": "2018-05-24T09:49:31 -03:00",
       "date_modified": "2018-02-14T10:00:28 -03:00"
     },
@@ -146,6 +149,7 @@
       "phone_number": "07xxxxxxx",
       "system_id": "5d9aeb7e4fd126e267a125b9",
       "status": "Active",
+      "notification_type": "Email",
       "date_created": "2018-05-24T09:49:31 -03:00",
       "date_modified": "2018-02-14T10:00:28 -03:00"
     },
@@ -155,6 +159,7 @@
       "phone_number": "07xxxxxxx",
       "system_id": "5d9aeb7e4fd126e267a125b9",
       "status": "Active",
+      "notification_type": "SMS",
       "date_created": "2018-05-24T09:49:31 -03:00",
       "date_modified": "2018-02-14T10:00:28 -03:00"
     },
@@ -164,6 +169,7 @@
       "phone_number": "07xxxxxxx",
       "system_id": "5d9aeb7e4fd126e267a125b9",
       "status": "Active",
+      "notification_type": "Email",
       "date_created": "2018-05-24T09:49:31 -03:00",
       "date_modified": "2018-02-14T10:00:28 -03:00"
     },
@@ -173,6 +179,7 @@
       "phone_number": "07xxxxxxx",
       "system_id": "5d9aeb7e4fd126e267a125b9",
       "status": "Active",
+      "notification_type": "SMS",
       "date_created": "2018-05-24T09:49:31 -03:00",
       "date_modified": "2018-02-14T10:00:28 -03:00"
     },
@@ -182,6 +189,7 @@
       "phone_number": "07xxxxxxx",
       "system_id": "5d9aeb7e4fd126e267a125b9",
       "status": "Active",
+      "notification_type": "Email",
       "date_created": "2018-05-24T09:49:31 -03:00",
       "date_modified": "2018-02-14T10:00:28 -03:00"
     },
@@ -191,6 +199,7 @@
       "phone_number": "07xxxxxxx",
       "system_id": "5d9aeb7e4fd126e267a125b9",
       "status": "Active",
+      "notification_type": "SMS",
       "date_created": "2018-05-24T09:49:31 -03:00",
       "date_modified": "2018-02-14T10:00:28 -03:00"
     },
@@ -200,6 +209,7 @@
       "phone_number": "07xxxxxxx",
       "system_id": "5d9aeb7e4fd126e267a125b9",
       "status": "Active",
+      "notification_type": "Email",
       "date_created": "2018-05-24T09:49:31 -03:00",
       "date_modified": "2018-02-14T10:00:28 -03:00"
     },
@@ -209,6 +219,7 @@
       "phone_number": "07xxxxxxx",
       "system_id": "5d9aeb7e4fd126e267a125b9",
       "status": "Active",
+      "notification_type": "SMS",
       "date_created": "2018-05-24T09:49:31 -03:00",
       "date_modified": "2018-02-14T10:00:28 -03:00"
     },
@@ -218,6 +229,7 @@
       "phone_number": "07xxxxxxx",
       "system_id": "5d9aeb7e4fd126e267a125b9",
       "status": "Active",
+      "notification_type": "Email",
       "date_created": "2018-05-24T09:49:31 -03:00",
       "date_modified": "2018-02-14T10:00:28 -03:00"
     },
@@ -227,6 +239,7 @@
       "phone_number": "07xxxxxxx",
       "system_id": "5d9aeb7e4fd126e267a125b9",
       "status": "Active",
+      "notification_type": "SMS",
       "date_created": "2018-05-24T09:49:31 -03:00",
       "date_modified": "2018-02-14T10:00:28 -03:00"
     },
@@ -236,6 +249,7 @@
       "phone_number": "07xxxxxxx",
       "system_id": "5d9aeb7e4fd126e267a125b9",
       "status": "Active",
+      "notification_type": "Email",
       "date_created": "2018-05-24T09:49:31 -03:00",
       "date_modified": "2018-02-14T10:00:28 -03:00"
     },
@@ -245,11 +259,62 @@
       "phone_number": "07xxxxxxx",
       "system_id": "5d9aeb7e4fd126e267a125b9",
       "status": "Active",
+      "notification_type": "SMS",
       "date_created": "2018-05-24T09:49:31 -03:00",
       "date_modified": "2018-02-14T10:00:28 -03:00"
+    },
+    {
+      "email": "alovegakevin@gmail.com",
+      "phone_number": "07171316934",
+      "user": "2",
+      "escalation_level": "1",
+      "notification_type": "1",
+      "status": "1",
+      "date_created": "Fri, 11 Oct 2019 12:31:31 GMT",
+      "id": 16
+    },
+    {
+      "email": "kevin.alovega@yahoo.com",
+      "phone_number": "07171316934",
+      "user": "2",
+      "escalation_level": "Level 2",
+      "notification_type": "Email",
+      "status": "active",
+      "date_created": "Fri, 11 Oct 2019 12:33:50 GMT",
+      "id": 17
+    },
+    {
+      "email": "alovegakevin@gmail.com",
+      "phone_number": "07171316934",
+      "user": "2",
+      "escalation_level": "Level 5",
+      "notification_type": "Email",
+      "status": "active",
+      "date_created": "10/11/2019",
+      "id": 18
+    },
+    {
+      "email": "mercynjeri@gmail.com",
+      "phone_number": "0718741751",
+      "user": "1",
+      "escalation_level": "Level 2",
+      "notification_type": "Email",
+      "status": "active",
+      "date_created": "Mon, 11 Apr 2011 10:20:30 GMT",
+      "id": 19
+    },
+    {
+      "email": "timothytrevalyn@yahoo.com",
+      "phone_number": "07xxxxxxxx",
+      "user": "1",
+      "escalation_level": "Level 3",
+      "notification_type": "SMS",
+      "status": "active",
+      "date_created": "Fri, 11 Oct 2019 12:43:19 GMT",
+      "id": 20
     }
   ],
-  "systems":[
+  "systems": [
     {
       "id": 1,
       "name": "system 1",
@@ -290,9 +355,8 @@
       "date_created": "2018-05-24T09:49:31 -03:00",
       "date_modified": "2018-02-14T10:00:28 -03:00"
     }
-
   ],
-  "levels":[
+  "levels": [
     {
       "id": 1,
       "name": "Level 1",
@@ -323,7 +387,25 @@
       "description": "Highest level of escalation level",
       "status": "Active"
     }
-
+  ],
+  "notification-type": [
+    {
+      "id": 1,
+      "name": "Email",
+      "description": "should recieve Email notification",
+      "status": "Active"
+    },
+    {
+      "id": 2,
+      "name": "SMS",
+      "description": "Should Recieve Sms notification",
+      "status": "Active"
+    },
+    {
+      "id": 3,
+      "name": "Email and SMS",
+      "description": "Should recieve both sms and email notification",
+      "status": "Active"
+    }
   ]
 }
-

@@ -51,7 +51,7 @@ export class SmsRecipientsComponent implements OnInit {
     return this.recipientService.getEndpoints()
        .subscribe((data) => {
          console.log(data)
-         this.elements = data
+         this.elements = data.filter(data => data.notification_type === 'SMS')
        });
    }
   

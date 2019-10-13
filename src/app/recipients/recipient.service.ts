@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
-import { Observable,throwError } from 'rxjs';
+import { SharedService } from '../shared/shared.service';
+import { Observable,throwError, from } from 'rxjs';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { catchError, tap, retry} from 'rxjs/operators';
 import{ Recipient } from './recipient';
+import { EscalationLevel } from '../shared/models/escalation-level';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +14,7 @@ export class RecipientService {
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
-constructor(private http: HttpClient) { }
+constructor(private http: HttpClient, private sharedService:SharedService) { }
 
 // Handle API errors
 handleError(error: HttpErrorResponse) {
@@ -30,9 +32,9 @@ handleError(error: HttpErrorResponse) {
   return throwError(
     'Something bad happened; please try again later.');
 };
-public getEndpoints(): Observable<Recipient> {
+public getEndpoints(): Observable<Recipient[]> {
 
-  return this.http.get<Recipient>(this.endpointUrl).pipe(
+  return this.http.get<Recipient[]>(this.endpointUrl).pipe(
     retry(2),
     catchError(this.handleError)
   );
@@ -62,5 +64,11 @@ public updateItem(id, item): Observable<Recipient>{
     retry(2),
     catchError(this.handleError)
   )
+}
+public getLevels(){
+  return this.sharedService.getEscalationLevels()
+}
+public getNotificationType(){
+  return this.sharedService.getNotificationTypes()
 }
 }
