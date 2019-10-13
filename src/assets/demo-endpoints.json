@@ -284,16 +284,6 @@
       "id": 17
     },
     {
-      "email": "alovegakevin@gmail.com",
-      "phone_number": "07171316934",
-      "user": "2",
-      "escalation_level": "Level 5",
-      "notification_type": "Email",
-      "status": "active",
-      "date_created": "10/11/2019",
-      "id": 18
-    },
-    {
       "email": "mercynjeri@gmail.com",
       "phone_number": "0718741751",
       "user": "1",

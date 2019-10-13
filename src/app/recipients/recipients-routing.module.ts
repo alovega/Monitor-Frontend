@@ -23,7 +23,7 @@ children: [
         component: RecipientFormComponent
       },
       {
-        path: 'recipient-update',
+        path: 'recipient-update/:id',
         component: RecipientUpdateComponent
       },
       {
