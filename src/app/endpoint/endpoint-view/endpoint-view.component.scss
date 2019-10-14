@@ -14,15 +14,11 @@ p{
     color: green;
     opacity: 0.4;
 }
-table.table a {
-    margin: 0px;
-    padding-left: 10px;
-    color: #212529;
-}
 
-.link{
-    padding: 10px;
-}
+table.table a{
+    margin:0;
+    margin-right: 5px;
+  }
 
 .btn{
     box-shadow: 0 2px 5px 0 rgba(0,0,0,.16), 0 2px 10px 0 rgba(0,0,0,.12);
@@ -35,5 +31,5 @@ table.table a {
     cursor: pointer;
     white-space: normal;
     word-wrap: break-word;
-    color: inherit;
+    color: white;
 }

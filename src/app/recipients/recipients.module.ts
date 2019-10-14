@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -21,6 +21,7 @@ import { RecipientUpdateComponent } from './recipient-update/recipient-update.co
     MatTableModule,
     MDBBootstrapModule.forRoot()
   ],
+  schemas:[CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
   exports: [RecipientFormComponent, EmailRecipientsComponent, SmsRecipientsComponent, RecipientUpdateComponent]
 })
 export class RecipientsModule { }

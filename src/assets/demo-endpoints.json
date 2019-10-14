@@ -99,17 +99,6 @@
       "status": "1",
       "date_created": 9,
       "id": 9
-    },
-    {
-      "system_id": "3",
-      "name": "Endpoint 66",
-      "description": "Sample Endpoint will be checked later",
-      "endpoint": "http://localhost:8000/endpoints/1",
-      "optimal_response_time": "49",
-      "endpoint_type": "1",
-      "status": "1",
-      "date_created": 9,
-      "id": 10
     }
   ],
   "recipients": [
@@ -408,111 +397,111 @@
       "status": "Active"
     }
   ],
-  "notifications":[
+  "notifications": [
     {
       "id": 1,
       "description": "This sample email",
       "date_created": "2019-09-30T10:13:51 -03:00",
       "status": "sent",
-      "notification_type":"Email"
+      "notification_type": "Email"
     },
     {
       "id": 2,
       "description": "this sample SMS 2",
       "date_created": "2019-09-30T10:13:51 -03:00",
       "status": "sent",
-      "notification_type":"SMS"
+      "notification_type": "SMS"
     },
     {
       "id": 3,
       "description": "this sample email 3",
       "date_created": "2019-09-30T10:13:51 -03:00",
       "status": "sent",
-      "notification_type":"Email"
+      "notification_type": "Email"
     },
     {
       "id": 4,
       "description": "this sample SMS 4",
       "date_created": "2019-09-30T10:13:51 -03:00",
       "status": "sent",
-      "notification_type":"SMS"
+      "notification_type": "SMS"
     },
     {
       "id": 5,
       "description": "this sample email 5",
       "date_created": "2019-09-30T10:13:51 -03:00",
       "status": "sent",
-      "notification_type":"Email"
+      "notification_type": "Email"
     },
     {
       "id": 6,
       "description": "this sample Sms 6",
       "date_created": "2019-09-30T10:13:51 -03:00",
       "status": "sent",
-      "notification_type":"SMS"
+      "notification_type": "SMS"
     },
     {
       "id": 7,
       "description": "this sample email 7",
       "date_created": "2019-09-30T10:13:51 -03:00",
       "status": "sent",
-      "notification_type":"Email"
+      "notification_type": "Email"
     },
     {
       "id": 8,
       "description": "this sample SMS 8",
       "date_created": "2019-09-30T10:13:51 -03:00",
       "status": "sent",
-      "notification_type":"SMS"
+      "notification_type": "SMS"
     },
     {
       "id": 9,
       "description": "this sample email 9",
       "date_created": "2019-09-30T10:13:51 -03:00",
       "status": "sent",
-      "notification_type":"Email"
+      "notification_type": "Email"
     },
     {
       "id": 10,
       "description": "this sample SMS 10",
       "date_created": "2019-09-30T10:13:51 -03:00",
       "status": "sent",
-      "notification_type":"SMS"
+      "notification_type": "SMS"
     },
     {
       "id": 11,
       "description": "this sample email 11",
       "date_created": "2019-09-30T10:13:51 -03:00",
       "status": "sent",
-      "notification_type":"Email"
+      "notification_type": "Email"
     },
     {
       "id": 12,
       "description": "this sample SMS 12",
       "date_created": "2019-09-30T10:13:51 -03:00",
       "status": "sent",
-      "notification_type":"SMS"
+      "notification_type": "SMS"
     },
     {
       "id": 13,
       "description": "this sample email 13",
       "date_created": "2019-09-30T10:13:51 -03:00",
       "status": "sent",
-      "notification_type":"Email"
+      "notification_type": "Email"
     },
     {
       "id": 14,
       "description": "this sample SMS 14",
       "date_created": "2019-09-30T10:13:51 -03:00",
       "status": "sent",
-      "notification_type":"SMS"
+      "notification_type": "SMS"
     },
     {
       "id": 15,
       "description": "this sample Sms 15",
       "date_created": "2019-09-30T10:13:51 -03:00",
       "status": "sent",
-      "notification_type":"SMS"
+      "notification_type": "SMS"
     }
   ]
 }
