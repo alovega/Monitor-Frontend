@@ -23,3 +23,7 @@ table {
   word-wrap: break-word;
   color: inherit;
 }
+
+table.table td, table.table th {
+  width:224px;
+}

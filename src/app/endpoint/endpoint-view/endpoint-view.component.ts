@@ -14,7 +14,7 @@ export class EndpointViewComponent implements OnInit {
   previous: any = [];
 
   
-  headElements = ['Endpoint', 'Date Created', 'Action'];
+  headElements = ['Endpoint', 'Date Created', 'State', 'Action'];
   constructor(
     private endpointService: EndpointService,
     private cdRef: ChangeDetectorRef

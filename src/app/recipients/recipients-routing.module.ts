@@ -19,18 +19,19 @@ children: [
         component: EmailRecipientsComponent
       },
       {
-        path: 'recipient-create',
-        component: RecipientFormComponent
-      },
-      {
         path: 'sms-recipient',
         component: SmsRecipientsComponent
       },
-      {
-        path: 'recipient-update/:id',
-        component: RecipientUpdateComponent
-      },
-    ] }];
+    ] },
+    {
+      path: 'recipient-create',
+      component: RecipientFormComponent
+    },
+    {
+      path: 'recipient-update/:id',
+      component: RecipientUpdateComponent
+    },
+  ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
