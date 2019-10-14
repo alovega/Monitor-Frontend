@@ -22,7 +22,7 @@
                     <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{el.date_created}}</td>
                     <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{el.status}}</td>
                     <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">
-                        <a class="btn btn-primary" routerLinkActive="active" routerLink="/endpoint/endpoint-update/{{el.id}}" >Update</a>
+                        <a class="btn btn-primary" routerLinkActive="active" routerLink="/endpoint/endpoint-update/{{el.id}}" >Edit</a>
                         <a class="btn btn-danger" (click)="delete(el)">Delete</a>
                     </td>
                     </tr>

@@ -26,7 +26,7 @@ export class EndpointFormComponent implements OnInit {
     this.endpointForm = this.fb.group({
         EndpointName: ['', Validators.required],
         Description: ['', [Validators.required, Validators.minLength(10)]],
-        Endpoint: ['', Validators.required],
+        URL: ['', Validators.required],
         OptimalResponseTime: ['', Validators.required],
         EndpointType: ['', Validators.required],
         SystemId:['', Validators.required],

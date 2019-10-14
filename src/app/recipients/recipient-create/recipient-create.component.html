@@ -8,56 +8,69 @@
       
 </div>
 <hr>
-  <!-- Email -->
-  <label>Email</label>
-  <input type="email" id="defaultContactFormEmail" class="form-control mb-4" placeholder="Email"
-  [ngClass]="{ 'is-invalid': submitted && f.EnpointName.errors }" formControlName="Email" 
-   [(ngModel)]="recipient.email" >
-     <div *ngIf="recipientForm.controls['Email'].invalid && (recipientForm.controls['Email'].dirty || recipientForm.controls['Email'].touched)" class="alert alert-danger">
-        <div *ngIf="recipientForm.controls['Email'].errors.required">
-            Email Name is required.
-        </div>
-        <div *ngIf="recipientForm.controls['Email'].errors.email">Email must be a valid email address</div>
+  
+  <div class="row">
+      <div class="col">
+        <!-- Email -->
+        <label>Email</label>
+        <input type="email" id="defaultContactFormEmail" class="form-control mb-4" placeholder="Email"
+        [ngClass]="{ 'is-invalid': submitted && f.EnpointName.errors }" formControlName="Email" 
+          [(ngModel)]="recipient.email" >
+          <div *ngIf="recipientForm.controls['Email'].invalid && (recipientForm.controls['Email'].dirty || recipientForm.controls['Email'].touched)" class="alert alert-danger">
+            <div *ngIf="recipientForm.controls['Email'].errors.required">
+                Email Name is required.
+            </div>
+            <div *ngIf="recipientForm.controls['Email'].errors.email">Email must be a valid email address</div>
+          </div>
       </div>
-  <!-- Phone Number -->
-  <label>Phone Number</label>
-  <input type="text" id="defaultContactFormPhoneNumber" class="form-control mb-4" placeholder="Phone Number"
-  [ngClass]="{ 'is-invalid': submitted && f.EnpointName.errors }" formControlName="PhoneNumber" 
-   [(ngModel)]="recipient.phone_number" >
-     <div *ngIf="recipientForm.controls['PhoneNumber'].invalid && (recipientForm.controls['PhoneNumber'].dirty || recipientForm.controls['PhoneNumber'].touched)" class="alert alert-danger">
+    <div class="col">
+      <!-- Phone Number -->
+    <label>Phone Number</label>
+    <input type="text" id="defaultContactFormPhoneNumber" class="form-control mb-4" placeholder="Phone Number"
+    [ngClass]="{ 'is-invalid': submitted && f.EnpointName.errors }" formControlName="PhoneNumber" 
+      [(ngModel)]="recipient.phone_number" >
+      <div *ngIf="recipientForm.controls['PhoneNumber'].invalid && (recipientForm.controls['PhoneNumber'].dirty || recipientForm.controls['PhoneNumber'].touched)" class="alert alert-danger">
         <div *ngIf="recipientForm.controls['PhoneNumber'].errors.required">
             Phone Number is required.
         </div>
         <div *ngIf="recipientForm.controls['PhoneNumber'].errors.minlength">Phone Number must be more than 10 characters</div>
       </div>
-
-  <!-- User -->
-  <label>User</label>
-  <select class="browser-default custom-select mb-4" formControlName="User" [(ngModel)]="recipient.user">
-    <option value="1">User 1</option>
-    <option value="2">User 2</option>
-  </select>
-  <div *ngIf="recipientForm.controls['User'].invalid && (recipientForm.controls['User'].dirty || recipientForm.controls['User'].touched)" class="alert alert-danger">
-      <div *ngIf="recipientForm.controls['User'].errors.required">
-          Please Select a User.
-      </div>
+    </div>
+      
   </div>
-
-  <!-- Escalation Level -->
-  <label for="EscalationLevel">Escalation Level</label>
-  <select class="browser-default custom-select mb-4" formControlName="EscalationLevel" [(ngModel)]="recipient.escalation_level">
-    <option value></option>
-    <option *ngFor="let level of EscalationLevels; let i = index" [value]="EscalationLevels[i].name">
-      {{EscalationLevels[i].name}}
-    </option>
-  </select>
-  <div *ngIf="recipientForm.controls['EscalationLevel'].invalid && (recipientForm.controls['EscalationLevel'].dirty || recipientForm.controls['EscalationLevel'].touched)" class="alert alert-danger">
-      <div *ngIf="recipientForm.controls['EscalationLevel'].errors.required">
-          Please Select an EscalationLevel.
+  <div class="row">
+    <div class="col">
+      <!-- User -->
+      <label>User</label>
+      <select class="browser-default custom-select mb-4" formControlName="User" [(ngModel)]="recipient.user">
+        <option value="1">User 1</option>
+        <option value="2">User 2</option>
+      </select>
+      <div *ngIf="recipientForm.controls['User'].invalid && (recipientForm.controls['User'].dirty || recipientForm.controls['User'].touched)" class="alert alert-danger">
+          <div *ngIf="recipientForm.controls['User'].errors.required">
+              Please Select a User.
+          </div>
       </div>
+    </div>
+    <div class="col">
+      <!-- Escalation Level -->
+      <label for="EscalationLevel">Escalation Level</label>
+      <select class="browser-default custom-select mb-4" formControlName="EscalationLevel" [(ngModel)]="recipient.escalation_level">
+        <option value></option>
+        <option *ngFor="let level of EscalationLevels; let i = index" [value]="EscalationLevels[i].name">
+          {{EscalationLevels[i].name}}
+        </option>
+      </select>
+      <div *ngIf="recipientForm.controls['EscalationLevel'].invalid && (recipientForm.controls['EscalationLevel'].dirty || recipientForm.controls['EscalationLevel'].touched)" class="alert alert-danger">
+          <div *ngIf="recipientForm.controls['EscalationLevel'].errors.required">
+             Please Select an EscalationLevel.
+          </div>
+      </div>
+    </div>
   </div>
-
-   <!-- Notification Type -->
+  <div class="row">
+    <div class="col">
+      <!-- Notification Type -->
    <label for="NotificationType">Notification Type</label>
    <select class="browser-default custom-select mb-4" formControlName="NotificationType" [(ngModel)]="recipient.notification_type">
       <option value></option>
@@ -70,9 +83,9 @@
           Please Select a Notification Type.
       </div>
   </div>
-  
-  
-  <!-- State -->
+    </div>
+    <div class="col">
+      <!-- State -->
   <label>State</label>
   <select class="browser-default custom-select mb-4" formControlName="State" [(ngModel)]="recipient.status" >
     <option value="active" selected>Active</option>
@@ -82,6 +95,8 @@
       <div *ngIf="recipientForm.controls['State'].errors.required">
           Please Select a State.
       </div>
+  </div>
+    </div>
   </div>
   
   <!-- Send button -->

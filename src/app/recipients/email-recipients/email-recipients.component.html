@@ -13,7 +13,7 @@
       <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{el.status}}</td>
       <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">
         
-        <a class="btn btn-primary  " routerLink="/recipients/recipient-update/{{el.id}}" routerLinkActive="active">Update</a>
+        <a class="btn btn-primary  " routerLink="/recipients/recipient-update/{{el.id}}" routerLinkActive="active">Edit</a>
         <a class="btn btn-danger " (click)="delete(el)">Delete</a>
       </td>
       </tr>
