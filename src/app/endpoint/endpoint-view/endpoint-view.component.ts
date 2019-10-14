@@ -1,7 +1,6 @@
 import { MdbTablePaginationComponent, MdbTableDirective } from 'angular-bootstrap-md';
 import { Component, OnInit, ViewChild, AfterViewInit, ChangeDetectorRef } from '@angular/core';
-import {EndpointService} from '../endpoint.service'
-import {map} from 'rxjs/operators'
+import {EndpointService} from '../endpoint.service';
  
 @Component({
   selector: 'app-endpoint-view',
@@ -14,9 +13,8 @@ export class EndpointViewComponent implements OnInit {
   elements: any;
   previous: any = [];
 
-
-  headElements = ['Endpoint', 'Date Created', 'Action'];
-
+  
+  headElements = ['Endpoint', 'Date Created', 'State', 'Action'];
   constructor(
     private endpointService: EndpointService,
     private cdRef: ChangeDetectorRef

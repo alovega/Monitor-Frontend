@@ -1,9 +1,5 @@
 form {
-    background-color: #ffffff;
-    
-}
-.border{
-    border: 0 !important;
+    background-color: #ffffff
 }
 .text-center{
     text-align: left !important;
@@ -14,4 +10,8 @@ form {
 }
 label{
     font-weight: 500;
+    font-size: 0.9em;
+}
+input select{
+    width: 375px;
 }
