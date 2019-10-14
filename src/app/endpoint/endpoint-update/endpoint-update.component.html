@@ -48,8 +48,8 @@
         <label>State</label>
         <select class=" form-control browser-default custom-select mb-4" formControlName="State" [(ngModel)]="data.status">
           <option value="" selected></option>
-          <option value="1">Active</option>
-          <option value="2">Disabled</option>
+          <option value="Active">Active</option>
+          <option value="Disabled">Disabled</option>
         </select>
         <div *ngIf="updateForm.controls['State'].invalid && (updateForm.controls['State'].dirty || updateForm.controls['State'].touched)" class="alert alert-danger">
             <div *ngIf="updateForm.controls['State'].errors.required">

@@ -59,8 +59,8 @@
       <label>State</label>
       <select class=" form-control browser-default custom-select mb-4" placeholder="State" formControlName="State" [(ngModel)]="data.status">
         <option value="" selected></option>
-        <option value="1">Active</option>
-        <option value="2">Disabled</option>
+        <option value="Active">Active</option>
+        <option value="Disabled">Disabled</option>
       </select>
       <div *ngIf="endpointForm.controls['State'].invalid && (endpointForm.controls['State'].dirty || endpointForm.controls['State'].touched)" class="alert alert-danger">
         <div *ngIf="endpointForm.controls['State'].errors.required">
