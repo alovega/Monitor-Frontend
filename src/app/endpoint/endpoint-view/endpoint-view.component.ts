@@ -1,7 +1,6 @@
 import { MdbTablePaginationComponent, MdbTableDirective } from 'angular-bootstrap-md';
 import { Component, OnInit, ViewChild, AfterViewInit, ChangeDetectorRef } from '@angular/core';
-import {EndpointService} from '../endpoint.service'
-import { Endpoint } from '../endpoint'
+import {EndpointService} from '../endpoint.service';
  
 @Component({
   selector: 'app-endpoint-view',

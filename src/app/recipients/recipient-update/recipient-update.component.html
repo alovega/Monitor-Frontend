@@ -1,0 +1,82 @@
+
+<!-- Default form contact -->
+<form [formGroup]="updateForm" class="text-center border  p-5" (ngSubmit) = "onSubmit()">
+
+        <div class="row">
+        
+          <div class="col"><p class="h4 mb-4">Update System Recipient </p></div>
+              
+        </div>
+        <hr>
+          <!-- Email -->
+          <label>Email</label>
+          <input type="email" id="defaultContactFormEmail" class="form-control mb-4" placeholder="Email"
+          [ngClass]="{ 'is-invalid': submitted && f.EnpointName.errors }" formControlName="Email" 
+           [(ngModel)]="recipient.email" >
+             <div *ngIf="updateForm.controls['Email'].invalid && (updateForm.controls['Email'].dirty || updateForm.controls['Email'].touched)" class="alert alert-danger">
+                <div *ngIf="updateForm.controls['Email'].errors.required">
+                    Email Name is required.
+                </div>
+                <div *ngIf="updateForm.controls['Email'].errors.email">Email must be a valid email address</div>
+              </div>
+          <!-- Phone Number -->
+          <label>Phone Number</label>
+          <input type="text" id="defaultContactFormPhoneNumber" class="form-control mb-4" placeholder="Phone Number"
+          [ngClass]="{ 'is-invalid': submitted && f.EnpointName.errors }" formControlName="PhoneNumber" 
+           [(ngModel)]="recipient.phone_number" >
+             <div *ngIf="updateForm.controls['PhoneNumber'].invalid && (updateForm.controls['PhoneNumber'].dirty || updateForm.controls['PhoneNumber'].touched)" class="alert alert-danger">
+                <div *ngIf="updateForm.controls['PhoneNumber'].errors.required">
+                    Phone Number is required.
+                </div>
+                <div *ngIf="updateForm.controls['PhoneNumber'].errors.minlength">Phone Number must be more than 10 characters</div>
+              </div>
+        
+          <!-- Escalation Level -->
+          <label for="EscalationLevel">Escalation Level</label>
+          <select class="browser-default custom-select mb-4" formControlName="EscalationLevel" [(ngModel)]="recipient.escalation_level">
+            <option value></option>
+            <option *ngFor="let level of EscalationLevels; let i = index" [value]="EscalationLevels[i].name">
+              {{EscalationLevels[i].name}}
+            </option>
+          </select>
+          <div *ngIf="updateForm.controls['EscalationLevel'].invalid && (updateForm.controls['EscalationLevel'].dirty || updateForm.controls['EscalationLevel'].touched)" class="alert alert-danger">
+              <div *ngIf="updateForm.controls['EscalationLevel'].errors.required">
+                  Please Select an EscalationLevel.
+              </div>
+          </div>
+        
+           <!-- Notification Type -->
+           <label for="NotificationType">Notification Type</label>
+           <select class="browser-default custom-select mb-4" formControlName="NotificationType" [(ngModel)]="recipient.notification_type">
+              <option value></option>
+             <option *ngFor="let type of NotificationTypes; let i = index" [value]="NotificationTypes[i].name">
+               {{NotificationTypes[i].name}}
+             </option>
+           </select>
+           <div *ngIf="updateForm.controls['NotificationType'].invalid && (updateForm.controls['NotificationType'].dirty || updateForm.controls['NotificationType'].touched)" class="alert alert-danger">
+              <div *ngIf="updateForm.controls['NotificationType'].errors.required">
+                  Please Select a Notification Type.
+              </div>
+          </div>
+          
+          
+          <!-- State -->
+          <label>State</label>
+          <select class="browser-default custom-select mb-4" formControlName="State" [(ngModel)]="recipient.status" >
+            <option value="active" selected>Active</option>
+            <option value="disabled">Disabled</option>
+          </select>
+          <div *ngIf="updateForm.controls['State'].invalid && (updateForm.controls['State'].dirty || updateForm.controls['State'].touched)" class="alert alert-danger">
+              <div *ngIf="updateForm.controls['State'].errors.required">
+                  Please Select a State.
+              </div>
+          </div>
+          
+          <!-- Send button -->
+          <button mdbBtn type="button" class="btn btn-primary waves-light" color="primary" mdbWavesEffect
+          [disabled]="!updateForm.valid" (click)="update()">Save</button>
+        
+        </form>
+          <!-- Default form contact -->
+        
+        

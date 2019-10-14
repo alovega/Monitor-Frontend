@@ -1,57 +1,93 @@
 
 <!-- Default form contact -->
-<mdb-card>
-        <mdb-card-body>
-          <form [formGroup]="recipientForm" class="text-center border  p-5">
-            <div class="row">
+<form [formGroup]="recipientForm" class="text-center border  p-5" (ngSubmit) = "onSubmit()">
 
-              <div class="col col-md-auto"><p class="h4 mb-4">Add System Recipient </p></div>
-                  
-            </div>
-            <hr>
-              <!-- First Name -->
-              <label>First Name</label>
-              <input type="text" id="defaultContactFormFirstName" class="form-control mb-4" placeholder="First Name">
-      
-              <!-- Last Name -->
-              <label>Lastname</label>
-              <input type="text" id="defaultContactFormLastName" class="form-control mb-4" placeholder="Last Name">
-            
-              <!-- Email -->
-              <label>Email</label>
-              <input type="email" id="defaultContactFormEmail" class="form-control mb-4" placeholder="Email">
-      
-              <!-- Phone Number -->
-              <label>Phone Number</label>
-              <input type="text" id="defaultContactFormPhoneNumber" class="form-control mb-4" placeholder="Phone Number">
-            
-              <!-- User -->
-              <label>User</label>
-              <select class="browser-default custom-select mb-4">
-                <option value="1" selected>User 1</option>
-                <option value="2">User 2</option>
-              </select>
+<div class="row">
 
-              <!-- Escalation Level -->
-              <label>Escalation Level</label>
-              <select class="browser-default custom-select mb-4">
-                <option value="1" selected>Level 1</option>
-                <option value="2">Level 2</option>
-              </select>
-              
-              <!-- State -->
-              <label>State</label>
-              <select class="browser-default custom-select mb-4">
-                <option value="1" selected>Active</option>
-                <option value="2">Disabled</option>
-              </select>
-              
-              <!-- Send button -->
-              <button mdbBtn type="button" class="btn btn-primary waves-light" color="primary" mdbWavesEffect>Save</button>
-            
-            </form>
-              <!-- Default form contact -->
+  <div class="col"><p class="h4 mb-4">Add System Recipient </p></div>
       
-        </mdb-card-body>
-      </mdb-card>
-      
+</div>
+<hr>
+  <!-- Email -->
+  <label>Email</label>
+  <input type="email" id="defaultContactFormEmail" class="form-control mb-4" placeholder="Email"
+  [ngClass]="{ 'is-invalid': submitted && f.EnpointName.errors }" formControlName="Email" 
+   [(ngModel)]="recipient.email" >
+     <div *ngIf="recipientForm.controls['Email'].invalid && (recipientForm.controls['Email'].dirty || recipientForm.controls['Email'].touched)" class="alert alert-danger">
+        <div *ngIf="recipientForm.controls['Email'].errors.required">
+            Email Name is required.
+        </div>
+        <div *ngIf="recipientForm.controls['Email'].errors.email">Email must be a valid email address</div>
+      </div>
+  <!-- Phone Number -->
+  <label>Phone Number</label>
+  <input type="text" id="defaultContactFormPhoneNumber" class="form-control mb-4" placeholder="Phone Number"
+  [ngClass]="{ 'is-invalid': submitted && f.EnpointName.errors }" formControlName="PhoneNumber" 
+   [(ngModel)]="recipient.phone_number" >
+     <div *ngIf="recipientForm.controls['PhoneNumber'].invalid && (recipientForm.controls['PhoneNumber'].dirty || recipientForm.controls['PhoneNumber'].touched)" class="alert alert-danger">
+        <div *ngIf="recipientForm.controls['PhoneNumber'].errors.required">
+            Phone Number is required.
+        </div>
+        <div *ngIf="recipientForm.controls['PhoneNumber'].errors.minlength">Phone Number must be more than 10 characters</div>
+      </div>
+
+  <!-- User -->
+  <label>User</label>
+  <select class="browser-default custom-select mb-4" formControlName="User" [(ngModel)]="recipient.user">
+    <option value="1">User 1</option>
+    <option value="2">User 2</option>
+  </select>
+  <div *ngIf="recipientForm.controls['User'].invalid && (recipientForm.controls['User'].dirty || recipientForm.controls['User'].touched)" class="alert alert-danger">
+      <div *ngIf="recipientForm.controls['User'].errors.required">
+          Please Select a User.
+      </div>
+  </div>
+
+  <!-- Escalation Level -->
+  <label for="EscalationLevel">Escalation Level</label>
+  <select class="browser-default custom-select mb-4" formControlName="EscalationLevel" [(ngModel)]="recipient.escalation_level">
+    <option value></option>
+    <option *ngFor="let level of EscalationLevels; let i = index" [value]="EscalationLevels[i].name">
+      {{EscalationLevels[i].name}}
+    </option>
+  </select>
+  <div *ngIf="recipientForm.controls['EscalationLevel'].invalid && (recipientForm.controls['EscalationLevel'].dirty || recipientForm.controls['EscalationLevel'].touched)" class="alert alert-danger">
+      <div *ngIf="recipientForm.controls['EscalationLevel'].errors.required">
+          Please Select an EscalationLevel.
+      </div>
+  </div>
+
+   <!-- Notification Type -->
+   <label for="NotificationType">Notification Type</label>
+   <select class="browser-default custom-select mb-4" formControlName="NotificationType" [(ngModel)]="recipient.notification_type">
+      <option value></option>
+     <option *ngFor="let type of NotificationTypes; let i = index" [value]="NotificationTypes[i].name">
+       {{NotificationTypes[i].name}}
+     </option>
+   </select>
+   <div *ngIf="recipientForm.controls['NotificationType'].invalid && (recipientForm.controls['NotificationType'].dirty || recipientForm.controls['NotificationType'].touched)" class="alert alert-danger">
+      <div *ngIf="recipientForm.controls['NotificationType'].errors.required">
+          Please Select a Notification Type.
+      </div>
+  </div>
+  
+  
+  <!-- State -->
+  <label>State</label>
+  <select class="browser-default custom-select mb-4" formControlName="State" [(ngModel)]="recipient.status" >
+    <option value="active" selected>Active</option>
+    <option value="disabled">Disabled</option>
+  </select>
+  <div *ngIf="recipientForm.controls['State'].invalid && (recipientForm.controls['State'].dirty || recipientForm.controls['State'].touched)" class="alert alert-danger">
+      <div *ngIf="recipientForm.controls['State'].errors.required">
+          Please Select a State.
+      </div>
+  </div>
+  
+  <!-- Send button -->
+  <button mdbBtn type="button" class="btn btn-primary waves-light" color="primary" mdbWavesEffect
+  [disabled]="!recipientForm.valid" (click)="addRecipient()">Save</button>
+
+</form>
+  <!-- Default form contact -->
+

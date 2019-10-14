@@ -90,8 +90,8 @@ export class CreateIncidentComponent implements OnInit {
     }
 
     return this.incidentService.createIncident(formData).subscribe(
-      (incident => {
-        if (incident.code === '800.200.001') {
+      ((result: any) => {
+        if (result.code === '800.200.001') {
           this.location.back();
         }
       })
@@ -134,8 +134,8 @@ export class CreateIncidentComponent implements OnInit {
     formData.append('incident_type', 'Scheduled');
 
     return this.incidentService.createIncident(formData).subscribe(
-      (incident => {
-        if (incident.code === '800.200.001') {
+      ((result: any) => {
+        if (result.code === '800.200.001') {
           this.location.back();
         }
       })

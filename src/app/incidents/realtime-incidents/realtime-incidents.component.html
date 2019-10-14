@@ -1,8 +1,9 @@
-<table mdbTable id="incident-list" *ngIf="incidents && incidents.length > 1; else noIncidents">
+<div class="full-page">
+<table mdbTable id="incident-list" *ngIf="(incidents$ | async).length; else noIncidents">
   <tbody>
     <!-- Incident Item -->
-    <tr mdbTableCol class="incident-item" *ngFor="let incident of incidents">
-      <td scope="row">
+    <tr mdbTableCol class="incident-item" *ngFor="let incident of incidents$ | async">        
+      <td scope="row" *ngIf="incident.type === 'Realtime'">
           <div class="incident-description">
             <div class="action-buttons float-right">
                 <a id="update-{{incident.incident_id}}" routerLink="/incidents/update/{{incident.incident_id}}" 
@@ -12,12 +13,13 @@
                 </ng-template>
             </div>
             <strong>
-                <a class="incident-view-link"routerLink="/incidents/update/{{incident.incident_id}}" routerLinkActive="active">
+                <a class="incident-view-link" routerLink="/incidents/update/{{incident.incident_id}}" routerLinkActive="active">
                 {{ incident.name }}
-                </a></strong><br>
+                </a>
+            </strong><br>
             <div class="last-updated">
-                <small>Last updated <span class="ago">about <span>2</span> hours ago. 
-                </span>({{ incident.date_created }})
+                <small>Last updated <span class="ago">on <span>{{ incident.date_modified | date: 'MMM d, y, h:mm:ss a' }}</span>. 
+                </span>
                 </small>
             </div>
           </div>
@@ -29,10 +31,15 @@
 <!-- Zero Realtime Incidents For the system -->
 <ng-template #noIncidents>
     <hm-empty-data header="All Clear" description="You will see all realtime incidents here">
-      <button action-button type="button" mdbBtn size="sm" color="primary">Create incident</button>
+      <a action-button routerLink='/incidents/new/realtime' routerlinkactive="active"> 
+        <button id="create-button" size="sm" color="primary">
+            Create incident
+        </button>
+      </a>
     </hm-empty-data>
 </ng-template>
 
 <div class="pagination-container">
 
+</div>
 </div>
