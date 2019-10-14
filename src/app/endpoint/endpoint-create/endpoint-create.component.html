@@ -54,38 +54,35 @@
         </div>
       </div>
     </div>
+    <div class="col">
+      <!-- State -->
+      <label>State</label>
+      <select class=" form-control browser-default custom-select mb-4" placeholder="State" formControlName="State" [(ngModel)]="data.status">
+        <option value="" selected></option>
+        <option value="1">Active</option>
+        <option value="2">Disabled</option>
+      </select>
+      <div *ngIf="endpointForm.controls['State'].invalid && (endpointForm.controls['State'].dirty || endpointForm.controls['State'].touched)" class="alert alert-danger">
+        <div *ngIf="endpointForm.controls['State'].errors.required">
+            State is required.
+        </div>
+      </div>
+    </div>
   </div>
   <div class="row">
     <div class="col">
-      <!-- State -->
-        <label>State</label>
-        <select class=" form-control browser-default custom-select mb-4" placeholder="State" formControlName="State" [(ngModel)]="data.status">
-          <option value="" selected></option>
-          <option value="1">Active</option>
-          <option value="2">Disabled</option>
-        </select>
-        <div *ngIf="endpointForm.controls['State'].invalid && (endpointForm.controls['State'].dirty || endpointForm.controls['State'].touched)" class="alert alert-danger">
-          <div *ngIf="endpointForm.controls['State'].errors.required">
-              State is required.
-          </div>
-        </div>
-    </div>
-    <div class="col"></div>
-  </div>
-    
-    
-    
-    <!-- Message -->
-    <label>Description</label>
-    <div class="form-group">
-            <textarea class="form-control rounded-0" id="exampleFormControlTextarea2" rows="3" placeholder="Description" formControlName="Description" [(ngModel)]="data.description" ></textarea>
-    </div>
-    <div *ngIf="endpointForm.controls['Description'].invalid && (endpointForm.controls['Description'].dirty || endpointForm.controls['Description'].touched)" class="alert alert-danger">
-      <div *ngIf="endpointForm.controls['Description'].errors.required">
+      <!-- Message -->
+      <label>Description</label>
+      <div class="form-group">
+        <textarea class="form-control rounded-0" id="exampleFormControlTextarea2" rows="3" placeholder="Description" formControlName="Description" [(ngModel)]="data.description" ></textarea>
+      </div>
+      <div *ngIf="endpointForm.controls['Description'].invalid && (endpointForm.controls['Description'].dirty || endpointForm.controls['Description'].touched)" class="alert alert-danger">
+        <div *ngIf="endpointForm.controls['Description'].errors.required">
           Description is required.
+        </div>
       </div>
     </div>
-    
+  </div>
     <!-- Send button -->
     <button mdbBtn type="button" class="btn btn-primary waves-light" 
         color="primary" mdbWavesEffect  [disabled]="!endpointForm.valid" (click)="addEndpoint()"

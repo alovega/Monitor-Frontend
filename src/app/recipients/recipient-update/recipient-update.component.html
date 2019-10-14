@@ -68,28 +68,23 @@
           </div>
         </div>
       </div>
-    </div>
-      
-    <div class="row">
       <div class="col">
           <!-- State -->
-        <label>State</label>
-        <select class="browser-default custom-select mb-4" formControlName="State" [(ngModel)]="recipient.status" >
-          <option value="active" selected>Active</option>
-          <option value="disabled">Disabled</option>
-        </select>
-        <div *ngIf="updateForm.controls['State'].invalid && (updateForm.controls['State'].dirty || updateForm.controls['State'].touched)" class="alert alert-danger">
-          <div *ngIf="updateForm.controls['State'].errors.required">
-              Please Select a State.
+          <label>State</label>
+          <select class="browser-default custom-select mb-4" formControlName="State" [(ngModel)]="recipient.status" >
+            <option value="active" selected>Active</option>
+            <option value="disabled">Disabled</option>
+          </select>
+          <div *ngIf="updateForm.controls['State'].invalid && (updateForm.controls['State'].dirty || updateForm.controls['State'].touched)" class="alert alert-danger">
+            <div *ngIf="updateForm.controls['State'].errors.required">
+                Please Select a State.
+            </div>
           </div>
-        </div>
       </div>
-      <div class="col"></div>
-    </div>   
+    </div>
     <!-- Send button -->
     <button mdbBtn type="button" class="btn btn-primary waves-light" color="primary" mdbWavesEffect
     [disabled]="!updateForm.valid" (click)="update()">Update</button>
-  
   </form>
           <!-- Default form contact -->
 </mdb-card>    
