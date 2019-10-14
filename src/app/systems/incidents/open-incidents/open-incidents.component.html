@@ -1,9 +1,9 @@
 <div class="full-page">
-<div *ngIf="(incidents$ | async); else noIncidents">
-      <a *ngFor="let incident of incidents$ | async" routerLink="/system/{{systemId}}/incidents/update/{{incident.incident_id}}" routerLinkActive="active">
+<div *ngIf="(incidents$ | async).length; else noIncidents">
+      <a *ngFor="let incident of incidents$ | async" routerLink="/system/{{currentSystemId}}/incidents/update/{{incident.incident_id}}" routerLinkActive="active">
         <mdb-card class="open-incident mb-4">
             <mdb-card-body>
-            <a routerLink="/system/{{systemId}}/incidents/update/{{incident.incident_id}}" routerLinkActive="active" class="update-incident-button float-right">
+            <a routerLink="/system/{{currentSystemId}}/incidents/update/{{incident.incident_id}}" routerLinkActive="active" class="update-incident-button float-right">
                 <button mdbBtn mdbWavesEffect color="info" size="sm">Update</button>
             </a>
             <h5 class="open-incident-title">{{ incident.name }}</h5>
@@ -35,7 +35,7 @@
 
 <ng-template #noIncidents>
   <hm-empty-data header="No open incidents" description="New incidents and scheduled maintenances will be displayed here">
-      <a action-button routerLink='/system/{{systemId}}/incidents/new/realtime' routerlinkactive="active"> 
+      <a action-button routerLink='/system/{{currentSystemId}}/incidents/new/realtime' routerlinkactive="active"> 
         <button id="create-button" size="sm" color="primary">
             Create new incident
         </button>

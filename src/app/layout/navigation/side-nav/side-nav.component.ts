@@ -19,6 +19,7 @@ export class SideNavComponent implements OnInit {
       system => {
         let currentSystem = system[0];
         this.currentSystemId = currentSystem.id;
+        console.log(this.currentSystemId);
       }
     );
   }

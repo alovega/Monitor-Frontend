@@ -22,7 +22,6 @@ export class SystemService {
       tap(system => {
         if (localStorage.getItem('currentSystem') === null) {
           this.currentSystem = system[0];
-          console.log(this.currentSystem);
           localStorage.setItem('currentSystem', JSON.stringify(this.currentSystem));
         }
       })
@@ -46,16 +45,16 @@ export class SystemService {
       token: 'OWM1MDU1OWE4MzI4NzFiZDE5MGIzMzNlZWE1MmM1',
     }).pipe(
       map(systems => systems.data.filter(system => system.id === systemId)),
-      tap(system => {
-        localStorage.setItem('currentSystem', JSON.stringify(system)),
-        this.changeSystem.emit(system)
-      }),
-      // tap(system => this.getCurrentSystem())
+      tap(systems => {
+        localStorage.setItem('currentSystem', JSON.stringify(systems[0])),
+        this.changeSystem.emit(systems);
+      })
     );
   }
 
   getCurrentSystem() {
-    if (localStorage.getItem('currentSystem') === null) {
+    // console.log(localStorage.getItem('currentSystem'));
+    if (localStorage.getItem('currentSystem') === null || localStorage.getItem('currentSystem') === undefined) {
       this.getSystems();
     }
     return JSON.parse(localStorage.getItem('currentSystem'));
