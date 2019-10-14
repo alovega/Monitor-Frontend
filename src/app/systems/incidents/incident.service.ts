@@ -14,7 +14,7 @@ export class IncidentService {
   httpOptions = {
     headers: new HttpHeaders({'Content-Type' : 'application/x-www-form-urlencoded'})
   };
-  token = 'OWM1MDU1OWE4MzI4NzFiZDE5MGIzMzNlZWE1MmM1';
+  token = 'YjAwNmViYmVhZmE3OTBlMmRjNmVlNjM3ZjU2OWIw';
   clientId = '3cd49364-721a-4d3f-8bfa-141d93d6a8f7';
   @Output() changeSystem: EventEmitter<boolean> = new EventEmitter();
 
@@ -38,9 +38,9 @@ export class IncidentService {
 
   getIncidents(): Observable<Incident[]> {
     return this.http.post<any>('http://127.0.0.1:8000/api/get_incidents/', {
-      client_id: '3cd49364-721a-4d3f-8bfa-141d93d6a8f7',
+      client_id: this.clientId,
       system: 'Helaplan',
-      token: 'OWM1MDU1OWE4MzI4NzFiZDE5MGIzMzNlZWE1MmM1',
+      token: this.token,
       start_date: '2019-9-1',
       end_date: '2019-10-15'
     }).pipe(
@@ -52,9 +52,9 @@ export class IncidentService {
   getOpenIncidents(currentSystem: any): Observable<Incident[]> {
     console.log(currentSystem);
     return this.http.post<any>('http://127.0.0.1:8000/api/get_incidents/', {
-      client_id: '3cd49364-721a-4d3f-8bfa-141d93d6a8f7',
+      client_id: this.clientId,
       system: currentSystem.name,
-      token: 'OWM1MDU1OWE4MzI4NzFiZDE5MGIzMzNlZWE1MmM1',
+      token: this.token,
       start_date: '2019-9-1',
       end_date: '2019-10-15'
     }).pipe(
@@ -69,11 +69,11 @@ export class IncidentService {
     return this.http.get<Incident[]>(this.incidentsUrl);
   }
 
-  getRealtimeIncidents(): Observable<any> {
+  getRealtimeIncidents(currentSystem: any): Observable<any> {
     return this.http.post<any>('http://127.0.0.1:8000/api/get_incidents/', {
-      client_id: '3cd49364-721a-4d3f-8bfa-141d93d6a8f7',
-      system: 'Helaplan',
-      token: 'OWM1MDU1OWE4MzI4NzFiZDE5MGIzMzNlZWE1MmM1',
+      client_id: this.clientId,
+      system: currentSystem.id,
+      token: this.token,
       start_date: '2019-9-1',
       end_date: '2019-10-15'
     }).pipe(
@@ -82,11 +82,11 @@ export class IncidentService {
     );
   }
 
-  getScheduledIncidents(): Observable<Incident[]> {
+  getScheduledIncidents(currentSystem: any): Observable<Incident[]> {
     return this.http.post<any>('http://127.0.0.1:8000/api/get_incidents/', {
-      client_id: '3cd49364-721a-4d3f-8bfa-141d93d6a8f7',
-      system: 'Helaplan',
-      token: 'OWM1MDU1OWE4MzI4NzFiZDE5MGIzMzNlZWE1MmM1',
+      client_id: this.clientId,
+      system: currentSystem.id,
+      token: this.token,
       start_date: '2019-9-1',
       end_date: '2019-10-15'
     }).pipe(
@@ -97,10 +97,10 @@ export class IncidentService {
 
   getIncident(incidentId: string): Observable<any> {
     return this.http.post<any>('http://127.0.0.1:8000/api/get_incident/', {
-      client_id: '3cd49364-721a-4d3f-8bfa-141d93d6a8f7',
+      client_id: this.clientId,
       system: 'Helaplan',
       incident_id: incidentId,
-      token: 'OWM1MDU1OWE4MzI4NzFiZDE5MGIzMzNlZWE1MmM1'
+      token: this.token
     }).pipe(
       map(incident => incident.data),
       tap(incident => console.log(incident))
@@ -109,8 +109,8 @@ export class IncidentService {
 
   updateIncident(formData: any): Observable<any> {
     formData.append('system', 'Helaplan');
-    formData.append('client_id', '3cd49364-721a-4d3f-8bfa-141d93d6a8f7');
-    formData.append('token', 'OWM1MDU1OWE4MzI4NzFiZDE5MGIzMzNlZWE1MmM1');
+    formData.append('client_id', this.clientId);
+    formData.append('token', this.token);
     return this.http.post<any>('http://127.0.0.1:8000/api/update_incident/', formData).pipe(
       map(incident => incident),
       tap(incident => console.log(incident))

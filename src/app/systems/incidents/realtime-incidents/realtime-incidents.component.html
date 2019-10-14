@@ -2,7 +2,7 @@
 <table mdbTable id="incident-list" *ngIf="(incidents$ | async).length; else noIncidents">
   <tbody>
     <!-- Incident Item -->
-    <tr mdbTableCol class="incident-item" *ngFor="let incident of incidents$ | async">        
+    <tr mdbTableCol class="incident-item" *ngFor="let incident of incidents$ | async" [ngClass]="{'d-none': incident.type !== 'Realtime', 'realtime': incident.type === 'Realtime'}">        
       <td scope="row" *ngIf="incident.type === 'Realtime'">
           <div class="incident-description">
             <div class="action-buttons float-right">

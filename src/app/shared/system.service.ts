@@ -10,13 +10,15 @@ import {map, tap, filter} from 'rxjs/operators';
 export class SystemService {
   currentSystem: any;
   @Output() changeSystem: EventEmitter<boolean> = new EventEmitter();
+  token = 'YjAwNmViYmVhZmE3OTBlMmRjNmVlNjM3ZjU2OWIw';
+  clientId = '3cd49364-721a-4d3f-8bfa-141d93d6a8f7';
 
   constructor(private http: HttpClient) { }
 
   getSystems(): Observable<any> {
     return this.http.post<any>('http://127.0.0.1:8000/api/get_systems/', {
-      client_id: '3cd49364-721a-4d3f-8bfa-141d93d6a8f7',
-      token: 'OWM1MDU1OWE4MzI4NzFiZDE5MGIzMzNlZWE1MmM1',
+      client_id: this.clientId,
+      token: this.token,
     }).pipe(
       map(system => system.data),
       tap(system => {
@@ -30,8 +32,8 @@ export class SystemService {
 
   createSystem(formData: any): Observable<any> {
     formData.append('system', 'Helaplan');
-    formData.append('client_id', '3cd49364-721a-4d3f-8bfa-141d93d6a8f7');
-    formData.append('token', 'OWM1MDU1OWE4MzI4NzFiZDE5MGIzMzNlZWE1MmM1');
+    formData.append('client_id', this.clientId);
+    formData.append('token', this.token);
 
     return this.http.post<any>('http://127.0.0.1:8000/api/get_systems', formData).pipe(
       // tap(system => console.log(system))
@@ -41,8 +43,8 @@ export class SystemService {
 
   setSystem(systemId: string) {
     return this.http.post<any>('http://127.0.0.1:8000/api/get_systems/', {
-      client_id: '3cd49364-721a-4d3f-8bfa-141d93d6a8f7',
-      token: 'OWM1MDU1OWE4MzI4NzFiZDE5MGIzMzNlZWE1MmM1',
+      client_id: this.clientId,
+      token: this.token,
     }).pipe(
       map(systems => systems.data.filter(system => system.id === systemId)),
       tap(systems => {
