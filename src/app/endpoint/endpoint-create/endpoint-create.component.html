@@ -2,16 +2,7 @@
 <!-- Default form contact -->
 <form [formGroup]="endpointForm" class="text-center border  p-5" (ngSubmit) = "onSubmit()">
   <div class="row">
-    <div class="col col-md-auto">
-        <select class="browser-default custom-select" formControlName="SystemId" [(ngModel)]="data.system_id"  >
-            <option value=""></option>
-            <option value="1">System 1</option>m
-            <option value="2">System 2</option>
-            <option value="3">System 3</option>
-        </select>
-    </div>
-    <div class="col col-6"><p class="h4 mb-4">Add an Endpoint </p></div>
-        
+    <div class="col col-6"><p class="h4 mb-4">Add an Endpoint </p></div>     
   </div>
   <hr>
   <div class="row">
