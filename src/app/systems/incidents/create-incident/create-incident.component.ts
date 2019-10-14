@@ -5,6 +5,7 @@ import { Incident } from '../incident';
 import { IncidentService } from '../incident.service';
 
 import { AbstractControl, FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
+import { SystemService } from 'src/app/shared/system.service';
 
 @Component({
   selector: 'hm-create-incident',
@@ -19,22 +20,31 @@ export class CreateIncidentComponent implements OnInit {
   timePicker: any;
   realtimeUrl: string;
   maintenanceUrl: string;
+  systemId: string;
+  currentSystem: any;
 
   constructor(
     public router: Router,
     private activatedRoute: ActivatedRoute,
     private location: Location,
     private incidentService: IncidentService,
-    private formBuilder: FormBuilder) {
+    private formBuilder: FormBuilder,
+    private systemService: SystemService) {
    }
 
   ngOnInit() {
     this.activatedRoute.parent.params.subscribe(
       (param: any) => {
-        let systemId = param['system-id'];
-        this.realtimeUrl = `/system/${systemId}/incidents/new/realtime`;
-        this.maintenanceUrl = `/system/${systemId}/incidents/new/maintenance`;
+        this.systemId = param['system-id'];
+        this.realtimeUrl = `/system/${this.systemId}/incidents/new/realtime`;
+        this.maintenanceUrl = `/system/${this.systemId}/incidents/new/maintenance`;
       });
+
+    this.systemService.setSystem(this.systemId).subscribe(
+      (result => {
+        this.currentSystem = result[0];
+      })
+    );
     this.createRealtimeIncidentForm();
     this.createScheduledMaintenanceForm();
   }
@@ -93,6 +103,7 @@ export class CreateIncidentComponent implements OnInit {
     formData.append('escalation_level', this.realtimeIncidentForm.get('escalationLevel').value);
     formData.append('priority_level', this.realtimeIncidentForm.get('priorityLevel').value);
     formData.append('incident_type', 'Realtime');
+    formData.append('system', this.currentSystem.name);
 
     for (let key of formData.entries()) {
       console.log(key[0] + ', ' + key[1]);
@@ -141,6 +152,7 @@ export class CreateIncidentComponent implements OnInit {
     formData.append('escalation_level', this.scheduledMaintenanceForm.get('escalationLevel').value);
     formData.append('priority_level', this.scheduledMaintenanceForm.get('priorityLevel').value);
     formData.append('incident_type', 'Scheduled');
+    formData.append('system', this.currentSystem.name);
 
     return this.incidentService.createIncident(formData).subscribe(
       ((result: any) => {

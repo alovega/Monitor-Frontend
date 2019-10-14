@@ -5,6 +5,7 @@ import { Location } from '@angular/common';
 
 import { IncidentService } from '../incident.service';
 import { Incident } from '../incident';
+import { SystemService } from 'src/app/shared/system.service';
 
 @Component({
   selector: 'hm-update-incident',
@@ -18,17 +19,30 @@ export class UpdateIncidentComponent implements OnInit {
   incident: Incident;
   initialPriorityLevel: string;
   id: string;
+  systemId: string;
+  currentSystem: any;
 
   constructor(
     private route: ActivatedRoute,
     private incidentService: IncidentService,
     private formBuilder: FormBuilder,
-    private location: Location
+    private location: Location,
+    private systemService: SystemService
   ) {
     this.id = this.route.snapshot.paramMap.get('incident-id');
   }
 
   ngOnInit() {
+    this.route.parent.params.subscribe(
+      (param: any) => {
+        this.systemId = param['system-id'];
+      });
+
+    this.systemService.setSystem(this.systemId).subscribe(
+      (result => {
+        this.currentSystem = result[0];
+      })
+    );
     this.showIncident();
     this.createUpdateIncidentForm();
   }
@@ -52,7 +66,7 @@ export class UpdateIncidentComponent implements OnInit {
   // }
 
   public showIncident(): void {
-    this.incidentService.getIncident(this.id).subscribe(
+    this.incidentService.getIncident(this.id, this.currentSystem).subscribe(
       (data: Incident) => {
         this.incident = data;
         this.updateIncidentForm.patchValue({

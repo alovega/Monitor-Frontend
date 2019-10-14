@@ -10,7 +10,7 @@ import {map, tap, filter} from 'rxjs/operators';
 export class SystemService {
   currentSystem: any;
   @Output() changeSystem: EventEmitter<boolean> = new EventEmitter();
-  token = 'YjAwNmViYmVhZmE3OTBlMmRjNmVlNjM3ZjU2OWIw';
+  token = 'ZWQ3NjNhZTgwMjZjYTFkZDg3MDEwM2I2ODY0MjMy';
   clientId = '3cd49364-721a-4d3f-8bfa-141d93d6a8f7';
 
   constructor(private http: HttpClient) { }

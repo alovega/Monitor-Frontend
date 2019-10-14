@@ -39,7 +39,7 @@
 <!-- Zero Scheduled Incidents For the system -->
 <ng-template #noIncidents>
     <hm-empty-data header="No Scheduled Maintenances" description="You will see all scheduled maintenances here">
-      <a action-button routerLink='/incidents/new/maintenance' routerlinkactive="active"> 
+      <a action-button routerLink='/system/{{systemId}}/incidents/new/maintenance' routerlinkactive="active"> 
         <button id="create-button" size="sm" color="primary">
           New maintenance 
         </button>

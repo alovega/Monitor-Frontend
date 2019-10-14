@@ -9,12 +9,13 @@ import { Incident } from './incident';
 @Injectable({
   providedIn: 'root'
 })
+
 export class IncidentService {
   incidentsUrl = 'assets/demo-incidents.json';
   httpOptions = {
     headers: new HttpHeaders({'Content-Type' : 'application/x-www-form-urlencoded'})
   };
-  token = 'YjAwNmViYmVhZmE3OTBlMmRjNmVlNjM3ZjU2OWIw';
+  token = 'ZWQ3NjNhZTgwMjZjYTFkZDg3MDEwM2I2ODY0MjMy';
   clientId = '3cd49364-721a-4d3f-8bfa-141d93d6a8f7';
   @Output() changeSystem: EventEmitter<boolean> = new EventEmitter();
 
@@ -24,7 +25,6 @@ export class IncidentService {
 
   createIncident(formData: any): Observable<Incident> {
     const createIncidentUrl = 'http://127.0.0.1:8000/api/create_incident/';
-    formData.append('system', 'Helaplan');
     formData.append('client_id', this.clientId);
     formData.append('token', this.token);
 
@@ -95,10 +95,10 @@ export class IncidentService {
     );
   }
 
-  getIncident(incidentId: string): Observable<any> {
+  getIncident(incidentId: string, currentSystem: any): Observable<any> {
     return this.http.post<any>('http://127.0.0.1:8000/api/get_incident/', {
       client_id: this.clientId,
-      system: 'Helaplan',
+      system: currentSystem.name,
       incident_id: incidentId,
       token: this.token
     }).pipe(
