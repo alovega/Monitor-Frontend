@@ -4,7 +4,6 @@ import { Routes, RouterModule } from '@angular/router';
 import { SystemsComponent } from './systems.component';
 
 const currentSystem = JSON.parse(localStorage.getItem('currentSystem'));
-console.log(currentSystem.id.toString());
 const systemId = currentSystem.id.toString();
 
 const routes: Routes = [
@@ -15,7 +14,7 @@ const routes: Routes = [
   children: [
   ]},
   {
-    path: ':system-id', pathMatch: 'prefix', redirectTo: `${systemId}/incidents`
+    path: ':system-id', component: SystemsComponent
   },
   { path: ':system-id/incidents', loadChildren: () => import('./incidents/incidents.module').then(m => m.IncidentsModule) }
 ];

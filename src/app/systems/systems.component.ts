@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
+import { map, tap } from 'rxjs/operators';
 
 import { SystemService } from '../shared/system.service';
 
@@ -10,18 +12,26 @@ import { SystemService } from '../shared/system.service';
 export class SystemsComponent implements OnInit {
   systems: any;
   currentSystem: any;
-
+  currentSystemId: any;
   constructor(
-    private systemService: SystemService
+    private systemService: SystemService,
+    private router: Router,
+    private activatedRoute: ActivatedRoute
   ) { }
 
   ngOnInit() {
-    this.systems = this.systemService.getSystems().subscribe(
-      (results: any) => {
-        this.systems = results;
-      });
-    this.currentSystem = this.systems[0];
-    // console.log(this.systems);
-    localStorage.setItem('currentSystem', this.currentSystem);
+    this.currentSystemId = this.activatedRoute.snapshot.params['system-id'];
+    if (!this.currentSystemId) {
+      this.currentSystem = this.systemService.getCurrentSystem();
+      this.currentSystemId = this.currentSystem.id;
+    }
+    this.systemService.setSystem(this.currentSystemId).subscribe(
+      systems => {
+        localStorage.setItem('currentSystem', JSON.stringify(systems[0]));
+      }
+    );
+    // this.router.navigateByUrl('/', {skipLocationChange: true}).then(() =>
+    // this.router.navigate([`system/${this.currentSystemId}/incidents`]));
+    this.router.navigate([`system/${this.currentSystemId}/incidents`]);
   }
 }

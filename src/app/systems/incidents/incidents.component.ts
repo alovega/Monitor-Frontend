@@ -5,6 +5,7 @@ import { debounceTime, switchMap, distinctUntilChanged, filter } from 'rxjs/oper
 
 import { Incident } from './incident';
 import { IncidentService } from './incident.service';
+import { SystemService } from 'src/app/shared/system.service';
 
 
 @Component({
@@ -23,7 +24,8 @@ export class IncidentsComponent implements OnInit {
   constructor(
     public router: Router,
     private activatedRoute: ActivatedRoute,
-    private incidentService: IncidentService
+    private incidentService: IncidentService,
+    private systemService: SystemService
   ) {
     this.systemId = this.activatedRoute.snapshot.paramMap.get('system-id');
     this.incidentType = this.activatedRoute.snapshot.paramMap.get('incident-type');
@@ -31,11 +33,6 @@ export class IncidentsComponent implements OnInit {
   }
 
   ngOnInit() {
-    let currentSystem = JSON.parse(localStorage.getItem('currentSystem'));
-    console.log(currentSystem.id);
-    if (this.systemId !== currentSystem.id) {
-      this.router.navigate(['/errors']);
-    }
     // console.log(this.router.url === '/system/' + this.systemId + '/incidents/maintenance');
     // this.incidents$ = this.searchTerms.pipe(
     //   debounceTime(300),

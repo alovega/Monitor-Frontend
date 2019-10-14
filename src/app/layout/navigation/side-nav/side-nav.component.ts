@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { SystemService } from '../../../shared/system.service';
+
 
 @Component({
   selector: 'hm-side-nav',
@@ -7,11 +9,21 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SideNavComponent implements OnInit {
   currentSystemId: any;
-  constructor() { }
+
+  constructor(
+    private systemService: SystemService
+  ) { }
 
   ngOnInit() {
-    const currentSystem = JSON.parse(localStorage.getItem('currentSystem'));
-    this.currentSystemId = currentSystem.id;
+    this.systemService.changeSystem.subscribe(
+      system => {
+        let currentSystem = system[0];
+        this.currentSystemId = currentSystem.id;
+      }
+    );
   }
 
+  setSystem(systemId: any) {
+
+  }
 }

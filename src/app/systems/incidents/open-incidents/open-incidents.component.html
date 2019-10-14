@@ -1,5 +1,5 @@
 <div class="full-page">
-<div *ngIf="(incidents$ | async).length; else noIncidents">
+<div *ngIf="(incidents$ | async); else noIncidents">
       <a *ngFor="let incident of incidents$ | async" routerLink="/system/{{systemId}}/incidents/update/{{incident.incident_id}}" routerLinkActive="active">
         <mdb-card class="open-incident mb-4">
             <mdb-card-body>
@@ -8,7 +8,7 @@
             </a>
             <h5 class="open-incident-title">{{ incident.name }}</h5>
             <div class="incident-info">
-              <span *ngIf="incident.incident_updates.length; else noUpdates">
+              <span *ngIf="incident.incident_updates; else noUpdates">
                   <span *ngFor="let update of incident.incident_updates; let i=index">
                     <span *ngIf="update.status && i<1" class="incident-status" color="info">{{ update.status }}</span>
                     <div *ngIf="update.status && i<1" class="last-update-time"><small>Last updated on: {{ update.date_modified | date:'full' }}</small></div>

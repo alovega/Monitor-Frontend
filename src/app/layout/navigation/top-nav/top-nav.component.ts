@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
 
 import { SystemService } from '../../../shared/system.service';
 
@@ -10,15 +11,28 @@ import { SystemService } from '../../../shared/system.service';
 export class TopNavComponent implements OnInit {
   systems: any;
   currentSystem: any;
+  currentSystemId: any;
 
   constructor(
     private systemService: SystemService,
-  ) { }
+    private route: ActivatedRoute,
+  ) {
+  }
 
   ngOnInit() {
     this.systemService.getSystems().subscribe(
-      (result => this.systems = result)
+      (result => {
+        this.systems = result;
+      })
     );
-    this.currentSystem = localStorage.getItem('currentSystem');
+    this.currentSystem = this.systemService.getCurrentSystem();
+  }
+
+  reload(systemId: string) {
+    this.systemService.setSystem(systemId).subscribe(
+      (result => {
+        this.currentSystem = result[0];
+      })
+    );
   }
 }
