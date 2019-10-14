@@ -15,7 +15,7 @@ export class EmailNotificationComponent implements OnInit {
   lastItemIndex: any;
   elements: any;
   previous: any = [];
-  headElements: string[] = [ 'notification', 'date-created', 'state'];
+  headElements: string[] = [ 'Notification', 'Date Created', 'State'];
 
   constructor(private notificationsService: NotificationsService, private cdRef: ChangeDetectorRef) {
     this.elements = []

@@ -114,13 +114,14 @@
     },
     {
       "id": 2,
-      "email": "user2@gmail.com",
-      "phone_number": "07xxxxxxx",
+      "email": "user2@yahoo.com",
+      "phone_number": "07171316934",
       "system_id": "5d9aeb7e4fd126e267a125b9",
-      "status": "Active",
+      "status": "active",
       "notification_type": "Email",
       "date_created": "2018-05-24T09:49:31 -03:00",
-      "date_modified": "2018-02-14T10:00:28 -03:00"
+      "date_modified": "Mon, 14 Oct 2019 08:42:20 GMT",
+      "escalation_level": "Level 1"
     },
     {
       "id": 3,
@@ -134,13 +135,14 @@
     },
     {
       "id": 4,
-      "email": "user4@gmail.com",
-      "phone_number": "07xxxxxxx",
+      "email": "user4@gmail.biz",
+      "phone_number": "07171316934",
       "system_id": "5d9aeb7e4fd126e267a125b9",
-      "status": "Active",
+      "status": "active",
       "notification_type": "Email",
       "date_created": "2018-05-24T09:49:31 -03:00",
-      "date_modified": "2018-02-14T10:00:28 -03:00"
+      "date_modified": "Mon, 14 Oct 2019 08:35:37 GMT",
+      "escalation_level": "Level 1"
     },
     {
       "id": 5,
@@ -271,16 +273,6 @@
       "status": "active",
       "date_created": "Fri, 11 Oct 2019 12:33:50 GMT",
       "id": 17
-    },
-    {
-      "email": "mercynjeri@gmail.com",
-      "phone_number": "0718741751",
-      "user": "1",
-      "escalation_level": "Level 2",
-      "notification_type": "Email",
-      "status": "active",
-      "date_created": "Mon, 11 Apr 2011 10:20:30 GMT",
-      "id": 19
     },
     {
       "email": "timothytrevalyn@yahoo.com",

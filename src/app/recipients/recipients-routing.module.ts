@@ -23,13 +23,13 @@ children: [
         component: RecipientFormComponent
       },
       {
+        path: 'sms-recipient',
+        component: SmsRecipientsComponent
+      },
+      {
         path: 'recipient-update/:id',
         component: RecipientUpdateComponent
       },
-      {
-        path: 'sms-recipient',
-        component: SmsRecipientsComponent
-      }
     ] }];
 
 @NgModule({
