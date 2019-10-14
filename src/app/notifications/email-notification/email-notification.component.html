@@ -7,11 +7,11 @@
         <tbody>
           <tr mdbTableCol *ngFor="let el of elements; let i = index ">
           <th *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex" scope="row">
-              {{el.name}}
+              {{el.description}}
           </th>
           <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{el.date_created}}</td>
           <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">
-            <h6><mdb-badge primary="true">{{el.status}}</mdb-badge></h6>
+            <a class="btn btn-primary" >{{el.status}}</a>
           </td>
           </tr>
         </tbody>
