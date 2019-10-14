@@ -10,7 +10,7 @@ import {map, tap, filter} from 'rxjs/operators';
 export class SystemService {
   currentSystem: any;
   @Output() changeSystem: EventEmitter<boolean> = new EventEmitter();
-  token = 'ZWQ3NjNhZTgwMjZjYTFkZDg3MDEwM2I2ODY0MjMy';
+  token = 'MmVmZWQzYTdhNGY2ZjMxNTE4NGQ1ZWZlOTk5MDA3';
   clientId = '3cd49364-721a-4d3f-8bfa-141d93d6a8f7';
 
   constructor(private http: HttpClient) { }
@@ -21,12 +21,13 @@ export class SystemService {
       token: this.token,
     }).pipe(
       map(system => system.data),
-      tap(system => {
-        if (localStorage.getItem('currentSystem') === null) {
-          this.currentSystem = system[0];
-          localStorage.setItem('currentSystem', JSON.stringify(this.currentSystem));
-        }
-      })
+      // tap(system => {
+      //   if (localStorage.getItem('currentSystem') === null || localStorage.getItem('currentSystem') === 'undefined') {
+      //     this.currentSystem = system[0];
+      //     console.log('Saving new current system ... ');
+      //     localStorage.setItem('currentSystem', JSON.stringify(this.currentSystem));
+      //   }
+      // })
     );
   }
 
@@ -54,11 +55,28 @@ export class SystemService {
     );
   }
 
+  checkCurrentSystem() {
+    if (localStorage.getItem('currentSystem') === null || localStorage.getItem('currentSystem') === 'undefined') {
+      console.log('Saved system');
+      return true;
+    } else {
+      let system = JSON.parse(localStorage.getItem('currentSystem'));
+      console.log(system.id);
+      return system.id;
+    }
+  }
+
   getCurrentSystem() {
     // console.log(localStorage.getItem('currentSystem'));
-    if (localStorage.getItem('currentSystem') === null || localStorage.getItem('currentSystem') === undefined) {
-      this.getSystems();
-    }
-    return JSON.parse(localStorage.getItem('currentSystem'));
+    return this.http.post<any>('http://127.0.0.1:8000/api/get_systems/', {
+      client_id: this.clientId,
+      token: this.token,
+    }).pipe(
+      map(result => result.data),
+      tap(result => {
+        const currentSystem = result[0];
+        localStorage.setItem('currentSystem', JSON.stringify(currentSystem));
+        // console.log(currentSystem);
+      }));
   }
 }

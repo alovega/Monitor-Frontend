@@ -15,7 +15,7 @@ export class IncidentService {
   httpOptions = {
     headers: new HttpHeaders({'Content-Type' : 'application/x-www-form-urlencoded'})
   };
-  token = 'ZWQ3NjNhZTgwMjZjYTFkZDg3MDEwM2I2ODY0MjMy';
+  token = 'MmVmZWQzYTdhNGY2ZjMxNTE4NGQ1ZWZlOTk5MDA3';
   clientId = '3cd49364-721a-4d3f-8bfa-141d93d6a8f7';
   @Output() changeSystem: EventEmitter<boolean> = new EventEmitter();
 
@@ -29,10 +29,10 @@ export class IncidentService {
     formData.append('token', this.token);
 
     for (let key of formData.entries()) {
-      console.log(key[0] + ', ' + key[1]);
+      // console.log(key[0] + ', ' + key[1]);
     }
     return this.http.post<Incident>(createIncidentUrl, formData).pipe(
-      tap(incident => console.log(incident))
+      // tap(incident => console.log(incident))
     );
   }
 
@@ -45,12 +45,12 @@ export class IncidentService {
       end_date: '2019-10-15'
     }).pipe(
       map(incidents => incidents.data),
-      tap(incidents => console.log(incidents))
+      // tap(incidents => console.log(incidents))
     );
   }
 
   getOpenIncidents(currentSystem: any): Observable<Incident[]> {
-    console.log(currentSystem);
+    // console.log(currentSystem);
     return this.http.post<any>('http://127.0.0.1:8000/api/get_incidents/', {
       client_id: this.clientId,
       system: currentSystem.name,
@@ -61,7 +61,7 @@ export class IncidentService {
       map(incidents => incidents.data.filter(incident => incident.status !== 'Completed').filter(
         incident => incident.status !== 'Resolved'
       )),
-      tap(incidents => console.log(incidents))
+      // tap(incidents => console.log(incidents))
     );
   }
 
@@ -78,7 +78,7 @@ export class IncidentService {
       end_date: '2019-10-15'
     }).pipe(
       map(incidents => incidents.data.filter(incident => incident.type === 'Realtime')),
-      tap(incidents => console.log(incidents))
+      // tap(incidents => console.log(incidents))
     );
   }
 
@@ -91,7 +91,7 @@ export class IncidentService {
       end_date: '2019-10-15'
     }).pipe(
       map(incidents => incidents.data.filter(incident => incident.type === 'Scheduled')),
-      tap(incidents => console.log(incidents))
+      // tap(incidents => console.log(incidents))
     );
   }
 
@@ -103,7 +103,7 @@ export class IncidentService {
       token: this.token
     }).pipe(
       map(incident => incident.data),
-      tap(incident => console.log(incident))
+      // tap(incident => console.log(incident))
     );
   }
 
@@ -113,7 +113,7 @@ export class IncidentService {
     formData.append('token', this.token);
     return this.http.post<any>('http://127.0.0.1:8000/api/update_incident/', formData).pipe(
       map(incident => incident),
-      tap(incident => console.log(incident))
+      // tap(incident => console.log(incident))
     );
   }
 

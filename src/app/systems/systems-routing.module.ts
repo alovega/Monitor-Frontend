@@ -5,6 +5,7 @@ import { SystemsComponent } from './systems.component';
 
 const currentSystem = JSON.parse(localStorage.getItem('currentSystem'));
 const systemId = currentSystem.id.toString();
+console.log(systemId);
 
 const routes: Routes = [
   {

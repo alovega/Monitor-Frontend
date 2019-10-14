@@ -12,11 +12,13 @@ export class TopNavComponent implements OnInit {
   systems: any;
   currentSystem: any;
   currentSystemId: any;
+  systemIsAvailable: boolean = false;
 
   constructor(
     private systemService: SystemService,
     private route: ActivatedRoute,
   ) {
+
   }
 
   ngOnInit() {
@@ -25,7 +27,10 @@ export class TopNavComponent implements OnInit {
         this.systems = result;
       })
     );
-    this.currentSystem = this.systemService.getCurrentSystem();
+    let issetCurrentSystem = this.systemService.checkCurrentSystem();
+    issetCurrentSystem ? this.systemService.getCurrentSystem()
+    .subscribe(systems => this.currentSystem = systems[0]) : this.currentSystem  = this.systemService.checkCurrentSystem();
+    this.systemIsAvailable = true;
   }
 
   reload(systemId: string) {

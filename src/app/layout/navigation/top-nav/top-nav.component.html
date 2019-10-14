@@ -1,5 +1,5 @@
 <mdb-navbar SideClass="navbar fixed-top navbar-expand-lg navbar-light white scrolling-navbar"
-    [containerInside]="false">
+    [containerInside]="false" *ngIf="systemIsAvailable">
     <!-- Navbar brand -->
       <a class="navbar-brand ml-2" mdbWavesEffect href="https://mdbootstrap.com/docs/jquery/" target="_blank">
         <strong class="blue-text">HM</strong>
