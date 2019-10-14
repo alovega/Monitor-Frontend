@@ -15,7 +15,7 @@ export class EmailRecipientsComponent implements OnInit {
   lastItemIndex: any;
   elements: any;
   previous: any = [];
-  headElements: string[] = [ 'email', 'date-created', 'action'];
+  headElements: string[] = [ 'Email', 'Date Created', 'Status','Action'];
 
   constructor(private recipientService:RecipientService, private cdRef: ChangeDetectorRef) {
     this.elements = []

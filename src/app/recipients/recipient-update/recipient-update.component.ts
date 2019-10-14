@@ -82,7 +82,7 @@ export class RecipientUpdateComponent implements OnInit {
   update() {
     this.recipient.date_modified = new Date(Date.now()).toUTCString()
     this.recipientService.updateItem(this.id, this.recipient).subscribe(response => {
-      this.router.navigate(['recipient']);
+      this.router.navigate(['recipients']);
     })
   }
 }

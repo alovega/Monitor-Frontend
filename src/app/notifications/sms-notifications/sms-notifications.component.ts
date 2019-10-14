@@ -15,7 +15,7 @@ export class SmsNotificationsComponent implements OnInit {
   lastItemIndex: any;
   elements: any;
   previous: any = [];
-  headElements: string[] = [ 'notification', 'date-created', 'state'];
+  headElements: string[] = [ 'Notification','Recipient', 'Date Created', 'Status'];
 
   constructor(private notificationsService: NotificationsService, private cdRef: ChangeDetectorRef) {
     this.elements = []

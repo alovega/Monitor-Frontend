@@ -14,7 +14,7 @@ export class SmsRecipientsComponent implements OnInit {
   lastItemIndex: any;
   elements: any;
   previous: any = [];
-  headElements: string[] = [ 'Phone-Number', 'date-created', 'action'];
+  headElements: string[] = [ 'Phone Number', 'Date Created','Status','Action'];
   constructor(private recipientService:RecipientService, private cdRef: ChangeDetectorRef) { 
     this.elements = []
   }

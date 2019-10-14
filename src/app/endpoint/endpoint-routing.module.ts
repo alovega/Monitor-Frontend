@@ -24,7 +24,7 @@ children: [
       {
         path: 'endpoint-update/:id',
         component:EndpointUpdateComponent
-      }
+      },
     ] }];
 
 @NgModule({

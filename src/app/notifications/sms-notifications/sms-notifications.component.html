@@ -9,9 +9,10 @@
           <th *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex" scope="row">
               {{el.description}}
           </th>
+          <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{el.recipient}}</td>
           <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{el.date_created}}</td>
           <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">
-            <a class="btn btn-primary" >{{el.status}}</a>
+            <h5><mdb-badge success="true">{{el.status}}</mdb-badge></h5>
           </td>
           </tr>
         </tbody>
