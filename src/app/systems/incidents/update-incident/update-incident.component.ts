@@ -36,15 +36,16 @@ export class UpdateIncidentComponent implements OnInit {
     this.activatedRoute.parent.params.subscribe(
       (param: any) => {
         this.systemId = param['system-id'];
-        console.log(this.systemId);
+        console.log('Update system id is '+ this.systemId + 'System ID');
       });
 
     let issetCurrentSystem = this.systemService.checkCurrentSystem();
     issetCurrentSystem ? this.systemService.getCurrentSystem()
     .subscribe(systems => this.currentSystem = systems[0]) : this.currentSystem  = this.systemService.checkCurrentSystem();
-    console.log(this.currentSystem);
+    if (this.currentSystem) {
+      this.showIncident();
+    }
 
-    this.showIncident();
     this.createUpdateIncidentForm();
   }
 
@@ -67,7 +68,7 @@ export class UpdateIncidentComponent implements OnInit {
   // }
 
   public showIncident(): void {
-    console.log('Showing...');
+    console.log('Showing...' + this.currentSystem);
     this.incidentService.getIncident(this.incidentId, this.currentSystem).subscribe(
       (data: any) => {
         this.incident = data;

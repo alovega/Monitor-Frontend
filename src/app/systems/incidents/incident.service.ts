@@ -123,12 +123,7 @@ export class IncidentService {
     );
   }
 
-  checkCurrentSystem() {
-
-  }
-
-  
-  getCurrentSystem() {
+  getSystem() {
     this.changeSystem.emit(JSON.parse(localStorage.getItem('currentSystem')));
   }
 }
