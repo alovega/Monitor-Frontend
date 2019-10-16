@@ -7,7 +7,7 @@
       "endpoint_id": "5d9aeb7e90273f7e0a642c63",
       "system_id": "5d9aeb7e4fd126e267a125b9",
       "optimal_response_time": "0.04",
-      "status": "1",
+      "status": "Active",
       "endpoint_type": "health_check",
       "endpoint": "http/sample/user.k",
       "date_created": "2018-05-24T09:49:31 -03:00",
@@ -120,7 +120,7 @@
       "status": "active",
       "notification_type": "Email",
       "date_created": "2018-05-24T09:49:31 -03:00",
-      "date_modified": "Mon, 14 Oct 2019 13:35:55 GMT",
+      "date_modified": "Mon, 14 Oct 2019 13:45:28 GMT",
       "escalation_level": "Level 1"
     },
     {
