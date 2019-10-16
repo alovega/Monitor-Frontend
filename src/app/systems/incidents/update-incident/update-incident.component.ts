@@ -18,45 +18,32 @@ export class UpdateIncidentComponent implements OnInit {
   incidents: Incident[];
   incident: any;
   initialPriorityLevel: string;
-  id: string;
+  incidentId: string;
   systemId: string;
   currentSystem: any;
 
   constructor(
-    private route: ActivatedRoute,
+    private activatedRoute: ActivatedRoute,
     private incidentService: IncidentService,
     private formBuilder: FormBuilder,
     private location: Location,
     private systemService: SystemService
   ) {
-    this.id = this.route.snapshot.paramMap.get('incident-id');
+    this.incidentId = this.activatedRoute.snapshot.paramMap.get('incident-id');
   }
 
   ngOnInit() {
-    this.route.parent.params.subscribe(
-      (param: any) => {
-        this.systemId = param['system-id'];
-      });
-
-    this.systemService.setSystem(this.systemId).subscribe(
-      (result => {
-        this.currentSystem = result[0];
-      })
-    );
-
-    this.route.parent.params.subscribe(
+    this.activatedRoute.parent.params.subscribe(
       (param: any) => {
         this.systemId = param['system-id'];
         console.log(this.systemId);
       });
 
-    this.systemService.setSystem(this.systemId).subscribe(
-      (result => {
-        this.currentSystem = result[0];
-        this.incident = this.incidentService.getIncident(this.id, this.currentSystem);
-        console.log(this.currentSystem);
-      })
-    );
+    let issetCurrentSystem = this.systemService.checkCurrentSystem();
+    issetCurrentSystem ? this.systemService.getCurrentSystem()
+    .subscribe(systems => this.currentSystem = systems[0]) : this.currentSystem  = this.systemService.checkCurrentSystem();
+    console.log(this.currentSystem);
+
     this.showIncident();
     this.createUpdateIncidentForm();
   }
@@ -80,11 +67,11 @@ export class UpdateIncidentComponent implements OnInit {
   // }
 
   public showIncident(): void {
-    console.log("ufnidsf");
-    this.incidentService.getIncident(this.id, this.currentSystem).subscribe(
-      (data: Incident) => {
+    console.log('Showing...');
+    this.incidentService.getIncident(this.incidentId, this.currentSystem).subscribe(
+      (data: any) => {
         this.incident = data;
-        console.log(data);
+        console.log('Incident data is' + data);
         this.updateIncidentForm.patchValue({
           priorityLevel: this.incident.priority_level.toString(),
           incidentStatus: this.incident.status.toString(),
@@ -116,7 +103,7 @@ export class UpdateIncidentComponent implements OnInit {
       console.log(key[0] + ', ' + key[1]);
     }
 
-    return this.incidentService.updateIncident(formData).subscribe(
+    return this.incidentService.updateIncident(formData, this.currentSystem).subscribe(
       (incident => {
         if (incident.code === '800.200.001') {
           this.location.back();

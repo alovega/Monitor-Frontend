@@ -103,13 +103,14 @@ export class IncidentService {
       token: this.token
     }).pipe(
       map(incident => incident.data),
-      // tap(incident => console.log(incident))
+      tap(incident => console.log(currentSystem.name))
     );
   }
 
-  updateIncident(formData: any): Observable<any> {
+  updateIncident(formData: any, currentSystem: any): Observable<any> {
     formData.append('client_id', this.clientId);
     formData.append('token', this.token);
+    formData.append('system', currentSystem.name);
     return this.http.post<any>('http://127.0.0.1:8000/api/update_incident/', formData).pipe(
       map(incident => incident),
       // tap(incident => console.log(incident))
@@ -122,7 +123,12 @@ export class IncidentService {
     );
   }
 
-  getSystem() {
+  checkCurrentSystem() {
+
+  }
+
+  
+  getCurrentSystem() {
     this.changeSystem.emit(JSON.parse(localStorage.getItem('currentSystem')));
   }
 }

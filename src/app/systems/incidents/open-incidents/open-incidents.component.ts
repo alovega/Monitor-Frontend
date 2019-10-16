@@ -34,11 +34,10 @@ export class OpenIncidentsComponent implements OnInit {
       (result => {
         this.currentSystem = result[0];
         this.incidents$ = this.incidentService.getOpenIncidents(this.currentSystem);
-        console.log(this.currentSystem);
+        // console.log(this.currentSystem);
       })
     );
   }
-
   // showIncidents() {
   //   this.incidentService.getIncidents()
   //   .subscribe((results: Incident[]) => {
