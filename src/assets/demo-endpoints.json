@@ -7,7 +7,7 @@
       "endpoint_id": "5d9aeb7e90273f7e0a642c63",
       "system_id": "5d9aeb7e4fd126e267a125b9",
       "optimal_response_time": "0.04",
-      "status": "Active",
+      "status": "1",
       "endpoint_type": "health_check",
       "endpoint": "http/sample/user.k",
       "date_created": "2018-05-24T09:49:31 -03:00",
@@ -99,17 +99,416 @@
       "status": "1",
       "date_created": 9,
       "id": 9
+    }
+  ],
+  "recipients": [
+    {
+      "id": 1,
+      "email": "user1@gmail.com",
+      "phone_number": "07ZSSSSSS",
+      "system_id": "5d9aeb7e4fd126e267a125b9",
+      "status": "Active",
+      "notification_type": "SMS",
+      "date_created": "2018-05-24T09:49:31 -03:00",
+      "date_modified": "2018-02-14T10:00:28 -03:00"
     },
     {
-      "system_id": "3",
-      "name": "Endpoint 66",
-      "description": "Sample Endpoint will be checked later",
-      "endpoint": "http://localhost:8000/endpoints/1",
-      "optimal_response_time": "49",
-      "endpoint_type": "1",
+      "id": 2,
+      "email": "user2@yahoo.com",
+      "phone_number": "07171316934",
+      "system_id": "5d9aeb7e4fd126e267a125b9",
+      "status": "active",
+      "notification_type": "Email",
+      "date_created": "2018-05-24T09:49:31 -03:00",
+      "date_modified": "Mon, 14 Oct 2019 13:35:55 GMT",
+      "escalation_level": "Level 1"
+    },
+    {
+      "id": 3,
+      "email": "user3@gmail.com",
+      "phone_number": "07xxxxxxx",
+      "system_id": "5d9aeb7e4fd126e267a125b9",
+      "status": "Active",
+      "notification_type": "SMS",
+      "date_created": "2018-05-24T09:49:31 -03:00",
+      "date_modified": "2018-02-14T10:00:28 -03:00"
+    },
+    {
+      "id": 4,
+      "email": "user4@gmail.biz",
+      "phone_number": "07171316934",
+      "system_id": "5d9aeb7e4fd126e267a125b9",
+      "status": "active",
+      "notification_type": "Email",
+      "date_created": "2018-05-24T09:49:31 -03:00",
+      "date_modified": "Mon, 14 Oct 2019 08:35:37 GMT",
+      "escalation_level": "Level 1"
+    },
+    {
+      "id": 5,
+      "email": "user5@gmail.com",
+      "phone_number": "07xxxxxxx",
+      "system_id": "5d9aeb7e4fd126e267a125b9",
+      "status": "Active",
+      "notification_type": "SMS",
+      "date_created": "2018-05-24T09:49:31 -03:00",
+      "date_modified": "2018-02-14T10:00:28 -03:00"
+    },
+    {
+      "id": 6,
+      "email": "user6@gmail.com",
+      "phone_number": "07xxxxxxx",
+      "system_id": "5d9aeb7e4fd126e267a125b9",
+      "status": "Active",
+      "notification_type": "Email",
+      "date_created": "2018-05-24T09:49:31 -03:00",
+      "date_modified": "2018-02-14T10:00:28 -03:00"
+    },
+    {
+      "id": 7,
+      "email": "user7@gmail.com",
+      "phone_number": "07xxxxxxx",
+      "system_id": "5d9aeb7e4fd126e267a125b9",
+      "status": "Active",
+      "notification_type": "SMS",
+      "date_created": "2018-05-24T09:49:31 -03:00",
+      "date_modified": "2018-02-14T10:00:28 -03:00"
+    },
+    {
+      "id": 8,
+      "email": "user8@gmail.com",
+      "phone_number": "07xxxxxxx",
+      "system_id": "5d9aeb7e4fd126e267a125b9",
+      "status": "Active",
+      "notification_type": "Email",
+      "date_created": "2018-05-24T09:49:31 -03:00",
+      "date_modified": "2018-02-14T10:00:28 -03:00"
+    },
+    {
+      "id": 9,
+      "email": "user9@gmail.com",
+      "phone_number": "07xxxxxxx",
+      "system_id": "5d9aeb7e4fd126e267a125b9",
+      "status": "Active",
+      "notification_type": "SMS",
+      "date_created": "2018-05-24T09:49:31 -03:00",
+      "date_modified": "2018-02-14T10:00:28 -03:00"
+    },
+    {
+      "id": 10,
+      "email": "user10@gmail.com",
+      "phone_number": "07xxxxxxx",
+      "system_id": "5d9aeb7e4fd126e267a125b9",
+      "status": "Active",
+      "notification_type": "Email",
+      "date_created": "2018-05-24T09:49:31 -03:00",
+      "date_modified": "2018-02-14T10:00:28 -03:00"
+    },
+    {
+      "id": 11,
+      "email": "user11@gmail.com",
+      "phone_number": "07xxxxxxx",
+      "system_id": "5d9aeb7e4fd126e267a125b9",
+      "status": "Active",
+      "notification_type": "SMS",
+      "date_created": "2018-05-24T09:49:31 -03:00",
+      "date_modified": "2018-02-14T10:00:28 -03:00"
+    },
+    {
+      "id": 12,
+      "email": "user12@gmail.com",
+      "phone_number": "07xxxxxxx",
+      "system_id": "5d9aeb7e4fd126e267a125b9",
+      "status": "Active",
+      "notification_type": "Email",
+      "date_created": "2018-05-24T09:49:31 -03:00",
+      "date_modified": "2018-02-14T10:00:28 -03:00"
+    },
+    {
+      "id": 13,
+      "email": "user13@gmail.com",
+      "phone_number": "07xxxxxxx",
+      "system_id": "5d9aeb7e4fd126e267a125b9",
+      "status": "Active",
+      "notification_type": "SMS",
+      "date_created": "2018-05-24T09:49:31 -03:00",
+      "date_modified": "2018-02-14T10:00:28 -03:00"
+    },
+    {
+      "id": 14,
+      "email": "user14@gmail.com",
+      "phone_number": "07xxxxxxx",
+      "system_id": "5d9aeb7e4fd126e267a125b9",
+      "status": "Active",
+      "notification_type": "Email",
+      "date_created": "2018-05-24T09:49:31 -03:00",
+      "date_modified": "2018-02-14T10:00:28 -03:00"
+    },
+    {
+      "id": 15,
+      "email": "user15@gmail.com",
+      "phone_number": "07xxxxxxx",
+      "system_id": "5d9aeb7e4fd126e267a125b9",
+      "status": "Active",
+      "notification_type": "SMS",
+      "date_created": "2018-05-24T09:49:31 -03:00",
+      "date_modified": "2018-02-14T10:00:28 -03:00"
+    },
+    {
+      "email": "alovegakevin@gmail.com",
+      "phone_number": "07171316934",
+      "user": "2",
+      "escalation_level": "1",
+      "notification_type": "1",
       "status": "1",
-      "date_created": 9,
-      "id": 10
+      "date_created": "Fri, 11 Oct 2019 12:31:31 GMT",
+      "id": 16
+    },
+    {
+      "email": "kevin.alovega@yahoo.com",
+      "phone_number": "07171316934",
+      "user": "2",
+      "escalation_level": "Level 2",
+      "notification_type": "Email",
+      "status": "active",
+      "date_created": "Fri, 11 Oct 2019 12:33:50 GMT",
+      "id": 17
+    },
+    {
+      "email": "timothytrevalyn@yahoo.com",
+      "phone_number": "07xxxxxxxx",
+      "user": "1",
+      "escalation_level": "Level 3",
+      "notification_type": "SMS",
+      "status": "active",
+      "date_created": "Fri, 11 Oct 2019 12:43:19 GMT",
+      "id": 20
+    },
+    {
+      "email": "ekaky.ek@gmail.com",
+      "phone_number": "0725354624",
+      "user": "1",
+      "escalation_level": "Level 5",
+      "notification_type": "Email",
+      "status": "active",
+      "date_created": "Sun, 13 Oct 2019 10:59:11 GMT",
+      "id": 21
+    }
+  ],
+  "systems": [
+    {
+      "id": 1,
+      "name": "system 1",
+      "description": "system 1",
+      "status": "Active",
+      "date_created": "2018-05-24T09:49:31 -03:00",
+      "date_modified": "2018-02-14T10:00:28 -03:00"
+    },
+    {
+      "id": 2,
+      "name": "system 2",
+      "description": "system 2",
+      "status": "Active",
+      "date_created": "2018-05-24T09:49:31 -03:00",
+      "date_modified": "2018-02-14T10:00:28 -03:00"
+    },
+    {
+      "id": 3,
+      "system": "system 3",
+      "description": "system 3",
+      "status": "Active",
+      "date_created": "2018-05-24T09:49:31 -03:00",
+      "date_modified": "2018-02-14T10:00:28 -03:00"
+    },
+    {
+      "id": 4,
+      "name": "system 4",
+      "description": "system 4",
+      "status": "Active",
+      "date_created": "2018-05-24T09:49:31 -03:00",
+      "date_modified": "2018-02-14T10:00:28 -03:00"
+    },
+    {
+      "id": 5,
+      "name": "system 5",
+      "description": "system 5",
+      "status": "Active",
+      "date_created": "2018-05-24T09:49:31 -03:00",
+      "date_modified": "2018-02-14T10:00:28 -03:00"
+    }
+  ],
+  "levels": [
+    {
+      "id": 1,
+      "name": "Level 1",
+      "description": "Lowest Escalation Level",
+      "status": "Active"
+    },
+    {
+      "id": 2,
+      "name": "Level 2",
+      "description": "Low Escalation level",
+      "status": "Active"
+    },
+    {
+      "id": 3,
+      "name": "Level 3",
+      "description": "Mid level escalation Level",
+      "status": "Active"
+    },
+    {
+      "id": 4,
+      "name": "Level 4",
+      "description": "High level escalation level",
+      "status": "Active"
+    },
+    {
+      "id": 5,
+      "name": "Level 5",
+      "description": "Highest level of escalation level",
+      "status": "Active"
+    }
+  ],
+  "notification-type": [
+    {
+      "id": 1,
+      "name": "Email",
+      "description": "should recieve Email notification",
+      "status": "Active"
+    },
+    {
+      "id": 2,
+      "name": "SMS",
+      "description": "Should Recieve Sms notification",
+      "status": "Active"
+    },
+    {
+      "id": 3,
+      "name": "Email and SMS",
+      "description": "Should recieve both sms and email notification",
+      "status": "Active"
+    }
+  ],
+  "notifications": [
+    {
+      "id": 1,
+      "description": "This sample email",
+      "date_created": "2019-09-30T10:13:51 -03:00",
+      "recipient": "email1@gmail.com",
+      "status": "sent",
+      "notification_type": "Email"
+    },
+    {
+      "id": 2,
+      "description": "this sample SMS 2",
+      "date_created": "2019-09-30T10:13:51 -03:00",
+      "recipient": "0712xxxxx",
+      "status": "sent",
+      "notification_type": "SMS"
+    },
+    {
+      "id": 3,
+      "description": "this sample email 3",
+      "date_created": "2019-09-30T10:13:51 -03:00",
+      "recipient": "user3@gmail.com",
+      "status": "sent",
+      "notification_type": "Email"
+    },
+    {
+      "id": 4,
+      "description": "this sample SMS 4",
+      "date_created": "2019-09-30T10:13:51 -03:00",
+      "recipient": "0722xxxxxx",
+      "status": "sent",
+      "notification_type": "SMS"
+    },
+    {
+      "id": 5,
+      "description": "this sample email 5",
+      "date_created": "2019-09-30T10:13:51 -03:00",
+      "recipient": "user4@gmail.com",
+      "status": "sent",
+      "notification_type": "Email"
+    },
+    {
+      "id": 6,
+      "description": "this sample Sms 6",
+      "date_created": "2019-09-30T10:13:51 -03:00",
+      "recipient": "0712xxxxx",
+      "status": "sent",
+      "notification_type": "SMS"
+    },
+    {
+      "id": 7,
+      "description": "this sample email 7",
+      "date_created": "2019-09-30T10:13:51 -03:00",
+      "recipient": "user7@gmail.com",
+      "status": "sent",
+      "notification_type": "Email"
+    },
+    {
+      "id": 8,
+      "description": "this sample SMS 8",
+      "date_created": "2019-09-30T10:13:51 -03:00",
+      "recipient": "0718xxxxxx",
+      "status": "sent",
+      "notification_type": "SMS"
+    },
+    {
+      "id": 9,
+      "description": "this sample email 9",
+      "date_created": "2019-09-30T10:13:51 -03:00",
+      "recipient": "user9@hotmail.com",
+      "status": "sent",
+      "notification_type": "Email"
+    },
+    {
+      "id": 10,
+      "description": "this sample SMS 10",
+      "date_created": "2019-09-30T10:13:51 -03:00",
+      "recipient": "0714xxxxx",
+      "status": "sent",
+      "notification_type": "SMS"
+    },
+    {
+      "id": 11,
+      "description": "this sample email 11",
+      "date_created": "2019-09-30T10:13:51 -03:00",
+      "recipient": "user11@gmail.com",
+      "status": "sent",
+      "notification_type": "Email"
+    },
+    {
+      "id": 12,
+      "description": "this sample SMS 12",
+      "date_created": "2019-09-30T10:13:51 -03:00",
+      "recipient": "0714xxxxx",
+      "status": "sent",
+      "notification_type": "SMS"
+    },
+    {
+      "id": 13,
+      "description": "this sample email 13",
+      "date_created": "2019-09-30T10:13:51 -03:00",
+      "recipient": "user13@gmail.com",
+      "status": "sent",
+      "notification_type": "Email"
+    },
+    {
+      "id": 14,
+      "description": "this sample SMS 14",
+      "date_created": "2019-09-30T10:13:51 -03:00",
+      "recipient": "0717xxxxxx",
+      "status": "sent",
+      "notification_type": "SMS"
+    },
+    {
+      "id": 15,
+      "description": "this sample Sms 15",
+      "date_created": "2019-09-30T10:13:51 -03:00",
+      "recipient": "user15@gmail.com",
+      "status": "sent",
+      "notification_type": "SMS"
     }
   ]
 }

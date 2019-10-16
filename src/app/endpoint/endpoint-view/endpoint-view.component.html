@@ -4,7 +4,7 @@
                 <h2>Endpoint</h2>
             </div>
             <div class="col-6 col-md-4 d-flex justify-content-end">
-                <button type="button" routerLink="/endpoint-form" mdbBtn color="primary" mdbWavesEffect>Add Endpoint</button>
+                <button type="button" routerLink="/endpoint/endpoint-form" mdbBtn color="primary" mdbWavesEffect>Add Endpoint</button>
             </div>
          </div>
         
@@ -18,12 +18,12 @@
                     <tr mdbTableCol *ngFor="let el of elements; let i = index ">
                     <th *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex" scope="row">
                         {{el.name}}
-                        <p>{{el.name}} is active</p>
                     </th>
                     <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{el.date_created}}</td>
+                    <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{el.status}}</td>
                     <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">
-                        <a  routerLinkActive="active" routerLink="/endpoint-update/{{el.id}}" ><mdb-badge primary="true" class="link link1">Update</mdb-badge></a>
-                        <a href=""><mdb-badge danger="true" class="link" (click)="delete(el)">Delete</mdb-badge></a>
+                        <a class="btn btn-primary" routerLinkActive="active" routerLink="/endpoint/endpoint-update/{{el.id}}" >Edit</a>
+                        <a class="btn btn-danger" (click)="delete(el)">Delete</a>
                     </td>
                     </tr>
                 </tbody>
@@ -39,5 +39,5 @@
             <hm-empty-data header="No Existing System Endpoints" description="New Endpoints  displayed here">
               <button action-button type="button" mdbBtn size="sm" color="primary">Add Endpoint</button>
             </hm-empty-data>
-          </ng-template>
+        </ng-template>
 <router-outlet></router-outlet>

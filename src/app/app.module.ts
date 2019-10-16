@@ -25,8 +25,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyBBCMBffWFPoWuR8mMDe56nDKI4A9mf55k'
     }),
-    // EndpointModule,
-    // RecipientsModule,
     HttpClientModule,
     AppRoutingModule,
     DashboardModule,

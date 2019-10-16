@@ -4,14 +4,16 @@
             <th *ngFor="let head of headElements" scope="col">{{head}} </th>
           </tr>
         </thead>
-        <tbody>
+        <tbody *ngIf="elements.length > 1; else noElements" >
           <tr mdbTableCol *ngFor="let el of elements; let i = index ">
           <th *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex" scope="row">
-              {{el.name}}
+              {{el.phone_number}}
           </th>
           <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{el.date_created}}</td>
+          <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{el.status}}</td>
           <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">
-            <h6><a href=""><mdb-badge danger="true">Remove</mdb-badge></a></h6>
+            <a class="btn btn-primary  " routerLink="/recipients/recipient-update/{{el.id}}" routerLinkActive="active">Edit</a>
+            <a class="btn btn-danger " (click)="delete(el)">Delete</a>
           </td>
           </tr>
         </tbody>
@@ -23,4 +25,9 @@
           </tr>
         </tfoot>
       </table>
+      <ng-template #noElements>
+        <hm-empty-data header="No Existing System Endpoints" description="New Endpoints  displayed here">
+          <button action-button type="button" mdbBtn size="sm" color="primary">Add Endpoint</button>
+        </hm-empty-data>
+      </ng-template>
       <router-outlet></router-outlet>
