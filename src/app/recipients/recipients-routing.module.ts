@@ -2,9 +2,10 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { RecipientsComponent } from './recipients.component';
-import { RecipientFormComponent } from './recipient-form/recipient-form.component';
+import { RecipientFormComponent } from './recipient-create/recipient-create.component';
 import { EmailRecipientsComponent } from './email-recipients/email-recipients.component';
 import { SmsRecipientsComponent } from './sms-recipients/sms-recipients.component';
+import { RecipientUpdateComponent } from './recipient-update/recipient-update.component';
 
 const routes: Routes = [{ path: '', component: RecipientsComponent, 
 children: [
@@ -18,14 +19,19 @@ children: [
         component: EmailRecipientsComponent
       },
       {
-        path: 'recipient-form',
-        component: RecipientFormComponent
-      },
-      {
         path: 'sms-recipient',
         component: SmsRecipientsComponent
-      }
-    ] }];
+      },
+    ] },
+    {
+      path: 'recipient-create',
+      component: RecipientFormComponent
+    },
+    {
+      path: 'recipient-update/:id',
+      component: RecipientUpdateComponent
+    },
+  ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],

@@ -1,6 +1,7 @@
 import { MdbTablePaginationComponent, MdbTableDirective } from 'angular-bootstrap-md';
 import { Component, OnInit, ViewChild, AfterViewInit, ChangeDetectorRef } from '@angular/core';
-import {GetNotificationsService} from '../get-notifications.service'
+import {NotificationsService} from '../notifications.service';
+import {Notification} from '../notification';
 
 @Component({
   selector: 'app-sms-notifications',
@@ -12,14 +13,16 @@ export class SmsNotificationsComponent implements OnInit {
   @ViewChild(MdbTableDirective, { static: true }) mdbTable: MdbTableDirective;
   firstItemIndex: any;
   lastItemIndex: any;
-  elements: any[];
+  elements: any;
   previous: any = [];
-  headElements: string[] = [ 'email', 'date-created', 'state'];
+  headElements: string[] = [ 'Notification','Recipient', 'Date Created', 'Status'];
 
-  constructor(private getNotifications: GetNotificationsService, private cdRef: ChangeDetectorRef) { }
+  constructor(private notificationsService: NotificationsService, private cdRef: ChangeDetectorRef) {
+    this.elements = []
+   }
 
   ngOnInit() {
-    this.elements = this.getNotifications.getSms()
+    this.elements = this.showNotifications()
     this.mdbTable.setDataSource(this.elements);
     this.elements = this.mdbTable.getDataSource();
     this.previous = this.mdbTable.getDataSource();
@@ -45,4 +48,11 @@ export class SmsNotificationsComponent implements OnInit {
       this.mdbTable.setDataSource(prev);
     }
   }
+  showNotifications() {
+    return this.notificationsService.getNotifications()
+       .subscribe((data:Notification[]) => {
+         console.log(data)
+         this.elements = data.filter(data => data.notification_type === 'SMS')
+       });
+   }
 }
