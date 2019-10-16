@@ -108,7 +108,6 @@ export class IncidentService {
   }
 
   updateIncident(formData: any): Observable<any> {
-    formData.append('system', 'Helaplan');
     formData.append('client_id', this.clientId);
     formData.append('token', this.token);
     return this.http.post<any>('http://127.0.0.1:8000/api/update_incident/', formData).pipe(

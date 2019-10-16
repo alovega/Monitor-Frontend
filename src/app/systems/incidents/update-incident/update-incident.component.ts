@@ -16,7 +16,7 @@ export class UpdateIncidentComponent implements OnInit {
   updateIncidentForm: FormGroup;
   submitted = false;
   incidents: Incident[];
-  incident: Incident;
+  incident: any;
   initialPriorityLevel: string;
   id: string;
   systemId: string;
@@ -43,6 +43,20 @@ export class UpdateIncidentComponent implements OnInit {
         this.currentSystem = result[0];
       })
     );
+
+    this.route.parent.params.subscribe(
+      (param: any) => {
+        this.systemId = param['system-id'];
+        console.log(this.systemId);
+      });
+
+    this.systemService.setSystem(this.systemId).subscribe(
+      (result => {
+        this.currentSystem = result[0];
+        this.incident = this.incidentService.getIncident(this.id, this.currentSystem);
+        console.log(this.currentSystem);
+      })
+    );
     this.showIncident();
     this.createUpdateIncidentForm();
   }
@@ -66,9 +80,11 @@ export class UpdateIncidentComponent implements OnInit {
   // }
 
   public showIncident(): void {
+    console.log("ufnidsf");
     this.incidentService.getIncident(this.id, this.currentSystem).subscribe(
       (data: Incident) => {
         this.incident = data;
+        console.log(data);
         this.updateIncidentForm.patchValue({
           priorityLevel: this.incident.priority_level.toString(),
           incidentStatus: this.incident.status.toString(),

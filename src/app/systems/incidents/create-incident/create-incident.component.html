@@ -3,7 +3,7 @@
   <!-- Grid column -->
   <div class="col-md-1"></div>
   <!-- Grid column -->
-  <div class="col-md-10" *ngIf="router.url === realtimeUrl">
+  <div class="col-md-12" *ngIf="router.url === realtimeUrl">
     <div class="page-header">
       Create Realtime Incident
       <div class="priority-level">
@@ -25,23 +25,22 @@
       <div class="new-incident">
         <mdb-card>
           <form [formGroup]="realtimeIncidentForm" (ngSubmit)="onSubmitRealtime()" class="text-center">
-            <!-- Name -->
-            <div class="form-group mb-4">
-              <label class="form-label">Incident Name</label>
-              <input [ngClass]="{ 'is-invalid': submitted && realtimeIncidentForm.controls.incidentName.errors }" type="text" 
-              id="incidentName" formControlName="incidentName" 
-              class="grey lighten-5 form-control"
-              placeholder="Incident name">
 
-              <!-- Incident Name Validation errors -->
-              <div *ngIf="submitted && realtimeIncidentForm.controls.incidentName.errors" class="invalid-feedback">
-                  <div *ngIf="realtimeIncidentForm.controls.incidentName.errors.required">Incident name is required</div>
-              </div>
-            </div>
-
-            <!-- Incident Status -->
             <div class="form-group mb-4 row">
-              <div class="col-md-6">
+              <div class="col-md-4">
+                <!-- Name -->
+                <label class="form-label">Incident Name</label>
+                <input [ngClass]="{ 'is-invalid': submitted && realtimeIncidentForm.controls.incidentName.errors }" type="text" 
+                  id="incidentName" formControlName="incidentName" class="grey lighten-5 form-control" placeholder="Incident name">
+
+                <!-- Incident Name Validation errors -->
+                <div *ngIf="submitted && realtimeIncidentForm.controls.incidentName.errors" class="invalid-feedback">
+                    <div *ngIf="realtimeIncidentForm.controls.incidentName.errors.required">Incident name is required</div>
+                </div> 
+              </div>
+
+              <!-- Incident Status -->
+              <div class="col-md-4">
                   <label class="form-label">Incident status</label>
                   <select formControlName="incidentStatus" [ngClass]="{ 'is-invalid': submitted && realtimeIncidentForm.controls.incidentStatus.errors}"
                   class="grey lighten-5 browser-default custom-select form-control">
@@ -56,7 +55,7 @@
                   </div>
               </div>
 
-              <div class="col-md-6">
+              <div class="col-md-4">
                 <!-- Escalation Levels -->
                 <label class="form-label">Escalation level</label>
                 <select formControlName="escalationLevel" class="grey lighten-5 browser-default custom-select form-control inline-rule"
@@ -95,7 +94,7 @@
   </div>
 
     <!-- Grid column -->
-  <div class="col-md-10" *ngIf="router.url === maintenanceUrl">
+  <div class="col-md-12" *ngIf="router.url === maintenanceUrl">
     <div class="page-header">
       Create Scheduled Maintenance
       <div class="priority-level">

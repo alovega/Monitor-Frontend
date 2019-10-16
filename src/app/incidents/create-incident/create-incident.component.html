@@ -1,10 +1,7 @@
 <!-- Grid Row -->
 <div class="row wow animate fadeIn" data-wow-delay="0.1s">
   <!-- Grid column -->
-  <div class="col-md-1"></div>
-
-  <!-- Grid column -->
-  <div class="col-md-10" *ngIf="router.url === '/incidents/new/realtime'">
+  <div class="col-md-12" *ngIf="router.url === '/incidents/new/realtime'">
     <div class="page-header">
       Create Realtime Incident
       <div class="priority-level">
@@ -96,7 +93,7 @@
   </div>
 
     <!-- Grid column -->
-  <div class="col-md-10" *ngIf="router.url === '/incidents/new/maintenance'">
+  <div class="col-md-12" *ngIf="router.url === '/incidents/new/maintenance'">
     <div class="page-header">
       Create Scheduled Maintenance
       <div class="priority-level">
@@ -240,7 +237,5 @@
     </div>
   </div>
 
-  <!-- Grid column -->
-  <div class="col-md-1"></div>
 </div>
 <!-- Grid Row -->
