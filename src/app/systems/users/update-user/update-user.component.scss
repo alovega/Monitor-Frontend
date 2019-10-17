@@ -3,6 +3,12 @@
     font-weight: 500;
 }
 
+.priority-level{
+    float: right;
+    font-size: 16px;
+    font-weight: 500;
+}
+
 .update-history-header, .update-history-header{
     font-size: 16px;
     font-weight: 500;
@@ -58,7 +64,7 @@
 }
 
 .inline-rule{
-    width: 100px;
+    width: 150px;
     margin: 0px 10px;
 }
 
@@ -66,10 +72,16 @@
     font-size: 13px;
     opacity: 0.7;
     font-weight: 500;
-    // margin-bottom: 20px !important;
+    margin-bottom: 20px !important;
     margin-bottom: 5px;
 }
 
-.invalid-feedback {
-    text-align: left;
+#create-button{
+    font-size: 14px;
+    background-color: #0052CC !important;
+    border: 1px solid #0052CC;
+    border-radius: 4px;
+    color: #ffffff;
+    padding: 6px 7px 6px 7px;
+    font-weight: 500;
 }

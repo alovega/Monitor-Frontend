@@ -10,6 +10,7 @@ import { RecipientFormComponent } from './recipient-create/recipient-create.comp
 import { EmailRecipientsComponent } from './email-recipients/email-recipients.component';
 import { SmsRecipientsComponent } from './sms-recipients/sms-recipients.component';
 import { RecipientUpdateComponent } from './recipient-update/recipient-update.component';
+import { SharedModule } from '../shared/shared.module';
 
 
 @NgModule({
@@ -19,6 +20,7 @@ import { RecipientUpdateComponent } from './recipient-update/recipient-update.co
     ReactiveFormsModule,
     RecipientsRoutingModule,
     MatTableModule,
+    SharedModule,
     MDBBootstrapModule.forRoot()
   ],
   schemas:[CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
