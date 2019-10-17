@@ -1,74 +1,25 @@
-<table mdbTable id="incident-list">
+<div class="full-page">
+<table mdbTable id="incident-list" *ngIf="(incidents$ | async).length; else noIncidents">
   <tbody>
     <!-- Incident Item -->
-    <tr mdbTableCol class="incident-item">
-      <td scope="row">
+    <tr mdbTableCol class="incident-item" *ngFor="let incident of incidents$ | async">        
+      <td scope="row" *ngIf="incident.type === 'Realtime'">
           <div class="incident-description">
             <div class="action-buttons float-right">
-                <a id="update-p2jg8qhdzs4k" routerLink="/incidents/update" routerLinkActive="active">Update</a>
+                <a id="update-{{incident.incident_id}}" routerLink="/incidents/update/{{incident.incident_id}}" 
+                routerLinkActive="active" *ngIf="incident.status !== 'Resolved'; else Open">Update</a>
+                <ng-template #Open>
+                    <a id="update-{{incident.incident_id}}" routerLink="/incidents/update/{{incident.incident_id}}" routerLinkActive="active">View</a>
+                </ng-template>
             </div>
             <strong>
-                <a class="incident-view-link"routerLink="/incidents/update" routerLinkActive="active">Data Processing Delays -
-                Reporting Tools Affected</a></strong><br>
+                <a class="incident-view-link" routerLink="/incidents/update/{{incident.incident_id}}" routerLinkActive="active">
+                {{ incident.name }}
+                </a>
+            </strong><br>
             <div class="last-updated">
-                <small>Last updated <span class="ago">about <span>2</span> hours ago. 
-                </span>4 Oct (06:37 UTC)
-                </small>
-            </div>
-          </div>
-      </td>      
-    </tr>
-
-    <!-- Incident Item -->
-    <tr mdbTableCol class="incident-item">
-      <td scope="row">
-          <div class="incident-description">
-            <div class="action-buttons float-right">
-                <a id="update-p2jg8qhdzs4k" routerLink="/incidents/update" routerLinkActive="active">Update</a>
-            </div>
-            <strong>
-                <a class="incident-view-link" routerLink="/incidents/update" routerLinkActive="active">Data Processing Delays -
-                Reporting Tools Affected</a></strong><br>
-            <div class="last-updated">
-                <small>Last updated <span class="ago">about <span>2</span> hours ago. 
-                </span>4 Oct (06:37 UTC)
-                </small>
-            </div>
-          </div>
-      </td>      
-    </tr>
-
-    <!-- Incident Item -->
-    <tr mdbTableCol class="incident-item">
-      <td scope="row">
-          <div class="incident-description">
-            <div class="action-buttons float-right">
-                <a id="update-p2jg8qhdzs4k" routerLink="/incidents/update" routerLinkActive="active">Update</a>
-            </div>
-            <strong>
-                <a class="incident-view-link" routerLink="/incidents/update" routerLinkActive="active">Data Processing Delays -
-                Reporting Tools Affected</a></strong><br>
-            <div class="last-updated">
-                <small>Last updated <span class="ago">about <span>2</span> hours ago. 
-                </span>4 Oct (06:37 UTC)
-                </small>
-            </div>
-          </div>
-      </td>      
-    </tr>
-
-    
-    <!-- Incident Item -->
-    <tr mdbTableCol class="incident-item">
-      <td scope="row">
-          <div class="incident-description">
-            <div class="action-buttons float-right">
-                <a id="" routerLink="/incidents/update" routerLinkActive="active">View</a>
-            </div>
-            <strong>
-                <a class="incident-view-link" routerLink="/incidents/update" routerLinkActive="active">Slow API Response times</a></strong><br>
-            <div class="last-updated">
-                <small>Resolved 30 Sept 2019 (10:40 UTC)
+                <small>Last updated <span class="ago">on <span>{{ incident.date_modified | date: 'MMM d, y, h:mm:ss a' }}</span>. 
+                </span>
                 </small>
             </div>
           </div>
@@ -76,8 +27,19 @@
     </tr>
   </tbody>
 </table>
+
+<!-- Zero Realtime Incidents For the system -->
+<ng-template #noIncidents>
+    <hm-empty-data header="All Clear" description="You will see all realtime incidents here">
+      <a action-button routerLink='/incidents/new/realtime' routerlinkactive="active"> 
+        <button id="create-button" size="sm" color="primary">
+            Create incident
+        </button>
+      </a>
+    </hm-empty-data>
+</ng-template>
+
 <div class="pagination-container">
-  
 
-
+</div>
 </div>

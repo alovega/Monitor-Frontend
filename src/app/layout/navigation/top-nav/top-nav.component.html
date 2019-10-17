@@ -1,5 +1,5 @@
 <mdb-navbar SideClass="navbar fixed-top navbar-expand-lg navbar-light white scrolling-navbar"
-    [containerInside]="false">
+    [containerInside]="false" *ngIf="systemIsAvailable">
     <!-- Navbar brand -->
       <a class="navbar-brand ml-2" mdbWavesEffect href="https://mdbootstrap.com/docs/jquery/" target="_blank">
         <strong class="blue-text">HM</strong>
@@ -8,18 +8,19 @@
       <links>
         <!-- Left -->
         <ul class="navbar-nav mr-auto">
-
-          <li class="nav-item active">
+          <li class="nav-item">
             <div class="dropdown" mdbDropdown>
               <a mdbDropdownToggle color="primary" class="dropdown-toggle nav-link waves-light"
-                mdbWavesEffect>
-                System 1
+                mdbWavesEffect>{{ currentSystem.name }}
               </a>
-              <div class="dropdown-menu dropdown-primary">
-                <a class="dropdown-item" href="#">System 2</a>
-                <a class="dropdown-item" href="#">System 3</a>
-                <a class="dropdown-item" href="#">System 4</a>
-                <a class="dropdown-item" href="#"> + Add System</a>
+              <div class="dropdown-menu dropdown-primary" *ngIf="systems">
+                <a class="dropdown-item"  *ngFor="let system of systems" [ngClass]="{'d-none': system.id === currentSystem.id}"
+                routerLink="system/{{system.id}}" (click)="reload(system.id)">
+                 {{ system.name }}
+                </a> 
+                <a class="dropdown-item" href="#">
+                  Add system
+                </a>
               </div>
             </div>
           </li>

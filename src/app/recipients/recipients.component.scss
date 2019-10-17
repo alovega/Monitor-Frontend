@@ -20,7 +20,7 @@
 
 .switch-tabs {
     border-bottom: 2px solid rgba(9,30,66,0.08);
-    padding: 0 0 4px 0;
+    padding: 0;
     margin-bottom: 30px;
 }
 
@@ -42,14 +42,17 @@
 
 #create-button{
     display: absolute;
-    font-size: 14px;
-    background-color: #0052CC !important;
-    border: 1px solid #0052CC;
-    border-radius: 4px;
-    color: #ffffff;
+    padding: 8px 20px 8px 20px;
+    font-size: 0.61rem;
+    transition: 0.2s ease-in-out;
+    margin: 0;
+    border: 0;
+    border-radius: 0.125rem;
+    cursor: pointer;
+    white-space: normal;
+    word-wrap: break-word;
+    color: white;
     right: 0;
-    padding: 3px 7px 3px 7px;
-    font-weight: 500;
 }
 
 .clearfix {
@@ -59,12 +62,37 @@
 .tab-item a {
     color: black;
     text-decoration: none;
-    padding: 12px 5px 10px 5px;
+    padding: 12px 5px 3.8px 5px;
     // margin: 30px;
     margin-right: 30px
 }
 
 .active {
-    color: blue !important;
+    color:#4285f4!important;
     border-bottom: 2px solid rgb(5, 91, 240) !important;
+}
+.btn{
+    box-shadow: 0 2px 5px 0 rgba(0,0,0,.16), 0 2px 10px 0 rgba(0,0,0,.12);
+    padding: 8px 20px 8px 20px;
+    font-size: .61rem;
+    transition: .2s ease-in-out;
+    margin: .375rem;
+    border: 0;
+    border-radius: .125rem;
+    cursor: pointer;
+    white-space: normal;
+    word-wrap: break-word;
+    color: white;
+}
+.button-recipient{
+    position: absolute;
+    top: 152px;
+    right: 57px;
+}
+@media (max-width: 1199.98px){
+    .button-recipient{
+        position: absolute;
+        top: 152px;
+        right: 13px;
+    }  
 }

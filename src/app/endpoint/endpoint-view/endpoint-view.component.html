@@ -1,31 +1,29 @@
-<mdb-card>
-    <mdb-card-body>
+
         <div class="row">
             <div class="col col-md-8">
                 <h2>Endpoint</h2>
             </div>
             <div class="col-6 col-md-4 d-flex justify-content-end">
-                <button type="button" routerLink="/endpoint-form" mdbBtn color="primary" mdbWavesEffect>Add Endpoint</button>
+                <button type="button" routerLink="/endpoint/endpoint-form" mdbBtn color="primary" mdbWavesEffect>Add Endpoint</button>
             </div>
-        </div>
+         </div>
         
-        <table mdbTable #tableEl="mdbTable" class="z-depth-1" >
+        <table mdbTable #tableEl="mdbTable" class="z-depth-1">
                 <thead class="white-text">
                     <tr>
                     <th *ngFor="let head of headElements" scope="col">{{head}} </th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody *ngIf="elements.length > 1; else noElements">
                     <tr mdbTableCol *ngFor="let el of elements; let i = index ">
                     <th *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex" scope="row">
                         {{el.name}}
-                        <p>{{el.name}} is active</p>
                     </th>
                     <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{el.date_created}}</td>
+                    <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{el.status}}</td>
                     <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">
-    
-                        <button mdbBtn color="primary" size="sm" mdbWavesEffect type="button">Update</button>
-                        <button mdbBtn color="primary" size="sm" mdbWavesEffect type="button">Delete</button>
+                        <a class="btn btn-primary" routerLinkActive="active" routerLink="/endpoint/endpoint-update/{{el.id}}" >Edit</a>
+                        <a class="btn btn-danger" (click)="delete(el)">Delete</a>
                     </td>
                     </tr>
                 </tbody>
@@ -37,6 +35,9 @@
                         </tr>
                     </tfoot>
         </table>
-    </mdb-card-body>     
-</mdb-card>
+        <ng-template #noElements>
+            <hm-empty-data header="No Existing System Endpoints" description="New Endpoints  displayed here">
+              <button action-button type="button" mdbBtn size="sm" color="primary">Add Endpoint</button>
+            </hm-empty-data>
+        </ng-template>
 <router-outlet></router-outlet>

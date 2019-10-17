@@ -17,12 +17,7 @@
 
     <li class="tab-item" >
         <span >
-        <a routerLink="recipient-form" *ngIf="router.url != '/email-recipient'">
-           <button  class="float-right" id="create-button">Add Recipient</button>
-        </a>
-        <a href="" *ngIf="router.url === '/incidents/maintenance'">
-            <button class="float-right" id="create-button" >Schedule Maintenance</button>
-        </a>
+        <button type="button" class="button-recipient" routerLink="recipient-create" *ngIf="router.url != '/email-recipient'" mdbBtn color="primary" mdbWavesEffect>Add Recipient</button>
         </span>
     </li>
     <div class="clearfix"></div>

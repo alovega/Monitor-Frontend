@@ -1,6 +1,6 @@
 import { MdbTablePaginationComponent, MdbTableDirective } from 'angular-bootstrap-md';
 import { Component, OnInit, ViewChild, AfterViewInit, ChangeDetectorRef } from '@angular/core';
-import {GetEndpointsService} from './get-endpoints.service'
+import {EndpointService} from '../endpoint.service';
  
 @Component({
   selector: 'app-endpoint-view',
@@ -10,44 +10,42 @@ import {GetEndpointsService} from './get-endpoints.service'
 export class EndpointViewComponent implements OnInit {
   @ViewChild(MdbTablePaginationComponent, { static: true }) mdbTablePagination: MdbTablePaginationComponent;
   @ViewChild(MdbTableDirective, { static: true }) mdbTable: MdbTableDirective;
-  firstItemIndex: any;
-  lastItemIndex: any;
-  elements: any[];
+  elements: any;
   previous: any = [];
 
-
-  headElements = ['Endpoint', 'Date Created', 'Action'];
-
+  
+  headElements = ['Endpoint', 'Date Created', 'State', 'Action'];
   constructor(
-    private getEndpoints: GetEndpointsService,
+    private endpointService: EndpointService,
     private cdRef: ChangeDetectorRef
-    ) {}
+    ) {
+      this.elements = []
+    }
 
   ngOnInit() {
-    this.elements = this.getEndpoints.getEndpoint();
+    this.elements = this.showEndpoints()
     this.mdbTable.setDataSource(this.elements);
     this.elements = this.mdbTable.getDataSource();
     this.previous = this.mdbTable.getDataSource();
   }
 
   ngAfterViewInit() {
-    this.mdbTablePagination.setMaxVisibleItemsNumberTo(5);
+    this.mdbTablePagination.setMaxVisibleItemsNumberTo(3);
     this.mdbTablePagination.calculateFirstItemIndex();
     this.mdbTablePagination.calculateLastItemIndex();
     this.cdRef.detectChanges();
   }
 
-  searchItems(search: string) {
-    const prev = this.mdbTable.getDataSource();
-
-    if (!search) {
-      this.mdbTable.setDataSource(this.previous);
-      this.elements = this.mdbTable.getDataSource();
-    }
-
-    if (search) {
-      this.elements = this.mdbTable.searchLocalDataBy(search);
-      this.mdbTable.setDataSource(prev);
-    }
+  showEndpoints() {
+   return this.endpointService.getEndpoints()
+      .subscribe((data) => {
+        console.log(data)
+        this.elements = data
+      });
+  }
+  delete(item){
+    this.endpointService.deleteItem(item.id).subscribe(response => {
+      this.showEndpoints();
+    })
   }
 }
