@@ -81,6 +81,7 @@ export class UpdateIncidentComponent implements OnInit {
     formData.append('escalation_level', 'High');
     formData.append('priority_level', this.updateIncidentForm.get('priorityLevel').value);
     formData.append('incident_id', this.incident.incident_id);
+    // formData.append('system', this.incident.currentSystem);
 
     for (let key of formData.entries()) {
       console.log(key[0] + ', ' + key[1]);
