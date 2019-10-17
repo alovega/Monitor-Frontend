@@ -36,16 +36,16 @@ export class UpdateIncidentComponent implements OnInit {
     this.activatedRoute.parent.params.subscribe(
       (param: any) => {
         this.systemId = param['system-id'];
-        console.log('Update system id is '+ this.systemId + 'System ID');
       });
 
     let issetCurrentSystem = this.systemService.checkCurrentSystem();
-    issetCurrentSystem ? this.systemService.getCurrentSystem()
-    .subscribe(systems => this.currentSystem = systems[0]) : this.currentSystem  = this.systemService.checkCurrentSystem();
+    console.log(issetCurrentSystem);
+    issetCurrentSystem ? this.currentSystem  = issetCurrentSystem : this.systemService.getCurrentSystem()
+    .subscribe(systems => this.currentSystem = systems[0]);
     if (this.currentSystem) {
       this.showIncident();
     }
-
+    // this.showIncident();
     this.createUpdateIncidentForm();
   }
 
@@ -68,7 +68,7 @@ export class UpdateIncidentComponent implements OnInit {
   // }
 
   public showIncident(): void {
-    console.log('Showing...' + this.currentSystem);
+    // console.log('Showing...' + this.currentSystem);
     this.incidentService.getIncident(this.incidentId, this.currentSystem).subscribe(
       (data: any) => {
         this.incident = data;
@@ -85,7 +85,6 @@ export class UpdateIncidentComponent implements OnInit {
 
   onSubmit() {
     this.submitted = true;
-    console.log(this.updateIncidentForm.value);
 
     if (this.updateIncidentForm.invalid) {
       console.log('Invalid');
@@ -100,11 +99,7 @@ export class UpdateIncidentComponent implements OnInit {
     formData.append('priority_level', this.updateIncidentForm.get('priorityLevel').value);
     formData.append('incident_id', this.incident.incident_id);
 
-    for (let key of formData.entries()) {
-      console.log(key[0] + ', ' + key[1]);
-    }
-
-    return this.incidentService.updateIncident(formData, this.currentSystem).subscribe(
+    return this.incidentService.updateIncident(formData).subscribe(
       (incident => {
         if (incident.code === '800.200.001') {
           this.location.back();

@@ -58,11 +58,10 @@ export class SystemService {
   checkCurrentSystem() {
     if (localStorage.getItem('currentSystem') === null || localStorage.getItem('currentSystem') === 'undefined') {
       // console.log('Saved system');
-      return true;
+      return false;
     } else {
       let system = JSON.parse(localStorage.getItem('currentSystem'));
-      console.log('Current system is ' + system.id);
-      return system.id;
+      return system;
     }
   }
 

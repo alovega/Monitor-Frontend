@@ -97,23 +97,18 @@ export class IncidentService {
 
   getIncident(incidentId: string, currentSystem: any): Observable<any> {
     return this.http.post<any>('http://127.0.0.1:8000/api/get_incident/', {
-      client_id: this.clientId,
       system: currentSystem.name,
       incident_id: incidentId,
-      token: this.token
     }).pipe(
       map(incident => incident.data),
-      tap(incident => console.log(currentSystem.name))
     );
   }
 
-  updateIncident(formData: any, currentSystem: any): Observable<any> {
-    formData.append('client_id', this.clientId);
-    formData.append('token', this.token);
-    formData.append('system', currentSystem.name);
+  updateIncident(formData: any): Observable<any> {
+    for (let key of formData.entries()) {
+      console.log(key[0] + ', ' + key[1]);
+    }
     return this.http.post<any>('http://127.0.0.1:8000/api/update_incident/', formData).pipe(
-      map(incident => incident),
-      // tap(incident => console.log(incident))
     );
   }
 
