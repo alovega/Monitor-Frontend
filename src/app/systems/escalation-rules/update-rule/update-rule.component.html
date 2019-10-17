@@ -1,0 +1,95 @@
+<!-- Grid Row -->
+<div class="row wow animate fadeIn" data-wow-delay="0.1s">
+      <!-- Grid column -->
+    <div class="col-md-12">
+      <div class="page-header">
+        Update Escalation Rule
+      </div>
+      <hr>
+      <div class="page-body">
+        <div class="new-rule">
+          <mdb-card class="card">
+            <form [formGroup]="escalationRuleForm" (ngSubmit)="onSubmit()" class="text-center">
+            <div class="form-group mb-4">
+              <!-- Name -->
+              <label class="form-label">Rule Name</label>
+              <input type="text" id="incidentName" formControlName="ruleName" class="grey lighten-5 form-control" placeholder="Rule name"
+              [ngClass]="{ 'is-invalid': submitted && form.ruleName.errors }">
+              <div *ngIf="submitted && form.ruleName.errors" class="invalid-feedback">
+                <div *ngIf="form.ruleName.errors.required">
+                  Escalation rule name is required</div>
+              </div>
+            </div>
+            
+            <div class="form-group mb-4">
+              <!-- Rule Description -->
+              <label class="form-label">Rule description</label>
+              <textarea class="grey lighten-5 form-control rounded-2" formControlName="ruleDescription"
+                  id="exampleFormControlTextarea2" rows="3" placeholder="Elevated error occurrence"
+                  [ngClass]="{ 'is-invalid': submitted && form.ruleDescription.errors }">
+              </textarea>
+
+              <div *ngIf="submitted && form.ruleDescription.errors" class="invalid-feedback">
+                <div *ngIf="form.ruleDescription.errors.required">Rule Description is required</div>
+              </div>            
+            </div>
+
+            <div class="form-group">
+              <!-- Rule Configuration -->
+              <div class="form-group">
+                  <div class="form-inline">                  
+                    <span class="rule-text">Escalate To: </span>
+
+                    <!-- Escalation Levels -->
+                    <select formControlName="escalationLevel" class="grey lighten-5 browser-default custom-select form-control inline-rule"
+                    [ngClass]="{ 'is-invalid': submitted && form.escalationLevel.errors }">
+                        <option selected value="High">High</option>
+                        <option value="Medium">Medium</option>
+                        <option value="Low">Low</option>
+                    </select>
+
+                    <span class="rule-text">If </span>
+                    <!-- Nth Event -->
+                    <input formControlName="nEvents" type="number" id="nthEvent" class="grey lighten-5 form-control inline-rule" placeholder="10"
+                    [ngClass]="{ 'is-invalid': submitted && form.nEvents.errors }">
+                    <!-- <span *ngIf="submitted && form.nEvents.errors" class="invalid-feedback">
+                      <span *ngIf="form.nEvents.errors.required">Nth event value is required</span>
+                    </span> -->
+
+                    <!-- Event Type -->
+                    <select formControlName="eventType" class="grey lighten-5 browser-default custom-select form-control inline-rule"
+                    [ngClass]="{ 'is-invalid': submitted && form.eventType.errors }">
+                        <option selected value="Error">Error</option>
+                        <option value="Warning">Warning</option>
+                        <option value="Critical">Critical</option>
+                        <option value="Info">Info</option>
+                    </select>
+                    <!-- <span *ngIf="submitted && form.eventType.errors" class="invalid-feedback">
+                        <span *ngIf="form.eventType.errors.required">Event type is required</span>
+                    </span> -->
+                    
+                    <span class="rule-text">Event(s) occur within</span>
+                    <!-- Duration -->
+                    <input type="number" formControlName="duration" class="grey lighten-5 form-control inline-rule" placeholder="3600"
+                    [ngClass]="{ 'is-invalid': submitted && form.duration.errors }"> 
+                    <span class="rule-text">Seconds</span>
+                    <!-- <span *ngIf="submitted && form.duration.errors" class="invalid-feedback">
+                        <span *ngIf="form.duration.errors.required">Duration is required</span>
+                    </span>                     -->
+                  </div>
+              </div>
+            </div>
+              <!-- Update button -->
+              <div class="create-button">
+                  <button type="submit" mdbWavesEffect class="btn btn-md btn-primary float-right" size="md">Update rule</button>
+              </div>
+            </form>
+          </mdb-card>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Grid column -->
+    <div class="col-md-1"></div>
+  </div>
+  <!-- Grid Row -->

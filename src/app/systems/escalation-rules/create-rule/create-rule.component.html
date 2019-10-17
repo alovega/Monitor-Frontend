@@ -1,0 +1,82 @@
+<!-- Grid Row -->
+<div class="row wow animate fadeIn" data-wow-delay="0.1s">
+      <!-- Grid column -->
+    <div class="col-md-12">
+      <div class="page-header">
+        Add Escalation Rule
+      </div>
+      <hr>
+      <div class="page-body">
+        <div class="new-rule">
+          <mdb-card class="card">
+            <form [formGroup]="escalationRuleForm" (ngSubmit)="onSubmit()" class="text-center">
+
+              <div class="form-group mb-4">
+                <!-- Name -->
+                <label class="form-label">Rule Name</label>
+                <input formControlName="ruleName" type="text" id="incidentName" class="grey lighten-5 form-control" placeholder="Rule name"
+                [ngClass]="{'is-invalid': submitted && escalationRuleForm.controls.ruleName.errors}">
+                
+                <div *ngIf="submitted && escalationRuleForm.controls.ruleName.errors" class="invalid-feedback">
+                  <div *ngIf="escalationRuleForm.controls.ruleName.errors.required">Rule Name is required</div>
+                </div>                
+              </div>
+            
+            <div class="form-group mb-4">
+              <!-- Rule Description -->
+              <label class="form-label">Rule description</label>
+              <textarea class="grey lighten-5 form-control rounded-2" formControlName="ruleDescription"
+                  id="exampleFormControlTextarea2" rows="3" placeholder="Elevated error occurrence"
+                  [ngClass]="{'is-invalid': submitted && escalationRuleForm.controls.ruleDescription.errors}">
+              </textarea>
+
+              <div *ngIf="submitted && escalationRuleForm.controls.ruleDescription.errors" class="invalid-feedback">
+                <div *ngIf="escalationRuleForm.controls.ruleDescription.errors.required">Rule Description is required</div>
+              </div>  
+            </div>
+
+              <!-- Rule Configuration -->
+              <div class="form-group mb-4">
+                  <div class="form-inline">                  
+                      <span class="rule-text">Escalate To: </span>
+
+                      <!-- Escalation Levels -->
+                      <select formControlName="escalationLevel" class="grey lighten-5 browser-default custom-select form-control inline-rule"
+                      [ngClass]="{ 'is-invalid': submitted && escalationRuleForm.controls.escalationLevel.errors }">
+                          <option selected value="High">High</option>
+                          <option value="Medium">Medium</option>
+                          <option value="Low">Low</option>
+                      </select>
+  
+                      <span class="rule-text">If </span>
+                      <!-- Nth Event -->
+                      <input formControlName="nEvents" type="number" id="nthEvent" class="grey lighten-5 form-control inline-rule" placeholder="10"
+                      [ngClass]="{ 'is-invalid': submitted && escalationRuleForm.controls.nEvents.errors }">
+
+                    <!-- Event Type -->
+                    <select formControlName="eventType" class="grey lighten-5 browser-default custom-select form-control inline-rule"
+                    [ngClass]="{'is-invalid': submitted && escalationRuleForm.controls.eventType.errors}">
+                        <option selected value="Error">Error</option>
+                        <option value="Warning">Warning</option>
+                        <option value="Critical">Critical</option>
+                        <option value="Info">Info</option>
+                    </select>
+                    <span class="rule-text">Event(s) occur within</span>
+                    <!-- Duration -->
+                    <input type="number" formControlName="duration" class="grey lighten-5 form-control inline-rule"
+                    placeholder="3600" [ngClass]="{'is-invalid': submitted && escalationRuleForm.controls.duration.errors}"> 
+                    <span class="rule-text">Seconds</span>
+                  </div>
+              </div>
+              <!-- Create button -->
+              <div class="create-button">
+                  <button mdbBtn mdbWavesEffect class="float-right" color="primary" size="md">Add</button>
+              </div>
+            </form>
+          </mdb-card>
+        </div>
+      </div>
+    </div>
+  
+  </div>
+  <!-- Grid Row -->
