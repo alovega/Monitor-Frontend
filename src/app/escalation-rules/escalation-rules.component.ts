@@ -6,7 +6,6 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./escalation-rules.component.scss']
 })
 export class EscalationRulesComponent implements OnInit {
-
   constructor() { }
 
   ngOnInit() {
