@@ -17,6 +17,7 @@ import { EmptyDataComponent } from './empty-data/empty-data.component';
 import { HttpInterceptorService } from './helpers/http-interceptor.service';
 
 import { SystemService } from './system.service';
+import { LoaderComponent } from './loader/loader.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { SystemService } from './system.service';
     RadarChartComponent,
     DatePickerComponent,
     TimePickerComponent,
-    EmptyDataComponent
+    EmptyDataComponent,
+    LoaderComponent
   ],
   imports: [
     CommonModule,
@@ -48,7 +50,8 @@ import { SystemService } from './system.service';
     RadarChartComponent,
     DatePickerComponent,
     TimePickerComponent,
-    EmptyDataComponent
+    EmptyDataComponent,
+    LoaderComponent
   ],
   providers: [SystemService,
     {
