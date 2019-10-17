@@ -1,0 +1,45 @@
+<div class="full-page">
+<table mdbTable id="incident-list" *ngIf="(incidents$ | async).length; else noIncidents">
+  <tbody>
+    <!-- Incident Item -->
+    <tr mdbTableCol class="incident-item" *ngFor="let incident of incidents$ | async" [ngClass]="{'d-none': incident.type !== 'Realtime', 'realtime': incident.type === 'Realtime'}">        
+      <td scope="row" *ngIf="incident.type === 'Realtime'">
+          <div class="incident-description">
+            <div class="action-buttons float-right">
+                <a id="update-{{incident.incident_id}}" routerLink="/system/{{systemId}}/incidents/update/{{incident.incident_id}}" 
+                routerLinkActive="active" *ngIf="incident.status !== 'Resolved'; else Open">Update</a>
+                <ng-template #Open>
+                    <a id="update-{{incident.incident_id}}" routerLink="/system/{{systemId}}/incidents/update/{{incident.incident_id}}" routerLinkActive="active">View</a>
+                </ng-template>
+            </div>
+            <strong>
+                <a class="incident-view-link" routerLink="/system/{{systemId}}/incidents/update/{{incident.incident_id}}" routerLinkActive="active">
+                {{ incident.name }}
+                </a>
+            </strong><br>
+            <div class="last-updated">
+                <small>Last updated <span class="ago">on <span>{{ incident.date_modified | date: 'MMM d, y, h:mm:ss a' }}</span>. 
+                </span>
+                </small>
+            </div>
+          </div>
+      </td>      
+    </tr>
+  </tbody>
+</table>
+
+<!-- Zero Realtime Incidents For the system -->
+<ng-template #noIncidents>
+    <hm-empty-data header="All Clear" description="You will see all realtime incidents here">
+      <a action-button routerLink='/system/{{systemId}}/incidents/new/realtime' routerlinkactive="active"> 
+        <button id="create-button" size="sm" color="primary">
+            Create incident
+        </button>
+      </a>
+    </hm-empty-data>
+</ng-template>
+
+<div class="pagination-container">
+
+</div>
+</div>

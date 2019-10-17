@@ -5,6 +5,7 @@ import { Location } from '@angular/common';
 
 import { IncidentService } from '../incident.service';
 import { Incident } from '../incident';
+import { SystemService } from 'src/app/shared/system.service';
 
 @Component({
   selector: 'hm-update-incident',
@@ -15,21 +16,36 @@ export class UpdateIncidentComponent implements OnInit {
   updateIncidentForm: FormGroup;
   submitted = false;
   incidents: Incident[];
-  incident: Incident;
+  incident: any;
   initialPriorityLevel: string;
-  id: string;
+  incidentId: string;
+  systemId: string;
+  currentSystem: any;
 
   constructor(
-    private route: ActivatedRoute,
+    private activatedRoute: ActivatedRoute,
     private incidentService: IncidentService,
     private formBuilder: FormBuilder,
-    private location: Location
+    private location: Location,
+    private systemService: SystemService
   ) {
-    this.id = this.route.snapshot.paramMap.get('incident-id');
+    this.incidentId = this.activatedRoute.snapshot.paramMap.get('incident-id');
   }
 
   ngOnInit() {
-    this.showIncident();
+    this.activatedRoute.parent.params.subscribe(
+      (param: any) => {
+        this.systemId = param['system-id'];
+      });
+
+    let issetCurrentSystem = this.systemService.checkCurrentSystem();
+    console.log(issetCurrentSystem);
+    issetCurrentSystem ? this.currentSystem  = issetCurrentSystem : this.systemService.getCurrentSystem()
+    .subscribe(systems => this.currentSystem = systems[0]);
+    if (this.currentSystem) {
+      this.showIncident();
+    }
+    // this.showIncident();
     this.createUpdateIncidentForm();
   }
 
@@ -52,9 +68,11 @@ export class UpdateIncidentComponent implements OnInit {
   // }
 
   public showIncident(): void {
-    this.incidentService.getIncident(this.id).subscribe(
-      (data: Incident) => {
+    // console.log('Showing...' + this.currentSystem);
+    this.incidentService.getIncident(this.incidentId, this.currentSystem).subscribe(
+      (data: any) => {
         this.incident = data;
+        console.log('Incident data is' + data);
         this.updateIncidentForm.patchValue({
           priorityLevel: this.incident.priority_level.toString(),
           incidentStatus: this.incident.status.toString(),
@@ -67,7 +85,6 @@ export class UpdateIncidentComponent implements OnInit {
 
   onSubmit() {
     this.submitted = true;
-    console.log(this.updateIncidentForm.value);
 
     if (this.updateIncidentForm.invalid) {
       console.log('Invalid');
@@ -81,11 +98,6 @@ export class UpdateIncidentComponent implements OnInit {
     formData.append('escalation_level', 'High');
     formData.append('priority_level', this.updateIncidentForm.get('priorityLevel').value);
     formData.append('incident_id', this.incident.incident_id);
-    // formData.append('system', this.incident.currentSystem);
-
-    for (let key of formData.entries()) {
-      console.log(key[0] + ', ' + key[1]);
-    }
 
     return this.incidentService.updateIncident(formData).subscribe(
       (incident => {

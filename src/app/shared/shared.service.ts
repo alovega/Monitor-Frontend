@@ -52,7 +52,7 @@ public getEscalationLevels(){
   );
 }
 
-public getNotificationTypes(){
+public getNotificationTypes() {
 
   return this.http.get<NotificationType[]>(this.notificationTypeUrl).pipe(
     retry(2),
