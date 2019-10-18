@@ -4,7 +4,7 @@
                 <h2>Endpoint</h2>
             </div>
             <div class="col-6 col-md-4 d-flex justify-content-end">
-                <button type="button" routerLink="/endpoint/endpoint-form" mdbBtn color="primary" mdbWavesEffect>Add Endpoint</button>
+                <button type="button" routerLink="/system/{{currentSystemId}}/endpoints/endpoint-form" mdbBtn color="primary" mdbWavesEffect>Add Endpoint</button>
             </div>
          </div>
         
@@ -19,10 +19,11 @@
                     <th *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex" scope="row">
                         {{el.name}}
                     </th>
+                    <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{el.endpoint_type__name}}</td>
                     <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{el.date_created}}</td>
-                    <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{el.status}}</td>
+                    <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{el.state__name}}</td>
                     <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">
-                        <a class="btn btn-primary" routerLinkActive="active" routerLink="/endpoint/endpoint-update/{{el.id}}" >Edit</a>
+                        <a class="btn btn-primary" routerLinkActive="active" routerLink="/system/{{currentSystemId}}/endpoints/endpoint-update/{{el.id}}" >Edit</a>
                         <a class="btn btn-danger" (click)="delete(el)">Delete</a>
                     </td>
                     </tr>
@@ -39,7 +40,7 @@
             <td colspan="7">
               <hm-empty-data header="No Existing Endpoints" description="New Endpoints will be displayed here">
                 <div action-button>
-                <a href="" routerLink="/endpoint/endpoint-form">
+                <a href="" routerLink="/system/{{currentSystemId}}/endpoints/endpoint-form">
                   <button action-button type="button" mdbBtn size="sm" color="primary" class="text-white">Add new Endpoint</button>
                 </a>
                 </div>

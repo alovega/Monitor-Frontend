@@ -10,7 +10,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./endpoint-update.component.scss']
 })
 export class EndpointUpdateComponent implements OnInit {
-  id:number;
+  currentSystem: any;
+  currentSystemId: any;
+  id:any;
   data:Endpoint;
   updateForm:FormGroup;
   submitted:boolean = false
@@ -24,7 +26,11 @@ export class EndpointUpdateComponent implements OnInit {
     }
 
   ngOnInit() {
-
+    this.activatedRoute.parent.params.subscribe(
+      (param: any) => {
+        this.currentSystemId = param['system-id'];
+        // console.log(this.currentSystemId);
+      });
     this.id = this.activatedRoute.snapshot.params["id"];
     console.log(this.id)
     this.endpointService.getItem(this.id).subscribe(response => {
