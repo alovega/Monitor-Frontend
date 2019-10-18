@@ -18,6 +18,7 @@ const routes: Routes = [
   { path: ':system-id/rules', loadChildren: () => import('./escalation-rules/escalation-rules.module').then(m => m.EscalationRulesModule) },
   { path: ':system-id/users', loadChildren: () => import('./users/users.module').then(m => m.UsersModule) },
   { path: ':system-id/endpoints', loadChildren: () => import('./endpoint/endpoint.module').then(m => m.EndpointModule) },
+  { path: ':system-id/recipients', loadChildren: () => import('./recipients/recipients.module').then(m => m.RecipientsModule) },
 ];
 
 @NgModule({

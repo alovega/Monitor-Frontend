@@ -1,16 +1,16 @@
 import { Injectable } from '@angular/core';
-import { SharedService } from '../shared/shared.service';
 import { Observable,throwError, from } from 'rxjs';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { catchError, tap, retry} from 'rxjs/operators';
 import{ Recipient } from './recipient';
-import { EscalationLevel } from '../shared/models/escalation-level';
+import { SharedService } from 'src/app/shared/shared.service';
+import { EscalationLevel } from 'src/app/shared/models/escalation-level';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RecipientService {
-  endpointUrl = 'http://localhost:8000/recipients';
+  endpointUrl = 'http://localhost:8000/api';
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
@@ -32,9 +32,11 @@ handleError(error: HttpErrorResponse) {
   return throwError(
     'Something bad happened; please try again later.');
 };
-public getEndpoints(): Observable<Recipient[]> {
+public getEndpoints(): Observable<any> {
 
-  return this.http.get<Recipient[]>(this.endpointUrl).pipe(
+  return this.http.post<any>(this.endpointUrl + '/' + 'get_recipients' + '/', {
+
+  }).pipe(
     retry(2),
     catchError(this.handleError)
   );
