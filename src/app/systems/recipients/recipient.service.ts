@@ -3,7 +3,7 @@ import { Observable,throwError, from } from 'rxjs';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { catchError, tap, retry} from 'rxjs/operators';
 import{ Recipient } from './recipient';
-import { SharedService } from 'src/app/shared/shared.service';
+import { LookUpService } from 'src/app/shared/look-up.service';
 import { EscalationLevel } from 'src/app/shared/models/escalation-level';
 
 @Injectable({
@@ -14,7 +14,7 @@ export class RecipientService {
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
-constructor(private http: HttpClient, private sharedService:SharedService) { }
+constructor(private http: HttpClient, private lookUpService:LookUpService) { }
 
 // Handle API errors
 handleError(error: HttpErrorResponse) {
@@ -68,9 +68,15 @@ public updateItem(id, item): Observable<Recipient>{
   )
 }
 public getLevels(){
-  return this.sharedService.getEscalationLevels()
+  return this.lookUpService.getEscalationLevel()
 }
 public getNotificationType(){
-  return this.sharedService.getNotificationTypes()
+  return this.lookUpService.getNotificationType()
+}
+public getUsers(){
+  return this.lookUpService.getUsers()
+}
+public getStates(){
+  return this.lookUpService.getStates()
 }
 }

@@ -1,4 +1,4 @@
-export class NotificationType {
+export class State {
     id:string;
     name:string;
 }
