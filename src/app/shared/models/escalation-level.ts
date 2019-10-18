@@ -1,6 +1,4 @@
 export class EscalationLevel {
-    id:number;
+    id:string;
     name:string;
-    description: string;
-    status:string;
 }

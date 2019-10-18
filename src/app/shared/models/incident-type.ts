@@ -1,4 +1,4 @@
-export class NotificationType {
+export class IncidentType {
     id:string;
     name:string;
 }
