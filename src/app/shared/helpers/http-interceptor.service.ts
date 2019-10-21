@@ -10,18 +10,20 @@ export class HttpInterceptorService implements HttpInterceptor {
   apiEndpoint = environment.apiEndpoint;
   clientId = environment.clientId;
   accessToken: string;
+  currentSystem: any;
 
   constructor() { }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     this.accessToken = JSON.parse(localStorage.getItem('accessToken'));
+    this.currentSystem = JSON.parse(localStorage.getItem('currentSystem'));
 
     if (!this.accessToken) {
       this.accessToken = environment.accessToken;
     }
 
     request = request.clone({
-        body: {...request.body, client_id: this.clientId, token: this.accessToken}
+        body: {...request.body, client_id: this.clientId, token: this.accessToken, system_id: this.currentSystem.id}
     });
 
     return next.handle(request);

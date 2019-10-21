@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 
+import { EscalationRule } from '../../../shared/models/escalation-rule';
+
 @Component({
   selector: 'hm-update-rule',
   templateUrl: './update-rule.component.html',
@@ -9,6 +11,8 @@ import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms'
 export class UpdateRuleComponent implements OnInit {
   escalationRuleForm: FormGroup;
   submitted = false;
+  escalationRule: EscalationRule;
+
   constructor(private formBuilder: FormBuilder) { }
 
   ngOnInit() {

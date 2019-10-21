@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
+import { map, tap} from 'rxjs/operators';
 
+import { environment } from '../../../environments/environment';
 import { EscalationRule } from './escalation-rule';
 
 @Injectable({
@@ -133,18 +135,18 @@ export class EscalationRuleService {
     );
   }
 
-  getRules(): any {
-    // const getRulesUrl = 'http://127.0.0.1:8000/api/get_rules/';
-    // return this.http.post<EscalationRule[]>(getRulesUrl, this.httpOptions).pipe(
-
-    // );
-    return this.rules;
+  getRules(): Observable<any> {
+    const getRulesUrl = environment.apiEndpoint + 'get_rules/';
+    return this.http.post<any>(getRulesUrl, {
+      token: 'MjM0Njg4YmVkYzRiMTA0MDU3Mjc3M2Y0MmNjMTg0'
+    }).pipe(
+      map(rule => rule.data)
+    );
   }
 
   getRule() {
     const getRuleUrl = 'http://127.0.0.1:8000/api/get_rule/';
     return this.http.post<EscalationRule[]>(getRuleUrl, this.httpOptions).pipe(
-
     );
   }
 

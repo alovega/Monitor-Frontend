@@ -42,11 +42,16 @@ export class EscalationRulesComponent implements OnInit, AfterViewInit {
       })
     );
 
-    this.rules = this.rulesService.getRules();
-    this.mdbTable.setDataSource(this.rules);
-    this.rules = this.mdbTable.getDataSource();
-    this.previous = this.mdbTable.getDataSource();
-    console.log(this.rules);
+    this.rulesService.getRules().subscribe(
+      (result => {
+        this.rules = result;
+        this.mdbTable.setDataSource(this.rules);
+        this.rules = this.mdbTable.getDataSource();
+        this.previous = this.mdbTable.getDataSource();
+        console.log(this.rules);
+      })
+    );
+
   }
 
   ngAfterViewInit() {
