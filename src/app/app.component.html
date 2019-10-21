@@ -1,8 +1,15 @@
-<hm-top-nav></hm-top-nav>
-<hm-side-nav></hm-side-nav>
-<main class="pt-5 mx-lg-5">
-  <div class="container-fluid mt-5">
-    <router-outlet></router-outlet>
-  </div>
-</main>
-<hm-footer></hm-footer>
+
+<div [hidden]="!loading" class="loader">
+<hm-loader></hm-loader>
+</div>
+
+<div [hidden]="loading" class="router-output">
+  <hm-top-nav></hm-top-nav>
+  <hm-side-nav></hm-side-nav>
+  <main class="pt-5 mx-lg-5">
+    <div class="container-fluid mt-5">
+      <router-outlet></router-outlet>
+    </div>
+  </main>
+  <hm-footer></hm-footer>
+</div>

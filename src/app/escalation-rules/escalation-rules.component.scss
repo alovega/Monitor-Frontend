@@ -1,0 +1,67 @@
+.card{
+    padding: 25px;
+}
+#rules-list {
+    margin-top: 0px;
+}
+
+table th, .table td {
+    padding-left: 0px;
+}
+
+#rules-list tr:nth-child(1){
+    margin-top: 0px;
+}
+
+#rules-list tr:nth-child(1) td{
+    border-top: none;
+    margin-top: 0px;
+    padding-top: 0px;
+}
+
+#rules-list tr td {
+    padding-bottom: 10px;
+}
+
+.rule-view-link {
+    font-size: 16px;
+    font-weight: 500;
+    opacity: 0.9;
+}
+
+.rule-body {
+    font-size: 14px;
+    font-weight: 400;
+    color: #97A0AF !important;
+    margin-top: 10px;
+}
+
+.update-button a{
+    font-size: 16px;
+    font-weight: 500;
+    opacity: 0.9;
+    color: blue;
+}
+
+.remove-button a{
+    font-size: 16px;
+    font-weight: 500;
+    opacity: 0.9;
+    color: rgb(255, 0, 0);
+    margin-left: 10px;
+}
+
+#create-button{
+    font-size: 14px;
+    width: 100%;
+    background-color: #0052CC !important;
+    border: 1px solid #0052CC;
+    border-radius: 4px;
+    color: #ffffff;
+    padding: 7px 10px 7px 10px;
+    font-weight: 500;
+}
+
+.top-controls {
+    padding-left: 5px !important;
+}

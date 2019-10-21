@@ -1,0 +1,144 @@
+<div class="page-header mb-4">
+    <h3 class="page-header-title float-left">Escalation Rules</h3>
+    <div class="float-right"> 
+        <div class="row">
+            <div class="col-md-6 px-0 top-controls">
+                <input class="form-control" type="text" #searchText [(ngModel)]="data" (input)="searchItems(searchText.value)" placeholder="Search">
+            </div>
+            <div class="col-md-6 top-controls">
+            <a routerLink="/system/{{currentSystemId}}/rules/new" routerLinkActive="active">
+                <button class="" id="create-button">Add rule</button>
+            </a>
+            </div>
+        </div>
+    
+    </div>
+    <div class="float-right">
+
+    </div>
+    <div class="clearfix"></div> 
+</div>
+
+<!-- Grid Row -->
+<div class="row mt-5 wow animated fadeIn" data-wow-delay="0.1s">
+  <!-- Grid column -->
+  <div class="col-lg-12 col-md-12 text-center">
+      <mdb-card class="container">
+      <table mdbTable #tableEl="mdbTable" class="">
+          <thead class="text-white">
+          <tr>
+          <th *ngFor="let head of headElements; let i = index" scope="col">{{head}}
+          </th>
+          </tr>
+          </thead>
+          <tbody *ngIf="rules.length; else noData">
+          <tr *ngFor="let rule of rules; let i = index">
+          <th *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex"
+              scope="row">{{rule.order_number}}</th>
+          <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{rule.purchased_on}}</td>
+          <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{rule.bill_to_name}}</td>
+          <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{rule.ship_to_name}}</td>
+          <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{rule.status}}</td>
+          <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{rule.status}}</td>
+          <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">
+              <span mdbIcon class="fas fa-trash-alt mr-2 text-danger" (click)="basicModal.show()"></span>
+              <span mdbIcon class="fas fa-edit text-success"></span>
+          </td>
+          </tr>
+          </tbody>
+          <tfoot class="w-100">
+          <ng-template #noData>
+            <td colspan="7">
+              <hm-empty-data header="No Existing Escalation Rules" description="New Escalation rules will be displayed here">
+                  <button action-button type="button" mdbBtn size="sm" color="primary" class="text-white">Add new Rule</button>
+              </hm-empty-data>
+            </td>
+          </ng-template>            
+          <tr>
+          <td colspan="7">
+              <mdb-table-pagination [tableEl]="tableEl" [searchDataSource]="rules"></mdb-table-pagination>
+          </td>
+          </tr>
+          </tfoot>
+      </table>
+      </mdb-card>
+  </div>
+</div>
+
+
+<!-- <mdb-card>
+<table mdbTable id="rules-list">
+  <tbody>
+    <tr mdbTableCol class="rule-item">
+      <td scope="row">
+          <div class="rule-description">
+            <div class="remove-button float-right">
+                <a id="update-p2jg8qhdzs4k" (click)="basicModal.show()" mdbWavesEffect>Remove</a>
+            </div>
+            <div class="update-button float-right">
+                <a id="update-p2jg8qhdzs4k" routerLink="/rules/update" routerLinkActive="active">Update</a>
+            </div>
+            <strong>
+                <a class="rule-view-link"routerLink="/rules/update" routerLinkActive="active">
+                Elevated Error Occurrence
+                </a></strong><br>
+            <div class="rule-body">
+                Escalate to <span class="escalationLevel">High</span> escalation level If <span class="nEvents">5 </span> <span class="eventType">Errors</span> occur within
+                <span class="duration">1 hour</span>
+            </div>
+          </div>
+      </td>      
+    </tr>
+
+    <tr mdbTableCol class="rule-item">
+      <td scope="row">
+          <div class="rule-description">
+            <div class="remove-button float-right">
+                <a id="update-p2jg8qhdzs4k" (click)="basicModal.show()" mdbWavesEffect>Remove</a>
+            </div>
+            <div class="update-button float-right">
+                <a id="update-p2jg8qhdzs4k" routerLink="/rules/update" routerLinkActive="active">Update</a>
+            </div>
+            <strong>
+                <a class="rule-view-link"routerLink="/rules/update" routerLinkActive="active">
+                Elevated Error Occurrence
+                </a></strong><br>
+            <div class="rule-body">
+                Escalate to <span class="escalationLevel">High</span> escalation level If <span class="nEvents">5 </span> <span class="eventType">Errors</span> occur within
+                <span class="duration">1 hour</span>
+            </div>
+          </div>
+      </td>      
+    </tr>
+    
+  </tbody>
+</table>
+<div class="pagination-container">
+
+</div>
+</mdb-card> -->
+
+<!-- Delete Confirmation Modal -->
+<div mdbModal #basicModal="mdbModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myBasicModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close pull-right" aria-label="Close" (click)="basicModal.hide()">
+          <span aria-hidden="true">×</span>
+        </button>
+        <h4 class="modal-title w-100" id="myModalLabel">Confirm Remove Escalation Rule</h4>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to remove this escalation rule?
+      </div>
+      <div class="modal-footer">
+        <span class="update-button">
+            <a color="primary" aria-label="Close" (click)="basicModal.hide()">Close</a>
+        </span>
+        <span class="remove-button">
+        <a class="relative">Confirm</a>
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
