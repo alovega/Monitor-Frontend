@@ -17,7 +17,7 @@ const routes: Routes = [
     component: CreateRuleComponent
   },
   {
-    path: 'edit/:rule_id',
+    path: 'edit/:rule-id',
     component: UpdateRuleComponent
   }
 ];

@@ -128,41 +128,40 @@ export class EscalationRuleService {
     private http: HttpClient
   ) { }
 
-  createRule(formData: any): Observable<EscalationRule[]> {
-    const getRulesUrl = 'http://127.0.0.1:8000/api/create_rule/';
-    return this.http.post<EscalationRule[]>(getRulesUrl, formData, this.httpOptions).pipe(
-
+  createRule(escalationRule: any): Observable<any> {
+    const createRulesUrl = environment.apiEndpoint + 'create_rule/';
+    return this.http.post<any>(createRulesUrl, escalationRule).pipe(
+      tap(response => console.log(response))
     );
   }
 
   getRules(): Observable<any> {
     const getRulesUrl = environment.apiEndpoint + 'get_rules/';
-    return this.http.post<any>(getRulesUrl, {
-      token: 'MjM0Njg4YmVkYzRiMTA0MDU3Mjc3M2Y0MmNjMTg0'
-    }).pipe(
+    return this.http.post<any>(getRulesUrl, {}).pipe(
       map(rule => rule.data)
     );
   }
 
-  getRule() {
-    const getRuleUrl = 'http://127.0.0.1:8000/api/get_rule/';
-    return this.http.post<EscalationRule[]>(getRuleUrl, this.httpOptions).pipe(
-    );
-  }
-
-  updateRule(formData: any) {
-    const updateRuleUrl = 'http://127.0.0.1:8000/api/update_rule/';
-    return this.http.post<EscalationRule[]>(updateRuleUrl, formData, this.httpOptions).pipe(
-
-    );
-  }
-
-  deleteRule(ruleId: string) {
-    const deleteRuleUrl = 'http://127.0.0.1:8000/api/delete_rule/';
-    return this.http.post<EscalationRule[]>(deleteRuleUrl, {
+  getRule(ruleId: string) {
+    const getRuleUrl = environment.apiEndpoint + 'get_rule/';
+    return this.http.post<any>(getRuleUrl, {
       rule_id: ruleId
-    }, this.httpOptions).pipe(
+    }).pipe(
+      map(rule => rule.data),
+    );
+  }
 
+  updateRule(escalationRule: any) {
+    const updateRuleUrl = environment.apiEndpoint + 'update_rule/';
+    return this.http.post<any>(updateRuleUrl, escalationRule).pipe(
+      tap(response => console.log(response))
+    );
+  }
+
+  deleteRule(escalationRuleId: any) {
+    const deleteRuleUrl = environment.apiEndpoint + 'delete_rule/';
+    return this.http.post<any>(deleteRuleUrl, escalationRuleId).pipe(
+      tap(response => console.log(response))
     );
   }
 }

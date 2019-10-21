@@ -23,7 +23,8 @@ export class HttpInterceptorService implements HttpInterceptor {
     }
 
     request = request.clone({
-        body: {...request.body, client_id: this.clientId, token: this.accessToken, system_id: this.currentSystem.id}
+        body: {...request.body, client_id: this.clientId, token: this.accessToken, system_id: this.currentSystem.id, 
+          system: this.currentSystem.name}
     });
 
     return next.handle(request);

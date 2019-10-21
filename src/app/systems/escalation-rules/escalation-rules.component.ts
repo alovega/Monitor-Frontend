@@ -75,4 +75,8 @@ export class EscalationRulesComponent implements OnInit, AfterViewInit {
       this.mdbTable.setDataSource(prev);
     }
   }
+
+  onOpen(event: any) {
+    console.log(event);
+  }
 }
