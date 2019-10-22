@@ -3,7 +3,7 @@
     <!-- Grid column -->
     <div class="col-md-1"></div>
       <!-- Grid column -->
-    <div class="col-md-10">
+    <div class="col-md-12">
       <div class="page-header">
         Add user
       </div>
@@ -11,27 +11,81 @@
       <div class="page-body">
         <div class="new-rule">
           <mdb-card class="card">
-            <form [formGroup]="addUserForm" class="text-center">
-            <!-- Name -->
-            <label class="form-label">User Name</label>
-            <input type="text" id="userName" formControlName="ruleName" class="grey lighten-5 form-control mb-4"
-            placeholder="Username">
-            
-            <label class="form-label">First Name</label>
-            <input type="text" id="firstName" formControlName="ruleName" class="grey lighten-5 form-control mb-4"
-            placeholder="first name">
+            <form [formGroup]="addUserForm" class="text-center row" (ngSubmit)="onSubmit()">
+            <div class="col-md-4 mb-4">
+              <div class="form-group">
+                  <!-- Name -->
+                  <label class="form-label">User Name</label>
+                  <input type="text" id="userName" formControlName="username" class="grey lighten-5 form-control"
+                  placeholder="Username" [ngClass]="{'is-invalid': submitted && addUserForm.controls.username.errors}" 
+                  [(ngModel)] = "user.username">
+                
+                  <div *ngIf="submitted && addUserForm.controls.username.errors" class="invalid-feedback">
+                    <div *ngIf="addUserForm.controls.username.errors.required">Username is required</div>
+                  </div>
+              </div>
+            </div>
 
-            <label class="form-label">Last Name</label>
-            <input type="text" id="lastName" formControlName="ruleName" class="grey lighten-5 form-control mb-4"
-            placeholder="last name">
-  
-            <!-- Email -->
-            <label class="form-label">Email</label>
-            <input type="email" id="email" formControlName="ruleName" class="grey lighten-5 form-control mb-4"
-            placeholder="email">
+            <div class="col-md-4 mb-4">
+                <div class="form-group">
+                    <!-- Name -->
+                    <label class="form-label">Email</label>
+                    <input type="email" id="email" formControlName="email" class="grey lighten-5 form-control"
+                    placeholder="Email" [ngClass]="{'is-invalid': submitted && addUserForm.controls.email.errors}" 
+                    [(ngModel)] = "user.email" required>
+                  
+                    <div *ngIf="submitted && addUserForm.controls.email.errors" class="invalid-feedback">
+                      <div *ngIf="addUserForm.controls.email.errors.required">Email is required</div>
+                    </div>
+                </div>
+              </div>
+
+            <div class="col-md-4 mb-4">
+              <div class="form-group">
+                  <!-- Name -->
+                  <label class="form-label">Password</label>
+                  <input type="text" id="password" formControlName="password" class="grey lighten-5 form-control"
+                  placeholder="Password" [ngClass]="{'is-invalid': submitted && addUserForm.controls.password.errors}" 
+                  [(ngModel)] = "user.password">
+                
+                  <div *ngIf="submitted && addUserForm.controls.email.errors" class="invalid-feedback">
+                    <div *ngIf="addUserForm.controls.email.errors.required">Password is required</div>
+                  </div>
+              </div>
+            </div>
+
+            <div class="col-md-6 mb-4">
+                <div class="form-group">
+                    <!-- Name -->
+                    <label class="form-label">First Name</label>
+                    <input type="text" id="firstname" formControlName="firstname" class="grey lighten-5 form-control"
+                    placeholder="First name" [ngClass]="{'is-invalid': submitted && addUserForm.controls.firstname.errors}" 
+                    [(ngModel)] = "user.first_name">
+                  
+                    <div *ngIf="submitted && addUserForm.controls.firstname.errors" class="invalid-feedback">
+                      <div *ngIf="addUserForm.controls.firstname.errors.required">Firstname is required</div>
+                    </div>
+                </div>
+              </div>
+            
+              <div class="col-md-6 mb-4">
+                <div class="form-group">
+                    <!-- Name -->
+                    <label class="form-label">Last Name</label>
+                    <input type="text" id="lastname" formControlName="lastname" class="grey lighten-5 form-control"
+                    placeholder="Last name" [ngClass]="{'is-invalid': submitted && addUserForm.controls.lastname.errors}" 
+                    [(ngModel)] = "user.last_name">
+                  
+                    <div *ngIf="submitted && addUserForm.controls.firstname.errors" class="invalid-feedback">
+                      <div *ngIf="addUserForm.controls.firstname.errors.required">Lastname is required</div>
+                    </div>
+                </div>
+              </div>
+              <div class="col-md-12">
               <!-- Create button -->
               <div class="create-button">
-                  <button id="create-button" mdbWavesEffect class="float-right" color="primary" size="md">Add user</button>
+                  <button id="create-button" mdbWavesEffect class="float-right pl-5 pr-5" color="primary" size="md">Add user</button>
+              </div>
               </div>
             </form>
           </mdb-card>

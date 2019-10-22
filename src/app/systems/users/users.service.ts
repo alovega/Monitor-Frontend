@@ -128,10 +128,9 @@ export class UsersService {
     private http: HttpClient
   ) { }
 
-  createUser(formData: any): Observable<any[]> {
-    const createUserUrl = 'http://127.0.0.1:8000/api/create_rule/';
-    return this.http.post<any[]>(createUserUrl, formData, this.httpOptions).pipe(
-
+  createUser(user: any): Observable<any> {
+    return this.http.post<any>(environment.apiEndpoint + 'create_user/', user).pipe(
+      tap(response => console.log(response))
     );
   }
 
@@ -155,12 +154,12 @@ export class UsersService {
     );
   }
 
-  deleteUser(ruleId: string) {
-    const deleteUserUrl = 'http://127.0.0.1:8000/api/delete_user';
-    return this.http.post<any[]>(deleteUserUrl, {
-      rule_id: ruleId
-    }, this.httpOptions).pipe(
-
+  deleteUser(userId: any) {
+    return this.http.post<any>(environment.apiEndpoint + 'delete_user/',
+    {
+      user_id: userId
+    }).pipe(
+      tap(response => console.log(response))
     );
   }
 }

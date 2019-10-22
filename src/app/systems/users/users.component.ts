@@ -78,7 +78,7 @@ export class UsersComponent implements OnInit, AfterViewInit {
     }
   }
 
-  deleteUser() {
+  deleteUser(userId) {
     Swal.fire({
       title: 'Are you sure?',
       text: 'You will not be able to recover this user!',
@@ -89,11 +89,27 @@ export class UsersComponent implements OnInit, AfterViewInit {
     }).then((result) => {
       if (result.value) {
         console.log('User deleted');
-        Swal.fire(
-          'Deleted!',
-          'This user has been deleted.',
-          'success'
+        this.usersService.deleteUser(userId).subscribe(
+          response => {
+            console.log(response);
+            if (response.code === '800.200.001') {
+              Swal.fire(
+                'Deleted!',
+                'This user has been deleted.',
+                'success'
+              )} else {
+              Swal.fire(
+                'Failed!',
+                'This user could not be deleted.',
+                'error'
+              )}
+          });
+        this.usersService.getUsers().subscribe(
+          (response => {
+            this.users = response.data;
+          })
         )
+
       } else if (result.dismiss === Swal.DismissReason.cancel) {
         Swal.fire(
           'Cancelled',
