@@ -28,7 +28,8 @@ export class EscalationRuleService {
   getRules(): Observable<any> {
     const getRulesUrl = environment.apiEndpoint + 'get_rules/';
     return this.http.post<any>(getRulesUrl, {}).pipe(
-      map(rule => rule.data)
+      map(rule => rule.data),
+      tap(rules => console.log(rules))
     );
   }
 

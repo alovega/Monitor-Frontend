@@ -22,7 +22,7 @@
 <!-- Grid Row -->
 <div class="row mt-5 wow animated fadeIn" data-wow-delay="0.1s">
   <!-- Grid column -->
-  <div class="col-lg-12 col-md-12 text-left" [ngClass] = "{'d-none': !rules.length}">
+  <div class="col-lg-12 col-md-12 text-left">
       <mdb-card class="container">
       <table mdbTable #tableEl="mdbTable" class="">
           <thead class="text-white">
@@ -50,7 +50,9 @@
           <ng-template #noData>
             <td colspan="7">
               <hm-empty-data header="No Existing Escalation Rules" description="New Escalation rules will be displayed here">
-                  <button action-button type="button" mdbBtn size="sm" color="primary" class="text-white">Add new Rule</button>
+                <a action-button routerLink="/system/{{currentSystemId}}/rules/new">
+                    <button type="button" mdbBtn size="sm" color="primary" class="text-white">Add new Rule</button>
+                </a>
               </hm-empty-data>
             </td>
           </ng-template>            

@@ -30,9 +30,10 @@ export class HttpInterceptorService implements HttpInterceptor {
     }
 
     request = request.clone({
-        body: {...request.body, client_id: this.clientId, token: this.accessToken , system_id: this.currentSystemId,
+        body: {...request.body, client_id: this.clientId, token: this.accessToken , system_id: '17b25f70-7a57-4c41-ac1e-f58f8fe89661',
           system: this.systemName}
     });
+
 
     return next.handle(request);
   }
