@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
+import { map, tap} from 'rxjs/operators';
 
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -133,11 +135,10 @@ export class UsersService {
     );
   }
 
-  getUsers(): any[] {
-    // const getRulesUrl = 'http://127.0.0.1:8000/api/get_rules/';
-    // return this.http.post<EscalationRule[]>(getRulesUrl, this.httpOptions).pipe(
-    // );
-    return this.users;
+  getUsers(): Observable<any> {
+    const getUsersUrl = environment.apiEndpoint + 'get_users/';
+    return this.http.post<any>(getUsersUrl, {}).pipe(
+    );
   }
 
   getUser() {

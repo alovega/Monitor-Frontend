@@ -48,7 +48,7 @@ export class EscalationRulesComponent implements OnInit, AfterViewInit {
         this.mdbTable.setDataSource(this.rules);
         this.rules = this.mdbTable.getDataSource();
         this.previous = this.mdbTable.getDataSource();
-        console.log(this.rules);
+        console.log(result);
       })
     );
 

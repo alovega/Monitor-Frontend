@@ -6,7 +6,7 @@ export const environment = {
   production: false,
   apiEndpoint: 'http://127.0.0.1:8000/api/',
   clientId: '3cd49364-721a-4d3f-8bfa-141d93d6a8f7',
-  accessToken: 'NDIxMTQ3NWM5Y2JhZjA3ZTAzMWQ2MDE1OWIwNGYx'
+  accessToken: 'MzdmM2IyNjQ5MDk5MGYwMjc5MTcwYmRmYmM3ZmZh'
 };
 
 /*

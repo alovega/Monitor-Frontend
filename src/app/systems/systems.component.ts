@@ -28,20 +28,9 @@ export class SystemsComponent implements OnInit {
       this.currentSystemId = this.currentSystem.id;
       this.redirect();
     });
-    if (!this.currentSystemId) {
-      this.currentSystemId = this.currentSystem.id;
-      console.log('Not Set');
-    } else {
-      console.log('Set');
+    if (this.currentSystemId) {
       this.redirect();
     }
-
-    if (this.currentSystem && this.currentSystemId) {
-      this.redirect();
-    }
-
-    // this.router.navigateByUrl('/', {skipLocationChange: true}).then(() =>
-    // this.router.navigate([`system/${this.currentSystemId}/incidents`]));
   }
 
   redirect() {

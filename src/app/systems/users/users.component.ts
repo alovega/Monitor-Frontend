@@ -41,11 +41,18 @@ export class UsersComponent implements OnInit, AfterViewInit {
       })
     );
 
-    this.users = this.usersService.getUsers();
-    this.mdbTable.setDataSource(this.users);
-    this.users = this.mdbTable.getDataSource();
-    this.previous = this.mdbTable.getDataSource();
-    console.log(this.users);
+    this.usersService.getUsers().subscribe(
+      result => {
+        if (result.code === '800.200.001') {
+          this.users = result.data;
+          this.mdbTable.setDataSource(this.users);
+          this.users = this.mdbTable.getDataSource();
+          this.previous = this.mdbTable.getDataSource();
+          console.log(this.users);
+        }
+      }
+    );
+
   }
 
   ngAfterViewInit() {

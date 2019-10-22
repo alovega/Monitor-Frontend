@@ -1,8 +1,9 @@
 import { Injectable, Output, EventEmitter } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import {map, tap, filter} from 'rxjs/operators';
+import { map, tap, filter} from 'rxjs/operators';
 // import { runInThisContext } from 'vm';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -31,22 +32,17 @@ export class SystemService {
     );
   }
 
-  createSystem(formData: any): Observable<any> {
-    formData.append('system', 'Helaplan');
-    formData.append('client_id', this.clientId);
-    formData.append('token', this.token);
-
-    return this.http.post<any>('http://127.0.0.1:8000/api/get_systems', formData).pipe(
-      // tap(system => console.log(system))
+  createSystem(system: any): Observable<any> {
+    const createSystemUrl = environment.apiEndpoint + 'create_system/';
+    return this.http.post<any>(createSystemUrl, system).pipe(
+      tap(system => console.log(system))
     );
   }
 
 
   setSystem(systemId: string) {
-    return this.http.post<any>('http://127.0.0.1:8000/api/get_systems/', {
-      client_id: this.clientId,
-      token: this.token,
-    }).pipe(
+    const getSystemUrl = environment.apiEndpoint + 'get_systems/';
+    return this.http.post<any>(getSystemUrl, {}).pipe(
       map(systems => systems.data.filter(system => system.id === systemId)),
       tap(systems => {
         localStorage.setItem('currentSystem', JSON.stringify(systems[0])),
@@ -57,10 +53,10 @@ export class SystemService {
 
   checkCurrentSystem() {
     if (localStorage.getItem('currentSystem') === null || localStorage.getItem('currentSystem') === 'undefined') {
-      // console.log('Saved system');
       return false;
     } else {
-      let system = JSON.parse(localStorage.getItem('currentSystem'));
+      // console.log('Saved system');
+      const system = JSON.parse(localStorage.getItem('currentSystem'));
       return system;
     }
   }
@@ -76,6 +72,7 @@ export class SystemService {
         const currentSystem = result[0];
         localStorage.setItem('currentSystem', JSON.stringify(currentSystem));
         console.log(currentSystem);
+        this.changeSystem.emit(result.data);
       }));
   }
 }

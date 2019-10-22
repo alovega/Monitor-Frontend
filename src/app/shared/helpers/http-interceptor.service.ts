@@ -11,6 +11,8 @@ export class HttpInterceptorService implements HttpInterceptor {
   clientId = environment.clientId;
   accessToken: string;
   currentSystem: any;
+  currentSystemId: any;
+  systemName: any;
 
   constructor() { }
 
@@ -22,9 +24,14 @@ export class HttpInterceptorService implements HttpInterceptor {
       this.accessToken = environment.accessToken;
     }
 
+    if (this.currentSystem) {
+      this.currentSystemId = this.currentSystem.id;
+      this.systemName = this.currentSystem.name;
+    }
+
     request = request.clone({
-        body: {...request.body, client_id: this.clientId, token: this.accessToken, system_id: this.currentSystem.id, 
-          system: this.currentSystem.name}
+        body: {...request.body, client_id: this.clientId, token: this.accessToken , system_id: this.currentSystemId,
+          system: this.systemName}
     });
 
     return next.handle(request);

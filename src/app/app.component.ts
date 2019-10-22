@@ -3,7 +3,6 @@ import { SystemService } from './shared/system.service';
 import {
   Router, NavigationStart, NavigationCancel, NavigationEnd , ActivatedRoute
 } from '@angular/router';
-import { isUndefined } from 'util';
 
 
 @Component({
@@ -21,7 +20,7 @@ export class AppComponent implements OnInit {
   constructor(
     private systemService: SystemService,
     private router: Router,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
   ) {
     this.loading = true;
   }
@@ -40,4 +39,6 @@ export class AppComponent implements OnInit {
       }
     });
   }
+
+
 }

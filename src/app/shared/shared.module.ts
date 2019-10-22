@@ -18,6 +18,7 @@ import { HttpInterceptorService } from './helpers/http-interceptor.service';
 
 import { SystemService } from './system.service';
 import { LoaderComponent } from './loader/loader.component';
+import { AddSystemComponent } from './add-system/add-system.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { LoaderComponent } from './loader/loader.component';
     DatePickerComponent,
     TimePickerComponent,
     EmptyDataComponent,
-    LoaderComponent
+    LoaderComponent,
+    AddSystemComponent
   ],
   imports: [
     CommonModule,
@@ -51,7 +53,8 @@ import { LoaderComponent } from './loader/loader.component';
     DatePickerComponent,
     TimePickerComponent,
     EmptyDataComponent,
-    LoaderComponent
+    LoaderComponent,
+    AddSystemComponent
   ],
   providers: [SystemService,
     {
