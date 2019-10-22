@@ -20,10 +20,9 @@ export class SideNavComponent implements OnInit {
 
   ngOnInit() {
     this.systemService.changeSystem.subscribe(
-      system => {
-        let currentSystem = system[0];
+      systems => {
+        let currentSystem = systems[0];
         this.currentSystemId = currentSystem.id;
-        console.log(this.route);
       }
     );
 

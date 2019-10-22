@@ -21,6 +21,7 @@ export class SystemsComponent implements OnInit {
 
   ngOnInit() {
     this.currentSystemId = this.activatedRoute.snapshot.params['system-id'];
+
     let issetCurrentSystem = this.systemService.checkCurrentSystem();
     issetCurrentSystem ? this.currentSystem  = issetCurrentSystem : this.systemService.getCurrentSystem()
     .subscribe(systems => {
@@ -30,7 +31,17 @@ export class SystemsComponent implements OnInit {
     });
     if (this.currentSystemId) {
       this.redirect();
+    } else if (this.currentSystem) {
+      this.currentSystemId = this.currentSystem.id;
+      this.redirect();
     }
+
+    // if (this.currentSystem && this.currentSystemId) {
+    //   this.redirect();
+    // }
+
+    // this.router.navigateByUrl('/', {skipLocationChange: true}).then(() =>
+    // this.router.navigate([`system/${this.currentSystemId}/incidents`]));
   }
 
   redirect() {

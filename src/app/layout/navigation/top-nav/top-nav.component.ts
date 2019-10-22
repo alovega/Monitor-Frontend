@@ -76,7 +76,7 @@ export class TopNavComponent implements OnInit {
               this.newSystem = newSystem[0];
               this.reload(this.newSystem.id);
               this.closeBtn.nativeElement.click();
-              this.router.navigate([`system/${this.newSystem.id}/incidents`]);
+              this.router.navigate(['']);
             }));
         }
       })

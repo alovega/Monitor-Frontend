@@ -22,6 +22,9 @@ export class SystemService {
       token: this.token,
     }).pipe(
       map(system => system.data),
+      tap(systems => {
+        this.changeSystem.emit(systems);
+      })
       // tap(system => {
       //   if (localStorage.getItem('currentSystem') === null || localStorage.getItem('currentSystem') === 'undefined') {
       //     this.currentSystem = system[0];
@@ -35,7 +38,7 @@ export class SystemService {
   createSystem(system: any): Observable<any> {
     const createSystemUrl = environment.apiEndpoint + 'create_system/';
     return this.http.post<any>(createSystemUrl, system).pipe(
-      tap(system => console.log(system))
+      tap(system => console.log(system)),
     );
   }
 
@@ -53,10 +56,12 @@ export class SystemService {
 
   checkCurrentSystem() {
     if (localStorage.getItem('currentSystem') === null || localStorage.getItem('currentSystem') === 'undefined') {
+      // console.log('Not set');
       return false;
     } else {
-      // console.log('Saved system');
+      console.log('Saved system');
       const system = JSON.parse(localStorage.getItem('currentSystem'));
+      console.log(system ? 'true' : 'false');
       return system;
     }
   }
@@ -71,8 +76,8 @@ export class SystemService {
       tap(result => {
         const currentSystem = result[0];
         localStorage.setItem('currentSystem', JSON.stringify(currentSystem));
-        console.log(currentSystem);
-        this.changeSystem.emit(result.data);
+        // console.log(currentSystem);
+        // this.changeSystem.emit(result.data);
       }));
   }
 }
