@@ -4,7 +4,7 @@ import { catchError, filter, tap, map } from 'rxjs/operators';
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 
 import { Incident } from './incident';
-
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -12,37 +12,39 @@ import { Incident } from './incident';
 
 export class IncidentService {
   incidentsUrl = 'assets/demo-incidents.json';
+  startDate = new Date(
+    new Date().getFullYear(),
+    new Date().getMonth() - 3,
+    new Date().getDate()
+  );
+  endDate = new Date(
+    new Date().getFullYear(),
+    new Date().getMonth() + 3,
+    new Date().getDate()
+  );
+
   httpOptions = {
     headers: new HttpHeaders({'Content-Type' : 'application/x-www-form-urlencoded'})
   };
   token = 'MmVmZWQzYTdhNGY2ZjMxNTE4NGQ1ZWZlOTk5MDA3';
   clientId = '3cd49364-721a-4d3f-8bfa-141d93d6a8f7';
+
   @Output() changeSystem: EventEmitter<boolean> = new EventEmitter();
 
   constructor(
     private http: HttpClient
   ) {}
 
-  createIncident(formData: any): Observable<Incident> {
-    const createIncidentUrl = 'http://127.0.0.1:8000/api/create_incident/';
-    formData.append('client_id', this.clientId);
-    formData.append('token', this.token);
-
-    for (let key of formData.entries()) {
-      // console.log(key[0] + ', ' + key[1]);
-    }
-    return this.http.post<Incident>(createIncidentUrl, formData).pipe(
-      // tap(incident => console.log(incident))
+  createIncident(incident: any): Observable<Incident> {
+    return this.http.post<Incident>(environment.apiEndpoint + 'create_incident/', incident).pipe(
+      tap(result => console.log(result))
     );
   }
 
   getIncidents(): Observable<Incident[]> {
-    return this.http.post<any>('http://127.0.0.1:8000/api/get_incidents/', {
-      client_id: this.clientId,
-      system: 'Helaplan',
-      token: this.token,
-      start_date: '2019-9-1',
-      end_date: '2019-10-15'
+    return this.http.post<any>(environment.apiEndpoint + 'get_incidents/', {
+      start_date: this.startDate.toISOString(),
+      end_date: this.endDate.toISOString(),
     }).pipe(
       map(incidents => incidents.data),
       // tap(incidents => console.log(incidents))
@@ -51,12 +53,9 @@ export class IncidentService {
 
   getOpenIncidents(currentSystem: any): Observable<Incident[]> {
     // console.log(currentSystem);
-    return this.http.post<any>('http://127.0.0.1:8000/api/get_incidents/', {
-      client_id: this.clientId,
-      system: currentSystem.name,
-      token: this.token,
-      start_date: '2019-9-1',
-      end_date: '2019-10-15'
+    return this.http.post<any>(environment.apiEndpoint + 'get_incidents/', {
+      start_date: this.startDate.toISOString(),
+      end_date: this.endDate.toISOString(),
     }).pipe(
       map(incidents => incidents.data.filter(incident => incident.status !== 'Completed').filter(
         incident => incident.status !== 'Resolved'
@@ -69,26 +68,20 @@ export class IncidentService {
     return this.http.get<Incident[]>(this.incidentsUrl);
   }
 
-  getRealtimeIncidents(currentSystem: any): Observable<any> {
-    return this.http.post<any>('http://127.0.0.1:8000/api/get_incidents/', {
-      client_id: this.clientId,
-      system: currentSystem.id,
-      token: this.token,
-      start_date: '2019-9-1',
-      end_date: '2019-10-15'
+  getRealtimeIncidents(): Observable<any> {
+    return this.http.post<any>(environment.apiEndpoint + 'get_incidents/', {
+      start_date: this.startDate.toISOString(),
+      end_date: this.endDate.toISOString(),
     }).pipe(
+      tap(incidents => console.log(incidents)),
       map(incidents => incidents.data.filter(incident => incident.type === 'Realtime')),
-      // tap(incidents => console.log(incidents))
     );
   }
 
-  getScheduledIncidents(currentSystem: any): Observable<Incident[]> {
-    return this.http.post<any>('http://127.0.0.1:8000/api/get_incidents/', {
-      client_id: this.clientId,
-      system: currentSystem.id,
-      token: this.token,
-      start_date: '2019-9-1',
-      end_date: '2019-10-15'
+  getScheduledIncidents(): Observable<Incident[]> {
+    return this.http.post<any>(environment.apiEndpoint + 'get_incidents/', {
+      start_date: this.startDate.toISOString(),
+      end_date: this.endDate.toISOString(),
     }).pipe(
       map(incidents => incidents.data.filter(incident => incident.type === 'Scheduled')),
       // tap(incidents => console.log(incidents))
@@ -104,11 +97,9 @@ export class IncidentService {
     );
   }
 
-  updateIncident(formData: any): Observable<any> {
-    for (let key of formData.entries()) {
-      console.log(key[0] + ', ' + key[1]);
-    }
-    return this.http.post<any>('http://127.0.0.1:8000/api/update_incident/', formData).pipe(
+  updateIncident(incident: any): Observable<any> {
+    return this.http.post<any>(environment.apiEndpoint + 'update_incident/', incident).pipe(
+      tap(result => console.log(result) )
     );
   }
 

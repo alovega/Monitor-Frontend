@@ -22,6 +22,7 @@ export class CreateIncidentComponent implements OnInit {
   maintenanceUrl: string;
   systemId: string;
   currentSystem: any;
+  incident: Incident;
 
   constructor(
     public router: Router,
@@ -30,6 +31,7 @@ export class CreateIncidentComponent implements OnInit {
     private incidentService: IncidentService,
     private formBuilder: FormBuilder,
     private systemService: SystemService) {
+      this.incident = new Incident();
    }
 
   ngOnInit() {
@@ -40,11 +42,13 @@ export class CreateIncidentComponent implements OnInit {
         this.maintenanceUrl = `/system/${this.systemId}/incidents/new/maintenance`;
       });
 
-    this.systemService.setSystem(this.systemId).subscribe(
-      (result => {
-        this.currentSystem = result[0];
-      })
-    );
+    let issetCurrentSystem = this.systemService.checkCurrentSystem();
+    issetCurrentSystem ? this.currentSystem  = issetCurrentSystem : this.systemService.getCurrentSystem()
+    .subscribe(systems => {
+      this.currentSystem = systems[0];
+      this.systemId = this.currentSystem.id;
+    });
+
     this.createRealtimeIncidentForm();
     this.createScheduledMaintenanceForm();
   }
@@ -96,20 +100,9 @@ export class CreateIncidentComponent implements OnInit {
       return;
     }
 
-    let formData: any = new FormData();
-    formData.append('name', this.realtimeIncidentForm.get('incidentName').value);
-    formData.append('state', this.realtimeIncidentForm.get('incidentStatus').value);
-    formData.append('description', this.realtimeIncidentForm.get('message').value);
-    formData.append('escalation_level', this.realtimeIncidentForm.get('escalationLevel').value);
-    formData.append('priority_level', this.realtimeIncidentForm.get('priorityLevel').value);
-    formData.append('incident_type', 'Realtime');
-    formData.append('system', this.currentSystem.name);
-
-    for (let key of formData.entries()) {
-      console.log(key[0] + ', ' + key[1]);
-    }
-
-    return this.incidentService.createIncident(formData).subscribe(
+    this.incident.incident_type = 'Realtime';
+    console.log(this.incident);
+    return this.incidentService.createIncident(this.incident).subscribe(
       ((result: any) => {
         if (result.code === '800.200.001') {
           this.location.back();
@@ -143,18 +136,11 @@ export class CreateIncidentComponent implements OnInit {
     // console.log(scheduledFor);
     // console.log(scheduledUntil);
 
-    let formData: any = new FormData();
-    formData.append('name', this.scheduledMaintenanceForm.get('maintenanceName').value);
-    formData.append('state', this.scheduledMaintenanceForm.get('maintenanceStatus').value);
-    formData.append('description', this.scheduledMaintenanceForm.get('message').value);
-    formData.append('scheduled_for', scheduledFor);
-    formData.append('scheduled_until', scheduledUntil);
-    formData.append('escalation_level', this.scheduledMaintenanceForm.get('escalationLevel').value);
-    formData.append('priority_level', this.scheduledMaintenanceForm.get('priorityLevel').value);
-    formData.append('incident_type', 'Scheduled');
-    formData.append('system', this.currentSystem.name);
-
-    return this.incidentService.createIncident(formData).subscribe(
+    this.incident.incident_type = 'Scheduled';
+    this.incident.scheduled_for = scheduledFor;
+    this.incident.scheduled_until = scheduledUntil;
+    console.log(this.incident);
+    return this.incidentService.createIncident(this.incident).subscribe(
       ((result: any) => {
         if (result.code === '800.200.001') {
           this.location.back();

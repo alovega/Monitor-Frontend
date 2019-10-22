@@ -10,7 +10,8 @@
             <div class="priority-level">
                 <form [formGroup]="updateIncidentForm" (ngSubmit)="onSubmit()" class="text-center" >
                     <label for="">Priority Level</label>
-                    <select formControlName="priorityLevel" [ngClass]="{ 'is-invalid': submitted && updateIncidentForm.controls.priorityLevel.errors }" class="browser-default custom-select">
+                    <select formControlName="priorityLevel" [ngClass]="{ 'is-invalid': submitted && updateIncidentForm.controls.priorityLevel.errors }" class="browser-default custom-select"
+                    [(ngModel)] = "incident.priority_level">
                     <option selected value="1">Level 1</option>
                     <option value="2">Level 2</option>
                     <option value="3">Level 3</option>
@@ -97,7 +98,7 @@
                             <label class="form-label">Message</label>
                             <textarea class="grey lighten-5 form-control rounded-2" formControlName="message"
                                 id="exampleFormControlTextarea2" rows="3" placeholder="We are currently investigating this incident"
-                                [ngClass]="{'is-invalid': submitted && updateIncidentForm.controls.message.errors}">
+                                [ngClass]="{'is-invalid': submitted && updateIncidentForm.controls.message.errors}" [(ngModel)] = "incident.description">
                             </textarea>
 
                             <div *ngIf="submitted && updateIncidentForm.controls.message.errors" class="invalid-feedback">
