@@ -22,9 +22,7 @@ export class EndpointViewComponent implements OnInit {
     private endpointService: EndpointService,
     private cdRef: ChangeDetectorRef,
     private activatedRoute: ActivatedRoute,
-    ) {
-      this.elements = []
-    }
+    ) {}
 
   ngOnInit() {
     this.activatedRoute.parent.params.subscribe(
@@ -32,7 +30,7 @@ export class EndpointViewComponent implements OnInit {
         this.currentSystemId = param['system-id'];
         console.log(this.currentSystemId);
       });
-    this.elements = this.showEndpoints()
+    this.elements = this.showEndpoints(this.currentSystemId)
     this.mdbTable.setDataSource(this.elements);
     this.elements = this.mdbTable.getDataSource();
     this.previous = this.mdbTable.getDataSource();
@@ -45,16 +43,16 @@ export class EndpointViewComponent implements OnInit {
     this.cdRef.detectChanges();
   }
 
-  showEndpoints() {
-   return this.endpointService.getEndpoints(this.currentSystemId)
+  showEndpoints(currentSystemId) {
+   return this.endpointService.getEndpoints(currentSystemId)
       .subscribe((data) => {
         console.log(data)
         this.elements = data
-      });
+    });
   }
   delete(item){
     this.endpointService.deleteItem(item.id).subscribe(response => {
-      this.showEndpoints();
+      this.showEndpoints(this.currentSystemId);
     })
   }
 }

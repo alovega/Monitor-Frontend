@@ -1,5 +1,5 @@
 export class Endpoint {
-    id:number;
+    id:string;
     name: string;
     description: string;
     endpoint_id: string;
@@ -7,7 +7,5 @@ export class Endpoint {
     system_id: string;
     optimal_response_time: number;
     endpoint_type: string;
-    status: string;
-    date_created?: number;
-    date_modified?: string;
+    state: string;
 }

@@ -2,6 +2,7 @@ import { MdbTablePaginationComponent, MdbTableDirective } from 'angular-bootstra
 import { RecipientService } from '../recipient.service';
 import { Component, OnInit, ViewChild, AfterViewInit, ChangeDetectorRef } from '@angular/core';
 import { Recipient } from '../recipient';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-email-recipients',
@@ -13,15 +14,28 @@ export class EmailRecipientsComponent implements OnInit {
   @ViewChild(MdbTableDirective, { static: true }) mdbTable: MdbTableDirective;
   firstItemIndex: any;
   lastItemIndex: any;
+  currentSystem: any;
+  currentSystemId: any;
   elements: any;
+  escalations:any
   previous: any = [];
   headElements: string[] = [ 'Email', 'Date Created', 'Status','Action'];
 
-  constructor(private recipientService:RecipientService, private cdRef: ChangeDetectorRef) {
+  constructor(
+    private recipientService:RecipientService, 
+    private cdRef: ChangeDetectorRef,
+    private activatedRoute: ActivatedRoute
+    
+    ) {
     this.elements = []
    }
 
    ngOnInit() {
+    this.activatedRoute.parent.params.subscribe(
+      (param: any) => {
+        this.currentSystemId = param['system-id'];
+        console.log(this.currentSystemId);
+      });
     this.elements = this.showRecipients()
     this.mdbTable.setDataSource(this.elements);
     this.elements = this.mdbTable.getDataSource();
@@ -49,10 +63,11 @@ export class EmailRecipientsComponent implements OnInit {
     }
   }
   showRecipients() {
-    return this.recipientService.getEndpoints()
-       .subscribe((data:Recipient[]) => {
-         console.log(data)
-         this.elements = data.filter(data => data.notification_type === 'Email')
+    return this.recipientService.getEmailRecipients(this.currentSystemId)
+       .subscribe((response) => {
+         console.log(response)
+         this.elements = response
+         this.escalations = response.escalation_levels
        });
    }
 

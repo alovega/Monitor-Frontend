@@ -20,7 +20,7 @@ const routes: Routes = [
   { path: 'notifications', loadChildren: () => import('./notifications/notifications.module').then(m => m.NotificationsModule) },
   { path: 'system', loadChildren: () => import('./systems/systems.module').then(m => m.SystemsModule) },
   { path: '**', component: PagenotfoundComponent },
-];
+  ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

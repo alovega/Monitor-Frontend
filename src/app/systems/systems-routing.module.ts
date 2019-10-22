@@ -19,6 +19,7 @@ const routes: Routes = [
   { path: ':system-id/users', loadChildren: () => import('./users/users.module').then(m => m.UsersModule) },
   { path: ':system-id/endpoints', loadChildren: () => import('./endpoint/endpoint.module').then(m => m.EndpointModule) },
   { path: ':system-id/recipients', loadChildren: () => import('./recipients/recipients.module').then(m => m.RecipientsModule) },
+  
 ];
 
 @NgModule({

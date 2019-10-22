@@ -44,9 +44,9 @@
       <!-- Endpoint type -->
       <label>Endpoint type</label>
       <select class=" form-control browser-default custom-select mb-4" placeholder="Endpoint type" formControlName="EndpointType" [(ngModel)]="data.endpoint_type">
-        <option value="" selected></option>
-        <option value="1">Healthcheck</option>
-        <option value="2">Authentication</option>
+          <option *ngFor="let type of endpoint_types; let i = index" [value]="endpoint_types[i].id">
+              {{endpoint_types[i].name}}
+            </option>
       </select>
       <div *ngIf="endpointForm.controls['EndpointType'].invalid && (endpointForm.controls['EndpointType'].dirty || endpointForm.controls['EndpointType'].touched)" class="alert alert-danger">
         <div *ngIf="endpointForm.controls['EndpointType'].errors.required">
@@ -57,10 +57,10 @@
     <div class="col">
       <!-- State -->
       <label>State</label>
-      <select class=" form-control browser-default custom-select mb-4" placeholder="State" formControlName="State" [(ngModel)]="data.status">
-        <option value="" selected></option>
-        <option value="Active">Active</option>
-        <option value="Disabled">Disabled</option>
+      <select class=" form-control browser-default custom-select mb-4" placeholder="State" formControlName="State" [(ngModel)]="data.state">
+          <option *ngFor="let type of states; let i = index" [value]="states[i].id">
+              {{states[i].name}}
+            </option>
       </select>
       <div *ngIf="endpointForm.controls['State'].invalid && (endpointForm.controls['State'].dirty || endpointForm.controls['State'].touched)" class="alert alert-danger">
         <div *ngIf="endpointForm.controls['State'].errors.required">
@@ -80,6 +80,9 @@
         <div *ngIf="endpointForm.controls['Description'].errors.required">
           Description is required.
         </div>
+        <div *ngIf="endpointForm.controls['Description'].errors.minlength">
+            Description is should be more than 10.
+          </div>
       </div>
     </div>
   </div>

@@ -1,6 +1,7 @@
 import { MdbTablePaginationComponent, MdbTableDirective } from 'angular-bootstrap-md';
 import { Component, OnInit, ViewChild, AfterViewInit, ChangeDetectorRef } from '@angular/core';
 import { RecipientService } from '../recipient.service'
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-sms-recipients',
@@ -13,13 +14,24 @@ export class SmsRecipientsComponent implements OnInit {
   firstItemIndex: any;
   lastItemIndex: any;
   elements: any;
+  currentSystem: any;
+  currentSystemId: any;
   previous: any = [];
-  headElements: string[] = [ 'Phone Number', 'Date Created','Status','Action'];
-  constructor(private recipientService:RecipientService, private cdRef: ChangeDetectorRef) { 
+  headElements: string[] = [ 'Phone Number', 'Date Created','EscalationLevels','Status','Action'];
+  constructor(
+    private recipientService:RecipientService, 
+    private cdRef: ChangeDetectorRef,
+    private activatedRoute: ActivatedRoute 
+    ) { 
     this.elements = []
   }
 
   ngOnInit() {
+    this.activatedRoute.parent.params.subscribe(
+      (param: any) => {
+        this.currentSystemId = param['system-id'];
+        console.log(this.currentSystemId);
+      });
     this.elements = this.showRecipients()
     this.mdbTable.setDataSource(this.elements);
     this.elements = this.mdbTable.getDataSource();
@@ -48,10 +60,10 @@ export class SmsRecipientsComponent implements OnInit {
   }
 
   showRecipients() {
-    return this.recipientService.getEndpoints()
-       .subscribe((data) => {
-         console.log(data)
-         this.elements = data.filter(data => data.notification_type === 'SMS')
+    return this.recipientService.getSmsRecipients(this.currentSystemId)
+       .subscribe((response) => {
+         console.log(response)
+         this.elements = response
        });
    }
 

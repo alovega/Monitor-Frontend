@@ -97,7 +97,7 @@ export class RecipientFormComponent implements OnInit {
 
     console.log(this.recipientForm.value)
     
-    this.recipientService.addEndpoints(this.recipient).subscribe(response => {
+    this.recipientService.addRecipient(this.recipient).subscribe(response => {
       this.router.navigate(['recipients'])
     });
   }

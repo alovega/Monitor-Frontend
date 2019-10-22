@@ -3,6 +3,7 @@ import { Observable,throwError } from 'rxjs';
 import { HttpClient, HttpHeaders, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { Endpoint } from './endpoint';
 import { catchError, retry,map} from 'rxjs/operators';
+import { LookUpService } from 'src/app/shared/look-up.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,11 +13,9 @@ export class EndpointService {
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
-  token = 'MmVmZWQzYTdhNGY2ZjMxNTE4NGQ1ZWZlOTk5MDA3';
-  clientId = '3cd49364-721a-4d3f-8bfa-141d93d6a8f7';
   @Output() changeSystem: EventEmitter<boolean> = new EventEmitter();
 
-  constructor(private http: HttpClient) { 
+  constructor(private http: HttpClient, private lookUpService:LookUpService) { 
   }
 
   // Handle API errors
@@ -44,13 +43,13 @@ export class EndpointService {
       retry(2)
     ),catchError(this.handleError))
   }
-  public addEndpoints(item): Observable<Endpoint>{
-    return this.http.post<Endpoint>(this.endpointUrl, JSON.stringify(item), this.httpOptions).pipe(
+  public addEndpoints(item): Observable<any>{
+    return this.http.post<any>(this.endpointUrl + '/create_endpoints/', item, this.httpOptions).pipe(
       retry(2),
       catchError(this.handleError)
     );
   }
-  public deleteItem(id):Observable<Endpoint>{
+  public deleteItem(id):Observable<any>{
     return this.http.delete<Endpoint>(this.endpointUrl + '/' + id, this.httpOptions).pipe(
       retry(2),
       catchError(this.handleError)
@@ -60,17 +59,26 @@ export class EndpointService {
   public getItem(endpoint_id):Observable<any>{
     return this.http.post<any>(this.endpointUrl + '/get_endpoint/', {
       endpoint_id: endpoint_id,
-    }).pipe(map(response => response.data.endpoint,
+    }).pipe(map(response => response,
       retry(2)
     ),
       catchError(this.handleError)
     )
   }
 
-  public updateItem(id, item): Observable<Endpoint>{
-    return this.http.post<Endpoint>(this.endpointUrl + '/' + id, JSON.stringify(item), this.httpOptions).pipe(
+  public updateItem(endpoint_id, item): Observable<any>{
+    return this.http.post<Endpoint>(this.endpointUrl + '/update_endpoints/',item, this.httpOptions).pipe(
       retry(2),
       catchError(this.handleError)
     )
+  }
+  public getStates(){
+    return this.lookUpService.getStates()
+  }
+  public getEndpointTypes(){
+    return this.lookUpService.getEndpointType()
+  }
+  public getSystems(){
+    return this.lookUpService.getSystems()
   }
 }

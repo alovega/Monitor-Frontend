@@ -11,6 +11,8 @@ import { ActivatedRoute } from '@angular/router';
 export class SideNavComponent implements OnInit {
   currentSystemId: any;
   currentSystem: any;
+  currentEscalationLevel: any;
+  currentEscalationLevelId: any;
   incidentsUrl = `/system/{{currentSystemId}}/incidents`;
   constructor(
     private systemService: SystemService,
@@ -32,7 +34,7 @@ export class SideNavComponent implements OnInit {
     .subscribe(systems => this.currentSystemId = systems[0].id) : this.currentSystemId  = this.systemService.checkCurrentSystem();
     // this.currentSystemId = this.currentSystem.id;
     // console.log(this.currentSystemId);
-  }
+    }
 
   isActive(path) {
     return this.location.path().indexOf(path) > -1;

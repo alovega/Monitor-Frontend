@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Observable,throwError, from } from 'rxjs';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
-import { catchError, tap, retry} from 'rxjs/operators';
+import { catchError, tap, retry, map} from 'rxjs/operators';
 import{ Recipient } from './recipient';
 import { LookUpService } from 'src/app/shared/look-up.service';
-import { EscalationLevel } from 'src/app/shared/models/escalation-level';
 
 @Injectable({
   providedIn: 'root'
@@ -32,16 +31,27 @@ handleError(error: HttpErrorResponse) {
   return throwError(
     'Something bad happened; please try again later.');
 };
-public getEndpoints(): Observable<any> {
+public getEmailRecipients(system_id): Observable<any> {
 
   return this.http.post<any>(this.endpointUrl + '/' + 'get_recipients' + '/', {
-
+    system_id: system_id,
   }).pipe(
-    retry(2),
+    map(response => response.data.filter(data => data.notification_type__name === 'Email'),
+    retry(2)),
     catchError(this.handleError)
   );
 }
-public addEndpoints(item): Observable<Recipient>{
+public getSmsRecipients(system_id): Observable<any> {
+
+  return this.http.post<any>(this.endpointUrl + '/' + 'get_recipients' + '/', {
+    system_id: system_id,
+  }).pipe(
+    map(response => response.data.filter(data => data.notification_type__name === 'Sms'),
+    retry(2)),
+    catchError(this.handleError)
+  );
+}
+public addRecipient(item): Observable<Recipient>{
   return this.http.post<Recipient>(this.endpointUrl, JSON.stringify(item), this.httpOptions).pipe(
     retry(2),
     catchError(this.handleError)

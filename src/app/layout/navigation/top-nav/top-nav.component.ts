@@ -40,4 +40,11 @@ export class TopNavComponent implements OnInit {
       })
     );
   }
+  // reloadEscalation(escalationLevelId: string) {
+  //   this.escalationService.setEscalationLevel(escalationLevelId).subscribe(
+  //     (result => {
+  //       this.currentEscalationLevel = result[0];
+  //     })
+  //   );
+  // }
 }
