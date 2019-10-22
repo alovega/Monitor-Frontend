@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild, AfterViewInit, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MdbTablePaginationComponent, MdbTableDirective } from 'angular-bootstrap-md';
+import Swal from 'sweetalert2';
 
 import { SystemService } from '../../shared/system.service';
 import { UsersService } from './users.service';
@@ -75,6 +76,32 @@ export class UsersComponent implements OnInit, AfterViewInit {
       this.users = this.mdbTable.searchLocalDataBy(search);
       this.mdbTable.setDataSource(prev);
     }
+  }
+
+  deleteUser() {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'You will not be able to recover this user!',
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, delete the user!',
+      cancelButtonText: 'No, keep the user'
+    }).then((result) => {
+      if (result.value) {
+        console.log('User deleted');
+        Swal.fire(
+          'Deleted!',
+          'This user has been deleted.',
+          'success'
+        )
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        Swal.fire(
+          'Cancelled',
+          '',
+          'error'
+        )
+      }
+    })
   }
 
 }

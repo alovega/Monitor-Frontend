@@ -29,7 +29,6 @@ export class EscalationRuleService {
     const getRulesUrl = environment.apiEndpoint + 'get_rules/';
     return this.http.post<any>(getRulesUrl, {}).pipe(
       map(rule => rule.data),
-      tap(rules => console.log(rules))
     );
   }
 
@@ -51,7 +50,7 @@ export class EscalationRuleService {
 
   deleteRule(escalationRuleId: any) {
     const deleteRuleUrl = environment.apiEndpoint + 'delete_rule/';
-    return this.http.post<any>(deleteRuleUrl, escalationRuleId).pipe(
+    return this.http.post<any>(deleteRuleUrl, {rule_id: escalationRuleId}).pipe(
       tap(response => console.log(response))
     );
   }

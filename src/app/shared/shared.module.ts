@@ -4,6 +4,8 @@ import { ChartsModule, WavesModule } from 'angular-bootstrap-md';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
+
 
 import { LineGraphComponent } from './graphs/line-graph/line-graph.component';
 import { BarGraphComponent } from './graphs/bar-graph/bar-graph.component';
@@ -19,6 +21,7 @@ import { HttpInterceptorService } from './helpers/http-interceptor.service';
 import { SystemService } from './system.service';
 import { LoaderComponent } from './loader/loader.component';
 import { AddSystemComponent } from './add-system/add-system.component';
+import { DeleteSwalComponent } from './alerts/delete-swal/delete-swal.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +35,8 @@ import { AddSystemComponent } from './add-system/add-system.component';
     TimePickerComponent,
     EmptyDataComponent,
     LoaderComponent,
-    AddSystemComponent
+    AddSystemComponent,
+    DeleteSwalComponent
   ],
   imports: [
     CommonModule,
@@ -41,7 +45,8 @@ import { AddSystemComponent } from './add-system/add-system.component';
     NgbModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    SweetAlert2Module.forRoot()
   ],
   exports: [
     LineGraphComponent,
@@ -54,7 +59,8 @@ import { AddSystemComponent } from './add-system/add-system.component';
     TimePickerComponent,
     EmptyDataComponent,
     LoaderComponent,
-    AddSystemComponent
+    AddSystemComponent,
+    DeleteSwalComponent
   ],
   providers: [SystemService,
     {

@@ -1,7 +1,7 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { SystemService } from './shared/system.service';
 import {
-  Router, NavigationStart, NavigationCancel, NavigationEnd , ActivatedRoute
+  Router, NavigationStart, NavigationCancel, NavigationEnd , ActivatedRoute, NavigationError
 } from '@angular/router';
 
 
@@ -26,19 +26,38 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
-    // this.loading = false;\
-    this.router.events
-    .subscribe((event) => {
-      if (event instanceof NavigationStart) {
-        this.loading = true;
-      } else if (
-        event instanceof NavigationEnd ||
-        event instanceof NavigationCancel
-      ) {
-        setTimeout(() => this.loading = false, 1000);
+    // this.loading = false;
+    this.router.events.subscribe((event: Event) => {
+      switch (true) {
+        case event instanceof NavigationStart: {
+          this.loading = true;
+          // setTimeout(() => this.loading = false, 100);
+          break;
+        }
+
+        case event instanceof NavigationEnd:
+        case event instanceof NavigationCancel:
+        case event instanceof NavigationError: {
+          this.loading = false;
+          break;
+        }
+        default: {
+          break;
+        }
       }
     });
+    // this.router.events
+    // .subscribe((event) => {
+    //   if (event instanceof NavigationStart) {
+    //     this.loading = true;
+    //   } else if (
+    //     event instanceof NavigationError ||
+    //     event instanceof NavigationCancel ||
+    //     event instanceof NavigationEnd
+    //   ) {
+    //     setTimeout(() => this.loading = false, 500);
+    //   }
+    // });
   }
-
 
 }
