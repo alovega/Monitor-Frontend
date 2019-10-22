@@ -81,11 +81,11 @@ export class EndpointFormComponent implements OnInit {
       if (response.code === "800.200.001"){
         this.data = response.data
         console.log(this.data)
-        console.log('successfully fetched endpoint %s', response.code)
+        console.log('message: %s, code: %s', response.message, response.code)
         this.location.back()
       }
       else{
-      console.log('error %s, message: %s', response.code,response.message)
+      console.log('error: %s, message: %s', response.code,response.message)
       }
     })
   }

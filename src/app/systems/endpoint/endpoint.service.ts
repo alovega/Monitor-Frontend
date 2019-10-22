@@ -39,7 +39,7 @@ export class EndpointService {
     return this.http.post<any>(this.endpointUrl + '/get_endpoints/', {
       system_id: system_id,
     }).pipe( 
-      map(endpoints => endpoints.data.endpoints,
+      map(response => response.data.endpoints,
       retry(2)
     ),catchError(this.handleError))
   }

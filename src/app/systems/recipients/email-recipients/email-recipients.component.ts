@@ -19,7 +19,7 @@ export class EmailRecipientsComponent implements OnInit {
   elements: any;
   escalations:any
   previous: any = [];
-  headElements: string[] = [ 'Email', 'Date Created', 'Status','Action'];
+  headElements: string[] = [ 'Email', 'Date Created', 'Escalation Levels','Username', 'Status','Action'];
 
   constructor(
     private recipientService:RecipientService, 

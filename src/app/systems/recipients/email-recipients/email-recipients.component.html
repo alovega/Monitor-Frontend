@@ -5,23 +5,28 @@
       </tr>
     </thead>
     <tbody *ngIf="elements.length > 0; else noElements" >
-      {{elements}}
       <tr mdbTableCol *ngFor="let el of elements; let i = index ">
       <th *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex" scope="row">
           {{el.email}}
       </th>
       <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{el.date_created}}</td>
-      <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{el.escalation_levels}}</td>
+      <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">
+        <span *ngFor="let el of el.system_recipients; let i = index ">
+          {{el.escalation_level__name}}
+        </span>
+      </td>
+      <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{el.user__username}}</td>
+      <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{el.state__name}}</td>
       <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">
         
-        <a class="btn btn-primary  " routerLink="/recipients/recipient-update/{{el.id}}" routerLinkActive="active">Edit</a>
-        <a class="btn btn-danger " (click)="delete(el)">Delete</a>
+        <a mdbIcon class="fas fa-edit text-success" routerLink="/recipients/recipient-update/{{el.id}}" routerLinkActive="active"></a>
+        <a mdbIcon class="fas fa-trash-alt mr-2 text-danger" (click)="delete(el)"></a>
       </td>
       </tr>
     </tbody>
     <tfoot class="grey lighten-5 w-100">
       <tr>
-        <td colspan="4">
+        <td colspan="10">
           <mdb-table-pagination [tableEl]="tableEl" [searchDataSource]="elements"></mdb-table-pagination>
         </td>
       </tr>

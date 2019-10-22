@@ -10,6 +10,34 @@
 <hr>
   
   <div class="row">
+    <div class="col">
+      <!-- First Name -->
+      <label>FirstName</label>
+      <input type="text" id="defaultContactFormFirstName" class="form-control mb-4" placeholder="First Name"
+      [ngClass]="{ 'is-invalid': submitted && f.FirstName.errors }" formControlName="FirstName" 
+        [(ngModel)]="recipient.first_name" >
+        <div *ngIf="recipientForm.controls['FirstName'].invalid && (recipientForm.controls['FirstName'].dirty || recipientForm.controls['FirstName'].touched)" class="alert alert-danger">
+          <div *ngIf="recipientForm.controls['FirstName'].errors.required">
+              First Name is required.
+          </div>
+          <div *ngIf="recipientForm.controls['FirstName'].errors.minlength">Must be more than one character</div>
+        </div>
+    </div>
+    <div class="col">
+        <!-- Last Name -->
+        <label>Last Name</label>
+        <input type="text" id="defaultContactFormLastName" class="form-control mb-4" placeholder="Last Name"
+        [ngClass]="{ 'is-invalid': submitted && f.EnpointName.errors }" formControlName="LastName" 
+          [(ngModel)]="recipient.last_name" >
+          <div *ngIf="recipientForm.controls['LastName'].invalid && (recipientForm.controls['LastName'].dirty || recipientForm.controls['LastName'].touched)" class="alert alert-danger">
+            <div *ngIf="recipientForm.controls['LastName'].errors.required">
+                Last Name is required.
+            </div>
+            <div *ngIf="recipientForm.controls['LastName'].errors.minlength">Last Name must be more than one character</div>
+          </div>
+      </div>
+  </div>
+  <div class="row">
       <div class="col">
         <!-- Email -->
         <label>Email</label>
@@ -89,7 +117,7 @@
     <div class="col">
       <!-- State -->
   <label>State</label>
-  <select class="browser-default custom-select mb-4" formControlName="State" [(ngModel)]="recipient.status" >
+  <select class="browser-default custom-select mb-4" formControlName="State" [(ngModel)]="recipient.state" >
       <option value></option>
       <option *ngFor="let type of States; let i = index" [value]="States[i].id">
         {{States[i].name}}

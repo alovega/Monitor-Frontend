@@ -2,6 +2,7 @@ import { MdbTablePaginationComponent, MdbTableDirective } from 'angular-bootstra
 import { Component, OnInit, ViewChild, AfterViewInit, ChangeDetectorRef } from '@angular/core';
 import { RecipientService } from '../recipient.service'
 import { ActivatedRoute } from '@angular/router';
+import { element } from 'protractor';
 
 @Component({
   selector: 'app-sms-recipients',
@@ -17,7 +18,7 @@ export class SmsRecipientsComponent implements OnInit {
   currentSystem: any;
   currentSystemId: any;
   previous: any = [];
-  headElements: string[] = [ 'Phone Number', 'Date Created','EscalationLevels','Status','Action'];
+  headElements: string[] = [ 'Phone Number', 'Date Created','EscalationLevels', 'Username','Status','Action'];
   constructor(
     private recipientService:RecipientService, 
     private cdRef: ChangeDetectorRef,
@@ -33,6 +34,7 @@ export class SmsRecipientsComponent implements OnInit {
         console.log(this.currentSystemId);
       });
     this.elements = this.showRecipients()
+    console.log(this.elements)
     this.mdbTable.setDataSource(this.elements);
     this.elements = this.mdbTable.getDataSource();
     this.previous = this.mdbTable.getDataSource();
