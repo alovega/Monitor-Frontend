@@ -19,7 +19,7 @@
       <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{el.state__name}}</td>
       <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">
         
-        <a mdbIcon class="fas fa-edit text-success" routerLink="/recipients/recipient-update/{{el.id}}" routerLinkActive="active"></a>
+        <a mdbIcon class="fas fa-edit text-success" routerLink="/system/{{currentSystemId}}/recipients/recipient-update/{{el.recipient_id}}" routerLinkActive="active"></a>
         <a mdbIcon class="fas fa-trash-alt mr-2 text-danger" (click)="delete(el)"></a>
       </td>
       </tr>

@@ -18,7 +18,7 @@
           <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{el.user__username}}</td>
           <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{el.state__name}}</td>
           <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">
-            <a mdbIcon class="fas fa-edit text-success" routerLink="/recipients/recipient-update/{{el.id}}" routerLinkActive="active"></a>
+            <a mdbIcon class="fas fa-edit text-success" routerLink="/system/{{currentSystemId}}/recipients/recipient-update/{{el.recipient_id}}" routerLinkActive="active"></a>
             <a class="fas fa-trash-alt mr-2 text-danger" (click)="delete(el)"></a>
           </td>
           </tr>
@@ -35,7 +35,7 @@
         <td colspan="7">
           <hm-empty-data header="No Existing Sms recipients" description="New Recipients will be displayed here">
             <div action-button>
-            <a href="" routerLink="/recipients/recipient-create">
+            <a href="" routerLink="system/{{currentSystemId}}/recipients/recipient-create">
               <button action-button type="button" mdbBtn size="sm" color="primary" class="text-white">Add Recipient</button>
             </a>
             </div>

@@ -66,15 +66,17 @@ public deleteItem(id):Observable<Recipient>{
   )
 }
 
-public getItem(id):Observable<Recipient>{
-  return this.http.get<Recipient>(this.endpointUrl + '/' + id).pipe(
-    retry(2),
+public getItem(recipient_id):Observable<any>{
+  return this.http.post<any>(this.endpointUrl + '/get_recipient/',{
+    recipient_id:recipient_id
+  }).pipe(
+    map(response => response,retry(2)),
     catchError(this.handleError)
   )
 }
 
-public updateItem(id, item): Observable<Recipient>{
-  return this.http.put<Recipient>(this.endpointUrl + '/' + id, JSON.stringify(item), this.httpOptions).pipe(
+public updateItem(id, item): Observable<any>{
+  return this.http.post<Recipient>(this.endpointUrl + '/update_recipient/', item, this.httpOptions).pipe(
     retry(2),
     catchError(this.handleError)
   )

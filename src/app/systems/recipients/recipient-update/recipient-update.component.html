@@ -10,11 +10,39 @@
     <hr>
     <div class="row">
       <div class="col">
+        <!-- First Name -->
+        <label>First Name</label>
+        <input type="text" id="defaultContactFormFirstName" class="form-control mb-4" placeholder="First Name"
+        [ngClass]="{ 'is-invalid': submitted && f.EnpointName.errors }" formControlName="FirstName" 
+        [(ngModel)]="recipient[0].first_name" >
+          <div *ngIf="updateForm.controls['FirstName'].invalid && (updateForm.controls['FirstName'].dirty || updateForm.controls['FirstName'].touched)" class="alert alert-danger">
+            <div *ngIf="updateForm.controls['FirstName'].errors.required">
+              First Name is required.
+            </div>
+            <div *ngIf="updateForm.controls['FirstName'].errors.minlength">First Name must be more than two characters</div>
+          </div>
+      </div>
+      <div class="col">
+        <!-- LastName -->
+        <label>Last Name</label>
+        <input type="text" id="defaultContactFormLastName" class="form-control mb-4" placeholder="LastName"
+        [ngClass]="{ 'is-invalid': submitted && f.EnpointName.errors }" formControlName="LastName" 
+        [(ngModel)]="recipient[0].last_name" >
+          <div *ngIf="updateForm.controls['LastName'].invalid && (updateForm.controls['LastName'].dirty || updateForm.controls['LastName'].touched)" class="alert alert-danger">
+            <div *ngIf="updateForm.controls['LastName'].errors.required">
+              required*.
+            </div>
+            <div *ngIf="updateForm.controls['LastName'].errors.minlength">Last Name must be more than two characters</div>
+          </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
         <!-- Email -->
         <label>Email</label>
         <input type="email" id="defaultContactFormEmail" class="form-control mb-4" placeholder="Email"
         [ngClass]="{ 'is-invalid': submitted && f.EnpointName.errors }" formControlName="Email" 
-        [(ngModel)]="recipient.email" >
+        [(ngModel)]="recipient[0].email" >
           <div *ngIf="updateForm.controls['Email'].invalid && (updateForm.controls['Email'].dirty || updateForm.controls['Email'].touched)" class="alert alert-danger">
             <div *ngIf="updateForm.controls['Email'].errors.required">
               Email Name is required.
@@ -27,7 +55,7 @@
         <label>Phone Number</label>
         <input type="text" id="defaultContactFormPhoneNumber" class="form-control mb-4" placeholder="Phone Number"
           [ngClass]="{ 'is-invalid': submitted && f.EnpointName.errors }" formControlName="PhoneNumber" 
-          [(ngModel)]="recipient.phone_number" >
+          [(ngModel)]="recipient[0].phone_number" >
           <div *ngIf="updateForm.controls['PhoneNumber'].invalid && (updateForm.controls['PhoneNumber'].dirty || updateForm.controls['PhoneNumber'].touched)" class="alert alert-danger">
             <div *ngIf="updateForm.controls['PhoneNumber'].errors.required">
                 Phone Number is required.
@@ -39,26 +67,11 @@
 
     <div class="row">
       <div class="col">
-        <!-- Escalation Level -->
-        <label for="EscalationLevel">Escalation Level</label>
-        <select class="browser-default custom-select mb-4" formControlName="EscalationLevel" [(ngModel)]="recipient.escalation_level">
-          <option value></option>
-          <option *ngFor="let level of EscalationLevels; let i = index" [value]="EscalationLevels[i].name">
-            {{EscalationLevels[i].name}}
-          </option>
-        </select>
-        <div *ngIf="updateForm.controls['EscalationLevel'].invalid && (updateForm.controls['EscalationLevel'].dirty || updateForm.controls['EscalationLevel'].touched)" class="alert alert-danger">
-          <div *ngIf="updateForm.controls['EscalationLevel'].errors.required">
-              Please Select an EscalationLevel.
-          </div>
-        </div>
-      </div>
-      <div class="col">
         <!-- Notification Type -->
         <label for="NotificationType">Notification Type</label>
-        <select class="browser-default custom-select mb-4" formControlName="NotificationType" [(ngModel)]="recipient.notification_type">
+        <select class="browser-default custom-select mb-4" formControlName="NotificationType" [(ngModel)]="recipient[0].notification_type">
           <option value></option>
-          <option *ngFor="let type of NotificationTypes; let i = index" [value]="NotificationTypes[i].name">
+          <option *ngFor="let type of NotificationTypes; let i = index" [value]="NotificationTypes[i].id">
             {{NotificationTypes[i].name}}
           </option>
         </select>
@@ -71,9 +84,10 @@
       <div class="col">
           <!-- State -->
           <label>State</label>
-          <select class="browser-default custom-select mb-4" formControlName="State" [(ngModel)]="recipient.status" >
-            <option value="active" selected>Active</option>
-            <option value="disabled">Disabled</option>
+          <select class="browser-default custom-select mb-4" formControlName="State" [(ngModel)]="recipient[0].state" >
+              <option *ngFor="let state of States; let i = index" [value]="States[i].id">
+                  {{States[i].name}}
+                </option>
           </select>
           <div *ngIf="updateForm.controls['State'].invalid && (updateForm.controls['State'].dirty || updateForm.controls['State'].touched)" class="alert alert-danger">
             <div *ngIf="updateForm.controls['State'].errors.required">
