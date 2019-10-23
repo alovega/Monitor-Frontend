@@ -1,26 +1,24 @@
 import { NgModule, NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
-import { AgmCoreModule } from '@agm/core';
 
 import { DashboardRoutingModule } from './dashboard-routing.module';
-import { SharedModule } from '../shared/shared.module';
 import { DashboardComponent } from './dashboard.component';
+import { SharedModule } from 'src/app/shared/shared.module';
+
 
 @NgModule({
   declarations: [DashboardComponent],
   imports: [
     CommonModule,
-    SharedModule,
     DashboardRoutingModule,
+    HttpClientModule,
     MDBBootstrapModule,
-    AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyBBCMBffWFPoWuR8mMDe56nDKI4A9mf55k'
-    }),
+    SharedModule
   ],
-  exports: [
-    DashboardComponent
-  ],
-  schemas: [ NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA ]
+  schemas:[
+    NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA
+  ]
 })
 export class DashboardModule { }

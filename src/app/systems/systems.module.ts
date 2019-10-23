@@ -9,7 +9,6 @@ import { SharedModule } from '../shared/shared.module';
 // import { NgbdModalContent, NgbdModalComponent } from './add-system/add-system.component';
 import { AddSystemComponent } from './add-system/add-system.component';
 
-
 @NgModule({
   declarations: [SystemsComponent, AddSystemComponent],
   imports: [

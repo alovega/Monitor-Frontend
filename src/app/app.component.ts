@@ -27,37 +27,37 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     // this.loading = false;
-    this.router.events.subscribe((event: Event) => {
-      switch (true) {
-        case event instanceof NavigationStart: {
-          this.loading = true;
-          // setTimeout(() => this.loading = false, 100);
-          break;
-        }
+    // this.router.events.subscribe((event: Event) => {
+    //   switch (true) {
+    //     case event instanceof NavigationStart: {
+    //       this.loading = true;
+    //       // setTimeout(() => this.loading = false, 100);
+    //       break;
+    //     }
 
-        case event instanceof NavigationEnd:
-        case event instanceof NavigationCancel:
-        case event instanceof NavigationError: {
-          this.loading = false;
-          break;
-        }
-        default: {
-          break;
-        }
-      }
-    });
-    // this.router.events
-    // .subscribe((event) => {
-    //   if (event instanceof NavigationStart) {
-    //     this.loading = true;
-    //   } else if (
-    //     event instanceof NavigationError ||
-    //     event instanceof NavigationCancel ||
-    //     event instanceof NavigationEnd
-    //   ) {
-    //     setTimeout(() => this.loading = false, 500);
+    //     case event instanceof NavigationEnd:
+    //     case event instanceof NavigationCancel:
+    //     case event instanceof NavigationError: {
+    //       this.loading = false;
+    //       break;
+    //     }
+    //     default: {
+    //       break;
+    //     }
     //   }
     // });
+    this.router.events
+    .subscribe((event) => {
+      if (event instanceof NavigationStart) {
+        this.loading = true;
+      } else if (
+        event instanceof NavigationError ||
+        event instanceof NavigationCancel ||
+        event instanceof NavigationEnd
+      ) {
+        setTimeout(() => this.loading = false, 500);
+      }
+    });
   }
 
 }

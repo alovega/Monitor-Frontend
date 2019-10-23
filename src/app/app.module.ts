@@ -10,7 +10,6 @@ import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { DashboardModule } from './dashboard/dashboard.module';
 import { ErrorsModule } from './errors/errors.module';
 import { FooterComponent } from './layout/footer/footer.component';
 import { TopNavComponent } from './layout/navigation/top-nav/top-nav.component';
@@ -36,7 +35,6 @@ import { SharedModule } from './shared/shared.module';
     ReactiveFormsModule,
     SweetAlert2Module.forRoot(),
     AppRoutingModule,
-    DashboardModule,
     ErrorsModule,
     BrowserAnimationsModule,
     SharedModule
