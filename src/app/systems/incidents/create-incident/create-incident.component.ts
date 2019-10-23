@@ -118,6 +118,10 @@ export class CreateIncidentComponent implements OnInit {
     );
   }
 
+  public back(): void {
+    this.location.back();
+  }
+
   onSubmitScheduled() {
     this.submitted = true;
     if (this.scheduledMaintenanceForm.invalid) {

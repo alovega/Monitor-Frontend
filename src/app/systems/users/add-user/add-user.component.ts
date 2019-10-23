@@ -56,4 +56,8 @@ export class AddUserComponent implements OnInit {
         }
       });
   }
+
+  public back(): void {
+    this.location.back();
+  }
 }

@@ -41,6 +41,10 @@ export class CreateRuleComponent implements OnInit {
     });
   }
 
+  public back(): void {
+    this.location.back();
+  }
+
   onSubmit() {
     this.submitted = true;
     if (this.escalationRuleForm.invalid) {

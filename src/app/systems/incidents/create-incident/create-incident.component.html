@@ -4,20 +4,12 @@
   <div class="col-md-1"></div>
   <!-- Grid column -->
   <div class="col-md-12" *ngIf="router.url === realtimeUrl">
-    <div class="page-header">
+    <div class="page-header d-flex">
+      <div class="col-md-6">
       Create Realtime Incident
-      <div class="priority-level">
-        <form [formGroup]="realtimeIncidentForm" (ngSubmit)="onSubmitRealtime()" class="text-center">
-        <label for="">Priority Level</label>
-        <select formControlName="priorityLevel" [ngClass]="{ 'is-invalid': submitted && realtimeIncidentForm.controls.priorityLevel.errors }" 
-        class="browser-default custom-select" [(ngModel)] = "incident.priority_level">
-          <option selected value="1">Level 1</option>
-          <option value="2">Level 2</option>
-          <option value="3">Level 3</option>
-          <option value="4">Level 4</option>
-          <option value="5">Level 5</option>
-        </select>
-        </form>
+      </div>
+      <div class="col-md-6">
+        <button class="float-right back-button" (click)="back()"><< back to incidents</button>
       </div>
     </div>
     <div class="clearfix"></div>
@@ -28,7 +20,7 @@
           <form [formGroup]="realtimeIncidentForm" (ngSubmit)="onSubmitRealtime()" class="text-center">
 
             <div class="form-group mb-4 row">
-              <div class="col-md-4">
+              <div class="col-md-3">
                 <!-- Name -->
                 <label class="form-label">Incident Name</label>
                 <input [ngClass]="{ 'is-invalid': submitted && realtimeIncidentForm.controls.incidentName.errors }" type="text" 
@@ -42,7 +34,7 @@
               </div>
 
               <!-- Incident Status -->
-              <div class="col-md-4">
+              <div class="col-md-3">
                   <label class="form-label">Incident status</label>
                   <select formControlName="incidentStatus" [ngClass]="{ 'is-invalid': submitted && realtimeIncidentForm.controls.incidentStatus.errors}"
                   class="grey lighten-5 browser-default custom-select form-control" [(ngModel)] = "incident.state">
@@ -57,7 +49,7 @@
                   </div>
               </div>
 
-              <div class="col-md-4">
+              <div class="col-md-3">
                 <!-- Escalation Levels -->
                 <label class="form-label">Escalation level</label>
                 <select formControlName="escalationLevel" class="grey lighten-5 browser-default custom-select form-control inline-rule"
@@ -69,6 +61,23 @@
                   <!-- Escalation level validation errors -->
                   <div *ngIf="submitted && realtimeIncidentForm.controls.escalationLevel.errors" class="invalid-feedback">
                       <div *ngIf="realtimeIncidentForm.controls.escalationLevel.errors.required">Escalation Level is required</div>
+                  </div>
+              </div>
+
+              <div class="col-md-3">
+                  <label class="form-label" for="">Priority Level</label>
+                  <select formControlName="priorityLevel" [ngClass]="{ 'is-invalid': submitted && realtimeIncidentForm.controls.priorityLevel.errors }" 
+                  class="grey lighten-5 browser-default custom-select" [(ngModel)] = "incident.priority_level">
+                    <option selected value="1">Level 1</option>
+                    <option value="2">Level 2</option>
+                    <option value="3">Level 3</option>
+                    <option value="4">Level 4</option>
+                    <option value="5">Level 5</option>
+                  </select>  
+                  
+                  <!-- Priority level validation errors -->
+                  <div *ngIf="submitted && realtimeIncidentForm.controls.priorityLevel.errors" class="invalid-feedback">
+                      <div *ngIf="realtimeIncidentForm.controls.priorityLevel.errors.required">Priority Level is required</div>
                   </div>
               </div>
             </div>
@@ -98,20 +107,12 @@
 
     <!-- Grid column -->
   <div class="col-md-12" *ngIf="router.url === maintenanceUrl">
-    <div class="page-header">
-      Create Scheduled Maintenance
-      <div class="priority-level">
-        <form [formGroup]="scheduledMaintenanceForm" (ngSubmit)="onSubmitScheduled()" class="text-center">
-        <label for="">Priority Level</label>
-        <select formControlName="priorityLevel" [ngClass]="{ 'is-invalid': submitted && scheduledMaintenanceForm.controls.priorityLevel.errors }" class="browser-default custom-select"
-        [(ngModel)] = "incident.priority_level">
-          <option selected value="1">Level 1</option>
-          <option value="2">Level 2</option>
-          <option value="3">Level 3</option>
-          <option value="4">Level 4</option>
-          <option value="5">Level 5</option>
-        </select>
-        </form>
+    <div class="page-header d-flex justify-content-end">
+      <div class="col-md-6">
+          Create Scheduled Maintenance
+      </div>
+      <div class="col-md-6">
+        <button class="float-right back-button" (click)="back()"><< back to incidents</button>
       </div>
     </div>
     <div class="clearfix"></div>
@@ -120,19 +121,40 @@
       <div class="new-incident">
         <div class="card">
           <form [formGroup]="scheduledMaintenanceForm" (ngSubmit)="onSubmitScheduled()" class="text-center">
-            <div class="form-group mb-4">
-              <!-- Name -->
-              <label class="form-label">Maintenance Name</label>
-              <input type="text" id="maintenanceName" formControlName="maintenanceName" 
-                [ngClass] = "{'is-invalid': submitted && scheduledMaintenanceForm.controls.maintenanceName.errors }"
-                class="grey lighten-5 form-control" placeholder="Maintenance name" [(ngModel)] = "incident.name">
+            <div class="form-group mb-4 row">
+              <div class="col-md-6">
+                <!-- Name -->
+                <label class="form-label">Maintenance Name</label>
+                <input type="text" id="maintenanceName" formControlName="maintenanceName" 
+                  [ngClass] = "{'is-invalid': submitted && scheduledMaintenanceForm.controls.maintenanceName.errors }"
+                  class="grey lighten-5 form-control" placeholder="Maintenance name" [(ngModel)] = "incident.name">
 
-              <!-- Maintenance Field Validation Errors -->
-              <div *ngIf="submitted && scheduledMaintenanceForm.controls.maintenanceName.errors" class="invalid-feedback">
-                <div *ngIf="scheduledMaintenanceForm.controls.maintenanceName.errors.required">
-                    Maintenance name is required
+                <!-- Maintenance Field Validation Errors -->
+                <div *ngIf="submitted && scheduledMaintenanceForm.controls.maintenanceName.errors" class="invalid-feedback">
+                  <div *ngIf="scheduledMaintenanceForm.controls.maintenanceName.errors.required">
+                      Maintenance name is required
+                  </div>
                 </div>
               </div>
+
+              <div class="col-md-6">
+                  <label class="form-label" for="">Priority Level</label>
+                  <select formControlName="priorityLevel" [ngClass]="{ 'is-invalid': submitted && scheduledMaintenanceForm.controls.priorityLevel.errors }" 
+                  class="grey lighten-5 browser-default custom-select" [(ngModel)] = "incident.priority_level">
+                    <option selected value="1">Level 1</option>
+                    <option value="2">Level 2</option>
+                    <option value="3">Level 3</option>
+                    <option value="4">Level 4</option>
+                    <option value="5">Level 5</option>
+                  </select>
+
+                  <div *ngIf="submitted && scheduledMaintenanceForm.controls.priorityLevel.errors" class="invalid-feedback">
+                      <div *ngIf="scheduledMaintenanceForm.controls.priorityLevel.errors.required">
+                          Priority level is required
+                      </div>
+                  </div>
+              </div>
+
             </div>
 
             <!-- Scheduled Date -->
@@ -145,7 +167,7 @@
                   <div class="col-md-6 date-input">
                     <hm-date-picker [parentForm]="scheduledMaintenanceForm" submitted={{submitted}} date="startDate"></hm-date-picker>
                       <div *ngIf="submitted && scheduledMaintenanceForm.controls.startDate.errors">
-                        <div *ngIf="scheduledMaintenanceForm.controls.startDate.errors.required" class="invalid-feedback-inline">
+                        <div *ngIf="scheduledMaintenanceForm.controls.startDate.errors.required" class="invalid-feedback-inline text-left">
                             Scheduled start date is required
                         </div>
                       </div>
@@ -153,7 +175,7 @@
                   <div class="col-md-6 time-input">
                      <hm-time-picker [parentForm]="scheduledMaintenanceForm" time="startTime"></hm-time-picker>
                      <div *ngIf="submitted && scheduledMaintenanceForm.controls.startTime.errors">
-                        <div *ngIf="scheduledMaintenanceForm.controls.startTime.errors.required" class="invalid-feedback-inline">
+                        <div *ngIf="scheduledMaintenanceForm.controls.startTime.errors.required" class="invalid-feedback-inline text-left">
                             Scheduled start time is required
                         </div>
                       </div>

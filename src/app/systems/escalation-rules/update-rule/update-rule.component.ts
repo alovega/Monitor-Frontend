@@ -70,4 +70,8 @@ export class UpdateRuleComponent implements OnInit {
     // console.log(formData.getAll());
   }
 
+  public back(): void {
+    this.location.back();
+  }
+
 }
