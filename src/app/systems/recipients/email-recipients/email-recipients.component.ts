@@ -1,8 +1,8 @@
 import { MdbTablePaginationComponent, MdbTableDirective } from 'angular-bootstrap-md';
 import { RecipientService } from '../recipient.service';
 import { Component, OnInit, ViewChild, AfterViewInit, ChangeDetectorRef } from '@angular/core';
-import { Recipient } from '../recipient';
 import { ActivatedRoute } from '@angular/router';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-email-recipients',
@@ -71,9 +71,49 @@ export class EmailRecipientsComponent implements OnInit {
        });
    }
 
-   delete(item){
-    this.recipientService.deleteItem(item.id).subscribe(response => {
-      this.showRecipients();
+   delete(recipient_id){
+    console.log(recipient_id)
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'You will not be able to recover this recipient!',
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, delete the recipient!',
+      cancelButtonText: 'No, keep the recipient'
+    }).then((result) => {
+      if (result.value) {
+        console.log(recipient_id);
+        this.recipientService.deleteItem(recipient_id).subscribe(
+          response => {
+            console.log(response)
+            if (response.code === '800.200.001') {
+              Swal.fire(
+                'Deleted!',
+                'This recipient has been deleted.',
+                'success'
+              )
+            } else {
+              Swal.fire(
+                'Failed!',
+                'This recipient could not be deleted.',
+                'error'
+              )
+            }
+          }
+        )
+        this.recipientService.getEmailRecipients(this.currentSystemId).subscribe(
+          result => {
+            this.elements = result;
+            this.mdbTable.setDataSource(this.elements);
+          }
+        )
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        Swal.fire(
+          'Cancelled',
+          '',
+          'error'
+        )
+      }
     })
   }
 }

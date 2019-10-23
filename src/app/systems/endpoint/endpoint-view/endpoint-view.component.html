@@ -24,7 +24,7 @@
                     <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{el.state__name}}</td>
                     <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">
                         <a class="fas fa-edit text-success"  routerLinkActive="active" routerLink="/system/{{currentSystemId}}/endpoints/endpoint-update/{{el.id}}" ></a>
-                        <a class="fas fa-trash-alt mr-2 text-danger" [disabled]="elements" (click)="delete(el)"></a>
+                        <a class="fas fa-trash-alt mr-2 text-danger" [disabled]="elements" (click)="delete(el.id)"></a>
                     </td>
                     </tr>
                 </tbody>

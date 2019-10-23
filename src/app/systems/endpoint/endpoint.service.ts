@@ -49,8 +49,8 @@ export class EndpointService {
       catchError(this.handleError)
     );
   }
-  public deleteItem(id):Observable<any>{
-    return this.http.delete<Endpoint>(this.endpointUrl + '/' + id, this.httpOptions).pipe(
+  public deleteItem(endpoint_id):Observable<any>{
+    return this.http.post<Endpoint>(this.endpointUrl + '/delete_endpoint/',{endpoint_id:endpoint_id}, this.httpOptions).pipe(
       retry(2),
       catchError(this.handleError)
     )
@@ -58,7 +58,7 @@ export class EndpointService {
 
   public getItem(endpoint_id):Observable<any>{
     return this.http.post<any>(this.endpointUrl + '/get_endpoint/', {
-      endpoint_id: endpoint_id,
+      endpoint_id: endpoint_id
     }).pipe(map(response => response,
       retry(2)
     ),
@@ -81,4 +81,5 @@ export class EndpointService {
   public getSystems(){
     return this.lookUpService.getSystems()
   }
+  
 }

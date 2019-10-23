@@ -59,8 +59,8 @@ public addRecipient(item): Observable<any>{
     catchError(this.handleError)
   );
 }
-public deleteItem(id):Observable<Recipient>{
-  return this.http.delete<Recipient>(this.endpointUrl + '/' + id, this.httpOptions).pipe(
+public deleteItem(recipient_id):Observable<any>{
+  return this.http.post<Recipient>(this.endpointUrl + '/delete_recipient/',{recipient_id:recipient_id}, this.httpOptions).pipe(
     retry(2),
     catchError(this.handleError)
   )

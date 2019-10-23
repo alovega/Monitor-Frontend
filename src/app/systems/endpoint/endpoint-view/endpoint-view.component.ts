@@ -2,6 +2,7 @@ import { MdbTablePaginationComponent, MdbTableDirective } from 'angular-bootstra
 import { Component, OnInit, ViewChild, AfterViewInit, ChangeDetectorRef } from '@angular/core';
 import {EndpointService} from '../endpoint.service';
 import { ActivatedRoute } from '@angular/router';
+import Swal from 'sweetalert2';
  
 @Component({
   selector: 'app-endpoint-view',
@@ -18,6 +19,8 @@ export class EndpointViewComponent implements OnInit {
   headElements = ['Endpoint', 'Endpoint Type', 'Date Created', 'State', 'Action'];
   currentSystem: any;
   currentSystemId: any;
+  endpoint_id:any;
+
   constructor(
     private endpointService: EndpointService,
     private cdRef: ChangeDetectorRef,
@@ -25,6 +28,7 @@ export class EndpointViewComponent implements OnInit {
     ) {}
 
   ngOnInit() {
+    this.endpoint_id = this.activatedRoute.snapshot.params["id"];
     this.activatedRoute.parent.params.subscribe(
       (param: any) => {
         this.currentSystemId = param['system-id'];
@@ -50,9 +54,48 @@ export class EndpointViewComponent implements OnInit {
         this.elements = data
     });
   }
-  delete(item){
-    this.endpointService.deleteItem(item.id).subscribe(response => {
-      this.showEndpoints(this.currentSystemId);
+  delete(endpoint_id){
+    console.log(endpoint_id)
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'You will not be able to recover this endpoint!',
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, delete the endpoint!',
+      cancelButtonText: 'No, keep the endpoint'
+    }).then((result) => {
+      if (result.value) {
+        console.log(endpoint_id);
+        this.endpointService.deleteItem(endpoint_id).subscribe(
+          response => {
+            if (response.code === '800.200.001') {
+              Swal.fire(
+                'Deleted!',
+                'This endpoint has been deleted.',
+                'success'
+              )
+            } else {
+              Swal.fire(
+                'Failed!',
+                'This endpoint could not be deleted.',
+                'error'
+              )
+            }
+          }
+        )
+        this.endpointService.getEndpoints(this.currentSystemId).subscribe(
+          result => {
+            this.elements = result;
+            this.mdbTable.setDataSource(this.elements);
+          }
+        )
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        Swal.fire(
+          'Cancelled',
+          '',
+          'error'
+        )
+      }
     })
   }
 }
