@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {  FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
+import Swal from 'sweetalert2';
 
 import { IncidentService } from '../incident.service';
 import { Incident } from '../incident';
@@ -94,5 +95,47 @@ export class UpdateIncidentComponent implements OnInit {
         }
       })
     );
+  }
+
+  removeIncident(incidentId) {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'You will not be able to recover this incident!',
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, delete it!',
+      cancelButtonText: 'No, keep it'
+    }).then((result) => {
+      if (result.value) {
+        console.log(incidentId);
+        this.incidentService.deleteIncident(incidentId).subscribe(
+          response => {
+            if (response.code == '800.200.001') {
+                  Swal.fire(
+                    'Deleted!',
+                    'This incident has been deleted.',
+                    'success'
+                  ).then(() => {
+                    setTimeout(() => {
+                      this.location.back();
+                    }, 1000);
+                  })
+            } else {
+              Swal.fire(
+                'Failed!',
+                'This incident could not be deleted.',
+                'error'
+              )
+            }
+          }
+        )
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        Swal.fire(
+          'Cancelled',
+          '',
+          'error'
+        )
+      }
+    })
   }
 }

@@ -3,6 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { Incident } from '../incident';
 import { IncidentService } from '../incident.service';
+import Swal from 'sweetalert2';
 
 import { AbstractControl, FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { SystemService } from 'src/app/shared/system.service';
@@ -105,7 +106,13 @@ export class CreateIncidentComponent implements OnInit {
     return this.incidentService.createIncident(this.incident).subscribe(
       ((result: any) => {
         if (result.code === '800.200.001') {
-          this.location.back();
+          Swal.fire({
+            title: 'Success',
+            text: 'Realtime incident created successfully!',
+            type: 'success',
+          }).then(() => {
+            this.location.back();
+          })
         }
       })
     );
@@ -143,7 +150,13 @@ export class CreateIncidentComponent implements OnInit {
     return this.incidentService.createIncident(this.incident).subscribe(
       ((result: any) => {
         if (result.code === '800.200.001') {
-          this.location.back();
+          Swal.fire({
+            title: 'Success',
+            text: 'Scheduled incident created successfully!',
+            type: 'success',
+          }).then(() => {
+            this.location.back();
+          })
         }
       })
     );

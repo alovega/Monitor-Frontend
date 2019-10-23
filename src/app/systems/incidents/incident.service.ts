@@ -103,9 +103,11 @@ export class IncidentService {
     );
   }
 
-  deleteIncident(IncidentId: string): Observable<Incident[]> {
-    return this.http.get<Incident[]>(this.incidentsUrl).pipe(
-
+  deleteIncident(incidentId: string): Observable<any> {
+    return this.http.post<any>(environment.apiEndpoint + 'delete_incident/', {
+      incident_id: incidentId,
+    }).pipe(
+      // tap(result => console.log(result))
     );
   }
 

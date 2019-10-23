@@ -4,7 +4,7 @@
     <div class="col-md-1"></div>
 
     <!-- Grid column -->
-    <div class="col-md-10">
+    <div class="col-md-12">
         <div class="page-header" *ngIf="incident.status !== 'Resolved' && incident.status !== 'Completed'; else Open">
             {{ incident.name }}
             <div class="priority-level">
@@ -114,7 +114,7 @@
             </div>
             <hr>
             <div class="delete-button">
-                <button mdbBtn mdbWavesEffect class="float-right" color="danger" size="md">Delete Incident</button>
+                <button mdbBtn mdbWavesEffect class="float-right" color="danger" size="md" (click)="removeIncident(incidentId)">Delete Incident</button>
             </div>
         </div>
     </div>

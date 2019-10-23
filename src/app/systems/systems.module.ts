@@ -17,7 +17,7 @@ import { AddSystemComponent } from './add-system/add-system.component';
     SystemsRoutingModule,
     SharedModule,
     NgbModule,
-    SweetAlert2Module.forChild()
+    SweetAlert2Module.forRoot()
   ]
 })
 export class SystemsModule { }

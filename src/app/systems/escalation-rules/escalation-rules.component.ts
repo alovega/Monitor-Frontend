@@ -107,12 +107,11 @@ export class EscalationRulesComponent implements OnInit, AfterViewInit {
               )
             }
           }
-        ).then(
-          this.rulesService.getRules().subscribe(
-            result => {
-              this.rules = result;
-            }
-          )
+        )
+        this.rulesService.getRules().subscribe(
+          result => {
+            this.rules = result;
+          }
         )
       } else if (result.dismiss === Swal.DismissReason.cancel) {
         Swal.fire(
