@@ -41,11 +41,17 @@ export class AuthenticationService {
 
   login(username, password) {
     return this.http.post<any>(`${environment.apiEndpoint}get_access_token/`, {username, password}).pipe(
-      map(user => {
-        if (user.code === '800.200.001') {
-          localStorage.setItem('currentUser', JSON.stringify(user.data));
-          this.currentUserSubject.next(user.data);
-          return user.data;
+      map(result => {
+        if (result.code === '800.200.001') {
+          localStorage.setItem('currentUser', JSON.stringify(result.data));
+          this.currentUserSubject.next(result.data);
+          let body = document.getElementsByTagName('body')[0];
+          if (this.currentUser) {
+            body.classList.remove('body-logged-out');
+          } else {
+            body.classList.add('body-logged-out');
+          }
+          return result.data;
         } else {
           return null;
         }

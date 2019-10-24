@@ -24,14 +24,6 @@ export class SystemsComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.authService.currentUser.subscribe((user) => this.currentUser = user);
-    let body = document.getElementsByTagName('body')[0];
-    if (this.currentUser) {
-      body.classList.remove('body-logged-out');
-    } else {
-      body.classList.add('body-logged-out');
-    }
-
     this.currentSystemId = this.activatedRoute.snapshot.params['system-id'];
 
     let issetCurrentSystem = this.systemService.checkCurrentSystem();
