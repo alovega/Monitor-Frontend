@@ -25,7 +25,6 @@ export class SystemsComponent implements OnInit {
 
   ngOnInit() {
     this.currentSystemId = this.activatedRoute.snapshot.params['system-id'];
-
     let issetCurrentSystem = this.systemService.checkCurrentSystem();
     issetCurrentSystem ? this.currentSystem  = issetCurrentSystem : this.systemService.getCurrentSystem()
     .subscribe(systems => {

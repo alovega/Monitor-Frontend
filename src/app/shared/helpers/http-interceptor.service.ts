@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
+import { AuthenticationService } from '../auth/authentication.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,13 +14,21 @@ export class HttpInterceptorService implements HttpInterceptor {
   currentSystem: any;
   currentSystemId: any;
   systemName: any;
+  currentUser: any;
 
-  constructor() { }
+  constructor(
+    private authService: AuthenticationService
+  ) { }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    this.accessToken = JSON.parse(localStorage.getItem('accessToken'));
-    this.currentSystem = JSON.parse(localStorage.getItem('currentSystem'));
+    if (localStorage.getItem('currentSystem') !== 'undefined') {
+      this.currentSystem = JSON.parse(localStorage.getItem('currentSystem'));
+    }
+    this.authService.currentUser.subscribe((user) => this.currentUser = user);
 
+    if (this.currentUser) {
+      this.accessToken = this.currentUser.token;
+    }
     if (!this.accessToken) {
       this.accessToken = environment.accessToken;
     }
