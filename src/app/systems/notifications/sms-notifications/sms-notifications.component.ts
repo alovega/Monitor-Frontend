@@ -61,10 +61,10 @@ export class SmsNotificationsComponent implements OnInit {
     }
   }
   showNotifications() {
-    return this.notificationsService.getNotifications()
-       .subscribe((data:Notification[]) => {
+    return this.notificationsService.getSmsNotifications(this.currentSystemId)
+       .subscribe((data) => {
          console.log(data)
-         this.elements = data.filter(data => data.notification_type === 'SMS')
+         this.elements = data
        });
    }
 }

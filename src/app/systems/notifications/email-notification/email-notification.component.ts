@@ -61,10 +61,10 @@ export class EmailNotificationComponent implements OnInit {
     }
   }
   showRecipients() {
-    return this.notificationsService.getNotifications()
+    return this.notificationsService.getEmailNotifications(this.currentSystemId)
        .subscribe((data:Notification[]) => {
          console.log(data)
-         this.elements = data.filter(data => data.notification_type === 'Email')
+         this.elements = data
        });
    }
 }
