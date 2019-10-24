@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AddSystemComponent } from '../../../shared/add-system/add-system.component';
@@ -6,13 +6,16 @@ import { AddSystemComponent } from '../../../shared/add-system/add-system.compon
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { SystemService } from '../../../shared/system.service';
 import { System } from '../../../shared/models/system';
+import { AuthenticationService } from 'src/app/shared/auth/authentication.service';
 
 @Component({
   selector: 'hm-top-nav',
   templateUrl: './top-nav.component.html',
   styleUrls: ['./top-nav.component.scss']
 })
-export class TopNavComponent implements OnInit {
+export class TopNavComponent implements OnInit, OnChanges {
+  @Input() user;
+  currentUser: any;
   systems: any;
   currentSystem: any;
   currentSystemId: any;
@@ -27,7 +30,8 @@ export class TopNavComponent implements OnInit {
     private systemService: SystemService,
     private router: Router,
     private modalService: NgbModal,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private authService: AuthenticationService
   ) {
     this.newSystem = new System();
   }
@@ -50,6 +54,14 @@ export class TopNavComponent implements OnInit {
       name: ['', Validators.required],
       description: ['', Validators.required],
     });
+
+    this.authService.currentUser.subscribe(user => this.currentUser = user);
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes.user.currentValue) {
+      this.currentUser = this.user;
+    }
   }
 
   reload(systemId: any) {
@@ -81,8 +93,13 @@ export class TopNavComponent implements OnInit {
         }
       })
     );
-
     console.log(this.newSystem);
+  }
+
+  logout() {
+    this.authService.logout();
+    // this.currentUser = null;
+    this.router.navigate(['/login']);
   }
 
 }

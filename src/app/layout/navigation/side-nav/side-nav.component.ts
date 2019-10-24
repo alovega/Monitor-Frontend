@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { SystemService } from '../../../shared/system.service';
 import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
+import { AuthenticationService } from 'src/app/shared/auth/authentication.service';
 
 @Component({
   selector: 'hm-side-nav',
@@ -12,10 +13,13 @@ export class SideNavComponent implements OnInit {
   currentSystemId: any;
   currentSystem: any;
   incidentsUrl = `/system/{{currentSystemId}}/incidents`;
+  currentUser: any;
+
   constructor(
     private systemService: SystemService,
     private location: Location,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private authService: AuthenticationService
   ) { }
 
   ngOnInit() {
@@ -31,6 +35,7 @@ export class SideNavComponent implements OnInit {
     .subscribe(systems => this.currentSystemId = systems[0].id) : this.currentSystemId  = this.systemService.checkCurrentSystem();
     // this.currentSystemId = this.currentSystem.id;
     // console.log(this.currentSystemId);
+    this.authService.currentUser.subscribe((user) => this.currentUser = user );
   }
 
   isActive(path) {

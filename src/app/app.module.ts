@@ -16,6 +16,8 @@ import { TopNavComponent } from './layout/navigation/top-nav/top-nav.component';
 import { SideNavComponent } from './layout/navigation/side-nav/side-nav.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SharedModule } from './shared/shared.module';
+import { AuthGuardService } from './shared/helpers/auth-guard.service';
+import { AuthenticationService } from './shared/auth/authentication.service';
 // import { EndpointModule } from './endpoint/endpoint.module';
 // import { RecipientsModule } from './recipients/recipients.module';
 
@@ -39,7 +41,7 @@ import { SharedModule } from './shared/shared.module';
     BrowserAnimationsModule,
     SharedModule
   ],
-  providers: [],
+  providers: [AuthenticationService, AuthGuardService],
   schemas: [
     NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA
   ],

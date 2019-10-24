@@ -5,20 +5,10 @@
 
     <!-- Grid column -->
     <div class="col-md-12">
-        <div class="page-header" *ngIf="incident.status !== 'Resolved' && incident.status !== 'Completed'; else Open">
-            {{ incident.name }}
-            <div class="priority-level">
-                <form [formGroup]="updateIncidentForm" (ngSubmit)="onSubmit()" class="text-center" >
-                    <label for="">Priority Level</label>
-                    <select formControlName="priorityLevel" [ngClass]="{ 'is-invalid': submitted && updateIncidentForm.controls.priorityLevel.errors }" class="browser-default custom-select"
-                    [(ngModel)] = "incident.priority_level">
-                    <option selected value="1">Level 1</option>
-                    <option value="2">Level 2</option>
-                    <option value="3">Level 3</option>
-                    <option value="4">Level 4</option>
-                    <option value="5">Level 5</option>
-                    </select>
-                </form>
+        <div class="page-header d-flex" *ngIf="incident.status !== 'Resolved' && incident.status !== 'Completed'; else Open">
+            <div class="col-md-6">{{ incident.name }}</div>
+            <div class="col-md-6">
+                <button class="float-right back-button" (click)="back()"><< back to incidents</button>
             </div>
             <div class="clearfix"></div>
         </div>
@@ -75,24 +65,40 @@
                 </div>
                 <mdb-card class="grey lighten-5 update-form">
                     <form [formGroup]="updateIncidentForm" (ngSubmit)="onSubmit()">
-                        <div class="form-group mb-4" *ngIf="incident.type === 'Realtime'">
-                            <label class="form-label">Incident status</label>
-                            <select formControlName="incidentStatus" class="browser-default custom-select" 
-                            [ngClass]="{'is-invalid': submitted && updateIncidentForm.controls.incidentStatus.errors}">
-                                <option selected value="Investigating">Investigating</option>
-                                <option value="Identified">Identified</option>
-                                <option value="Monitoring">Monitoring</option>
-                                <option value="Resolved">Resolved</option>
-                            </select>
-                        </div>
-                        <div class="form-group mb-4" *ngIf="incident.type === 'Scheduled'">
-                            <label class="form-label">Maintenance status</label>
-                            <select formControlName="incidentStatus" class="browser-default custom-select" 
-                            [ngClass]="{'is-invalid': submitted && updateIncidentForm.controls.incidentStatus.errors}">
-                                <option selected value="Scheduled">Scheduled</option>
-                                <option value="InProgress">In Progress</option>
-                                <option value="Complete">Complete</option>
-                            </select>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group mb-4" *ngIf="incident.type === 'Realtime'">
+                                    <label class="form-label">Incident status</label>
+                                    <select formControlName="incidentStatus" class="browser-default custom-select" 
+                                    [ngClass]="{'is-invalid': submitted && updateIncidentForm.controls.incidentStatus.errors}">
+                                        <option selected value="Investigating">Investigating</option>
+                                        <option value="Identified">Identified</option>
+                                        <option value="Monitoring">Monitoring</option>
+                                        <option value="Resolved">Resolved</option>
+                                    </select>
+                                </div>
+                                <div class="form-group mb-4" *ngIf="incident.type === 'Scheduled'">
+                                    <label class="form-label">Maintenance status</label>
+                                    <select formControlName="incidentStatus" class="browser-default custom-select" 
+                                    [ngClass]="{'is-invalid': submitted && updateIncidentForm.controls.incidentStatus.errors}">
+                                        <option selected value="Scheduled">Scheduled</option>
+                                        <option value="InProgress">In Progress</option>
+                                        <option value="Complete">Complete</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 form-group mb-4">
+                                <label class="form-label" for="">Priority Level</label>
+                                <select formControlName="priorityLevel" [ngClass]="{ 'is-invalid': submitted && updateIncidentForm.controls.priorityLevel.errors }" class="browser-default custom-select"
+                                [(ngModel)] = "incident.priority_level">
+                                <option selected value="1">Level 1</option>
+                                <option value="2">Level 2</option>
+                                <option value="3">Level 3</option>
+                                <option value="4">Level 4</option>
+                                <option value="5">Level 5</option>
+                                </select>
+                            </div>
                         </div>
                         <div class="form-group mb-4">
                             <label class="form-label">Message</label>
@@ -105,7 +111,6 @@
                                 <div *ngIf="updateIncidentForm.controls.message.errors.required">Message is required</div>
                             </div>
                         </div>
-
                         <div class="update-button">
                             <button mdbBtn mdbWavesEffect class="float-right" color="primary" size="md">update</button>
                         </div>

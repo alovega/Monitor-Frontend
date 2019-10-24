@@ -8,6 +8,7 @@ import { SystemsComponent } from './systems.component';
 import { SharedModule } from '../shared/shared.module';
 // import { NgbdModalContent, NgbdModalComponent } from './add-system/add-system.component';
 import { AddSystemComponent } from './add-system/add-system.component';
+import { AuthGuardService } from '../shared/helpers/auth-guard.service';
 
 @NgModule({
   declarations: [SystemsComponent, AddSystemComponent],
@@ -17,6 +18,9 @@ import { AddSystemComponent } from './add-system/add-system.component';
     SharedModule,
     NgbModule,
     SweetAlert2Module.forRoot()
+  ],
+  providers: [
+    AuthGuardService
   ]
 })
 export class SystemsModule { }

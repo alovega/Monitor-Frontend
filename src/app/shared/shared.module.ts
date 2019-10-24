@@ -1,11 +1,11 @@
-import { NgModule } from '@angular/core';
+import { NgModule, NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ChartsModule, WavesModule } from 'angular-bootstrap-md';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
-
+import { MDBBootstrapModule } from 'angular-bootstrap-md';
 
 import { LineGraphComponent } from './graphs/line-graph/line-graph.component';
 import { BarGraphComponent } from './graphs/bar-graph/bar-graph.component';
@@ -22,6 +22,7 @@ import { SystemService } from './system.service';
 import { LoaderComponent } from './loader/loader.component';
 import { AddSystemComponent } from './add-system/add-system.component';
 import { DeleteSwalComponent } from './alerts/delete-swal/delete-swal.component';
+import { LoginComponent } from './auth/login/login.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { DeleteSwalComponent } from './alerts/delete-swal/delete-swal.component'
     EmptyDataComponent,
     LoaderComponent,
     AddSystemComponent,
-    DeleteSwalComponent
+    DeleteSwalComponent,
+    LoginComponent
   ],
   imports: [
     CommonModule,
@@ -46,7 +48,8 @@ import { DeleteSwalComponent } from './alerts/delete-swal/delete-swal.component'
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    SweetAlert2Module.forRoot()
+    SweetAlert2Module.forRoot(),
+    MDBBootstrapModule
   ],
   exports: [
     LineGraphComponent,
@@ -60,7 +63,8 @@ import { DeleteSwalComponent } from './alerts/delete-swal/delete-swal.component'
     EmptyDataComponent,
     LoaderComponent,
     AddSystemComponent,
-    DeleteSwalComponent
+    DeleteSwalComponent,
+    LoginComponent
   ],
   providers: [SystemService,
     {
@@ -68,6 +72,7 @@ import { DeleteSwalComponent } from './alerts/delete-swal/delete-swal.component'
       useClass: HttpInterceptorService,
       multi: true
     }
-  ]
+  ],
+  schemas: [NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA]
 })
 export class SharedModule { }

@@ -11,6 +11,19 @@ body{
   }
 }
 
+.logged-out, .logged-out > * {
+  padding-left: 0px !important;
+}
+
+.body-logged-out {
+  background-image: url("./assets/login_gb.png") !important;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  min-height: 100vh;
+  font-family: 'Roboto', sans-serif;
+}
+
 @media (max-width: 1199.98px) {
   .sidebar-fixed {
     display: none; } }

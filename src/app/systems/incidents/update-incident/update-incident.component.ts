@@ -13,6 +13,7 @@ import { SystemService } from 'src/app/shared/system.service';
   templateUrl: './update-incident.component.html',
   styleUrls: ['./update-incident.component.scss']
 })
+
 export class UpdateIncidentComponent implements OnInit {
   updateIncidentForm: FormGroup;
   submitted = false;
@@ -137,5 +138,9 @@ export class UpdateIncidentComponent implements OnInit {
         )
       }
     })
+  }
+
+  back() {
+    this.location.back();
   }
 }

@@ -90,7 +90,6 @@ export class EscalationRulesComponent implements OnInit, AfterViewInit {
       cancelButtonText: 'No, keep the rule'
     }).then((result) => {
       if (result.value) {
-        console.log(ruleId);
         this.rulesService.deleteRule(ruleId).subscribe(
           response => {
             if (response.code === '800.200.001') {

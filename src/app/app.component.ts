@@ -3,6 +3,7 @@ import { SystemService } from './shared/system.service';
 import {
   Router, NavigationStart, NavigationCancel, NavigationEnd , ActivatedRoute, NavigationError
 } from '@angular/router';
+import { AuthenticationService } from './shared/auth/authentication.service';
 
 
 @Component({
@@ -16,16 +17,27 @@ export class AppComponent implements OnInit {
   currentSystem: any;
   currentSystemId: any;
   loading;
+  currentUser: any;
 
   constructor(
     private systemService: SystemService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
+    private authService: AuthenticationService
   ) {
     this.loading = true;
+    this.authService.currentUser.subscribe(user => this.currentUser = user);
+    let body = document.getElementsByTagName('body')[0];
+
+    if (this.currentUser) {
+      body.classList.remove('body-logged-out');
+    } else {
+      body.classList.add('body-logged-out');
+    }
   }
 
   ngOnInit() {
+    console.log(this.currentUser);
     // this.loading = false;
     // this.router.events.subscribe((event: Event) => {
     //   switch (true) {
@@ -58,6 +70,11 @@ export class AppComponent implements OnInit {
         setTimeout(() => this.loading = false, 500);
       }
     });
+  }
+
+  logout() {
+    this.authService.logout();
+    this.router.navigate(['/login']);
   }
 
 }

@@ -7,11 +7,13 @@ import { RealtimeIncidentsComponent } from './realtime-incidents/realtime-incide
 import { MaintenanceComponent } from './maintenance/maintenance.component';
 import { UpdateIncidentComponent } from './update-incident/update-incident.component';
 import { CreateIncidentComponent } from './create-incident/create-incident.component';
+import { AuthGuardService } from 'src/app/shared/helpers/auth-guard.service';
 
 const routes: Routes = [
   {
     path: '',
     component: IncidentsComponent,
+    canActivateChild: [AuthGuardService],
     children: [
       {
         path: 'open',
