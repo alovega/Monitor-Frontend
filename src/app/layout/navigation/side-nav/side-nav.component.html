@@ -1,12 +1,12 @@
   <!-- Sidebar -->
-<div class="sidebar-fixed position-fixed">
+<div class="sidebar-fixed position-fixed"  *ngIf = "currentUser">
     <a class="logo-wrapper waves-effect">
-      <span style="font-size: 40px">HM</span>
-      <!-- <img src="../../assets/img/mdb.png" class="img-fluid" alt=""> -->
+      <!-- <span style="font-size: 40px">HM</span> -->
+      <img src="../../assets/hm_logo.png" class="img-fluid" alt="">
     </a>
 
     <div class="list-group list-group-flush">
-      <a mdbWavesEffect routerLink="dashboard" routerLinkActive="active" class="list-group-item list-group-item-action">
+      <a mdbWavesEffect routerLink="system/{{currentSystemId}}/dashboard/" routerLinkActive="active" class="list-group-item list-group-item-action">
         <i class="fas fa-chart-pie mr-3"></i>Dashboard
       </a>
       <a mdbWavesEffect routerLink="system/{{currentSystemId}}/incidents/" routerLinkActive="active" class="list-group-item list-group-item-action waves-effect">
@@ -24,3 +24,5 @@
     </div>
   </div>
   <!-- Sidebar -->
+
+
