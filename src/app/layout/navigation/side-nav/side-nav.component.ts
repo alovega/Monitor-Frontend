@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { SystemService } from '../../../shared/system.service';
 import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
+import { AuthenticationService } from 'src/app/shared/auth/authentication.service';
 
 @Component({
   selector: 'hm-side-nav',
@@ -14,18 +15,20 @@ export class SideNavComponent implements OnInit {
   currentEscalationLevel: any;
   currentEscalationLevelId: any;
   incidentsUrl = `/system/{{currentSystemId}}/incidents`;
+  currentUser: any;
+
   constructor(
     private systemService: SystemService,
     private location: Location,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private authService: AuthenticationService
   ) { }
 
   ngOnInit() {
     this.systemService.changeSystem.subscribe(
-      system => {
-        let currentSystem = system[0];
+      systems => {
+        let currentSystem = systems[0];
         this.currentSystemId = currentSystem.id;
-        console.log(this.route);
       }
     );
 
@@ -34,7 +37,8 @@ export class SideNavComponent implements OnInit {
     .subscribe(systems => this.currentSystemId = systems[0].id) : this.currentSystemId  = this.systemService.checkCurrentSystem();
     // this.currentSystemId = this.currentSystem.id;
     // console.log(this.currentSystemId);
-    }
+    this.authService.currentUser.subscribe((user) => this.currentUser = user );
+  }
 
   isActive(path) {
     return this.location.path().indexOf(path) > -1;
