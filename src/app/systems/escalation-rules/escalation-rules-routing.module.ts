@@ -4,10 +4,12 @@ import { Routes, RouterModule } from '@angular/router';
 import { EscalationRulesComponent } from './escalation-rules.component';
 import { CreateRuleComponent } from './create-rule/create-rule.component';
 import { UpdateRuleComponent } from './update-rule/update-rule.component';
+import { AuthGuardService } from 'src/app/shared/helpers/auth-guard.service';
 
 const routes: Routes = [
   { path: '',
     component: EscalationRulesComponent,
+    canActivate: [AuthGuardService],
     children: [
 
     ]
@@ -17,7 +19,7 @@ const routes: Routes = [
     component: CreateRuleComponent
   },
   {
-    path: 'update',
+    path: 'edit/:rule-id',
     component: UpdateRuleComponent
   }
 ];

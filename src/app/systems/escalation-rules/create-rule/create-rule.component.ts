@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import {  FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
+import { Location } from '@angular/common';
+
+import { EscalationRule } from '../escalation-rule';
+import { EscalationRuleService } from '../escalation-rule.service';
 
 @Component({
   selector: 'hm-create-rule',
@@ -9,9 +14,18 @@ import {  FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms
 export class CreateRuleComponent implements OnInit {
   escalationRuleForm: FormGroup;
   submitted = false;
+  escalationRule: EscalationRule;
+  ruleId: string;
 
-  constructor(private formBuilder: FormBuilder) { }
+  constructor(
+    private formBuilder: FormBuilder,
+    private ruleService: EscalationRuleService,
+    private activatedRoute: ActivatedRoute,
+    private location: Location) {
 
+    this.escalationRule = new EscalationRule();
+    this.ruleId = this.activatedRoute.snapshot.params['rule-id'];
+   }
   ngOnInit() {
     this.createEscalationRuleForm();
   }
@@ -27,23 +41,29 @@ export class CreateRuleComponent implements OnInit {
     });
   }
 
+  public back(): void {
+    this.location.back();
+  }
+
   onSubmit() {
     this.submitted = true;
     if (this.escalationRuleForm.invalid) {
       console.log('Invalid');
       return;
     }
-    console.log(this.escalationRuleForm.value);
-    let formData: any = new FormData();
-    formData.append('name', this.escalationRuleForm.get('ruleName').value);
-    formData.append('description', this.escalationRuleForm.get('ruleDescription').value);
-    formData.append('nth_event', this.escalationRuleForm.get('nEvents').value);
-    formData.append('duration', this.escalationRuleForm.get('duration').value);
-    formData.append('escalation_level', this.escalationRuleForm.get('escalationLevel').value);
-    formData.append('event_type', this.escalationRuleForm.get('eventType').value);
 
-    for (let key of formData.entries()){
-      console.log(key[0] + ', ' + key[1]);
-    }
+    this.escalationRule.event_type = this.escalationRule.eventtype;
+    this.escalationRule.escalation_level = this.escalationRule.escalation;
+    this.escalationRule.status = 'Active';
+    this.escalationRule.state = this.escalationRule.status;
+    console.log(this.escalationRule);
+
+    this.ruleService.createRule(this.escalationRule).subscribe(
+      response => {
+        if (response.code === '800.200.001') {
+          console.log(this.escalationRule);
+          this.location.back();
+        }
+      });
   }
 }

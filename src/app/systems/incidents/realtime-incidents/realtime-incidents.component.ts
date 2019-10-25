@@ -13,7 +13,7 @@ import { SystemService } from '../../../shared/system.service';
 export class RealtimeIncidentsComponent implements OnInit {
   incidents$: Observable<Incident[]>;
   systemId: string;
-  currentSystem: string;
+  currentSystem: any;
 
   constructor(
     private incidentService: IncidentService,
@@ -27,13 +27,20 @@ export class RealtimeIncidentsComponent implements OnInit {
         this.systemId = param['system-id'];
       });
 
-    this.systemService.setSystem(this.systemId).subscribe(
-      (result => {
-        this.currentSystem = result[0];
-        this.incidents$ = this.incidentService.getOpenIncidents(this.currentSystem);
-      })
-    );
-    this.incidents$ = this.incidentService.getRealtimeIncidents(this.currentSystem);
+    let issetCurrentSystem = this.systemService.checkCurrentSystem();
+    issetCurrentSystem ? this.currentSystem  = issetCurrentSystem : this.systemService.getCurrentSystem()
+    .subscribe(systems => {
+      this.currentSystem = systems[0];
+      this.systemId = this.currentSystem.id;
+      this.incidents$ = this.incidentService.getRealtimeIncidents();
+    });
+    this.incidents$ = this.incidentService.getRealtimeIncidents();
+    // this.systemService.setSystem(this.systemId).subscribe(
+    //   (result => {
+    //     this.currentSystem = result[0];
+    //     this.incidents$ = this.incidentService.getOpenIncidents(this.currentSystem);
+    //   })
+    // );
   }
 
   // TODO Replace service call with getRealtimeIncidents

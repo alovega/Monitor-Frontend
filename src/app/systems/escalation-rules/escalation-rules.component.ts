@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild, AfterViewInit, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MdbTablePaginationComponent, MdbTableDirective } from 'angular-bootstrap-md';
+import Swal from 'sweetalert2';
 
 import { SystemService } from '../../shared/system.service';
 import { EscalationRuleService } from './escalation-rule.service';
@@ -20,7 +21,6 @@ export class EscalationRulesComponent implements OnInit, AfterViewInit {
   previous: any = [];
 
   headElements = ['Name', 'Description', 'Nth occurrence', 'Duration', 'Escalation Level', 'Date Created', 'Action'];
-
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -42,11 +42,16 @@ export class EscalationRulesComponent implements OnInit, AfterViewInit {
       })
     );
 
-    this.rules = this.rulesService.getRules();
-    this.mdbTable.setDataSource(this.rules);
-    this.rules = this.mdbTable.getDataSource();
-    this.previous = this.mdbTable.getDataSource();
-    console.log(this.rules);
+    this.rulesService.getRules().subscribe(
+      (result => {
+        this.rules = result;
+        this.mdbTable.setDataSource(this.rules);
+        this.rules = this.mdbTable.getDataSource();
+        this.previous = this.mdbTable.getDataSource();
+        console.log(result);
+      })
+    );
+
   }
 
   ngAfterViewInit() {
@@ -69,5 +74,51 @@ export class EscalationRulesComponent implements OnInit, AfterViewInit {
       this.rules = this.mdbTable.searchLocalDataBy(search);
       this.mdbTable.setDataSource(prev);
     }
+  }
+
+  onOpen(event: any) {
+    console.log(event);
+  }
+
+  removeRule(ruleId) {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'You will not be able to recover this rule!',
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, delete the rule!',
+      cancelButtonText: 'No, keep the rule'
+    }).then((result) => {
+      if (result.value) {
+        this.rulesService.deleteRule(ruleId).subscribe(
+          response => {
+            if (response.code === '800.200.001') {
+              Swal.fire(
+                'Deleted!',
+                'This rule has been deleted.',
+                'success'
+              )
+            } else {
+              Swal.fire(
+                'Failed!',
+                'This rule could not be deleted.',
+                'error'
+              )
+            }
+          }
+        )
+        this.rulesService.getRules().subscribe(
+          result => {
+            this.rules = result;
+          }
+        )
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        Swal.fire(
+          'Cancelled',
+          '',
+          'error'
+        )
+      }
+    })
   }
 }

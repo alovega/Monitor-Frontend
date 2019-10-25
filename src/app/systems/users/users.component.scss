@@ -2,6 +2,10 @@
     display: inline;
 }
 
+.container{
+  padding: 0px;
+}
+
 .update-button a{
     font-size: 14px;
     font-weight: 500;
@@ -49,4 +53,5 @@ table {
 
   table.table td, table.table th {
     width:224px;
+    padding: 20px;
 }
