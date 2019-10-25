@@ -10,14 +10,52 @@
     </div>
   </div>
 
-<table mdbTable #tableEl="mdbTable" class="z-depth-1">
+  <mat-table [dataSource]="dataSource">
+    {{dataSource}}
+      <!-- Name Column -->
+      <ng-container matColumnDef="Endpoint">
+          <mat-header-cell *matHeaderCellDef> Endpoint </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
+      </ng-container>
+
+      <!--  EndpointType column -->
+    <ng-container matColumnDef="Endpoint Type">
+        <mat-header-cell *matHeaderCellDef> Endpoint Type </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.endpoint_type__name}} </mat-cell>
+    </ng-container>
+
+      <!--  Datecreated column -->
+      <ng-container matColumnDef="Date Created">
+          <mat-header-cell *matHeaderCellDef> Date Created </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.date_created}} </mat-cell>
+      </ng-container>
+
+    <!--  status column -->
+    <ng-container matColumnDef="State">
+        <mat-header-cell *matHeaderCellDef> State </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.state__name}} </mat-cell>
+    </ng-container>
+
+      <!--  Action column -->
+      <ng-container matColumnDef="Action">
+          <mat-header-cell *matHeaderCellDef> Action </mat-header-cell>
+          <mat-cell *matCellDef="let element"> 
+            <a class="fas fa-edit text-success"  routerLinkActive="active" routerLink="/system/{{currentSystemId}}/endpoints/endpoint-update/{{element.id}}" ></a>
+            <a class="fas fa-trash-alt mr-2 text-danger" [disabled]="elements" (click)="delete(element.id)"></a> </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="headElements"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: headElements"></mat-row>
+  </mat-table>
+
+<!-- <table mdbTable #tableEl="mdbTable" class="z-depth-1">
         <thead class="white-text">
             <tr>
             <th *ngFor="let head of headElements" scope="col">{{head}} </th>
             </tr>
         </thead>
         <tbody *ngIf="elements.length > 0; else noElements">
-            <tr mdbTableCol *ngFor="let el of elements; let i = index ">
+            <tr mdbTableCol (rowCreated)="onRowCreate($event)" (rowRemoved)="onRowRemove($event)" *ngFor="let el of elements; let i = index">
             <th *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex" scope="row">
                 {{el.name}}
             </th>
@@ -48,5 +86,5 @@
         </div>
       </hm-empty-data>
     </td>
-</ng-template>            
+</ng-template>             -->
 <router-outlet></router-outlet>

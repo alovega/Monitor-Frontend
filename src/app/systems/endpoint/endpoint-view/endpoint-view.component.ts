@@ -1,7 +1,9 @@
 import { MdbTablePaginationComponent, MdbTableDirective } from 'angular-bootstrap-md';
 import { Component, OnInit, ViewChild, AfterViewInit, HostListener, ChangeDetectorRef } from '@angular/core';
 import {EndpointService} from '../endpoint.service';
+import {Endpoint} from '../endpoint';
 import { ActivatedRoute } from '@angular/router';
+import { MatPaginator, MatTableDataSource } from '@angular/material';
 import Swal from 'sweetalert2';
  
 @Component({
@@ -14,9 +16,10 @@ export class EndpointViewComponent implements OnInit, AfterViewInit {
   @ViewChild(MdbTableDirective, { static: true }) mdbTable: MdbTableDirective;
   elements: any;
   searchText: string = '';
-  previous: any = [];
+  previous: string;
+  maxVisibleItems: number=8;
 
-  
+  dataSource:any;
   headElements = ['Endpoint', 'Endpoint Type', 'Date Created', 'State', 'Action'];
   currentSystem: any;
   currentSystemId: any;
@@ -27,9 +30,9 @@ export class EndpointViewComponent implements OnInit, AfterViewInit {
     private cdRef: ChangeDetectorRef,
     private activatedRoute: ActivatedRoute,
     ) {}
-    @HostListener('input') oninput() {
-      this.searchItems();
-    }
+    // // @HostListener('input') oninput() {
+    // //   this.mdbTablePagination.searchText = this.searchText;
+    // }
   ngOnInit() {
     this.endpoint_id = this.activatedRoute.snapshot.params["id"];
     this.activatedRoute.parent.params.subscribe(
@@ -38,23 +41,66 @@ export class EndpointViewComponent implements OnInit, AfterViewInit {
         console.log(this.currentSystemId);
       });
     this.elements = this.showEndpoints(this.currentSystemId)
-    this.mdbTable.setDataSource(this.elements);
-    this.elements = this.mdbTable.getDataSource();
-    this.previous = this.mdbTable.getDataSource();
+    this.dataSource = new MatTableDataSource<Endpoint>(this.elements)
+    console.log(this.dataSource)
+    // this.mdbTable.setDataSource(this.elements);
+    // this.elements = this.mdbTable.getDataSource();
+    // this.previous = this.mdbTable.getDataSource();
   }
 
   ngAfterViewInit() {
-    this.mdbTablePagination.setMaxVisibleItemsNumberTo(5);
-    this.mdbTablePagination.calculateFirstItemIndex();
-    this.mdbTablePagination.calculateLastItemIndex();
-    this.cdRef.detectChanges();
+    // this.mdbTablePagination.setMaxVisibleItemsNumberTo(this.maxVisibleItems);
+    // this.mdbTablePagination.calculateFirstItemIndex();
+    // this.mdbTablePagination.calculateLastItemIndex();
+    // this.cdRef.detectChanges();
+  }
+  addNewRow() {
+    this.mdbTable.addRow({
+      id: this.elements.length.toString(),
+      Endpoint: 'Endpoint ' + this.elements.length,
+      EndpointType: 'Endpoint Type ' + this.elements.length,
+      DateCreated:'Date Created' + this.elements.length,
+      State:'elements.state__name' + this.elements.length,
+      Action: 'Action' + this.elements.length
+    });
+    this.emitDataSourceChange();
+  }
+  addNewRowAfter() {
+    this.mdbTable.addRowAfter(1, {Endpoint: 'httpp/aajaha', EndpointType: 'Email', DateCreated: '26/10/2017', Action: 'edit'});
+    this.mdbTable.getDataSource().forEach((el: any, index: any) => {
+      el.id = (index + 1).toString();
+    });
+    this.emitDataSourceChange();
+  }
+  removeLastRow() {
+    this.mdbTable.removeLastRow();
+    this.emitDataSourceChange();
+    this.mdbTable.rowRemoved().subscribe((data: any) => {
+      console.log(data);
+    });
+  }
+
+  removeRow() {
+    this.mdbTable.removeRow(1);
+    this.mdbTable.getDataSource().forEach((el: any, index: any) => {
+      el.id = (index + 1).toString();
+    });
+    this.emitDataSourceChange();
+    this.mdbTable.rowRemoved().subscribe((data: any) => {
+      console.log(data);
+    });
+  }
+  emitDataSourceChange() {
+    this.mdbTable.dataSourceChange().subscribe((data: any) => {
+      console.log(data);
+    });
   }
 
   showEndpoints(currentSystemId) {
    return this.endpointService.getEndpoints(currentSystemId)
       .subscribe((data) => {
+        this.dataSource = data
         console.log(data)
-        this.elements = data
     });
   }
   searchItems() {
@@ -70,6 +116,13 @@ export class EndpointViewComponent implements OnInit, AfterViewInit {
       this.elements = this.mdbTable.searchLocalDataBy(this.searchText);
       this.mdbTable.setDataSource(prev);
     }
+    this.mdbTablePagination.calculateFirstItemIndex();
+    this.mdbTablePagination.calculateLastItemIndex();
+
+    this.mdbTable.searchDataObservable(this.searchText).subscribe(() => {
+      this.mdbTablePagination.calculateFirstItemIndex();
+      this.mdbTablePagination.calculateLastItemIndex();
+    });
   }
   delete(endpoint_id){
     console.log(endpoint_id)

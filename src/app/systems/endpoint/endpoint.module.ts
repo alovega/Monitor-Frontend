@@ -1,6 +1,7 @@
 import { NgModule, NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
+import { MatTableModule } from '@angular/material/table';
 
 import { EndpointRoutingModule } from './endpoint-routing.module';
 import { EndpointComponent } from './endpoint.component';
@@ -16,6 +17,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
   imports: [
     CommonModule,
     FormsModule,
+    MatTableModule,
     ReactiveFormsModule,
     EndpointRoutingModule,
     MDBBootstrapModule.forRoot(),
