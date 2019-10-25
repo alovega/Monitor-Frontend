@@ -6,7 +6,7 @@ import { EndpointRoutingModule } from './endpoint-routing.module';
 import { EndpointComponent } from './endpoint.component';
 import { EndpointFormComponent } from './endpoint-create/endpoint-create.component';
 import { EndpointViewComponent } from './endpoint-view/endpoint-view.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { EndpointUpdateComponent } from './endpoint-update/endpoint-update.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 
@@ -15,6 +15,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
   declarations: [EndpointComponent, EndpointViewComponent, EndpointFormComponent,EndpointUpdateComponent],
   imports: [
     CommonModule,
+    FormsModule,
     ReactiveFormsModule,
     EndpointRoutingModule,
     MDBBootstrapModule.forRoot(),

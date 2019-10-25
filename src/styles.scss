@@ -60,6 +60,12 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .full-page {
   min-height: 50vh;
 }
+.invalid-feedback{
+text-align: left;
+display: block;
+position: relative;
+top:-11px
+}
 
 .loader {
   height: 100%;

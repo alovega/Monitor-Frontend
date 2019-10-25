@@ -1,5 +1,5 @@
 import { MdbTablePaginationComponent, MdbTableDirective } from 'angular-bootstrap-md';
-import { Component, OnInit, ViewChild, AfterViewInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit, HostListener, ChangeDetectorRef } from '@angular/core';
 import {EndpointService} from '../endpoint.service';
 import { ActivatedRoute } from '@angular/router';
 import Swal from 'sweetalert2';
@@ -9,10 +9,11 @@ import Swal from 'sweetalert2';
   templateUrl: './endpoint-view.component.html',
   styleUrls: ['./endpoint-view.component.scss']
 })
-export class EndpointViewComponent implements OnInit {
+export class EndpointViewComponent implements OnInit, AfterViewInit {
   @ViewChild(MdbTablePaginationComponent, { static: true }) mdbTablePagination: MdbTablePaginationComponent;
   @ViewChild(MdbTableDirective, { static: true }) mdbTable: MdbTableDirective;
   elements: any;
+  searchText: string = '';
   previous: any = [];
 
   
@@ -26,7 +27,9 @@ export class EndpointViewComponent implements OnInit {
     private cdRef: ChangeDetectorRef,
     private activatedRoute: ActivatedRoute,
     ) {}
-
+    @HostListener('input') oninput() {
+      this.searchItems();
+    }
   ngOnInit() {
     this.endpoint_id = this.activatedRoute.snapshot.params["id"];
     this.activatedRoute.parent.params.subscribe(
@@ -41,7 +44,7 @@ export class EndpointViewComponent implements OnInit {
   }
 
   ngAfterViewInit() {
-    this.mdbTablePagination.setMaxVisibleItemsNumberTo(3);
+    this.mdbTablePagination.setMaxVisibleItemsNumberTo(5);
     this.mdbTablePagination.calculateFirstItemIndex();
     this.mdbTablePagination.calculateLastItemIndex();
     this.cdRef.detectChanges();
@@ -53,6 +56,20 @@ export class EndpointViewComponent implements OnInit {
         console.log(data)
         this.elements = data
     });
+  }
+  searchItems() {
+    const prev = this.mdbTable.getDataSource();
+    console.log(prev)
+
+    if (!this.searchText) {
+      this.mdbTable.setDataSource(this.previous);
+      this.elements = this.mdbTable.getDataSource();
+    }
+
+    if (this.searchText) {
+      this.elements = this.mdbTable.searchLocalDataBy(this.searchText);
+      this.mdbTable.setDataSource(prev);
+    }
   }
   delete(endpoint_id){
     console.log(endpoint_id)

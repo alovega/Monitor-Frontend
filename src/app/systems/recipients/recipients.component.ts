@@ -11,6 +11,7 @@ export class RecipientsComponent implements OnInit {
   public systemId: string;
   public incidentType: string;
   public maintenanceUrl: string;
+  search: string = '';
   constructor(
     public router: Router,
   ) { }

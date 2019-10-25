@@ -9,13 +9,13 @@
           <th *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex" scope="row">
               {{el.phone_number}}
           </th>
-          <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{el.date_created}}</td>
           <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">
             <span *ngFor="let el of el.system_recipients; let i = index ">
               {{el.escalation_level__name}}
             </span>
           </td>
           <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{el.user__username}}</td>
+          <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{el.date_created}}</td>
           <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{el.state__name}}</td>
           <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">
             <a mdbIcon class="fas fa-edit text-success" routerLink="/system/{{currentSystemId}}/recipients/recipient-update/{{el.recipient_id}}" routerLinkActive="active"></a>
@@ -35,7 +35,7 @@
         <td colspan="7">
           <hm-empty-data header="No Existing Sms recipients" description="New Recipients will be displayed here">
             <div action-button>
-            <a href="" routerLink="system/{{currentSystemId}}/recipients/recipient-create">
+            <a href="" routerLink="/system/{{currentSystemId}}/recipients/recipient-create">
               <button action-button type="button" mdbBtn size="sm" color="primary" class="text-white">Add Recipient</button>
             </a>
             </div>

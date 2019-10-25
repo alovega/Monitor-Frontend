@@ -12,7 +12,7 @@
       <input mdbInput MdbValidate type="text" id="defaultContactFormName" class="form-control mb-4"
       [ngClass]="{ 'is-invalid': submitted && f.EnpointName.errors }"
       placeholder="Name" formControlName="EndpointName" [(ngModel)]="data.name" >
-      <div *ngIf="endpointForm.controls['EndpointName'].invalid && (endpointForm.controls['EndpointName'].dirty || endpointForm.controls['EndpointName'].touched)" class="alert alert-danger">
+      <div *ngIf="endpointForm.controls['EndpointName'].invalid && (endpointForm.controls['EndpointName'].dirty || endpointForm.controls['EndpointName'].touched)" class="invalid-feedback">
         <div *ngIf="endpointForm.controls['EndpointName'].errors.required">
             Endpoint Name is required.
         </div>
@@ -22,7 +22,7 @@
       <!-- Endpoint -->
       <label>URL</label>
       <input type="text" id="defaultContactFormEndpoint" class="form-control mb-4" placeholder="URL" formControlName="URL" [(ngModel)]="data.endpoint" >
-      <div *ngIf="endpointForm.controls['URL'].invalid && (endpointForm.controls['URL'].dirty || endpointForm.controls['URL'].touched)" class="alert alert-danger">
+      <div *ngIf="endpointForm.controls['URL'].invalid && (endpointForm.controls['URL'].dirty || endpointForm.controls['URL'].touched)" class="invalid-feedback">
         <div *ngIf="endpointForm.controls['URL'].errors.required">
           A URL is required.
         </div>
@@ -34,7 +34,7 @@
       <!-- Optimal response time -->
       <label>Optimal response time</label>
       <input type="text" id="defaultContactFormEndpoint" class="form-control mb-4" placeholder="Optimal response time" formControlName="OptimalResponseTime" [(ngModel)]="data.optimal_response_time" >
-      <div *ngIf="endpointForm.controls['OptimalResponseTime'].invalid && (endpointForm.controls['OptimalResponseTime'].dirty || endpointForm.controls['OptimalResponseTime'].touched)" class="alert alert-danger">
+      <div *ngIf="endpointForm.controls['OptimalResponseTime'].invalid && (endpointForm.controls['OptimalResponseTime'].dirty || endpointForm.controls['OptimalResponseTime'].touched)" class="invalid-feedback">
         <div *ngIf="endpointForm.controls['OptimalResponseTime'].errors.required">
           Optimal response time is required.
         </div>
@@ -48,7 +48,7 @@
               {{endpoint_types[i].name}}
             </option>
       </select>
-      <div *ngIf="endpointForm.controls['EndpointType'].invalid && (endpointForm.controls['EndpointType'].dirty || endpointForm.controls['EndpointType'].touched)" class="alert alert-danger">
+      <div *ngIf="endpointForm.controls['EndpointType'].invalid && (endpointForm.controls['EndpointType'].dirty || endpointForm.controls['EndpointType'].touched)" class="invalid-feedback">
         <div *ngIf="endpointForm.controls['EndpointType'].errors.required">
             EnpointType is required.
         </div>
@@ -62,7 +62,7 @@
               {{states[i].name}}
             </option>
       </select>
-      <div *ngIf="endpointForm.controls['State'].invalid && (endpointForm.controls['State'].dirty || endpointForm.controls['State'].touched)" class="alert alert-danger">
+      <div *ngIf="endpointForm.controls['State'].invalid && (endpointForm.controls['State'].dirty || endpointForm.controls['State'].touched)" class="invalid-feedback">
         <div *ngIf="endpointForm.controls['State'].errors.required">
             State is required.
         </div>
@@ -76,7 +76,7 @@
       <div class="form-group">
         <textarea class="form-control rounded-0" id="exampleFormControlTextarea2" rows="3" placeholder="Description" formControlName="Description" [(ngModel)]="data.description" ></textarea>
       </div>
-      <div *ngIf="endpointForm.controls['Description'].invalid && (endpointForm.controls['Description'].dirty || endpointForm.controls['Description'].touched)" class="alert alert-danger">
+      <div *ngIf="endpointForm.controls['Description'].invalid && (endpointForm.controls['Description'].dirty || endpointForm.controls['Description'].touched)" class="invalid-feedback">
         <div *ngIf="endpointForm.controls['Description'].errors.required">
           Description is required.
         </div>
