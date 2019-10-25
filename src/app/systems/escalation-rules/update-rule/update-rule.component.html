@@ -2,8 +2,9 @@
 <div class="row wow animate fadeIn" data-wow-delay="0.1s">
       <!-- Grid column -->
     <div class="col-md-12">
-      <div class="page-header">
-        Update Escalation Rule
+      <div class="page-header d-flex">
+        <div class="col-md-6">Update Escalation Rule</div>
+        <div class="col-md-6"><button class="float-right back-button" (click)="back()"><< back to rules</button></div>
       </div>
       <hr>
       <div class="page-body">
@@ -14,7 +15,7 @@
               <!-- Name -->
               <label class="form-label">Rule Name</label>
               <input type="text" id="incidentName" formControlName="ruleName" class="grey lighten-5 form-control" placeholder="Rule name"
-              [ngClass]="{ 'is-invalid': submitted && form.ruleName.errors }">
+              [ngClass]="{ 'is-invalid': submitted && form.ruleName.errors }" [(ngModel)] = "escalationRule.name">
               <div *ngIf="submitted && form.ruleName.errors" class="invalid-feedback">
                 <div *ngIf="form.ruleName.errors.required">
                   Escalation rule name is required</div>
@@ -26,7 +27,7 @@
               <label class="form-label">Rule description</label>
               <textarea class="grey lighten-5 form-control rounded-2" formControlName="ruleDescription"
                   id="exampleFormControlTextarea2" rows="3" placeholder="Elevated error occurrence"
-                  [ngClass]="{ 'is-invalid': submitted && form.ruleDescription.errors }">
+                  [ngClass]="{ 'is-invalid': submitted && form.ruleDescription.errors }" [(ngModel)] = "escalationRule.description">
               </textarea>
 
               <div *ngIf="submitted && form.ruleDescription.errors" class="invalid-feedback">
@@ -42,7 +43,7 @@
 
                     <!-- Escalation Levels -->
                     <select formControlName="escalationLevel" class="grey lighten-5 browser-default custom-select form-control inline-rule"
-                    [ngClass]="{ 'is-invalid': submitted && form.escalationLevel.errors }">
+                    [ngClass]="{ 'is-invalid': submitted && form.escalationLevel.errors }" [(ngModel)] = "escalationRule.escalation">
                         <option selected value="High">High</option>
                         <option value="Medium">Medium</option>
                         <option value="Low">Low</option>
@@ -51,14 +52,14 @@
                     <span class="rule-text">If </span>
                     <!-- Nth Event -->
                     <input formControlName="nEvents" type="number" id="nthEvent" class="grey lighten-5 form-control inline-rule" placeholder="10"
-                    [ngClass]="{ 'is-invalid': submitted && form.nEvents.errors }">
+                    [ngClass]="{ 'is-invalid': submitted && form.nEvents.errors }" [(ngModel)] = "escalationRule.nth_event">
                     <!-- <span *ngIf="submitted && form.nEvents.errors" class="invalid-feedback">
                       <span *ngIf="form.nEvents.errors.required">Nth event value is required</span>
                     </span> -->
 
                     <!-- Event Type -->
                     <select formControlName="eventType" class="grey lighten-5 browser-default custom-select form-control inline-rule"
-                    [ngClass]="{ 'is-invalid': submitted && form.eventType.errors }">
+                    [ngClass]="{ 'is-invalid': submitted && form.eventType.errors }" [(ngModel)] = "escalationRule.eventtype">
                         <option selected value="Error">Error</option>
                         <option value="Warning">Warning</option>
                         <option value="Critical">Critical</option>
@@ -71,7 +72,7 @@
                     <span class="rule-text">Event(s) occur within</span>
                     <!-- Duration -->
                     <input type="number" formControlName="duration" class="grey lighten-5 form-control inline-rule" placeholder="3600"
-                    [ngClass]="{ 'is-invalid': submitted && form.duration.errors }"> 
+                    [ngClass]="{ 'is-invalid': submitted && form.duration.errors }" [(ngModel)] = "escalationRule.duration"> 
                     <span class="rule-text">Seconds</span>
                     <!-- <span *ngIf="submitted && form.duration.errors" class="invalid-feedback">
                         <span *ngIf="form.duration.errors.required">Duration is required</span>

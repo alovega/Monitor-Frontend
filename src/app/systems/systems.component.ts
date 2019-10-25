@@ -3,6 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { map, tap } from 'rxjs/operators';
 
 import { SystemService } from '../shared/system.service';
+import { AuthenticationService } from '../shared/auth/authentication.service';
 
 @Component({
   selector: 'hm-systems',
@@ -13,10 +14,13 @@ export class SystemsComponent implements OnInit {
   systems: any;
   currentSystem: any;
   currentSystemId: any;
+  currentUser: any;
+
   constructor(
     private systemService: SystemService,
     private router: Router,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private authService: AuthenticationService
   ) { }
 
   ngOnInit() {
@@ -28,17 +32,16 @@ export class SystemsComponent implements OnInit {
       this.currentSystemId = this.currentSystem.id;
       this.redirect();
     });
-    if (!this.currentSystemId) {
+    if (this.currentSystemId) {
+      this.redirect();
+    } else if (this.currentSystem) {
       this.currentSystemId = this.currentSystem.id;
-      console.log('Not Set');
-    } else {
-      console.log('Set');
       this.redirect();
     }
 
-    if (this.currentSystem && this.currentSystemId) {
-      this.redirect();
-    }
+    // if (this.currentSystem && this.currentSystemId) {
+    //   this.redirect();
+    // }
 
     // this.router.navigateByUrl('/', {skipLocationChange: true}).then(() =>
     // this.router.navigate([`system/${this.currentSystemId}/incidents`]));

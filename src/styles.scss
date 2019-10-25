@@ -11,6 +11,19 @@ body{
   }
 }
 
+.logged-out, .logged-out > * {
+  padding-left: 0px !important;
+}
+
+.body-logged-out {
+  background-image: url("./assets/login_gb.png") !important;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  min-height: 100vh;
+  font-family: 'Roboto', sans-serif;
+}
+
 @media (max-width: 1199.98px) {
   .sidebar-fixed {
     display: none; } }
@@ -82,4 +95,15 @@ h1 {
 .app-root {
   margin-left: 1rem;
   margin-right: 1rem;
+}
+
+.back-button{
+  font-size: 14px;
+  background-color: #0052CC !important;
+  border: 1px solid #0052CC;
+  border-radius: 4px;
+  color: #ffffff;
+  right: 0;
+  padding: 3px 7px 3px 7px;
+  font-weight: 500;
 }

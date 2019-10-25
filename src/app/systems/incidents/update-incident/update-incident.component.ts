@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {  FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
+import Swal from 'sweetalert2';
 
 import { IncidentService } from '../incident.service';
 import { Incident } from '../incident';
@@ -12,11 +13,12 @@ import { SystemService } from 'src/app/shared/system.service';
   templateUrl: './update-incident.component.html',
   styleUrls: ['./update-incident.component.scss']
 })
+
 export class UpdateIncidentComponent implements OnInit {
   updateIncidentForm: FormGroup;
   submitted = false;
   incidents: Incident[];
-  incident: any;
+  incident: Incident;
   initialPriorityLevel: string;
   incidentId: string;
   systemId: string;
@@ -30,18 +32,22 @@ export class UpdateIncidentComponent implements OnInit {
     private systemService: SystemService
   ) {
     this.incidentId = this.activatedRoute.snapshot.paramMap.get('incident-id');
+    this.incident = new Incident();
   }
 
   ngOnInit() {
     this.activatedRoute.parent.params.subscribe(
       (param: any) => {
         this.systemId = param['system-id'];
-      });
+    });
 
     let issetCurrentSystem = this.systemService.checkCurrentSystem();
-    console.log(issetCurrentSystem);
     issetCurrentSystem ? this.currentSystem  = issetCurrentSystem : this.systemService.getCurrentSystem()
-    .subscribe(systems => this.currentSystem = systems[0]);
+    .subscribe(systems => {
+      this.currentSystem = systems[0];
+      this.systemId = this.currentSystem.id;
+      this.showIncident();
+    });
     if (this.currentSystem) {
       this.showIncident();
     }
@@ -57,16 +63,6 @@ export class UpdateIncidentComponent implements OnInit {
     });
   }
 
-  // public showIncident(): void {
-  //   const id = this.route.snapshot.paramMap.get('incident-id');
-  //   this.incidentService.getIncident(id)
-  //     .subscribe((data: Incident[]) => {
-  //       this.incidents = data.filter(incident => incident.incident_id === id);
-  //       // console.log(this.incidents);
-  //       this.incident = this.incidents[0];
-  //     });
-  // }
-
   public showIncident(): void {
     // console.log('Showing...' + this.currentSystem);
     this.incidentService.getIncident(this.incidentId, this.currentSystem).subscribe(
@@ -78,7 +74,7 @@ export class UpdateIncidentComponent implements OnInit {
           incidentStatus: this.incident.status.toString(),
         });
         // this.initialPriorityLevel = this.incident.priority_level.toString();
-        console.log(this.incident.priority_level.toString());
+        console.log(this.incident);
       }
     );
   }
@@ -90,21 +86,61 @@ export class UpdateIncidentComponent implements OnInit {
       console.log('Invalid');
       return ;
     }
-
-    let formData: any = new FormData();
-    formData.append('name', this.incident.name);
-    formData.append('state', this.updateIncidentForm.get('incidentStatus').value);
-    formData.append('description', this.updateIncidentForm.get('message').value);
-    formData.append('escalation_level', 'High');
-    formData.append('priority_level', this.updateIncidentForm.get('priorityLevel').value);
-    formData.append('incident_id', this.incident.incident_id);
-
-    return this.incidentService.updateIncident(formData).subscribe(
+    console.log(this.incident);
+    this.incident.state = this.incident.status;
+    this.incident.escalation_level = 'Medium';
+    return this.incidentService.updateIncident(this.incident).subscribe(
       (incident => {
         if (incident.code === '800.200.001') {
           this.location.back();
         }
       })
     );
+  }
+
+  removeIncident(incidentId) {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'You will not be able to recover this incident!',
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, delete it!',
+      cancelButtonText: 'No, keep it'
+    }).then((result) => {
+      if (result.value) {
+        console.log(incidentId);
+        this.incidentService.deleteIncident(incidentId).subscribe(
+          response => {
+            if (response.code == '800.200.001') {
+                  Swal.fire(
+                    'Deleted!',
+                    'This incident has been deleted.',
+                    'success'
+                  ).then(() => {
+                    setTimeout(() => {
+                      this.location.back();
+                    }, 1000);
+                  })
+            } else {
+              Swal.fire(
+                'Failed!',
+                'This incident could not be deleted.',
+                'error'
+              )
+            }
+          }
+        )
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        Swal.fire(
+          'Cancelled',
+          '',
+          'error'
+        )
+      }
+    })
+  }
+
+  back() {
+    this.location.back();
   }
 }

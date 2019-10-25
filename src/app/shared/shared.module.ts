@@ -1,9 +1,11 @@
-import { NgModule } from '@angular/core';
+import { NgModule, NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ChartsModule, WavesModule } from 'angular-bootstrap-md';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
+import { MDBBootstrapModule } from 'angular-bootstrap-md';
 
 import { LineGraphComponent } from './graphs/line-graph/line-graph.component';
 import { BarGraphComponent } from './graphs/bar-graph/bar-graph.component';
@@ -18,6 +20,9 @@ import { HttpInterceptorService } from './helpers/http-interceptor.service';
 
 import { SystemService } from './system.service';
 import { LoaderComponent } from './loader/loader.component';
+import { AddSystemComponent } from './add-system/add-system.component';
+import { DeleteSwalComponent } from './alerts/delete-swal/delete-swal.component';
+import { LoginComponent } from './auth/login/login.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +35,10 @@ import { LoaderComponent } from './loader/loader.component';
     DatePickerComponent,
     TimePickerComponent,
     EmptyDataComponent,
-    LoaderComponent
+    LoaderComponent,
+    AddSystemComponent,
+    DeleteSwalComponent,
+    LoginComponent
   ],
   imports: [
     CommonModule,
@@ -39,7 +47,9 @@ import { LoaderComponent } from './loader/loader.component';
     NgbModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    SweetAlert2Module.forRoot(),
+    MDBBootstrapModule
   ],
   exports: [
     LineGraphComponent,
@@ -51,7 +61,10 @@ import { LoaderComponent } from './loader/loader.component';
     DatePickerComponent,
     TimePickerComponent,
     EmptyDataComponent,
-    LoaderComponent
+    LoaderComponent,
+    AddSystemComponent,
+    DeleteSwalComponent,
+    LoginComponent
   ],
   providers: [SystemService,
     {
@@ -59,6 +72,7 @@ import { LoaderComponent } from './loader/loader.component';
       useClass: HttpInterceptorService,
       multi: true
     }
-  ]
+  ],
+  schemas: [NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA]
 })
 export class SharedModule { }

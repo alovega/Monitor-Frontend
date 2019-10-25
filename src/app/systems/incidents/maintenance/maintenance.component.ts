@@ -31,14 +31,14 @@ export class MaintenanceComponent implements OnInit {
         console.log(this.systemId);
       });
 
-    this.systemService.setSystem(this.systemId).subscribe(
-      (result => {
-        this.currentSystem = result[0];
-        this.incidents$ = this.incidentService.getOpenIncidents(this.currentSystem);
-        console.log(this.currentSystem);
-      })
-    );
-    this.incidents$ = this.incidentService.getScheduledIncidents(this.currentSystem);
+    let issetCurrentSystem = this.systemService.checkCurrentSystem();
+    issetCurrentSystem ? this.currentSystem  = issetCurrentSystem : this.systemService.getCurrentSystem()
+    .subscribe(systems => {
+      this.currentSystem = systems[0];
+      this.systemId = this.currentSystem.id;
+      this.incidents$ = this.incidentService.getScheduledIncidents();
+    });
+    this.incidents$ = this.incidentService.getScheduledIncidents();
     // this.showMaintenanceIncidents();
   }
 
