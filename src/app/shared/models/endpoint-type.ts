@@ -1,4 +1,4 @@
-export class NotificationType {
+export class EndpointType {
     id:string;
     name:string;
 }

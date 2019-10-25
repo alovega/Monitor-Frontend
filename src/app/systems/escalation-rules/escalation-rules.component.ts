@@ -51,7 +51,6 @@ export class EscalationRulesComponent implements OnInit, AfterViewInit {
         console.log(result);
       })
     );
-
   }
 
   ngAfterViewInit() {

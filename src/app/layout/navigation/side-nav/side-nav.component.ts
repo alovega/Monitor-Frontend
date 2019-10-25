@@ -23,19 +23,20 @@ export class SideNavComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.systemService.changeSystem.subscribe(
-      systems => {
-        let currentSystem = systems[0];
-        this.currentSystemId = currentSystem.id;
-      }
-    );
-
-    let issetCurrentSystem = this.systemService.checkCurrentSystem();
-    issetCurrentSystem ? this.systemService.getCurrentSystem()
-    .subscribe(systems => this.currentSystemId = systems[0].id) : this.currentSystemId  = this.systemService.checkCurrentSystem();
-    // this.currentSystemId = this.currentSystem.id;
-    // console.log(this.currentSystemId);
-    this.authService.currentUser.subscribe((user) => this.currentUser = user );
+    this.authService.currentUser.subscribe((user) => {
+      this.currentUser = user;
+      this.systemService.changeSystem.subscribe(
+        systems => {
+          let currentSystem = systems[0];
+          this.currentSystemId = currentSystem.id;
+        }
+      );
+      let issetCurrentSystem = this.systemService.checkCurrentSystem();
+      issetCurrentSystem ? this.systemService.getCurrentSystem()
+      .subscribe(systems => this.currentSystemId = systems[0].id) : this.currentSystemId  = this.systemService.checkCurrentSystem();
+      // this.currentSystemId = this.currentSystem.id;
+      // console.log(this.currentSystemId);
+    });
   }
 
   isActive(path) {

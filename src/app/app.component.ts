@@ -27,6 +27,19 @@ export class AppComponent implements OnInit {
   ) {
     this.loading = true;
     this.authService.currentUser.subscribe(user => this.currentUser = user);
+  }
+
+  ngOnInit() {
+    this.authService.currentUser.subscribe(
+      (user) => {
+        this.currentUser = user;
+        let issetCurrentSystem = this.systemService.checkCurrentSystem();
+        issetCurrentSystem ? this.currentSystem  = issetCurrentSystem : this.systemService.getCurrentSystem()
+        .subscribe(systems => {
+          this.currentSystem = systems[0];
+          this.currentSystemId = this.currentSystem.id;
+        });
+      });
     let body = document.getElementsByTagName('body')[0];
 
     if (this.currentUser) {
@@ -34,10 +47,6 @@ export class AppComponent implements OnInit {
     } else {
       body.classList.add('body-logged-out');
     }
-  }
-
-  ngOnInit() {
-    console.log(this.currentUser);
     // this.loading = false;
     // this.router.events.subscribe((event: Event) => {
     //   switch (true) {
@@ -67,7 +76,7 @@ export class AppComponent implements OnInit {
         event instanceof NavigationCancel ||
         event instanceof NavigationEnd
       ) {
-        setTimeout(() => this.loading = false, 500);
+        setTimeout(() => this.loading = false, 100);
       }
     });
   }

@@ -7,8 +7,8 @@ import { EndpointComponent } from './endpoint.component';
 import { EndpointFormComponent } from './endpoint-create/endpoint-create.component';
 import { EndpointViewComponent } from './endpoint-view/endpoint-view.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { SharedModule } from '../shared/shared.module';
 import { EndpointUpdateComponent } from './endpoint-update/endpoint-update.component';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 
 @NgModule({

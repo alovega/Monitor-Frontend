@@ -20,7 +20,7 @@ export class UsersComponent implements OnInit, AfterViewInit {
   users: any[];
   previous: any = [];
 
-  headElements = ['Username', 'Email', 'First Name', 'Last Name', 'Status', 'Date Created', 'Action'];
+  headElements = ['Username', 'Email', 'First Name', 'Last Name', 'Active', 'Date Created', 'Action'];
 
   constructor(
     private activatedRoute: ActivatedRoute,

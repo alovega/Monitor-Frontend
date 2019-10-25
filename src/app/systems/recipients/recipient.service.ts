@@ -1,20 +1,20 @@
 import { Injectable } from '@angular/core';
-import { SharedService } from '../shared/shared.service';
 import { Observable,throwError, from } from 'rxjs';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { catchError, tap, retry} from 'rxjs/operators';
 import{ Recipient } from './recipient';
-import { EscalationLevel } from '../shared/models/escalation-level';
+import { LookUpService } from 'src/app/shared/look-up.service';
+import { EscalationLevel } from 'src/app/shared/models/escalation-level';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RecipientService {
-  endpointUrl = 'http://localhost:8000/recipients';
+  endpointUrl = 'http://localhost:8000/api';
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
-constructor(private http: HttpClient, private sharedService:SharedService) { }
+constructor(private http: HttpClient, private lookUpService:LookUpService) { }
 
 // Handle API errors
 handleError(error: HttpErrorResponse) {
@@ -32,9 +32,11 @@ handleError(error: HttpErrorResponse) {
   return throwError(
     'Something bad happened; please try again later.');
 };
-public getEndpoints(): Observable<Recipient[]> {
+public getEndpoints(): Observable<any> {
 
-  return this.http.get<Recipient[]>(this.endpointUrl).pipe(
+  return this.http.post<any>(this.endpointUrl + '/' + 'get_recipients' + '/', {
+
+  }).pipe(
     retry(2),
     catchError(this.handleError)
   );
@@ -66,9 +68,15 @@ public updateItem(id, item): Observable<Recipient>{
   )
 }
 public getLevels(){
-  return this.sharedService.getEscalationLevels()
+  return this.lookUpService.getEscalationLevel()
 }
 public getNotificationType(){
-  return this.sharedService.getNotificationTypes()
+  return this.lookUpService.getNotificationType()
+}
+public getUsers(){
+  return this.lookUpService.getUsers()
+}
+public getStates(){
+  return this.lookUpService.getStates()
 }
 }

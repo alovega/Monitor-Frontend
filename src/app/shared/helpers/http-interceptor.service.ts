@@ -21,17 +21,19 @@ export class HttpInterceptorService implements HttpInterceptor {
   ) { }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    if (localStorage.getItem('currentSystem') !== 'undefined') {
-      this.currentSystem = JSON.parse(localStorage.getItem('currentSystem'));
+    const system = localStorage.getItem('currentSystem');
+    if (system !== 'undefined' || system !==  null) {
+      this.currentSystem = JSON.parse(system);
     }
     this.authService.currentUser.subscribe((user) => this.currentUser = user);
 
     if (this.currentUser) {
       this.accessToken = this.currentUser.token;
+      console.log(this.accessToken);
     }
-    if (!this.accessToken) {
-      this.accessToken = environment.accessToken;
-    }
+    // if (!this.accessToken) {
+    //   this.accessToken = environment.accessToken;
+    // }
 
     if (this.currentSystem) {
       this.currentSystemId = this.currentSystem.id;

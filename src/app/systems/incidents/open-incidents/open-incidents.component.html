@@ -28,6 +28,11 @@
                       <mdb-icon fas icon="check-circle" class="green-text pr-3"></mdb-icon>
                     </div>
               </div>
+              <div class="affected-systems" *ngIf="incident.incident_updates.length">
+                  <span *ngFor="let update of incident.incident_updates; let i=index">
+                      <span *ngIf="update.user_name && i<1" class=""><small class="affected-systems-title">Assigned User : </small> {{update.user_name}}</span>
+                    </span>
+              </div>
             </mdb-card-body>
         </mdb-card>
       </a>

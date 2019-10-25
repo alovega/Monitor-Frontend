@@ -24,11 +24,17 @@
           <mdb-table-pagination [tableEl]="tableEl" [searchDataSource]="elements"></mdb-table-pagination>
         </td>
       </tr>
-    </tfoot>
+  </tfoot>
   </table>
   <ng-template #noElements>
-    <hm-empty-data header="No Existing System Endpoints" description="New Endpoints  displayed here">
-      <button action-button type="button" mdbBtn size="sm" color="primary">Add Endpoint</button>
-    </hm-empty-data>
-  </ng-template>
-  <router-outlet></router-outlet>
+    <td colspan="7">
+      <hm-empty-data header="No Existing Email Recipients" description="New Recipients will be displayed here">
+        <div action-button>
+        <a href="" routerLink="/recipients/recipient-create">
+          <button action-button type="button" mdbBtn size="sm" color="primary" class="text-white">Add Recipient</button>
+        </a>
+        </div>
+      </hm-empty-data>
+    </td>
+</ng-template>            
+<router-outlet></router-outlet>

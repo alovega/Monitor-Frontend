@@ -37,25 +37,27 @@ export class TopNavComponent implements OnInit, OnChanges {
   }
 
   ngOnInit() {
-    this.systemService.getSystems().subscribe(
-      (result => {
-        this.systems = result;
-      })
-    );
-    const issetCurrentSystem = this.systemService.checkCurrentSystem();
-    issetCurrentSystem ? this.currentSystem  = issetCurrentSystem : this.systemService.getCurrentSystem()
-    .subscribe(systems => {
-      this.currentSystem = systems[0];
-      this.currentSystemId = this.currentSystem.id;
-    });
+    this.authService.currentUser.subscribe(
+      (user) => {
+        this.currentUser = user;
+        let issetCurrentSystem = this.systemService.checkCurrentSystem();
+        issetCurrentSystem ? this.currentSystem  = issetCurrentSystem : this.systemService.getCurrentSystem()
+        .subscribe(systems => {
+          this.currentSystem = systems[0];
+          this.currentSystemId = this.currentSystem.id;
+        });
+        this.systemService.getSystems().subscribe(
+          (result => {
+            this.systems = result;
+          })
+        );
+      });
     this.systemIsAvailable = true;
 
     this.addSystemForm = this.formBuilder.group({
       name: ['', Validators.required],
       description: ['', Validators.required],
     });
-
-    this.authService.currentUser.subscribe(user => this.currentUser = user);
   }
 
   ngOnChanges(changes: SimpleChanges) {
