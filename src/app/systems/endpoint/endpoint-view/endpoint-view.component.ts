@@ -30,9 +30,9 @@ export class EndpointViewComponent implements OnInit, AfterViewInit {
     private cdRef: ChangeDetectorRef,
     private activatedRoute: ActivatedRoute,
     ) {}
-    // // @HostListener('input') oninput() {
-    // //   this.mdbTablePagination.searchText = this.searchText;
-    // }
+    @HostListener('input') oninput() {
+      this.mdbTablePagination.searchText = this.searchText;
+    }
   ngOnInit() {
     this.endpoint_id = this.activatedRoute.snapshot.params["id"];
     this.activatedRoute.parent.params.subscribe(
@@ -40,68 +40,24 @@ export class EndpointViewComponent implements OnInit, AfterViewInit {
         this.currentSystemId = param['system-id'];
         console.log(this.currentSystemId);
       });
-    this.elements = this.showEndpoints(this.currentSystemId)
-    this.dataSource = new MatTableDataSource<Endpoint>(this.elements)
-    console.log(this.dataSource)
-    // this.mdbTable.setDataSource(this.elements);
-    // this.elements = this.mdbTable.getDataSource();
-    // this.previous = this.mdbTable.getDataSource();
+      this.endpointService.getEndpoints(this.currentSystemId)
+      .subscribe((data) => {
+        this.elements = data
+        this.mdbTable.setDataSource(this.elements);
+        this.elements = this.mdbTable.getDataSource();
+        this.previous = this.mdbTable.getDataSource();
+      });
   }
 
   ngAfterViewInit() {
-    // this.mdbTablePagination.setMaxVisibleItemsNumberTo(this.maxVisibleItems);
-    // this.mdbTablePagination.calculateFirstItemIndex();
-    // this.mdbTablePagination.calculateLastItemIndex();
-    // this.cdRef.detectChanges();
-  }
-  addNewRow() {
-    this.mdbTable.addRow({
-      id: this.elements.length.toString(),
-      Endpoint: 'Endpoint ' + this.elements.length,
-      EndpointType: 'Endpoint Type ' + this.elements.length,
-      DateCreated:'Date Created' + this.elements.length,
-      State:'elements.state__name' + this.elements.length,
-      Action: 'Action' + this.elements.length
-    });
-    this.emitDataSourceChange();
-  }
-  addNewRowAfter() {
-    this.mdbTable.addRowAfter(1, {Endpoint: 'httpp/aajaha', EndpointType: 'Email', DateCreated: '26/10/2017', Action: 'edit'});
-    this.mdbTable.getDataSource().forEach((el: any, index: any) => {
-      el.id = (index + 1).toString();
-    });
-    this.emitDataSourceChange();
-  }
-  removeLastRow() {
-    this.mdbTable.removeLastRow();
-    this.emitDataSourceChange();
-    this.mdbTable.rowRemoved().subscribe((data: any) => {
-      console.log(data);
-    });
-  }
-
-  removeRow() {
-    this.mdbTable.removeRow(1);
-    this.mdbTable.getDataSource().forEach((el: any, index: any) => {
-      el.id = (index + 1).toString();
-    });
-    this.emitDataSourceChange();
-    this.mdbTable.rowRemoved().subscribe((data: any) => {
-      console.log(data);
-    });
-  }
-  emitDataSourceChange() {
-    this.mdbTable.dataSourceChange().subscribe((data: any) => {
-      console.log(data);
-    });
+    this.mdbTablePagination.setMaxVisibleItemsNumberTo(this.maxVisibleItems);
+    this.mdbTablePagination.calculateFirstItemIndex();
+    this.mdbTablePagination.calculateLastItemIndex();
+    this.cdRef.detectChanges();
   }
 
   showEndpoints(currentSystemId) {
-   return this.endpointService.getEndpoints(currentSystemId)
-      .subscribe((data) => {
-        this.dataSource = data
-        console.log(data)
-    });
+   return 
   }
   searchItems() {
     const prev = this.mdbTable.getDataSource();
