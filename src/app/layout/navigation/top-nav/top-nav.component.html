@@ -1,4 +1,4 @@
-<mdb-navbar [ngClass]="{'logged-out': !currentUser}" SideClass="navbar fixed-top navbar-expand-lg navbar-light white scrolling-navbar" [containerInside]="false">
+<mdb-navbar [ngClass]="{'logged-out': !currentUser}" SideClass="navbar fixed-top navbar-expand navbar-light white scrolling-navbar" [containerInside]="false">
     <!-- Navbar brand -->
       <a class="navbar-brand" mdbWavesEffect routerLink="/system">
         <a class="logo-wrapper waves-effect">
@@ -7,29 +7,25 @@
         </a>
       </a>
       <!-- Links -->
-      <links>
-        <!-- Left -->
-        <ul class="navbar-nav mr-auto" *ngIf="currentUser">
-          <li class="nav-item">
-            <div class="dropdown" mdbDropdown>
-              <a mdbDropdownToggle color="primary" class="dropdown-toggle nav-link waves-light ml-0 pl-0"
-                mdbWavesEffect>{{ currentSystem.name }}
-              </a>
-              <div class="dropdown-menu dropdown-primary" *ngIf="systems">
-                <a class="dropdown-item"  *ngFor="let system of systems" [ngClass]="{'d-none': system.id === currentSystem.id}"
-                routerLink="system/{{system.id}}" (click)="reload(system.id)">
-                 {{ system.name }}
-                </a> 
-                <a class="dropdown-item" (click)="frame.show()" data-target="#basicExample">
-                  Add system
-                </a>
-              </div>
-            </div>
-          </li>
-        </ul>
-
+      <links class="ml-auto float-right">
         <!-- Right -->
         <ul class="navbar-nav nav-flex-icons ml-auto">
+            <li class="nav-item mr-2" *ngIf="currentUser">
+                <div class="dropdown" mdbDropdown>
+                  <a mdbDropdownToggle color="primary" class="dropdown-toggle nav-link waves-light ml-0 pl-0"
+                    mdbWavesEffect>{{ currentSystem.name }}
+                  </a>
+                  <div class="dropdown-menu dropdown-primary" *ngIf="systems">
+                    <a class="dropdown-item"  *ngFor="let system of systems" [ngClass]="{'d-none': system.id === currentSystem.id}"
+                    routerLink="system/{{system.id}}" (click)="reload(system.id)">
+                     {{ system.name }}
+                    </a> 
+                    <a class="dropdown-item" (click)="frame.show()" data-target="#basicExample">
+                      Add system
+                    </a>
+                  </div>
+                </div>
+              </li>
           <li class="nav-item" *ngIf="currentUser; else login">
             <a class="nav-link border border-light rounded waves-effect">
               <i class="fas fa-user-alt mr-2" (click)="logout()"></i>Logout
@@ -43,10 +39,18 @@
                   </a>
               </li>
           </ng-template>
+
+          <li class="nav-item" *ngIf="showToggler" (click)="toggleSideNav()">
+            <a class="nav-link">
+                <span class="fas fa-bars" style="font-size: 17px;"></span>
+            </a>
+          </li>
         </ul>
       </links>
   </mdb-navbar>
   <!--/.Navbar-->
+ 
+  <hm-side-nav [toggleStatus]="showSideNav"></hm-side-nav>
 
 <div mdbModal #frame="mdbModal" class="modal fade left" id="frameModalTop" tabindex="-1" role="dialog"
      aria-labelledby="myModalLabel" aria-hidden="true">
