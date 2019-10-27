@@ -1,5 +1,5 @@
   <!-- Sidebar -->
-<div class="sidebar-fixed position-fixed wow animated"  *ngIf = "hideSideNav" [ngClass] = "{'d-none': !hideSideNav}">
+<div class="sidebar-fixed position-fixed wow animated"  *ngIf = "hideSideNav" [ngClass] = "{'d-none': !hideSideNav || !currentUser, 'logged-out': !currentUser}" >
     <a class="logo-wrapper waves-effect">
       <!-- <span style="font-size: 40px">HM</span> -->
       <img src="../../assets/hm_logo.png" class="img-fluid" alt="">
@@ -24,5 +24,3 @@
     </div>
   </div>
   <!-- Sidebar -->
-
-

@@ -1,4 +1,4 @@
-<mdb-navbar [ngClass]="{'logged-out': !currentUser}" SideClass="navbar fixed-top navbar-expand navbar-light white scrolling-navbar" [containerInside]="false">
+<mdb-navbar [ngClass]="{'logged-out d-none': !currentUser}" SideClass="navbar fixed-top navbar-expand navbar-light white scrolling-navbar" [containerInside]="false">
     <!-- Navbar brand -->
       <a class="navbar-brand" mdbWavesEffect routerLink="/system">
         <a class="logo-wrapper waves-effect">
@@ -50,7 +50,7 @@
   </mdb-navbar>
   <!--/.Navbar-->
  
-  <hm-side-nav [toggleStatus]="showSideNav"></hm-side-nav>
+<hm-side-nav></hm-side-nav>
 
 <div mdbModal #frame="mdbModal" class="modal fade left" id="frameModalTop" tabindex="-1" role="dialog"
      aria-labelledby="myModalLabel" aria-hidden="true">
