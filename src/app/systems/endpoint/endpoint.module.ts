@@ -17,7 +17,6 @@ import { SharedModule } from 'src/app/shared/shared.module';
   imports: [
     CommonModule,
     FormsModule,
-    MatTableModule,
     ReactiveFormsModule,
     EndpointRoutingModule,
     MDBBootstrapModule.forRoot(),
