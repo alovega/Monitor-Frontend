@@ -20,7 +20,7 @@ export class EscalationRulesComponent implements OnInit, AfterViewInit {
   rules: any[];
   previous: any = [];
 
-  headElements = ['Name', 'Description', 'Nth occurrence', 'Duration', 'Escalation Level', 'Date Created', 'Action'];
+  headElements = ['Name', 'Event Type', 'Description', 'Nth occurrence', 'Duration', 'Escalation Level', 'Date Created', 'Action'];
 
   constructor(
     private activatedRoute: ActivatedRoute,

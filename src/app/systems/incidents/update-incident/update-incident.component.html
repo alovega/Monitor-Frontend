@@ -5,10 +5,10 @@
 
     <!-- Grid column -->
     <div class="col-md-12">
-        <div class="page-header d-flex" *ngIf="incident.status !== 'Resolved' && incident.status !== 'Completed'; else Open">
+        <div class="page-header row" *ngIf="incident.status !== 'Resolved' && incident.status !== 'Completed'; else Open">
             <div class="col-md-6">{{ incident.name }}</div>
             <div class="col-md-6">
-                <button class="float-right back-button" (click)="back()"><< back to incidents</button>
+                <button class="float-right back-button" (click)="back()"><i class="fas fa-angle-double-left"></i> back to incidents</button>
             </div>
             <div class="clearfix"></div>
         </div>
@@ -16,111 +16,24 @@
             <div class="page-header">{{ incident.name }}</div>
         </ng-template>
         <div class="clearfix"></div>
-        <hr>
         <div class="page-body">
             <div class="update-history">
-                <div class="update-history-header">Update History</div>
-                <div *ngIf="incident.incident_updates.length >= 1">
-                    <mdb-card class="mb-4" *ngFor="let incident_update of incident.incident_updates">
-                        <div class="last-update-time">
-                            <strong>
-                            <small>{{ incident_update.date_created | date: 'MMMM d, y' }}</small>
-                            </strong>
-                        </div>
-                        <div>
-                        <div class="update-status">{{ incident_update.status }}</div>
-                        </div>
-                        <div class="update-description">
-                            {{ incident_update.description }}
-                        </div>
-                        <div class="affected-systems">
-                            <span class="affected-systems-title"><small>Affected System : </small></span> 
-                            <div class="system">
-                                {{ incident.affected_system }}<mdb-icon fas icon="check-circle" class="green-text pr-3"></mdb-icon>
-                            </div> 
-                        </div>
-                    </mdb-card>
-                </div>
-                <mdb-card class="mb-4">
-                    <div class="last-update-time"><strong>
-                        <small>{{ incident.date_modified  | date: 'MMMM d, y' }}</small>
-                    </strong></div>
-                    <div>
-                    <div class="update-status">{{ incident.status }}</div>
-                    </div>
-                    <div class="update-description">
-                        {{ incident.description }}
-                    </div>
-                    <div class="affected-systems">
-                        <span class="affected-systems-title"><small>Affected System : </small></span> 
-                        <div class="system">
-                            {{ incident.affected_system }} <mdb-icon fas icon="check-circle" class="green-text pr-3"></mdb-icon>
-                        </div>
-                    </div>
-                </mdb-card>
-            </div>
-            <div class="new-update" *ngIf="incident.status !== 'Resolved' && incident.status !== 'Completed'">
                 <div class="update-history-header">
-                    Add new update
+                    <ul class="list-group switch-tabs d-flex">
+                        <div>
+                        <li class="tab-item">
+                            <a routerLink="history" routerLinkActive="active">Update history</a>
+                        </li>
+                        <li class="tab-item">
+                            <a routerLink="events" routerLinkActive="active">Incident events</a>        
+                        </li>
+                        <div class="clearfix"></div>
+                        </div>
+                    </ul>
                 </div>
-                <mdb-card class="grey lighten-5 update-form">
-                    <form [formGroup]="updateIncidentForm" (ngSubmit)="onSubmit()">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group mb-4" *ngIf="incident.type === 'Realtime'">
-                                    <label class="form-label">Incident status</label>
-                                    <select formControlName="incidentStatus" class="browser-default custom-select" 
-                                    [ngClass]="{'is-invalid': submitted && updateIncidentForm.controls.incidentStatus.errors}">
-                                        <option selected value="Investigating">Investigating</option>
-                                        <option value="Identified">Identified</option>
-                                        <option value="Monitoring">Monitoring</option>
-                                        <option value="Resolved">Resolved</option>
-                                    </select>
-                                </div>
-                                <div class="form-group mb-4" *ngIf="incident.type === 'Scheduled'">
-                                    <label class="form-label">Maintenance status</label>
-                                    <select formControlName="incidentStatus" class="browser-default custom-select" 
-                                    [ngClass]="{'is-invalid': submitted && updateIncidentForm.controls.incidentStatus.errors}">
-                                        <option selected value="Scheduled">Scheduled</option>
-                                        <option value="InProgress">In Progress</option>
-                                        <option value="Complete">Complete</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="col-md-6 form-group mb-4">
-                                <label class="form-label" for="">Priority Level</label>
-                                <select formControlName="priorityLevel" [ngClass]="{ 'is-invalid': submitted && updateIncidentForm.controls.priorityLevel.errors }" class="browser-default custom-select"
-                                [(ngModel)] = "incident.priority_level">
-                                <option selected value="1">Level 1</option>
-                                <option value="2">Level 2</option>
-                                <option value="3">Level 3</option>
-                                <option value="4">Level 4</option>
-                                <option value="5">Level 5</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group mb-4">
-                            <label class="form-label">Message</label>
-                            <textarea class="grey lighten-5 form-control rounded-2" formControlName="message"
-                                id="exampleFormControlTextarea2" rows="3" placeholder="We are currently investigating this incident"
-                                [ngClass]="{'is-invalid': submitted && updateIncidentForm.controls.message.errors}" [(ngModel)] = "incident.description">
-                            </textarea>
-
-                            <div *ngIf="submitted && updateIncidentForm.controls.message.errors" class="invalid-feedback">
-                                <div *ngIf="updateIncidentForm.controls.message.errors.required">Message is required</div>
-                            </div>
-                        </div>
-                        <div class="update-button">
-                            <button mdbBtn mdbWavesEffect class="float-right" color="primary" size="md">update</button>
-                        </div>
-                    </form>
-                </mdb-card>
             </div>
-            <hr>
-            <div class="delete-button">
-                <button mdbBtn mdbWavesEffect class="float-right" color="danger" size="md" (click)="removeIncident(incidentId)">Delete Incident</button>
-            </div>
+            <router-outlet></router-outlet>
+
         </div>
     </div>
 

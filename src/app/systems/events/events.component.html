@@ -1,17 +1,11 @@
 <div class="page-header mb-4 d-flex">
-    <h3 class="page-header-title">Escalation Rules</h3>
+    <h3 class="page-header-title">Events</h3>
     <div class="float-right ml-auto">
         <div class="d-flex">
             <div class="col-md-6 px-0 top-controls">
                 <input class="form-control" type="text" #searchText [(ngModel)]="data" (input)="searchItems(searchText.value)" placeholder="Search">
             </div>
-            <div class="col-md-6 top-controls">
-            <a routerLink="/system/{{currentSystemId}}/rules/new" routerLinkActive="active">
-                <button class="" id="create-button">Add rule</button>
-            </a>
-            </div>
         </div>
-    
     </div>
     <div class="float-right">
 
@@ -31,35 +25,30 @@
           </th>
           </tr>
           </thead>
-          <tbody *ngIf="rules.length; else noData">
-          <tr *ngFor="let rule of rules; let i = index">
+          <tbody *ngIf="events.length; else noData">
+          <tr *ngFor="let event of events; let i = index">
           <th *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex"
-              scope="row">{{rule.name}}</th>
-          <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{rule.eventtype}}</td>
-          <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{rule.description}}</td>
-          <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{rule.nth_event}}</td>
-          <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{rule.duration_str}}</td>
-          <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{rule.escalation}}</td>
-          <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{rule.date_created | date:'MMMM d, yyyy' }} </td>
-          <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">
-              <span mdbIcon class="fas fa-trash-alt mr-2 text-danger" (click)="removeRule(rule.rule_id)"></span>
-              <span mdbIcon class="fas fa-edit text-success" routerLink="/system/{{currentSystemId}}/rules/edit/{{rule.rule_id}}" routerLinkActive="active"></span>
-          </td>
+              scope="row">{{event.eventtype}}</th>
+          <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{event.description}}</td>
+          <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{event.method}}</td>
+          <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{event.stack_trace}}</td>
+          <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{event.interface}}</td>
+          <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{event.request}}</td>
+          <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{event.response}}</td>
+          <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{event.code}}</td>
+          <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{event.date_created | date:'MMMM d, yyyy'}}</td>
           </tr>
           </tbody>
           <tfoot class="w-100">
           <ng-template #noData>
-            <td colspan="8">
-              <hm-empty-data header="No Existing Escalation Rules" description="New Escalation rules will be displayed here">
-                <a action-button routerLink="/system/{{currentSystemId}}/rules/new">
-                    <button type="button" mdbBtn size="sm" color="primary" class="text-white">Add new Rule</button>
-                </a>
+            <td colspan="9">
+              <hm-empty-data header="No Logged Events" description="New Events will be displayed here">
               </hm-empty-data>
             </td>
           </ng-template>            
           <tr>
-          <td colspan="8">
-              <mdb-table-pagination [tableEl]="tableEl" [searchDataSource]="rules"></mdb-table-pagination>
+          <td colspan="9">
+              <mdb-table-pagination [tableEl]="tableEl" [searchDataSource]="events"></mdb-table-pagination>
           </td>
           </tr>
           </tfoot>
