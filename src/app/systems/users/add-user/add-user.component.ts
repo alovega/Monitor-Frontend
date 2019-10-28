@@ -16,6 +16,7 @@ export class AddUserComponent implements OnInit {
   public addUserForm: FormGroup;
   user: User;
   submitted = false;
+  confirmPassword: any;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -33,6 +34,7 @@ export class AddUserComponent implements OnInit {
       lastname: [''],
       email: ['', Validators.required],
       password: ['', Validators.required],
+      confirmPassword: ['', Validators.required]
     });
   }
 
@@ -48,6 +50,7 @@ export class AddUserComponent implements OnInit {
     // this.user.status = 'Active';
     // this.user.state = this.escalationRule.status;
     console.log(this.user);
+    // if (t)
     this.usersService.createUser(this.user).subscribe(
       response => {
         if (response.code === '800.200.001') {

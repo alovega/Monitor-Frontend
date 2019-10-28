@@ -13,7 +13,13 @@
             <div class="clearfix"></div>
         </div>
         <ng-template #Open>
-            <div class="page-header">{{ incident.name }}</div>
+            <div class="page-header row">
+                <div class="col-md-6">{{ incident.name }}</div>
+                    <div class="col-md-6">
+                        <button class="float-right back-button" (click)="back()"><i class="fas fa-angle-double-left"></i> back to incidents</button>
+                    </div>
+                <div class="clearfix"></div>
+            </div>
         </ng-template>
         <div class="clearfix"></div>
         <div class="page-body">

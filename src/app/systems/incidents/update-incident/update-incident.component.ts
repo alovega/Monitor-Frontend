@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {  FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import Swal from 'sweetalert2';
 
@@ -29,7 +29,8 @@ export class UpdateIncidentComponent implements OnInit {
     private incidentService: IncidentService,
     private formBuilder: FormBuilder,
     private location: Location,
-    private systemService: SystemService
+    private systemService: SystemService,
+    private router: Router,
   ) {
     this.incidentId = this.activatedRoute.snapshot.paramMap.get('incident-id');
     this.incident = new Incident();
@@ -141,6 +142,6 @@ export class UpdateIncidentComponent implements OnInit {
   }
 
   back() {
-    this.location.back();
+    this.router.navigate([`system/${this.systemId}/incidents`]);
   }
 }
