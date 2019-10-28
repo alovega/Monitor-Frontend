@@ -4,12 +4,12 @@
   <div class="col-md-1"></div>
   <!-- Grid column -->
   <div class="col-md-12" *ngIf="router.url === realtimeUrl">
-    <div class="page-header d-flex">
+    <div class="page-header d-flex row">
       <div class="col-md-6">
       Create Realtime Incident
       </div>
       <div class="col-md-6">
-        <button class="float-right back-button" (click)="back()"><< back to incidents</button>
+        <button class="float-right back-button" (click)="back()"><i class="fas fa-angle-double-left"></i> back to incidents</button>
       </div>
     </div>
     <div class="clearfix"></div>
@@ -107,12 +107,12 @@
 
     <!-- Grid column -->
   <div class="col-md-12" *ngIf="router.url === maintenanceUrl">
-    <div class="page-header d-flex justify-content-end">
+    <div class="page-header d-flex row">
       <div class="col-md-6">
           Create Scheduled Maintenance
       </div>
       <div class="col-md-6">
-        <button class="float-right back-button" (click)="back()"><< back to incidents</button>
+        <button class="float-right back-button" (click)="back()"><i class="fas fa-angle-double-left"></i> back to incidents</button>
       </div>
     </div>
     <div class="clearfix"></div>

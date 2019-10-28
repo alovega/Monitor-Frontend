@@ -2,9 +2,9 @@
 <div class="row wow animate fadeIn" data-wow-delay="0.1s">
       <!-- Grid column -->
     <div class="col-md-12">
-      <div class="page-header d-flex">
+      <div class="page-header d-flex row">
         <div class="col-md-6">Update Escalation Rule</div>
-        <div class="col-md-6"><button class="float-right back-button" (click)="back()"><< back to rules</button></div>
+        <div class="col-md-6"><button class="float-right back-button" (click)="back()"><i class="fas fa-angle-double-left"></i> back to rules</button></div>
       </div>
       <hr>
       <div class="page-body">
@@ -13,7 +13,7 @@
             <form [formGroup]="escalationRuleForm" (ngSubmit)="onSubmit()" class="text-center">
             <div class="form-group mb-4">
               <!-- Name -->
-              <label class="form-label">Rule Name</label>
+              <label class="form-label">Name</label>
               <input type="text" id="incidentName" formControlName="ruleName" class="grey lighten-5 form-control" placeholder="Rule name"
               [ngClass]="{ 'is-invalid': submitted && form.ruleName.errors }" [(ngModel)] = "escalationRule.name">
               <div *ngIf="submitted && form.ruleName.errors" class="invalid-feedback">
@@ -24,7 +24,7 @@
             
             <div class="form-group mb-4">
               <!-- Rule Description -->
-              <label class="form-label">Rule description</label>
+              <label class="form-label">Description</label>
               <textarea class="grey lighten-5 form-control rounded-2" formControlName="ruleDescription"
                   id="exampleFormControlTextarea2" rows="3" placeholder="Elevated error occurrence"
                   [ngClass]="{ 'is-invalid': submitted && form.ruleDescription.errors }" [(ngModel)] = "escalationRule.description">
@@ -48,8 +48,8 @@
                         <option value="Medium">Medium</option>
                         <option value="Low">Low</option>
                     </select>
-
-                    <span class="rule-text">If </span>
+                    <span class="rule-text mr-1">escalation level </span>
+                    <span class="rule-text"> If </span>
                     <!-- Nth Event -->
                     <input formControlName="nEvents" type="number" id="nthEvent" class="grey lighten-5 form-control inline-rule" placeholder="10"
                     [ngClass]="{ 'is-invalid': submitted && form.nEvents.errors }" [(ngModel)] = "escalationRule.nth_event">
