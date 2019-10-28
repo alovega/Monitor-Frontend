@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Observable,throwError, from } from 'rxjs';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
-import { catchError, tap, retry} from 'rxjs/operators';
+import { catchError, tap, retry, map} from 'rxjs/operators';
 import{ Recipient } from './recipient';
 import { LookUpService } from 'src/app/shared/look-up.service';
-import { EscalationLevel } from 'src/app/shared/models/escalation-level';
 
 @Injectable({
   providedIn: 'root'
@@ -32,37 +31,52 @@ handleError(error: HttpErrorResponse) {
   return throwError(
     'Something bad happened; please try again later.');
 };
-public getEndpoints(): Observable<any> {
+public getEmailRecipients(system_id): Observable<any> {
 
   return this.http.post<any>(this.endpointUrl + '/' + 'get_recipients' + '/', {
-
+    system_id: system_id,
   }).pipe(
+    map(response => response.data.recipients.filter(data => data.type === 'Email'),
+    retry(2)),
+    catchError(this.handleError),
+   
+  );
+  
+}
+public getSmsRecipients(system_id): Observable<any> {
+
+  return this.http.post<any>(this.endpointUrl + '/' + 'get_recipients' + '/', {
+    system_id: system_id,
+  }).pipe(
+    map(response => response.data.recipients.filter(data => data.type === 'Sms'),
+    retry(2)),
+    catchError(this.handleError)
+  );
+}
+public addRecipient(item): Observable<any>{
+  return this.http.post<any>(this.endpointUrl + '/create_recipients/', item, this.httpOptions).pipe(
     retry(2),
     catchError(this.handleError)
   );
 }
-public addEndpoints(item): Observable<Recipient>{
-  return this.http.post<Recipient>(this.endpointUrl, JSON.stringify(item), this.httpOptions).pipe(
-    retry(2),
-    catchError(this.handleError)
-  );
-}
-public deleteItem(id):Observable<Recipient>{
-  return this.http.delete<Recipient>(this.endpointUrl + '/' + id, this.httpOptions).pipe(
+public deleteItem(recipient_id):Observable<any>{
+  return this.http.post<Recipient>(this.endpointUrl + '/delete_recipient/',{recipient_id:recipient_id}, this.httpOptions).pipe(
     retry(2),
     catchError(this.handleError)
   )
 }
 
-public getItem(id):Observable<Recipient>{
-  return this.http.get<Recipient>(this.endpointUrl + '/' + id).pipe(
-    retry(2),
+public getItem(recipient_id):Observable<any>{
+  return this.http.post<any>(this.endpointUrl + '/get_recipient/',{
+    recipient_id:recipient_id
+  }).pipe(
+    map(response => response,retry(2)),
     catchError(this.handleError)
   )
 }
 
-public updateItem(id, item): Observable<Recipient>{
-  return this.http.put<Recipient>(this.endpointUrl + '/' + id, JSON.stringify(item), this.httpOptions).pipe(
+public updateItem(id, item): Observable<any>{
+  return this.http.post<Recipient>(this.endpointUrl + '/update_recipient/', item, this.httpOptions).pipe(
     retry(2),
     catchError(this.handleError)
   )

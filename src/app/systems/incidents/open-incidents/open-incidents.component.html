@@ -11,14 +11,14 @@
               <span *ngIf="incident.incident_updates.length; else noUpdates">
                   <span *ngFor="let update of incident.incident_updates; let i=index">
                     <span *ngIf="update.status && i<1" class="incident-status" color="info">{{ update.status }}</span>
-                    <div *ngIf="update.status && i<1" class="last-update-time"><small>Last updated on: {{ update.date_modified | date:'full' }}</small></div>
+                    <div *ngIf="update.status && i<1" class="last-update-time"><small>Last updated on: {{ incident.date_modified | date:'MMMM d, y' }} at {{ incident.date_modified | date:'h:mm:ss a' }}</small></div>
                   </span> 
               </span>               
               <ng-template #noUpdates>
                 <span class="incident-status" color="info">
                     {{ incident.status }}
                 </span>
-                <div class="last-update-time"><small>Last updated incident: {{ incident.date_modified | date:'full' }}</small></div>
+                <div class="last-update-time"><small>Last updated on: {{ incident.date_modified | date:'MMMM d, y' }} at {{ incident.date_modified | date:'h:mm:ss a' }}</small></div>
               </ng-template>
             </div>
               <div class="affected-systems">

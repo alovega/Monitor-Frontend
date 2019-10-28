@@ -1,11 +1,13 @@
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import {RecipientService} from '../recipient.service';
+import { Location } from '@angular/common';
 import { Router, ActivatedRoute } from '@angular/router';
 import {Recipient} from '../recipient';
 import { of } from 'rxjs';
 import { EscalationLevel } from 'src/app/shared/models/escalation-level';
 import { NotificationType } from 'src/app/shared/models/notification-type';
+import { State } from 'src/app/shared/models/state';
 
 @Component({
   selector: 'hm-recipient-update',
@@ -15,18 +17,23 @@ import { NotificationType } from 'src/app/shared/models/notification-type';
 export class RecipientUpdateComponent implements OnInit {
   updateForm:FormGroup;
   id:number;
+  recipient_id:string;
   submitted:boolean = false;
   recipient:Recipient
-  EscalationLevels:EscalationLevel[]
-  NotificationTypes:NotificationType[]
+  States:State
+  NotificationTypes:NotificationType
 
-  constructor(private fb: FormBuilder, private recipientService:RecipientService, public router: Router,
-    public activatedRoute: ActivatedRoute,) {
+  constructor(
+    private fb: FormBuilder, 
+    private recipientService:RecipientService, 
+    public router: Router,
+    public activatedRoute: ActivatedRoute,
+    public location: Location) {
     this.createForm()
     this.recipient = new Recipient()
-    of(this.getEscalationLevels()).subscribe((data:any) => {
+    of(this.getStates()).subscribe((data:any) => {
       console.log(data)
-      this.EscalationLevels = data;
+      this.States = data;
     });
     of(this.getNotificationTypes()).subscribe((data:any) => {
       console.log(data)
@@ -35,34 +42,30 @@ export class RecipientUpdateComponent implements OnInit {
    }
 
   ngOnInit() {
-    this.getEscalationLevels()
-    this.getNotificationTypes()
     this.id = this.activatedRoute.snapshot.params["id"];
     console.log(this.id)
     this.recipientService.getItem(this.id).subscribe(response => {
-      console.log(response);
-      this.recipient = response
+      console.log(response.data.recipient);
+      this.recipient = response.data.recipient
   })
   }
   createForm(){
     this.updateForm = this.fb.group({
+        FirstName:['',[Validators.required, Validators.minLength(3)]],
+        LastName:['',[Validators.required, Validators.minLength(3)]],
         Email: ['', [Validators.required, Validators.email]],
         PhoneNumber: ['', [Validators.required, Validators.minLength(10)]],
         NotificationType: ['', Validators.required],
-        EscalationLevel:['', Validators.required],
         State: ['', Validators.required]
     })
   }
-
-  getEscalationLevels(){
-    this.recipientService.getLevels().subscribe((data: EscalationLevel[]) => {
-      this.EscalationLevels = data
+  getStates(){
+    this.recipientService.getStates().subscribe((data) => {
+      this.States = data
     })
-  }
-
-  
+  }  
   getNotificationTypes(){
-    this.recipientService.getNotificationType().subscribe((data: NotificationType[]) => {
+    this.recipientService.getNotificationType().subscribe((data: any) => {
       this.NotificationTypes = data
     })
   }
@@ -80,9 +83,15 @@ export class RecipientUpdateComponent implements OnInit {
     this.updateForm.reset();
   }
   update() {
-    this.recipient.date_modified = new Date(Date.now()).toUTCString()
-    this.recipientService.updateItem(this.id, this.recipient).subscribe(response => {
-      this.router.navigate(['recipients']);
-    })
-  }
+    this.recipient.recipient_id = this.recipient_id
+    console.log(this.recipient)
+  this.recipientService.updateItem(this.recipient_id, this.recipient[0]).subscribe(response => {
+    if (response.code === "800.200.001"){
+      console.log('message: %s, code: %s', response.message,response.code)
+      this.location.back();}
+    else{
+      console.log('message: %s, code: %s', response.message,response.code)
+    }
+  })
+}
 }

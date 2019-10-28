@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
-
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'hm-update-user',
@@ -14,9 +14,14 @@ export class UpdateUserComponent implements OnInit {
     lastName: new FormControl(''),
     email: new FormControl('')
   });
-  constructor() { }
+  constructor(
+    public location: Location
+  ) { }
 
   ngOnInit() {
   }
 
+  public back(): void {
+    this.location.back();
+  }
 }
