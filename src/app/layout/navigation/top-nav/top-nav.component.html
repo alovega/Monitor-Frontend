@@ -29,11 +29,26 @@
         </ul>
 
         <!-- Right -->
+        <ul class="navbar-nav ml-auto nav-flex-icons">
+          <!-- <li class="nav-item">
+            <a href="#"
+              class="nav-link border border-light rounded waves-effect" target="_blank">
+              <i class="fab fa-user-alt mr-2" mdbIcon></i>Logout
         <ul class="navbar-nav nav-flex-icons ml-auto">
           <li class="nav-item" *ngIf="currentUser; else login">
             <a class="nav-link border border-light rounded waves-effect">
               <i class="fas fa-user-alt mr-2" (click)="logout()"></i>Logout
             </a>
+          </li> -->
+          <!-- Dropdown -->
+          <li class="nav-item dropdown" dropdown>
+            <a dropdownToggle mdbWavesEffect type="button" class="nav-link dropdown-toggle waves-light" mdbWavesEffect>
+              <mdb-icon fas icon="user"></mdb-icon> Profile<span class="caret"></span></a>
+            <div *dropdownMenu class="dropdown-menu dropdown-menu-right dropdown dropdown-primary" role="menu">
+              <a class="dropdown-item waves-light" routerLink="profile" mdbWavesEffect> My account</a>
+              <a class="dropdown-item waves-light" routerLink="profile/user-notifications" mdbWavesEffect>Notifications</a>
+              <a class="dropdown-item waves-light" mdbWavesEffect href="#">Log out</a>
+            </div>
           </li>
 
           <ng-template #login>

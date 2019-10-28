@@ -1,8 +1,9 @@
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import {RecipientService} from '../recipient.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import {Recipient} from '../recipient';
+import { Location } from '@angular/common';
 import { of } from 'rxjs';
 import { EscalationLevel } from 'src/app/shared/models/escalation-level';
 import { State } from 'src/app/shared/models/state';
@@ -18,13 +19,20 @@ export class RecipientFormComponent implements OnInit {
 
   recipientForm:FormGroup;
   submitted:boolean = false;
+  currentSystem: any;
+  currentSystemId: any;
   recipient:Recipient
   EscalationLevels:EscalationLevel
   NotificationTypes:NotificationType
   Users:User
   States:State
 
-  constructor(private fb: FormBuilder, private recipientService:RecipientService, public router: Router) {
+  constructor(
+    private fb: FormBuilder, 
+    private recipientService:RecipientService, 
+    public location: Location,
+    public activatedRoute: ActivatedRoute
+    ) {
     this.createForm()
     this.recipient = new Recipient()
     of(this.getEscalationLevels()).subscribe((data:any) => {
@@ -46,12 +54,16 @@ export class RecipientFormComponent implements OnInit {
    }
 
   ngOnInit() {
-    this.getEscalationLevels()
-    console.log(this.getEscalationLevels())
-    // this.getNotificationTypes()
+    this.activatedRoute.parent.params.subscribe(
+      (param: any) => {
+        this.currentSystemId = param['system-id'];
+        // console.log(this.currentSystemId);
+      });
   }
   createForm(){
     this.recipientForm = this.fb.group({
+        FirstName:['', [Validators.required, Validators.minLength(3)]],
+        LastName:['', [Validators.required, Validators.minLength(3)]],
         Email: ['', [Validators.required, Validators.email]],
         PhoneNumber: ['', [Validators.required, Validators.minLength(10)]],
         User: ['', Validators.required],
@@ -63,7 +75,6 @@ export class RecipientFormComponent implements OnInit {
 
   getEscalationLevels(){
     this.recipientService.getLevels().subscribe((data) => {
-      console.log(data)
       this.EscalationLevels = data
     })
   }
@@ -93,12 +104,17 @@ export class RecipientFormComponent implements OnInit {
   }
 
   addRecipient() {
-    this.recipient.date_created = new Date(Date.now()).toUTCString()
-
-    console.log(this.recipientForm.value)
-    
-    this.recipientService.addEndpoints(this.recipient).subscribe(response => {
-      this.router.navigate(['recipients'])
+    this.recipient.system_id = this.currentSystemId
+    console.log(this.recipient)
+    this.recipientService.addRecipient(this.recipient).subscribe(response => {
+      if (response.code === "800.200.001"){
+        this.recipient = response.data
+        console.log('message: %s, code: %s', response.message,response.code)
+        this.location.back()
+      }
+      else{
+      console.log('error: %s, message: %s', response.code,response.message)
+      }
     });
   }
 }

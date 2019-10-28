@@ -1,40 +1,34 @@
 import { MdbTablePaginationComponent, MdbTableDirective } from 'angular-bootstrap-md';
 import { Component, OnInit, ViewChild, AfterViewInit, ChangeDetectorRef } from '@angular/core';
-import {NotificationsService} from '../notifications.service';
-import {Notification} from '../notification';
 
 @Component({
-  selector: 'app-sms-notifications',
-  templateUrl: './sms-notifications.component.html',
-  styleUrls: ['./sms-notifications.component.scss']
+  selector: 'hm-user-notifications',
+  templateUrl: './user-notifications.component.html',
+  styleUrls: ['./user-notifications.component.scss']
 })
-export class SmsNotificationsComponent implements OnInit {
+export class UserNotificationsComponent implements OnInit {
   @ViewChild(MdbTablePaginationComponent, { static: true }) mdbTablePagination: MdbTablePaginationComponent;
   @ViewChild(MdbTableDirective, { static: true }) mdbTable: MdbTableDirective;
   firstItemIndex: any;
   lastItemIndex: any;
   elements: any;
   previous: any = [];
-  headElements: string[] = [ 'Notification','Recipient', 'Date Created', 'Status'];
+  headElements: string[] = [ 'Message', 'Notification Type', 'Date Created', 'Status'];
 
-  constructor(private notificationsService: NotificationsService, private cdRef: ChangeDetectorRef) {
-    this.elements = []
-   }
+  constructor(private cdRef: ChangeDetectorRef,) { }
 
   ngOnInit() {
-    this.elements = this.showNotifications()
+    this.elements = []
     this.mdbTable.setDataSource(this.elements);
     this.elements = this.mdbTable.getDataSource();
     this.previous = this.mdbTable.getDataSource();
   }
-
   ngAfterViewInit() {
     this.mdbTablePagination.setMaxVisibleItemsNumberTo(5);
     this.mdbTablePagination.calculateFirstItemIndex();
     this.mdbTablePagination.calculateLastItemIndex();
     this.cdRef.detectChanges();
   }
-
   searchItems(search: string) {
     const prev = this.mdbTable.getDataSource();
 
@@ -48,11 +42,5 @@ export class SmsNotificationsComponent implements OnInit {
       this.mdbTable.setDataSource(prev);
     }
   }
-  showNotifications() {
-    return this.notificationsService.getNotifications()
-       .subscribe((data:Notification[]) => {
-         console.log(data)
-         this.elements = data.filter(data => data.notification_type === 'SMS')
-       });
-   }
+
 }

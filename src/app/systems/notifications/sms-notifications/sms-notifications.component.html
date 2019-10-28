@@ -1,16 +1,19 @@
+<div class="col-md-6 px-0 top-controls">
+    <input class="form-control" type="text"  [(ngModel)]="searchText" id="search" placeholder="search" mdbInput>
+</div>
 <table mdbTable #tableEl="mdbTable" class="z-depth-1" >
         <thead class="white-text">
           <tr>
-            <th *ngFor="let head of headElements" scope="col">{{head}} </th>
+            <th *ngFor="let head of headElements; let i = index" aria-controls="tableSort" scope="col" [mdbTableSort]="elements" [sortBy]="headElements[i]" scope="col">{{head | titlecase}} <mdb-icon fas icon="sort"></mdb-icon></th>
           </tr>
         </thead>
         <tbody *ngIf="elements.length > 1; else noElements">
           <tr mdbTableCol *ngFor="let el of elements; let i = index ">
           <th *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex" scope="row">
-              {{el.description}}
+              {{el.message}}
           </th>
           <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{el.recipient}}</td>
-          <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{el.date_created}}</td>
+          <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{el.dateCreated | date}}</td>
           <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">
             <h5><mdb-badge success="true">{{el.status}}</mdb-badge></h5>
           </td>
@@ -24,10 +27,10 @@
           </tr>
         </tfoot>
       </table>
-
       <ng-template #noElements>
-        <hm-empty-data header="No Existing System Endpoints" description="New Endpoints  displayed here">
-          <button action-button type="button" mdbBtn size="sm" color="primary">Add Endpoint</button>
-        </hm-empty-data>
-      </ng-template>
+        <td colspan="7">
+          <hm-empty-data header="No Existing Notifications" description="New Notifications will be displayed here">
+          </hm-empty-data>
+        </td>
+    </ng-template>
 <router-outlet></router-outlet>

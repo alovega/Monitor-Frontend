@@ -1,0 +1,32 @@
+<table mdbTable #tableEl="mdbTable" class="z-depth-1" >
+    <thead class="white-text">
+      <tr>
+        <th *ngFor="let head of headElements" scope="col">{{head}} </th>
+      </tr>
+    </thead>
+    <tbody *ngIf="elements.length > 0; else noElements">
+      <tr mdbTableCol *ngFor="let el of elements; let i = index ">
+      <th *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex" scope="row">
+          {{el.message}}
+      </th>
+      <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{el.recipient}}</td>
+      <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{el.date_created}}</td>
+      <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{el.state__name}}</td>
+      </tr>
+    </tbody>
+    <tfoot class="grey lighten-5 w-100">
+      <tr>
+        <td colspan="4">
+          <mdb-table-pagination [tableEl]="tableEl" [searchDataSource]="elements"></mdb-table-pagination>
+        </td>
+      </tr>
+    </tfoot>
+  </table>
+
+  <ng-template #noElements>
+    <td colspan="7">
+      <hm-empty-data header="No Existing Notifications" description="New Notifications will be displayed here">
+      </hm-empty-data>
+    </td>
+</ng-template>
+<router-outlet></router-outlet>

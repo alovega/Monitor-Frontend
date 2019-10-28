@@ -1,129 +1,52 @@
-<div class="row">
-  <div class="col-md-4">
-    <!--Card-->
-    <mdb-card cascade="true" wider="true">
+<div class="container">
+    <div class="row my-2">
+        <div class="col-lg-8 order-lg-2">
+            <ul class="nav nav-tabs">
+                <li class="nav-item">
+                    <a routerLink="edit" routerLinkActive="active" data-toggle="tab" class="nav-link">Edit</a>
+                </li>
+                <li class="nav-item">
+                    <a routerLink="details" routerLinkActive="active" data-toggle="tab" class="nav-link">Profile</a>
+                </li>
+                <li class="nav-item">
+                    <a routerLink="recent-notifications" routerLinkActive="active" data-toggle="tab" class="nav-link">Recent Notifications</a>
+                </li>
+                
+            </ul>
+            <router-outlet></router-outlet>
+        </div>
+        <div class="col-lg-4 order-lg-1 text-center">
+            <!-- <img src="//placehold.it/150" class="mx-auto img-fluid img-circle d-block" alt="avatar">
+            <h6 class="mt-2">Upload a different photo</h6>
+            <label class="custom-file">
+                <input type="file" id="file" class="custom-file-input">
+                <span class="custom-file-control">Choose file</span>
+            </label> -->
+            <div class="card testimonial-card">
 
-      <!--Card image-->
-      <div class="view view-cascade overlay waves-light" mdbWavesEffect>
-        <mdb-card-img src="../../assets/img/jane.jpg"></mdb-card-img>
-        <a>
-          <div class="mask rgba-white-slight"></div>
-        </a>
-      </div>
-      <!--/Card image-->
-
-      <mdb-card-body cascade="true" class="text-center">
-        <!--Card content-->
-        <!--Title-->
-        <h4 class="card-title">
-          <strong>Jane Doe  </strong>
-        </h4>
-        <h5 class="indigo-text">
-          <strong>Photographer</strong>
-        </h5>
-
-        <mdb-card-text>
-          Sed ut perspiciatis unde omnis iste natus sit voluptatem accusantium doloremque laudantium, totam rem
-          aperiam.
-        </mdb-card-text>
-
-        <!--Linkedin-->
-        <a class="px-2 icons-sm li-ic">
-          <mdb-icon fab icon="linkedin-in"> </mdb-icon>
-        </a>
-        <!--Twitter-->
-        <a class="px-2 icons-sm tw-ic">
-          <mdb-icon fab icon="twitter"> </mdb-icon>
-        </a>
-        <!--Dribbble-->
-        <a class="px-2 icons-sm fb-ic">
-          <mdb-icon fab icon="facebook-f"> </mdb-icon>
-        </a>
-
-      </mdb-card-body>
-      <!--/.Card content-->
-
-    </mdb-card>
-    <!--/.Card-->
-  </div>
-
-  <div class="col-md-4">
-    <!--Card-->
-    <mdb-card cascade="true" narrower="true">
-
-      <!--Card image-->
-      <div class="view view-cascade overlay waves-light" mdbWavesEffect>
-        <mdb-card-img src="../../assets/img/culinary.jpg"></mdb-card-img>
-        <a>
-          <div class="mask rgba-white-slight"></div>
-        </a>
-      </div>
-      <!--/Card image-->
-
-      <mdb-card-body cascade="true" class="text-center">
-        <!--Card content-->
-        <h5 class="pink-text">
-          <mdb-icon fas icon="utensils"></mdb-icon> Culinary</h5>
-        <!--Title-->
-        <h4 class="card-title">Cheat day inspirations</h4>
-        <!--Text-->
-
-        <mdb-card-text>
-          Sed ut perspiciatis unde omnis iste natus sit voluptatem accusantium doloremque laudantium, totam rem
-          aperiam.
-        </mdb-card-text>
-
-        <a mdbBtn color="unique" class="waves-light" mdbWavesEffect>Button</a>
-
-      </mdb-card-body>
-      <!--/.Card content-->
-
-    </mdb-card>
-    <!--/.Card-->
-  </div>
-
-  <div class="col-md-4">
-    <!--Card-->
-    <mdb-card cascade="true">
-
-      <!--Card image-->
-      <div class="view view-cascade overlay waves-light" mdbWavesEffect>
-        <mdb-card-img src="../../assets/img/doe.jpg"></mdb-card-img>
-        <a>
-          <div class="mask rgba-white-slight"></div>
-        </a>
-      </div>
-      <!-- Card image -->
-
-      <mdb-card-body cascade="true" class="text-center">
-        <!--Card content-->
-        <h4 class="card-title">
-          <strong>John Doe</strong>
-        </h4>
-        <h5>Web developer</h5>
-
-        <mdb-card-text>
-          Sed ut perspiciatis unde omnis iste natus sit voluptatem accusantium doloremque laudantium, totam rem
-          aperiam.
-        </mdb-card-text>
-
-        <!--Facebook-->
-        <a type="button" mdbBtn floating="true" size="sm" color="fb" class="waves-light" mdbWavesEffect>
-          <mdb-icon fab icon="facebook-f"></mdb-icon>
-        </a>
-        <!--Twitter-->
-        <a type="button" mdbBtn floating="true" size="sm" color="tw" class="waves-light" mdbWavesEffect>
-          <mdb-icon fab icon="twitter"></mdb-icon>
-        </a>
-        <!--Google +-->
-        <a type="button" mdbBtn floating="true" size="sm" color="dribbble" class="waves-light" mdbWavesEffect>
-          <mdb-icon fab icon="dribbble"></mdb-icon>
-        </a>
-
-      </mdb-card-body>
-      <!--/.Card content-->
-
-    </mdb-card>
-    <!--/.Card-->
-  </div>
+                <!--Background color-->
+                <div class="card-up teal lighten-2">
+                </div>
+        
+                <!--Avatar-->
+                <div class="avatar mx-auto white">
+                    <a class="logo-wrapper waves-effect">
+                        <span style="font-size: 80px; color:#007bff;">HM</span>
+                                
+                    </a>
+                    <!-- <img src="./assets/img/default-profile.png"
+                    alt="avatar mx-auto white" class="rounded-circle img-fluid"> -->
+                </div>
+        
+                <div class="card-body">
+                  <!--Name-->
+                  <h4 class="card-title mt-1">User Name</h4>
+                  <hr>
+                  <!--Quotation-->
+                  <p><i class="fas fa-quote-left"></i> Welcome to Hela monitor.</p>
+                </div>
+        
+              </div>
+        </div>
+    </div>
 </div>

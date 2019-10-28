@@ -6,13 +6,16 @@ import { NotificationsRoutingModule } from './notifications-routing.module';
 import { NotificationsComponent } from './notifications.component';
 import { EmailNotificationComponent } from './email-notification/email-notification.component';
 import { SmsNotificationsComponent } from './sms-notifications/sms-notifications.component';
-
+import { SharedModule } from 'src/app/shared/shared.module';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [NotificationsComponent, EmailNotificationComponent, SmsNotificationsComponent],
   imports: [
     CommonModule,
     NotificationsRoutingModule,
+    FormsModule,
+    SharedModule,
     MDBBootstrapModule.forRoot()
   ],
   schemas: [ NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA],

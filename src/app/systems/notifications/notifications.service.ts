@@ -1,18 +1,17 @@
-import { Injectable } from '@angular/core';
+import { Injectable,Output, EventEmitter } from '@angular/core';
 import { Observable,throwError } from 'rxjs';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
-import { Notification } from './notification';
-import { catchError, retry} from 'rxjs/operators';
+import { catchError, retry, map} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class NotificationsService {
-  notificationUrl = 'http://localhost:8000/notifications';
+  notificationUrl = 'http://localhost:8000/api';
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
-
+  @Output() changeSystem: EventEmitter<boolean> = new EventEmitter();
   constructor(private http: HttpClient) { }
 
   // Handle API errors
@@ -31,11 +30,22 @@ export class NotificationsService {
     return throwError(
       'Something bad happened; please try again later.');
   };
-  public getNotifications(): Observable<Notification[]> {
+  public getEmailNotifications(system_id): Observable<any> {
 
-    return this.http.get<Notification[]>(this.notificationUrl).pipe(
-      retry(2),
-      catchError(this.handleError)
-    );
+    return this.http.post<any>(this.notificationUrl + '/get_notifications/', {
+      system_id: system_id,
+    }).pipe( 
+      map(response => response.data.notifications.filter(data => data.type === 'Email'),
+      retry(2)
+    ),catchError(this.handleError))
+  }
+  public getSmsNotifications(system_id): Observable<any> {
+
+    return this.http.post<any>(this.notificationUrl + '/get_notifications/', {
+      system_id: system_id,
+    }).pipe( 
+      map(response => response.data.notifications.filter(data => data.type === 'Sms'),
+      retry(2)
+    ),catchError(this.handleError))
   }
 }

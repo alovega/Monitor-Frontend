@@ -7,12 +7,15 @@ import { Router } from '@angular/router';
   styleUrls: ['./recipients.component.scss']
 })
 export class RecipientsComponent implements OnInit {
-
+  isHidden = true;
+  public systemId: string;
+  public incidentType: string;
+  public maintenanceUrl: string;
+  search: string = '';
   constructor(
-    public router: Router
+    public router: Router,
   ) { }
 
   ngOnInit() {
   }
-
-}
+  }
