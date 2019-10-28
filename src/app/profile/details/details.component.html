@@ -1,6 +1,8 @@
 <div class="tab-content py-4"  *ngFor="let data of data">
     <div class="tab-pane active">
-        <h5>User Profile</h5>
+        <div class="row">
+            <h5>{{data.userName}}</h5> <span id="profile">Profile</span>
+        </div>
         <div class="row">
           <div class="col-md-6" >
             <h6>Details</h6>
@@ -11,40 +13,8 @@
           </div>
           <div class="col-md-6">
             <h6>Role</h6>
-            <span class="badge badge-primary">Admin</span>
+            <span class="badge badge-primary">{{data.role}}</span>
             <hr>
-          </div>
-          <div class="col-md-12">
-            <h5 class="mt-2"><span class="fa fa-clock-o ion-clock float-right"></span> Recent Activity</h5>
-            <table class="table table-sm table-hover table-striped">
-              <tbody>                                    
-                <tr>
-                  <td>
-                    <strong>Abby</strong> joined ACME Project Team in <strong>`Collaboration`</strong>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <strong>Gary</strong> deleted My Board1 in <strong>`Discussions`</strong>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <strong>Kensington</strong> deleted MyBoard3 in <strong>`Discussions`</strong>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <strong>John</strong> deleted My Board1 in <strong>`Discussions`</strong>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <strong>Skell</strong> deleted his post Look at Why this is.. in <strong>`Discussions`</strong>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
           </div>
         </div>   
     </div>

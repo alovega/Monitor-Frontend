@@ -9,6 +9,7 @@ import { EditComponent } from './edit/edit.component';
 import { DetailsComponent } from './details/details.component';
 import { UserNotificationsComponent } from './user-notifications/user-notifications.component';
 import { SharedModule } from '../shared/shared.module';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -16,6 +17,8 @@ import { SharedModule } from '../shared/shared.module';
   imports: [
     CommonModule,
     ProfileRoutingModule,
+    FormsModule,
+    ReactiveFormsModule,
     SharedModule,
     MDBBootstrapModule.forRoot()
   ],

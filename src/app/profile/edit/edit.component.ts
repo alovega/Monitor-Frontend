@@ -7,42 +7,37 @@ import { MustMatch } from 'src/app/shared/must-match.validator';
   styleUrls: ['./edit.component.scss']
 })
 export class EditComponent implements OnInit {
-  updateForm:FormGroup
+  profileUpdateForm:FormGroup
   submitted:boolean = false;
   constructor(private fb: FormBuilder,) {
-    
+    this.createForm()
    }
 
   ngOnInit() {
-    this.createForm()
   }
   createForm(){
-    this.updateForm = this.fb.group({
+    this.profileUpdateForm = this.fb.group({
         FirstName:['',[Validators.required, Validators.minLength(3)]],
         LastName:['',[Validators.required, Validators.minLength(3)]],
         Email: ['', [Validators.required, Validators.email]],
         PhoneNumber: ['', [Validators.required, Validators.minLength(10)]],
         Username: ['', Validators.required],
-        Password: ['', [Validators.required, Validators.minLength(6)]],
-        ConfirmPassword:['',Validators.required]
-    },{
-      validator: MustMatch('password', 'confirmPassword')
     })
   }
    // convenience getter for easy access to form fields
-   get f() { return this.updateForm.controls; }
+   get f() { return this.profileUpdateForm.controls; }
 
    onSubmit() {
        this.submitted = true;
 
        // stop here if form is invalid
-       if (this.updateForm.invalid) {
+       if (this.profileUpdateForm.invalid) {
            return;
        }
       }
 
    onReset() {
        this.submitted = false;
-       this.updateForm.reset();
+       this.profileUpdateForm.reset();
    }
 }
