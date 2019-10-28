@@ -40,7 +40,7 @@ export class IncidentsComponent implements OnInit {
     //   distinctUntilChanged(),
     //   switchMap((term: string) => this.incidentService.searchIncidents(term)),
     // );
-    setTimeout(() => this.isLoaded = true, 500);
+    this.isLoaded = true;
   }
 
   // searchIncident(term: string): void {

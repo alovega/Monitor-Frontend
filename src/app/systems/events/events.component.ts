@@ -19,6 +19,7 @@ export class EventsComponent implements OnInit, AfterViewInit {
   currentSystem: string;
   events: any[];
   previous: any = [];
+  isLoaded = false;
 
   headElements = ['Event Type', 'Description', 'Method', 'Interface', 'Request', 'Response', 'Stack Trace', 'Code', 'Date Created'];
 
@@ -48,10 +49,10 @@ export class EventsComponent implements OnInit, AfterViewInit {
         this.mdbTable.setDataSource(this.events);
         this.events = this.mdbTable.getDataSource();
         this.previous = this.mdbTable.getDataSource();
-        console.log('Current events => ' + result);
+        // console.log('Current events => ' + result);
       })
     );
-
+    this.isLoaded = true;
   }
 
   ngAfterViewInit() {

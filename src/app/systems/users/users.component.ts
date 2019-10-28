@@ -19,6 +19,7 @@ export class UsersComponent implements OnInit, AfterViewInit {
   currentSystem: string;
   users: any[];
   previous: any = [];
+  isLoaded = false;
 
   headElements = ['Username', 'Email', 'First Name', 'Last Name', 'Active', 'Date Created', 'Action'];
 
@@ -49,11 +50,11 @@ export class UsersComponent implements OnInit, AfterViewInit {
           this.mdbTable.setDataSource(this.users);
           this.users = this.mdbTable.getDataSource();
           this.previous = this.mdbTable.getDataSource();
-          console.log(this.users);
+          // console.log(this.users);
         }
       }
     );
-
+    this.isLoaded = true;
   }
 
   ngAfterViewInit() {
