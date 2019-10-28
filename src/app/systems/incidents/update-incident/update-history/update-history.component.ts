@@ -1,20 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import {  FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import Swal from 'sweetalert2';
 
-import { IncidentService } from '../incident.service';
-import { Incident } from '../incident';
+import { IncidentService } from '../../incident.service';
+import { Incident } from '../../incident';
 import { SystemService } from 'src/app/shared/system.service';
 
 @Component({
-  selector: 'hm-update-incident',
-  templateUrl: './update-incident.component.html',
-  styleUrls: ['./update-incident.component.scss']
+  selector: 'hm-update-history',
+  templateUrl: './update-history.component.html',
+  styleUrls: ['./update-history.component.scss']
 })
-
-export class UpdateIncidentComponent implements OnInit {
+export class UpdateHistoryComponent implements OnInit {
   updateIncidentForm: FormGroup;
   submitted = false;
   incidents: Incident[];
@@ -29,10 +28,9 @@ export class UpdateIncidentComponent implements OnInit {
     private incidentService: IncidentService,
     private formBuilder: FormBuilder,
     private location: Location,
-    private systemService: SystemService,
-    private router: Router,
+    private systemService: SystemService
   ) {
-    this.incidentId = this.activatedRoute.snapshot.paramMap.get('incident-id');
+    // this.incidentId = this.activatedRoute.snapshot.paramMap.get('incident-id');
     this.incident = new Incident();
   }
 
@@ -40,6 +38,7 @@ export class UpdateIncidentComponent implements OnInit {
     this.activatedRoute.parent.params.subscribe(
       (param: any) => {
         this.systemId = param['system-id'];
+        this.incidentId = param['incident-id'];
     });
 
     let issetCurrentSystem = this.systemService.checkCurrentSystem();
@@ -69,7 +68,7 @@ export class UpdateIncidentComponent implements OnInit {
     this.incidentService.getIncident(this.incidentId, this.currentSystem).subscribe(
       (data: any) => {
         this.incident = data;
-        console.log('Incident data is' + data);
+        // console.log('Incident data is' + this.incident.status);
         this.updateIncidentForm.patchValue({
           priorityLevel: this.incident.priority_level.toString(),
           incidentStatus: this.incident.status.toString(),
@@ -142,6 +141,6 @@ export class UpdateIncidentComponent implements OnInit {
   }
 
   back() {
-    this.router.navigate([`system/${this.systemId}/incidents`]);
+    this.location.back();
   }
 }
