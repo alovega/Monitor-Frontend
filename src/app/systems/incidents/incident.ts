@@ -16,4 +16,5 @@ export class Incident {
     incident_updates: any[];
     escalation_level ?: any;
     incident_type ?: any;
+    user ?: any;
 }

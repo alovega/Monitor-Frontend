@@ -7,6 +7,7 @@ import Swal from 'sweetalert2';
 import { IncidentService } from '../incident.service';
 import { Incident } from '../incident';
 import { SystemService } from 'src/app/shared/system.service';
+import { LookUpService } from 'src/app/shared/look-up.service';
 
 @Component({
   selector: 'hm-update-incident',
@@ -23,6 +24,7 @@ export class UpdateIncidentComponent implements OnInit {
   incidentId: string;
   systemId: string;
   currentSystem: any;
+  users: any;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -31,12 +33,16 @@ export class UpdateIncidentComponent implements OnInit {
     private location: Location,
     private systemService: SystemService,
     private router: Router,
+    private lookupService: LookUpService
   ) {
     this.incidentId = this.activatedRoute.snapshot.paramMap.get('incident-id');
     this.incident = new Incident();
   }
 
   ngOnInit() {
+    this.lookupService.getUsers().subscribe(
+      (users) => this.users = users
+    );
     this.activatedRoute.parent.params.subscribe(
       (param: any) => {
         this.systemId = param['system-id'];
@@ -60,7 +66,8 @@ export class UpdateIncidentComponent implements OnInit {
     this.updateIncidentForm = this.formBuilder.group({
       incidentStatus: ['Investigating', Validators.required],
       message: ['', Validators.required],
-      priorityLevel: ['', Validators.required]
+      priorityLevel: ['', Validators.required],
+      user: ['']
     });
   }
 
@@ -87,9 +94,10 @@ export class UpdateIncidentComponent implements OnInit {
       console.log('Invalid');
       return ;
     }
-    console.log(this.incident);
     this.incident.state = this.incident.status;
     this.incident.escalation_level = 'Medium';
+    console.log(this.incident);
+
     return this.incidentService.updateIncident(this.incident).subscribe(
       (incident => {
         if (incident.code === '800.200.001') {

@@ -47,7 +47,7 @@ export class LookUpService {
       catchError(this.handleError)
     );
   }
-  
+
   public getEndpointType(){
 
     return this.http.get<any>(this.Url).pipe(
