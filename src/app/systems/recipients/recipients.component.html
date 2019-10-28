@@ -1,0 +1,29 @@
+<div class="page-header">
+    <div class="row">
+        <div class="col">
+            <div class="row">
+                <h3>Recipients</h3>
+            </div>
+        </div>
+    </div>
+    <div class="clearfix"></div> 
+</div>
+
+<ul class="list-group switch-tabs">
+    <div>
+    <li class="tab-item">
+        <a routerLink="email-recipient" routerLinkActive="active">Email</a>
+    </li>
+    <li class="tab-item">
+        <a routerLink="sms-recipient" routerLinkActive="active">Sms</a>        
+    </li>
+
+    <li class="tab-item" >
+        <span >
+        <button type="button" class="button-recipient" routerLink="recipient-create" *ngIf="router.url != '/email-recipient'" mdbBtn color="primary" mdbWavesEffect>Add Recipient</button>
+        </span>
+    </li>
+    <div class="clearfix"></div>
+    </div>
+</ul>
+<router-outlet></router-outlet>

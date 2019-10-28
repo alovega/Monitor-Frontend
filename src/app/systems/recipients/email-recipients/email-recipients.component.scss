@@ -1,0 +1,92 @@
+table {
+    width: 100%;
+  }
+  thead{
+    background-color: #007bff;
+  }
+
+  table.table a{
+    margin:0;
+    margin-right: 5px;
+  }
+
+.btn{
+  box-shadow: 0 2px 5px 0 rgba(0,0,0,.16), 0 2px 10px 0 rgba(0,0,0,.12);
+  padding: 8px 20px 8px 20px;
+  font-size: .61rem;
+  transition: .2s ease-in-out;
+  margin: .375rem;
+  border: 0;
+  border-radius: .125rem;
+  cursor: pointer;
+  white-space: normal;
+  word-wrap: break-word;
+  color: inherit;
+}
+
+table.table td, table.table  {
+  font-weight: 300;
+}
+
+.top-controls{
+  position: absolute;
+  top:97px;
+  width:207px;
+  right:67px;
+}
+
+// Small devices (landscape phones, 576px and up)
+@media (min-width: 360px) {
+  .top-controls{
+    position: absolute;
+    top: 88px;
+    width: 151px;
+    right: 10px;
+  }
+  table{
+    width:100%
+  }
+}
+
+// Small devices (landscape phones, 576px and up)
+@media (min-width: 320px) {
+  .top-controls{
+    position: absolute;
+    top: 88px;
+    width: 151px;
+    right: 10px;
+  }
+  table{
+    width:100%
+  }
+}
+
+// Medium devices (tablets, 768px and up)
+@media (min-width: 768px) {
+  .top-controls{
+    position: absolute;
+    top: 97px;
+    width: 151px;
+    right: -7px;
+  }
+}
+
+// Large devices (desktops, 992px and up)
+@media (min-width: 992px) {
+  .top-controls{
+    position: absolute;
+    top:97px;
+    width:207px;
+    right:67px;
+  }
+}
+
+// Extra large devices (large desktops, 1200px and up)
+@media (min-width: 1200px) {
+  .top-controls{
+    position: absolute;
+    top:97px;
+    width:207px;
+    right:67px;
+  }
+ }

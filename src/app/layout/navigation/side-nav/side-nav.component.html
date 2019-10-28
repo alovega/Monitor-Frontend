@@ -4,20 +4,21 @@
       <!-- <span style="font-size: 40px">HM</span> -->
       <img src="../../assets/hm_logo.png" class="img-fluid" alt="">
     </a>
-
+    
     <div class="list-group list-group-flush">
       <a mdbWavesEffect routerLink="system/{{currentSystemId}}/dashboard/" routerLinkActive="active" class="list-group-item list-group-item-action">
         <i class="fas fa-chart-pie mr-3"></i>Dashboard
       </a>
+      {{currentEscalationLevelId}}
       <a mdbWavesEffect routerLink="system/{{currentSystemId}}/incidents/" routerLinkActive="active" class="list-group-item list-group-item-action waves-effect">
         <i class="fas fa-user mr-3" [class.active]="isActive(incidentsUrl)"></i>Incidents</a>
-      <a mdbWavesEffect routerLink="endpoint" routerLinkActive="active" class="list-group-item list-group-item-action waves-effect">
+      <a mdbWavesEffect routerLink="system/{{currentSystemId}}/endpoints/" routerLinkActive="active" class="list-group-item list-group-item-action waves-effect">
         <i class="fas fa-table mr-3"></i>Endpoints</a>
       <a mdbWavesEffect routerLink="system/{{currentSystemId}}/users/" routerLinkActive="active" class="list-group-item list-group-item-action waves-effect">
         <i class="fas fa-map mr-3"></i>Users</a>
-      <a mdbWavesEffect routerLink="recipients" routerLinkActive="active" class="list-group-item list-group-item-action waves-effect">
+      <a mdbWavesEffect routerLink="system/{{currentSystemId}}/recipients" routerLinkActive="active" class="list-group-item list-group-item-action waves-effect">
         <i class="fas fa-money-bill-alt mr-3"></i>Recipients</a>
-      <a mdbWavesEffect routerLink="notifications" routerLinkActive="active"  class="list-group-item list-group-item-action waves-effect">
+      <a mdbWavesEffect routerLink="system/{{currentSystemId}}/notifications" routerLinkActive="active"  class="list-group-item list-group-item-action waves-effect">
         <i class="fas fa-money-bill-alt mr-3"></i>Notifications</a>
       <a mdbWavesEffect routerLink="system/{{currentSystemId}}/rules/" routerLinkActive="active" class="list-group-item list-group-item-action waves-effect">
         <i class="fas fa-money-bill-alt mr-3"></i>Rules</a>

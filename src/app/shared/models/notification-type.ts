@@ -1,6 +1,4 @@
 export class NotificationType {
-    id:number;
+    id:string;
     name:string;
-    description: string;
-    status:string;
 }

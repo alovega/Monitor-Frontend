@@ -12,6 +12,8 @@ import { AuthenticationService } from 'src/app/shared/auth/authentication.servic
 export class SideNavComponent implements OnInit {
   currentSystemId: any;
   currentSystem: any;
+  currentEscalationLevel: any;
+  currentEscalationLevelId: any;
   incidentsUrl = `/system/{{currentSystemId}}/incidents`;
   currentUser: any;
 

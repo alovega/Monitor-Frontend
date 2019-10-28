@@ -18,4 +18,10 @@ export class GraphsService {
       map(response => response.data)
     )
   }
+
+  getSystemStatus(): Observable<any>{
+    return this.http.post<any>(environment.apiEndpoint + 'get_system_status/', {}).pipe(
+      map(response => response.data)
+    )
+  }
 }
