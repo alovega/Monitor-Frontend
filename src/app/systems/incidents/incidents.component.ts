@@ -20,6 +20,7 @@ export class IncidentsComponent implements OnInit {
   public systemId: string;
   public incidentType: string;
   public maintenanceUrl: string;
+  public isLoaded = false;
 
   constructor(
     public router: Router,
@@ -39,6 +40,7 @@ export class IncidentsComponent implements OnInit {
     //   distinctUntilChanged(),
     //   switchMap((term: string) => this.incidentService.searchIncidents(term)),
     // );
+    this.isLoaded = true;
   }
 
   // searchIncident(term: string): void {

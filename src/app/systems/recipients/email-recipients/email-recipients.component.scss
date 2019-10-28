@@ -30,9 +30,9 @@ table.table td, table.table  {
 
 .top-controls{
   position: absolute;
-  top:97px;
+  top:105px;
   width:207px;
-  right:67px;
+  right:15px;
 }
 
 // Small devices (landscape phones, 576px and up)
@@ -85,8 +85,8 @@ table.table td, table.table  {
 @media (min-width: 1200px) {
   .top-controls{
     position: absolute;
-    top:97px;
+    top:105px;
     width:207px;
-    right:67px;
+    right:15px;
   }
  }

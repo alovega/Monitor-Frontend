@@ -4,12 +4,12 @@
     <div class="col-md-1"></div>
       <!-- Grid column -->
     <div class="col-md-12">
-      <div class="page-header d-flex">
+      <div class="page-header d-flex row">
         <div class="col-sm-6">
             Add user
         </div>
         <div class="col-sm-6">
-          <button class="float-right back-button" (click)="back()"><< back to users</button>
+          <button class="float-right back-button" (click)="back()"><i class="fas fa-angle-double-left"></i> back to users</button>
         </div>
       </div>
       <hr>
@@ -17,7 +17,7 @@
         <div class="new-rule">
           <mdb-card class="card">
             <form [formGroup]="addUserForm" class="text-center row" (ngSubmit)="onSubmit()">
-            <div class="col-md-4 mb-4">
+            <div class="col-md-6 mb-4">
               <div class="form-group">
                   <!-- Name -->
                   <label class="form-label">User Name</label>
@@ -31,7 +31,7 @@
               </div>
             </div>
 
-            <div class="col-md-4 mb-4">
+            <div class="col-md-6 mb-4">
                 <div class="form-group">
                     <!-- Name -->
                     <label class="form-label">Email</label>
@@ -44,20 +44,6 @@
                     </div>
                 </div>
               </div>
-
-            <div class="col-md-4 mb-4">
-              <div class="form-group">
-                  <!-- Name -->
-                  <label class="form-label">Password</label>
-                  <input type="text" id="password" formControlName="password" class="grey lighten-5 form-control"
-                  placeholder="Password" [ngClass]="{'is-invalid': submitted && addUserForm.controls.password.errors}" 
-                  [(ngModel)] = "user.password">
-                
-                  <div *ngIf="submitted && addUserForm.controls.email.errors" class="invalid-feedback">
-                    <div *ngIf="addUserForm.controls.email.errors.required">Password is required</div>
-                  </div>
-              </div>
-            </div>
 
             <div class="col-md-6 mb-4">
                 <div class="form-group">
@@ -86,6 +72,36 @@
                     </div>
                 </div>
               </div>
+            
+              <div class="col-md-6 mb-4">
+                  <div class="form-group">
+                      <!-- Name -->
+                      <label class="form-label">Password</label>
+                      <input type="text" id="password" formControlName="password" class="grey lighten-5 form-control"
+                      placeholder="Password" [ngClass]="{'is-invalid': submitted && addUserForm.controls.password.errors}" 
+                      [(ngModel)] = "user.password">
+                    
+                      <div *ngIf="submitted && addUserForm.controls.password.errors" class="invalid-feedback">
+                        <div *ngIf="addUserForm.controls.password.errors.required">Password is required</div>
+                      </div>
+                  </div>
+              </div>
+
+              <div class="col-md-6 mb-4">
+                  <div class="form-group">
+                      <!-- Name -->
+                      <label class="form-label">Confirm Password</label>
+                      <input type="text" id="password" formControlName="confirmPassword" class="grey lighten-5 form-control"
+                      placeholder="Password" [ngClass]="{'is-invalid': submitted && addUserForm.controls.confirmPassword.errors}" 
+                      [(ngModel)] = "confirmPassword" pattern="{{ addUserForm.controls.password.value }}">
+                    
+                      <div *ngIf="submitted && addUserForm.controls.confirmPassword.errors" class="invalid-feedback">
+                        <div *ngIf="addUserForm.controls.confirmPassword.errors.required">Password confirmation is required</div>
+                        <div *ngIf="addUserForm.controls.confirmPassword.errors.pattern"> Password & Confirm Password do not match.</div>
+                      </div>
+                  </div>
+              </div>    
+          
               <div class="col-md-12">
               <!-- Create button -->
               <div class="create-button">

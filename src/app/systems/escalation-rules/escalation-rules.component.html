@@ -1,3 +1,6 @@
+<div class="m-auto" style="position:fixed; right: 0; left: 0; z-index: 2; " [ngClass] = "{'d-none': isLoaded}">
+    <hm-component-loader></hm-component-loader>
+</div>
 <div class="page-header mb-4 d-flex">
     <h3 class="page-header-title">Escalation Rules</h3>
     <div class="float-right ml-auto">
@@ -23,8 +26,8 @@
 <div class="row mt-5 wow animated fadeIn" data-wow-delay="0.1s">
   <!-- Grid column -->
   <div class="col-lg-12 col-md-12 text-left">
-      <mdb-card class="container">
-      <table mdbTable #tableEl="mdbTable" class="">
+      <mdb-card>
+      <table mdbTable #tableEl="mdbTable" class="table-responsive-lg">
           <thead class="text-white">
           <tr>
           <th *ngFor="let head of headElements; let i = index" scope="col">{{head}}
@@ -35,6 +38,7 @@
           <tr *ngFor="let rule of rules; let i = index">
           <th *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex"
               scope="row">{{rule.name}}</th>
+          <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{rule.eventtype}}</td>
           <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{rule.description}}</td>
           <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{rule.nth_event}}</td>
           <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{rule.duration_str}}</td>
@@ -48,7 +52,7 @@
           </tbody>
           <tfoot class="w-100">
           <ng-template #noData>
-            <td colspan="7">
+            <td colspan="8">
               <hm-empty-data header="No Existing Escalation Rules" description="New Escalation rules will be displayed here">
                 <a action-button routerLink="/system/{{currentSystemId}}/rules/new">
                     <button type="button" mdbBtn size="sm" color="primary" class="text-white">Add new Rule</button>
@@ -57,7 +61,7 @@
             </td>
           </ng-template>            
           <tr>
-          <td colspan="7">
+          <td colspan="8">
               <mdb-table-pagination [tableEl]="tableEl" [searchDataSource]="rules"></mdb-table-pagination>
           </td>
           </tr>

@@ -1,16 +1,9 @@
-<div [hidden]="!loading" class="loader">
-<hm-loader></hm-loader>
-</div>
-
-<div [hidden]="loading" class="router-output">
-  <hm-top-nav [user]="currentUser"></hm-top-nav>
-  <hm-side-nav></hm-side-nav>
-  <main class="pt-5 mx-lg-5" [ngClass]="{'logged-out': !currentUser}">
+<div class="router-output">
+  <hm-top-nav></hm-top-nav>
+  <main class="pt-5" [ngClass]="{'logged-out': !currentUser}" style="margin-bottom: 80px;">
     <div class="container-fluid mt-5">
       <router-outlet></router-outlet>
     </div>
   </main>
-  <div>
-  </div>
   <hm-footer></hm-footer>
 </div>

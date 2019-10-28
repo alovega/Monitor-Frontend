@@ -4,12 +4,12 @@
   <div class="col-md-1"></div>
   <!-- Grid column -->
   <div class="col-md-12" *ngIf="router.url === realtimeUrl">
-    <div class="page-header d-flex">
+    <div class="page-header d-flex row">
       <div class="col-md-6">
       Create Realtime Incident
       </div>
       <div class="col-md-6">
-        <button class="float-right back-button" (click)="back()"><< back to incidents</button>
+        <button class="float-right back-button" (click)="back()"><i class="fas fa-angle-double-left"></i> back to incidents</button>
       </div>
     </div>
     <div class="clearfix"></div>
@@ -20,7 +20,7 @@
           <form [formGroup]="realtimeIncidentForm" (ngSubmit)="onSubmitRealtime()" class="text-center">
 
             <div class="form-group mb-4 row">
-              <div class="col-md-3">
+              <div class="col-md-4">
                 <!-- Name -->
                 <label class="form-label">Incident Name</label>
                 <input [ngClass]="{ 'is-invalid': submitted && realtimeIncidentForm.controls.incidentName.errors }" type="text" 
@@ -34,7 +34,7 @@
               </div>
 
               <!-- Incident Status -->
-              <div class="col-md-3">
+              <div class="col-md-4">
                   <label class="form-label">Incident status</label>
                   <select formControlName="incidentStatus" [ngClass]="{ 'is-invalid': submitted && realtimeIncidentForm.controls.incidentStatus.errors}"
                   class="grey lighten-5 browser-default custom-select form-control" [(ngModel)] = "incident.state">
@@ -49,7 +49,7 @@
                   </div>
               </div>
 
-              <div class="col-md-3">
+              <div class="col-md-4">
                 <!-- Escalation Levels -->
                 <label class="form-label">Escalation level</label>
                 <select formControlName="escalationLevel" class="grey lighten-5 browser-default custom-select form-control inline-rule"
@@ -63,23 +63,33 @@
                       <div *ngIf="realtimeIncidentForm.controls.escalationLevel.errors.required">Escalation Level is required</div>
                   </div>
               </div>
+            </div>
 
-              <div class="col-md-3">
-                  <label class="form-label" for="">Priority Level</label>
-                  <select formControlName="priorityLevel" [ngClass]="{ 'is-invalid': submitted && realtimeIncidentForm.controls.priorityLevel.errors }" 
-                  class="grey lighten-5 browser-default custom-select" [(ngModel)] = "incident.priority_level">
-                    <option selected value="1">Level 1</option>
-                    <option value="2">Level 2</option>
-                    <option value="3">Level 3</option>
-                    <option value="4">Level 4</option>
-                    <option value="5">Level 5</option>
-                  </select>  
-                  
-                  <!-- Priority level validation errors -->
-                  <div *ngIf="submitted && realtimeIncidentForm.controls.priorityLevel.errors" class="invalid-feedback">
-                      <div *ngIf="realtimeIncidentForm.controls.priorityLevel.errors.required">Priority Level is required</div>
-                  </div>
-              </div>
+            <div class="form-group mb-4 row">
+                <div class="col-md-6">
+                    <label class="form-label" for="">Priority Level</label>
+                    <select formControlName="priorityLevel" [ngClass]="{ 'is-invalid': submitted && realtimeIncidentForm.controls.priorityLevel.errors }" 
+                    class="grey lighten-5 browser-default custom-select" [(ngModel)] = "incident.priority_level">
+                      <option selected value="1">Level 1</option>
+                      <option value="2">Level 2</option>
+                      <option value="3">Level 3</option>
+                      <option value="4">Level 4</option>
+                      <option value="5">Level 5</option>
+                    </select>  
+                    
+                    <!-- Priority level validation errors -->
+                    <div *ngIf="submitted && realtimeIncidentForm.controls.priorityLevel.errors" class="invalid-feedback">
+                        <div *ngIf="realtimeIncidentForm.controls.priorityLevel.errors.required">Priority Level is required</div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label" for="">Assigned user</label>
+                    <select formControlName="user" [ngClass]="{ 'is-invalid': submitted && realtimeIncidentForm.controls.user.errors }" 
+                    class="grey lighten-5 browser-default custom-select" [(ngModel)] = "incident.user">
+                      <option selected [value]="user.id" *ngFor="let user of users">{{user.username}}</option>
+                    </select>  
+                </div>
             </div>
 
             <!-- Message -->
@@ -107,12 +117,12 @@
 
     <!-- Grid column -->
   <div class="col-md-12" *ngIf="router.url === maintenanceUrl">
-    <div class="page-header d-flex justify-content-end">
+    <div class="page-header d-flex row">
       <div class="col-md-6">
           Create Scheduled Maintenance
       </div>
       <div class="col-md-6">
-        <button class="float-right back-button" (click)="back()"><< back to incidents</button>
+        <button class="float-right back-button" (click)="back()"><i class="fas fa-angle-double-left"></i> back to incidents</button>
       </div>
     </div>
     <div class="clearfix"></div>

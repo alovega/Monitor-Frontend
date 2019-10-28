@@ -16,7 +16,6 @@ export class AppComponent implements OnInit {
   systems: any;
   currentSystem: any;
   currentSystemId: any;
-  loading;
   currentUser: any;
 
   constructor(
@@ -25,8 +24,20 @@ export class AppComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private authService: AuthenticationService
   ) {
-    this.loading = true;
     this.authService.currentUser.subscribe(user => this.currentUser = user);
+  }
+
+  ngOnInit() {
+    this.authService.currentUser.subscribe(
+      (user) => {
+        this.currentUser = user;
+        let issetCurrentSystem = this.systemService.checkCurrentSystem();
+        issetCurrentSystem ? this.currentSystem  = issetCurrentSystem : this.systemService.getCurrentSystem()
+        .subscribe(systems => {
+          this.currentSystem = systems[0];
+          this.currentSystemId = this.currentSystem.id;
+        });
+      });
     let body = document.getElementsByTagName('body')[0];
 
     if (this.currentUser) {
@@ -34,10 +45,6 @@ export class AppComponent implements OnInit {
     } else {
       body.classList.add('body-logged-out');
     }
-  }
-
-  ngOnInit() {
-    console.log(this.currentUser);
     // this.loading = false;
     // this.router.events.subscribe((event: Event) => {
     //   switch (true) {
@@ -58,18 +65,18 @@ export class AppComponent implements OnInit {
     //     }
     //   }
     // });
-    this.router.events
-    .subscribe((event) => {
-      if (event instanceof NavigationStart) {
-        this.loading = true;
-      } else if (
-        event instanceof NavigationError ||
-        event instanceof NavigationCancel ||
-        event instanceof NavigationEnd
-      ) {
-        setTimeout(() => this.loading = false, 500);
-      }
-    });
+    // this.router.events
+    // .subscribe((event) => {
+    //   if (event instanceof NavigationStart) {
+    //     this.loading = true;
+    //   } else if (
+    //     event instanceof NavigationError ||
+    //     event instanceof NavigationCancel ||
+    //     event instanceof NavigationEnd
+    //   ) {
+    //     setTimeout(() => this.loading = false, 500);
+    //   }
+    // });
   }
 
   logout() {

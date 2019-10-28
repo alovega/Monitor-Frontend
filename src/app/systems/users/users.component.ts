@@ -19,8 +19,9 @@ export class UsersComponent implements OnInit, AfterViewInit {
   currentSystem: string;
   users: any[];
   previous: any = [];
+  isLoaded = false;
 
-  headElements = ['Username', 'Email', 'First Name', 'Last Name', 'Status', 'Date Created', 'Action'];
+  headElements = ['Username', 'Email', 'First Name', 'Last Name', 'Active', 'Date Created', 'Action'];
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -49,11 +50,11 @@ export class UsersComponent implements OnInit, AfterViewInit {
           this.mdbTable.setDataSource(this.users);
           this.users = this.mdbTable.getDataSource();
           this.previous = this.mdbTable.getDataSource();
-          console.log(this.users);
+          // console.log(this.users);
         }
       }
     );
-
+    this.isLoaded = true;
   }
 
   ngAfterViewInit() {
@@ -97,6 +98,9 @@ export class UsersComponent implements OnInit, AfterViewInit {
                 'Deleted!',
                 'This user has been deleted.',
                 'success'
+              );
+              this.usersService.getUsers().subscribe(
+                (users) => this.users = users.data
               )} else {
               Swal.fire(
                 'Failed!',

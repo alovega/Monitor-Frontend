@@ -2,11 +2,13 @@ import { Component, OnInit, ViewChild, ElementRef, Input, OnChanges, SimpleChang
 import { Router, ActivatedRoute } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AddSystemComponent } from '../../../shared/add-system/add-system.component';
+import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
 
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { SystemService } from '../../../shared/system.service';
 import { System } from '../../../shared/models/system';
 import { AuthenticationService } from 'src/app/shared/auth/authentication.service';
+import { SideNavToggleService } from 'src/app/shared/side-nav-toggle.service';
 
 @Component({
   selector: 'hm-top-nav',
@@ -25,13 +27,16 @@ export class TopNavComponent implements OnInit, OnChanges {
   newSystem: System;
   submitted = false;
   @ViewChild('closeBtn', { static: false }) closeBtn: ElementRef;
+  showToggler = false;
 
   constructor(
     private systemService: SystemService,
     private router: Router,
     private modalService: NgbModal,
     private formBuilder: FormBuilder,
-    private authService: AuthenticationService
+    private authService: AuthenticationService,
+    public breakpointObserver: BreakpointObserver,
+    public sideNavService: SideNavToggleService
   ) {
     this.newSystem = new System();
   }
@@ -42,20 +47,36 @@ export class TopNavComponent implements OnInit, OnChanges {
         this.systems = result;
       })
     );
-    const issetCurrentSystem = this.systemService.checkCurrentSystem();
-    issetCurrentSystem ? this.currentSystem  = issetCurrentSystem : this.systemService.getCurrentSystem()
-    .subscribe(systems => {
-      this.currentSystem = systems[0];
-      this.currentSystemId = this.currentSystem.id;
+
+    this.breakpointObserver.observe(['(max-width: 1199.98px)'])
+    .subscribe((state: BreakpointState) => {
+      if (state.matches) {
+        this.showToggler = true;
+      } else {
+        this.showToggler = false;
+      }
     });
+    this.authService.currentUser.subscribe(
+      (user) => {
+        this.currentUser = user;
+        let issetCurrentSystem = this.systemService.checkCurrentSystem();
+        issetCurrentSystem ? this.currentSystem  = issetCurrentSystem : this.systemService.getCurrentSystem()
+        .subscribe(systems => {
+          this.currentSystem = systems[0];
+          this.currentSystemId = this.currentSystem.id;
+        });
+        this.systemService.getSystems().subscribe(
+          (result => {
+            this.systems = result;
+          })
+        );
+      });
     this.systemIsAvailable = true;
 
     this.addSystemForm = this.formBuilder.group({
       name: ['', Validators.required],
       description: ['', Validators.required],
     });
-
-    this.authService.currentUser.subscribe(user => this.currentUser = user);
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -70,6 +91,10 @@ export class TopNavComponent implements OnInit, OnChanges {
         this.currentSystem = result[0];
       })
     );
+  }
+
+  toggleSideNav(): void {
+    this.sideNavService.toggleSideNav();
   }
 
   onSubmit() {
