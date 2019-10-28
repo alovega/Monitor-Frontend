@@ -21,7 +21,7 @@
     <div class="col">
       <!-- Endpoint -->
       <label>URL</label>
-      <input type="text" id="defaultContactFormEndpoint" class="form-control mb-4" placeholder="URL" formControlName="URL" [(ngModel)]="data.endpoint" >
+      <input type="text" id="defaultContactFormEndpoint" class="form-control mb-4" placeholder="URL" formControlName="URL" [(ngModel)]="data.url" >
       <div *ngIf="endpointForm.controls['URL'].invalid && (endpointForm.controls['URL'].dirty || endpointForm.controls['URL'].touched)" class="invalid-feedback">
         <div *ngIf="endpointForm.controls['URL'].errors.required">
           A URL is required.

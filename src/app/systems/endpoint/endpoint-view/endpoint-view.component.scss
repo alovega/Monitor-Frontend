@@ -36,5 +36,9 @@ table.table a{
     color: white;
 }
 .row{
-    margin-bottom: 1.5rem !important;
+    margin-bottom: 1.5rem !important
+}
+
+td{
+    max-width: 200px;
 }
