@@ -3,7 +3,7 @@ export class Endpoint {
     name: string;
     description: string;
     endpoint_id: string;
-    endpoint:string
+    url:string
     system_id: string;
     optimal_response_time: number;
     endpoint_type: string;

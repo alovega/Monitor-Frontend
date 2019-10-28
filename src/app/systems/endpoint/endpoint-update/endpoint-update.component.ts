@@ -45,6 +45,7 @@ export class EndpointUpdateComponent implements OnInit {
     this.endpointService.getItem(this.endpoint_id).subscribe(response => {
       if (response.code === "800.200.001"){
         this.data = response.data.endpoint
+        console.log(this.data)
         console.log('successfully fetched endpoint %s', response.code)
       }
       else{
@@ -55,7 +56,7 @@ export class EndpointUpdateComponent implements OnInit {
     this.updateForm = this.fb.group({
         EndpointName: ['', Validators.required],
         Description: ['', [Validators.required, Validators.minLength(10)]],
-        Endpoint: ['', Validators.required],
+        Url: ['', Validators.required],
         OptimalResponseTime: ['', Validators.required],
         State: ['', Validators.required]
     })

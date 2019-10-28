@@ -23,11 +23,11 @@
       </div>
       <div class="col">
         <!-- Endpoint -->
-        <label>Endpoint</label>
-        <input type="text" id="defaultContactFormEndpoint" class="form-control mb-4" placeholder="Endpoint" formControlName="Endpoint" [(ngModel)]="data[0].endpoint" >
-        <div *ngIf="updateForm.controls['Endpoint'].invalid && (updateForm.controls['Endpoint'].dirty || updateForm.controls['Endpoint'].touched)" class="invalid-feedback">
-          <div *ngIf="updateForm.controls['Endpoint'].errors.required">
-            Endpoint is required.
+        <label>Url</label>
+        <input type="text" id="defaultContactFormUrl" class="form-control mb-4" placeholder="Url" formControlName="Url" [(ngModel)]="data[0].url" >
+        <div *ngIf="updateForm.controls['Url'].invalid && (updateForm.controls['Url'].dirty || updateForm.controls['Url'].touched)" class="invalid-feedback">
+          <div *ngIf="updateForm.controls['Url'].errors.required">
+            Url is required.
           </div>
         </div>
       </div>
