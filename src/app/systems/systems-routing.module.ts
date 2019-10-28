@@ -22,6 +22,7 @@ const routes: Routes = [
   { path: ':system-id/users', loadChildren: () => import('./users/users.module').then(m => m.UsersModule), canLoad: [AuthGuardService] },
   { path: ':system-id/endpoints', loadChildren: () => import('./endpoint/endpoint.module').then(m => m.EndpointModule) },
   { path: ':system-id/recipients', loadChildren: () => import('./recipients/recipients.module').then(m => m.RecipientsModule) },
+  { path: ':system-id/events', loadChildren: () => import('./events/events.module').then(m => m.EventsModule), canLoad: [AuthGuardService]},
 ];
 
 @NgModule({

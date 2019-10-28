@@ -20,8 +20,8 @@
 <div class="row mt-5 wow animated fadeIn" data-wow-delay="0.1s">
     <!-- Grid column -->
     <div class="col-lg-12 col-md-12 text-left">
-        <mdb-card class="container">
-        <table mdbTable #tableEl="mdbTable" class="">
+        <mdb-card>
+        <table mdbTable #tableEl="mdbTable" class="table-responsive">
             <thead class="text-white">
             <tr>
             <th *ngFor="let head of headElements; let i = index" scope="col">{{head}}
@@ -35,10 +35,10 @@
             <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{user.email}}</td>
             <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{user.first_name}}</td>
             <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{user.last_name}}</td>
-            <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{user.is_active}}</td>
+            <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{ user.is_active }}</td>
             <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{user.date_joined | date:'MMMM d, yyyy'}}</td>
             <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">
-                <span mdbIcon class="fas fa-trash-alt mr-2 text-danger" (click)="deleteUser()"></span>
+                <span mdbIcon class="fas fa-trash-alt mr-2 text-danger" (click)="deleteUser(user.id)"></span>
                 <span mdbIcon class="fas fa-edit text-success"></span>
             </td>
             </tr>

@@ -10,7 +10,6 @@ import { IncidentsComponent } from './incidents.component';
 import { OpenIncidentsComponent } from './open-incidents/open-incidents.component';
 import { RealtimeIncidentsComponent } from './realtime-incidents/realtime-incidents.component';
 import { MaintenanceComponent } from './maintenance/maintenance.component';
-import { UpdateIncidentComponent } from './update-incident/update-incident.component';
 import { CreateIncidentComponent } from './create-incident/create-incident.component';
 import { SharedModule } from '../../shared/shared.module';
 import { SearchIncidentsComponent } from './search-incidents/search-incidents.component';
@@ -22,9 +21,8 @@ import { SearchIncidentsComponent } from './search-incidents/search-incidents.co
     OpenIncidentsComponent,
     RealtimeIncidentsComponent,
     MaintenanceComponent,
-    UpdateIncidentComponent,
     CreateIncidentComponent,
-    SearchIncidentsComponent
+    SearchIncidentsComponent,
   ],
   imports: [
     CommonModule,

@@ -16,7 +16,6 @@ export class AppComponent implements OnInit {
   systems: any;
   currentSystem: any;
   currentSystemId: any;
-  loading;
   currentUser: any;
 
   constructor(
@@ -25,7 +24,6 @@ export class AppComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private authService: AuthenticationService
   ) {
-    this.loading = true;
     this.authService.currentUser.subscribe(user => this.currentUser = user);
     let body = document.getElementsByTagName('body')[0];
 
@@ -58,18 +56,18 @@ export class AppComponent implements OnInit {
     //     }
     //   }
     // });
-    this.router.events
-    .subscribe((event) => {
-      if (event instanceof NavigationStart) {
-        this.loading = true;
-      } else if (
-        event instanceof NavigationError ||
-        event instanceof NavigationCancel ||
-        event instanceof NavigationEnd
-      ) {
-        setTimeout(() => this.loading = false, 500);
-      }
-    });
+    // this.router.events
+    // .subscribe((event) => {
+    //   if (event instanceof NavigationStart) {
+    //     this.loading = true;
+    //   } else if (
+    //     event instanceof NavigationError ||
+    //     event instanceof NavigationCancel ||
+    //     event instanceof NavigationEnd
+    //   ) {
+    //     setTimeout(() => this.loading = false, 500);
+    //   }
+    // });
   }
 
   logout() {

@@ -1,4 +1,4 @@
-import { NgModule, NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { NgModule, NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA, Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ChartsModule, WavesModule } from 'angular-bootstrap-md';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -23,6 +23,8 @@ import { LoaderComponent } from './loader/loader.component';
 import { AddSystemComponent } from './add-system/add-system.component';
 import { DeleteSwalComponent } from './alerts/delete-swal/delete-swal.component';
 import { LoginComponent } from './auth/login/login.component';
+import { ComponentLoaderComponent } from './component-loader/component-loader.component';
+import { SideNavToggleService } from './side-nav-toggle.service';
 
 @NgModule({
   declarations: [
@@ -38,7 +40,8 @@ import { LoginComponent } from './auth/login/login.component';
     LoaderComponent,
     AddSystemComponent,
     DeleteSwalComponent,
-    LoginComponent
+    LoginComponent,
+    ComponentLoaderComponent
   ],
   imports: [
     CommonModule,
@@ -64,14 +67,16 @@ import { LoginComponent } from './auth/login/login.component';
     LoaderComponent,
     AddSystemComponent,
     DeleteSwalComponent,
-    LoginComponent
+    LoginComponent,
+    ComponentLoaderComponent
   ],
   providers: [SystemService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: HttpInterceptorService,
       multi: true
-    }
+    },
+    SideNavToggleService
   ],
   schemas: [NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA]
 })

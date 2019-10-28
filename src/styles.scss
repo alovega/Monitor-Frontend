@@ -26,7 +26,11 @@ body{
 
 @media (max-width: 1199.98px) {
   .sidebar-fixed {
-    display: none; } }
+    display: block; 
+    width: 200px !important;
+    padding: 0.5rem !important;
+  }
+}
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
@@ -87,15 +91,13 @@ top:-11px
   transition: opacity .8s ease-out;
   margin: auto; 
 }
+// .full-page {
+//   min-height: 50vh;
+// }
 
-app-root:empty + .loading {
-opacity: 1;
-z-index: 100;
-h1 {
-  font-family: "courier", monospace;
-  color: #EEE;
-  margin-bottom: 50px;
-}
+.app-root {
+  margin-left: 1rem;
+  margin-right: 1rem;
 }
 
 .back-button{
@@ -107,4 +109,24 @@ h1 {
   right: 0;
   padding: 3px 7px 3px 7px;
   font-weight: 500;
+}
+
+/* default .loading styles, .loading should be invisible, opacity: 0, z-index: -1 */
+.loading {
+  opacity: 0;
+  transition: opacity 0 ease-in-out 1s;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  display: none;
+}
+
+/* .loading screen is visible when app is not bootstrapped yet, my-app is empty */
+hm-root:empty + .loading {
+  opacity: 1;
+  z-index: 100;
+  transition: opacity 0 ease-in-out 1s;
+  display: block;
 }
