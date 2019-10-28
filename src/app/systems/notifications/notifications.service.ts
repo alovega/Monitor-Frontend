@@ -35,7 +35,7 @@ export class NotificationsService {
     return this.http.post<any>(this.notificationUrl + '/get_notifications/', {
       system_id: system_id,
     }).pipe( 
-      map(response => response.data.notifications.filter(data => data.notification_type__name === 'Email'),
+      map(response => response.data.notifications.filter(data => data.type === 'Email'),
       retry(2)
     ),catchError(this.handleError))
   }
@@ -44,7 +44,7 @@ export class NotificationsService {
     return this.http.post<any>(this.notificationUrl + '/get_notifications/', {
       system_id: system_id,
     }).pipe( 
-      map(response => response.data.notifications.filter(data => data.notification_type__name === 'Sms'),
+      map(response => response.data.notifications.filter(data => data.type === 'Sms'),
       retry(2)
     ),catchError(this.handleError))
   }

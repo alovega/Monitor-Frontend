@@ -1,9 +1,7 @@
-import { MdbTablePaginationComponent, MdbTableDirective } from 'angular-bootstrap-md';
+import { MdbTablePaginationComponent, MdbTableDirective, MdbTableSortDirective } from 'angular-bootstrap-md';
 import { Component, OnInit, ViewChild, AfterViewInit, HostListener, ChangeDetectorRef } from '@angular/core';
 import {EndpointService} from '../endpoint.service';
-import {Endpoint} from '../endpoint';
 import { ActivatedRoute } from '@angular/router';
-import { MatPaginator, MatTableDataSource } from '@angular/material';
 import Swal from 'sweetalert2';
  
 @Component({
@@ -14,13 +12,13 @@ import Swal from 'sweetalert2';
 export class EndpointViewComponent implements OnInit, AfterViewInit {
   @ViewChild(MdbTablePaginationComponent, { static: true }) mdbTablePagination: MdbTablePaginationComponent;
   @ViewChild(MdbTableDirective, { static: true }) mdbTable: MdbTableDirective;
+  @ViewChild(MdbTableSortDirective, { static: true }) mdbTableSort: MdbTableSortDirective;
   elements: any;
   searchText: string = '';
-  previous: string;
-  maxVisibleItems: number=8;
+  previous: any = [];
 
-  dataSource:any;
-  headElements = ['Endpoint', 'Endpoint Type', 'Date Created', 'State', 'Action'];
+  
+  headElements = ['endpoint', 'description', 'responseTime', 'type',  'dateCreated', 'status', 'action'];
   currentSystem: any;
   currentSystemId: any;
   endpoint_id:any;
@@ -31,7 +29,7 @@ export class EndpointViewComponent implements OnInit, AfterViewInit {
     private activatedRoute: ActivatedRoute,
     ) {}
     @HostListener('input') oninput() {
-      this.mdbTablePagination.searchText = this.searchText;
+      this.searchItems();
     }
   ngOnInit() {
     this.endpoint_id = this.activatedRoute.snapshot.params["id"];
@@ -40,25 +38,24 @@ export class EndpointViewComponent implements OnInit, AfterViewInit {
         this.currentSystemId = param['system-id'];
         console.log(this.currentSystemId);
       });
-      this.endpointService.getEndpoints(this.currentSystemId)
-      .subscribe((data) => {
-        this.elements = data
+
+    this.endpointService.getEndpoints(this.currentSystemId).subscribe(
+      (data) => {
+        console.log(data)
+        this.elements = data;
         this.mdbTable.setDataSource(this.elements);
         this.elements = this.mdbTable.getDataSource();
         this.previous = this.mdbTable.getDataSource();
-      });
+    });
   }
 
   ngAfterViewInit() {
-    this.mdbTablePagination.setMaxVisibleItemsNumberTo(this.maxVisibleItems);
+    this.mdbTablePagination.setMaxVisibleItemsNumberTo(5);
     this.mdbTablePagination.calculateFirstItemIndex();
     this.mdbTablePagination.calculateLastItemIndex();
     this.cdRef.detectChanges();
   }
 
-  showEndpoints(currentSystemId) {
-   return 
-  }
   searchItems() {
     const prev = this.mdbTable.getDataSource();
     console.log(prev)
@@ -72,13 +69,6 @@ export class EndpointViewComponent implements OnInit, AfterViewInit {
       this.elements = this.mdbTable.searchLocalDataBy(this.searchText);
       this.mdbTable.setDataSource(prev);
     }
-    this.mdbTablePagination.calculateFirstItemIndex();
-    this.mdbTablePagination.calculateLastItemIndex();
-
-    this.mdbTable.searchDataObservable(this.searchText).subscribe(() => {
-      this.mdbTablePagination.calculateFirstItemIndex();
-      this.mdbTablePagination.calculateLastItemIndex();
-    });
   }
   delete(endpoint_id){
     console.log(endpoint_id)

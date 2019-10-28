@@ -1,7 +1,10 @@
+<div class="col-md-6 px-0 top-controls">
+    <input class="form-control" type="text"  [(ngModel)]="searchText" id="search" placeholder="search" mdbInput>
+</div>
 <table mdbTable #tableEl="mdbTable" class="z-depth-1" >
         <thead class="white-text">
           <tr>
-            <th *ngFor="let head of headElements" scope="col">{{head}} </th>
+            <th *ngFor="let head of headElements; let i = index;" aria-controls="tableSort" scope="col" [mdbTableSort]="elements" [sortBy]="headElements[i]" scope="col">{{head | titlecase}} <mdb-icon fas icon="sort"></mdb-icon></th>
           </tr>
         </thead>
         <tbody *ngIf="elements.length > 0; else noElements">
@@ -10,8 +13,8 @@
               {{el.message}}
           </th>
           <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{el.recipient}}</td>
-          <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{el.date_created}}</td>
-          <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{el.state__name}}</td>
+          <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{el.dateCreated | date}}</td>
+          <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{el.status}}</td>
           </tr>
         </tbody>
         <tfoot class="grey lighten-5 w-100">

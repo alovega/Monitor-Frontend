@@ -13,7 +13,7 @@
 <table mdbTable id="tableSort" #tableEl="mdbTable" class="z-depth-1">
       <thead class="white-text">
           <tr>
-          <th *ngFor="let head of headElements; let i = index" aria-controls="tableSort" scope="col" [mdbTableSort]="elements" [sortBy]="headElements[i]">{{head | titlecase}} <mdb-icon fas icon="sort"></mdb-icon></th>
+          <th *ngFor="let head of headElements let i = index" aria-controls="tableSort" scope="col" [mdbTableSort]="elements" [sortBy]="headElements[i]">{{head | titlecase}} <mdb-icon fas icon="sort"></mdb-icon></th>
           </tr>
       </thead>
       <tbody *ngIf="elements.length > 0; else noElements">
@@ -21,9 +21,11 @@
           <th scope="row" *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex" scope="row">
               {{el.name}}
           </th>
-          <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{el.endpoint_type__name}}</td>
-          <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{el.date_created}}</td>
-          <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{el.state__name}}</td>
+          <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{el.description}}</td>
+          <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{el.responseTime}}</td>
+          <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{el.type}}</td>
+          <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{el.dateCreated | date}}</td>
+          <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{el.status}}</td>
           <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">
               <a class="fas fa-edit text-success"  routerLinkActive="active" routerLink="/system/{{currentSystemId}}/endpoints/endpoint-update/{{el.id}}" ></a>
               <a class="fas fa-trash-alt mr-2 text-danger" [disabled]="elements" (click)="delete(el.id)"></a>

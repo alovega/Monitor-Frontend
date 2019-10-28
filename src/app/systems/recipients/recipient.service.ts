@@ -36,7 +36,7 @@ public getEmailRecipients(system_id): Observable<any> {
   return this.http.post<any>(this.endpointUrl + '/' + 'get_recipients' + '/', {
     system_id: system_id,
   }).pipe(
-    map(response => response.data.recipients.filter(data => data.notification_type__name === 'Email'),
+    map(response => response.data.recipients.filter(data => data.type === 'Email'),
     retry(2)),
     catchError(this.handleError),
    
@@ -48,7 +48,7 @@ public getSmsRecipients(system_id): Observable<any> {
   return this.http.post<any>(this.endpointUrl + '/' + 'get_recipients' + '/', {
     system_id: system_id,
   }).pipe(
-    map(response => response.data.recipients.filter(data => data.notification_type__name === 'Sms'),
+    map(response => response.data.recipients.filter(data => data.type === 'Sms'),
     retry(2)),
     catchError(this.handleError)
   );

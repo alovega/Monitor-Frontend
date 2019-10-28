@@ -3,14 +3,15 @@
         <div class="col-lg-8 order-lg-2">
             <ul class="nav nav-tabs">
                 <li class="nav-item">
+                    <a routerLink="edit" routerLinkActive="active" data-toggle="tab" class="nav-link">Edit</a>
+                </li>
+                <li class="nav-item">
                     <a routerLink="details" routerLinkActive="active" data-toggle="tab" class="nav-link">Profile</a>
                 </li>
                 <li class="nav-item">
                     <a routerLink="recent-notifications" routerLinkActive="active" data-toggle="tab" class="nav-link">Recent Notifications</a>
                 </li>
-                <li class="nav-item">
-                    <a routerLink="edit" routerLinkActive="active" data-toggle="tab" class="nav-link">Edit</a>
-                </li>
+                
             </ul>
             <router-outlet></router-outlet>
         </div>

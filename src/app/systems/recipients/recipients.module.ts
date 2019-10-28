@@ -1,7 +1,7 @@
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import {MatTableModule} from '@angular/material/table';
 
 import { RecipientsRoutingModule } from './recipients-routing.module';
@@ -17,6 +17,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
   declarations: [RecipientsComponent, RecipientFormComponent, EmailRecipientsComponent, SmsRecipientsComponent, RecipientUpdateComponent],
   imports: [
     CommonModule,
+    FormsModule,
     ReactiveFormsModule,
     RecipientsRoutingModule,
     MatTableModule,

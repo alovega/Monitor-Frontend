@@ -56,28 +56,6 @@
         </div>
     </div>
     <div class="form-group row">
-        <label class="col-lg-3 col-form-label form-control-label">Password</label>
-        <div class="col-lg-9">
-            <input class="form-control" type="text" placeholder="Password"
-            [ngClass]="{ 'is-invalid': submitted && f.Password.errors }">
-            <div *ngIf="submitted && updateForm.controls['Password'].errors" class="invalid-feedback">
-                <div *ngIf="updateForm.controls['Password'].errors.required">password is required</div>
-                <div *ngIf="updateForm.controls['Password'].errors.minlength">must be atleast 6 characters</div>
-            </div>
-        </div>
-    </div>
-    <div class="form-group row">
-        <label class="col-lg-3 col-form-label form-control-label">Confirm Password</label>
-        <div class="col-lg-9">
-            <input class="form-control" formControlName="ConfirmPassword" type="text" placeholder="Confirm Password"
-            [ngClass]="{ 'is-invalid': submitted && f.ConfirmPassword.errors }">
-            <div *ngIf="submitted && updateForm.controls['ConfirmPassword'].errors" class="invalid-feedback">
-              <div *ngIf="updateForm.controls['ConfirmPassword'].errors.required">Confirm Password is required</div>
-              <div *ngIf="updateForm.controls['ConfirmPassword'].errors.mustMatch">Passwords must match</div>
-            </div>
-        </div>
-    </div>
-    <div class="form-group row">
         <label class="col-lg-3 col-form-label form-control-label"></label>
       <div class="col-lg-9">
           <button mdbBtn type="button" class="btn btn-blue-grey waves-light" color="primary" mdbWavesEffect

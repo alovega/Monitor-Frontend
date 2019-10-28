@@ -1,5 +1,5 @@
-import { MdbTablePaginationComponent, MdbTableDirective } from 'angular-bootstrap-md';
-import { Component, OnInit, ViewChild, AfterViewInit, ChangeDetectorRef } from '@angular/core';
+import { MdbTablePaginationComponent, MdbTableDirective, MdbTableSortDirective } from 'angular-bootstrap-md';
+import { Component, OnInit, ViewChild, AfterViewInit, HostListener, ChangeDetectorRef } from '@angular/core';
 import {NotificationsService} from '../notifications.service';
 import { Notification } from '../notification'
 import { ActivatedRoute } from '@angular/router';
@@ -9,24 +9,27 @@ import { ActivatedRoute } from '@angular/router';
   templateUrl: './email-notification.component.html',
   styleUrls: ['./email-notification.component.scss']
 })
-export class EmailNotificationComponent implements OnInit {
+export class EmailNotificationComponent implements OnInit, AfterViewInit {
   @ViewChild(MdbTablePaginationComponent, { static: true }) mdbTablePagination: MdbTablePaginationComponent;
   @ViewChild(MdbTableDirective, { static: true }) mdbTable: MdbTableDirective;
+  @ViewChild(MdbTableSortDirective, { static: true }) mdbTableSort: MdbTableSortDirective;
   firstItemIndex: any;
   lastItemIndex: any;
+  searchText:string = '';
   elements: any;
   previous: any = [];
   currentSystem: any;
   currentSystemId: any;
-  headElements: string[] = [ 'Notification', 'Recipient', 'Date Created', 'Status'];
+  headElements: string[] = [ 'message', 'recipient', 'dateCreated', 'status'];
 
   constructor(
     private notificationsService: NotificationsService, 
     private cdRef: ChangeDetectorRef,
     private activatedRoute: ActivatedRoute
-    ) {
-    this.elements = []
-   }
+    ) {}
+    @HostListener('input') oninput() {
+      this.searchItems();
+    }
 
   ngOnInit() {
     this.activatedRoute.parent.params.subscribe(
@@ -34,10 +37,15 @@ export class EmailNotificationComponent implements OnInit {
         this.currentSystemId = param['system-id'];
         console.log(this.currentSystemId);
       });
-    this.elements = this.showRecipients()
-    this.mdbTable.setDataSource(this.elements);
-    this.elements = this.mdbTable.getDataSource();
-    this.previous = this.mdbTable.getDataSource();
+      this.notificationsService.getEmailNotifications(this.currentSystemId)
+       .subscribe((data:Notification[]) => {
+         console.log(data)
+          this.elements = data
+          this.mdbTable.setDataSource(this.elements);
+          this.elements = this.mdbTable.getDataSource();
+          this.previous = this.mdbTable.getDataSource();
+       });
+    
   }
 
   ngAfterViewInit() {
@@ -47,24 +55,18 @@ export class EmailNotificationComponent implements OnInit {
     this.cdRef.detectChanges();
   }
 
-  searchItems(search: string) {
+  searchItems() {
     const prev = this.mdbTable.getDataSource();
+    console.log(prev)
 
-    if (!search) {
+    if (!this.searchText) {
       this.mdbTable.setDataSource(this.previous);
       this.elements = this.mdbTable.getDataSource();
     }
 
-    if (search) {
-      this.elements = this.mdbTable.searchLocalDataBy(search);
+    if (this.searchText) {
+      this.elements = this.mdbTable.searchLocalDataBy(this.searchText);
       this.mdbTable.setDataSource(prev);
     }
   }
-  showRecipients() {
-    return this.notificationsService.getEmailNotifications(this.currentSystemId)
-       .subscribe((data:Notification[]) => {
-         console.log(data)
-         this.elements = data
-       });
-   }
 }

@@ -1,5 +1,5 @@
-import { MdbTablePaginationComponent, MdbTableDirective } from 'angular-bootstrap-md';
-import { Component, OnInit, ViewChild, AfterViewInit, ChangeDetectorRef } from '@angular/core';
+import { MdbTablePaginationComponent, MdbTableDirective, MdbTableSortDirective } from 'angular-bootstrap-md';
+import { Component, OnInit, ViewChild, AfterViewInit,HostListener,ChangeDetectorRef } from '@angular/core';
 import { RecipientService } from '../recipient.service'
 import { ActivatedRoute } from '@angular/router';
 import Swal from 'sweetalert2';
@@ -9,23 +9,26 @@ import Swal from 'sweetalert2';
   templateUrl: './sms-recipients.component.html',
   styleUrls: ['./sms-recipients.component.scss']
 })
-export class SmsRecipientsComponent implements OnInit {
+export class SmsRecipientsComponent implements OnInit, AfterViewInit {
   @ViewChild(MdbTablePaginationComponent, { static: true }) mdbTablePagination: MdbTablePaginationComponent;
   @ViewChild(MdbTableDirective, { static: true }) mdbTable: MdbTableDirective;
+  @ViewChild(MdbTableSortDirective, { static: true }) mdbTableSort: MdbTableSortDirective;
   firstItemIndex: any;
   lastItemIndex: any;
   elements: any;
   currentSystem: any;
+  searchText: string = '';
   currentSystemId: any;
   previous: any = [];
-  headElements: string[] = [ 'Phone Number','EscalationLevels', 'Username', 'Date Created','Status','Action'];
+  headElements: string[] = [ 'phoneNumber','escalationLevels', 'userName', 'dateCreated','status','action'];
   constructor(
     private recipientService:RecipientService, 
     private cdRef: ChangeDetectorRef,
     private activatedRoute: ActivatedRoute 
-    ) { 
-    this.elements = []
-  }
+    ) {}
+    @HostListener('input') oninput() {
+      this.searchItems();
+    }
 
   ngOnInit() {
     this.activatedRoute.parent.params.subscribe(
@@ -33,11 +36,14 @@ export class SmsRecipientsComponent implements OnInit {
         this.currentSystemId = param['system-id'];
         console.log(this.currentSystemId);
       });
-    this.elements = this.showRecipients()
-    console.log(this.elements)
-    this.mdbTable.setDataSource(this.elements);
-    this.elements = this.mdbTable.getDataSource();
-    this.previous = this.mdbTable.getDataSource();
+      this.recipientService.getSmsRecipients(this.currentSystemId)
+       .subscribe((response) => {
+         console.log(response)
+          this.elements = response
+          this.mdbTable.setDataSource(this.elements);
+          this.elements = this.mdbTable.getDataSource();
+          this.previous = this.mdbTable.getDataSource();
+       });
   }
 
   ngAfterViewInit() {
@@ -47,26 +53,23 @@ export class SmsRecipientsComponent implements OnInit {
     this.cdRef.detectChanges();
   }
 
-  searchItems(search: string) {
+  searchItems() {
     const prev = this.mdbTable.getDataSource();
+    console.log(prev)
 
-    if (!search) {
+    if (!this.searchText) {
       this.mdbTable.setDataSource(this.previous);
       this.elements = this.mdbTable.getDataSource();
     }
 
-    if (search) {
-      this.elements = this.mdbTable.searchLocalDataBy(search);
+    if (this.searchText) {
+      this.elements = this.mdbTable.searchLocalDataBy(this.searchText);
       this.mdbTable.setDataSource(prev);
     }
   }
 
   showRecipients() {
-    return this.recipientService.getSmsRecipients(this.currentSystemId)
-       .subscribe((response) => {
-         console.log(response)
-         this.elements = response
-       });
+    return 
    }
 
    delete(recipient_id){
