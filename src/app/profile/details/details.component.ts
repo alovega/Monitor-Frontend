@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ProfileService } from '../profile.service';
+import { map, tap} from 'rxjs/operators';
 
 @Component({
   selector: 'hm-details',
@@ -6,10 +8,16 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./details.component.scss']
 })
 export class DetailsComponent implements OnInit {
+  data: any
 
-  constructor() { }
+  constructor(private profileService:ProfileService) { }
 
   ngOnInit() {
+    this.profileService.getLoggedInUserDetail().subscribe(
+    (data) => {
+        this.data = data
+        console.log(this.data)
+      })
   }
 
 }

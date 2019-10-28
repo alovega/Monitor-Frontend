@@ -1,52 +1,33 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit, Input, OnChanges, SimpleChanges} from '@angular/core';
 
 @Component({
   selector: 'hm-bar-graph',
   templateUrl: './bar-graph.component.html',
   styleUrls: ['./bar-graph.component.scss']
 })
-export class BarGraphComponent implements OnInit {
+export class BarGraphComponent implements OnInit, OnChanges {
   public chartType = 'bar';
-  public chartDatasets: Array<any> = [{
-      data: [12, 19, 3, 5, 2, 3],
-      label: '# of Votes',
-      borderWidth: 1
-    }];
-
-  public chartLabels: Array<any> = ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'];
-
-  public chartColors: Array<any> = [{
-    backgroundColor: [
-      'rgba(255, 99, 132, 0.2)',
-      'rgba(54, 162, 235, 0.2)',
-      'rgba(255, 206, 86, 0.2)',
-      'rgba(75, 192, 192, 0.2)',
-      'rgba(153, 102, 255, 0.2)',
-      'rgba(255, 159, 64, 0.2)'
-    ],
-    borderColor: [
-      'rgba(255,99,132,1)',
-      'rgba(54, 162, 235, 1)',
-      'rgba(255, 206, 86, 1)',
-      'rgba(75, 192, 192, 1)',
-      'rgba(153, 102, 255, 1)',
-      'rgba(255, 159, 64, 1)'
-    ],
-  }];
-
-  public chartOptions: any = {
-    responsive: true,
-    scales: {
-      yAxes: [{
-        ticks: {
-          beginAtZero: true
-        }
-      }]
-    }
-  };
+  @Input() chartData;
+  public chartDatasets;
+  public chartLabels;
+  public chartColors;
+  public chartOptions;
   constructor() { }
 
   ngOnInit() {
+    this.chartDatasets = this.chartData.chartDatasets;
+    this.chartLabels = this.chartData.chartLabels;
+    this.chartColors = this.chartData.chartColors;
+    this.chartOptions = this.chartData.chartOptions;
+    console.log(this.chartDatasets, this.chartData.chartDatasets);
+  }
+  ngOnChanges(changes: SimpleChanges) {
+    console.log(changes.chartData.currentValue);
+    if (changes.chartData.currentValue) {
+        this.chartData = changes.chartData.currentValue;
+        this.chartDatasets = this.chartData.chartDataSets;
+        this.chartLabels = this.chartData.chartLabels;
+    }
   }
 
   public chartClicked(e: any): void { }

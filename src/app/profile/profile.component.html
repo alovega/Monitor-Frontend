@@ -38,9 +38,9 @@
                     alt="avatar mx-auto white" class="rounded-circle img-fluid"> -->
                 </div>
         
-                <div class="card-body">
+                <div class="card-body" *ngFor="let data of data;">
                   <!--Name-->
-                  <h4 class="card-title mt-1">User Name</h4>
+                  <h4 class="card-title mt-1">{{data.userName}}</h4>
                   <hr>
                   <!--Quotation-->
                   <p><i class="fas fa-quote-left"></i> Welcome to Hela monitor.</p>

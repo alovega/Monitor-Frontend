@@ -39,6 +39,35 @@ export class DashboardComponent implements OnInit {
     }
   };
 
+  public systemStatusGraph = {
+    chartType: 'bar',
+    chartDatasets: [
+      { data: [], label: 'System Status per hour' },
+    ],
+    chartLabels: [],
+    chartColors: [
+      {
+        backgroundColor: ['rgba(54, 162, 235, 0.2)', 'rgba(255, 99, 132, 0.2)'],
+        borderColor: ['rgba(54, 162, 235, 1)', 'rgba(255,99,132,1)',],
+        borderWidth: 2,
+      }
+    ],
+    chartOptions: {
+      responsive: true,
+      scales: {
+        yAxes: [{
+          ticks: {
+            beginAtZero: true
+          },
+          scaleLabel: {
+            display: true,
+            labelString: 'System Status per hour'
+          }
+        }]
+      }
+    }
+  };
+
   constructor(
     public graphsService: GraphsService,
     public systemService: SystemService
@@ -50,6 +79,14 @@ export class DashboardComponent implements OnInit {
       (result => {
         this.errorRateGraph.chartLabels = result.labels;
         this.errorRateGraph.chartDatasets[0].data = result.datasets;
+      })
+    );
+
+    this.graphsService.getSystemStatus().subscribe(
+      (result => {
+        this.systemStatusGraph.chartLabels = result.labels;
+        this.systemStatusGraph.chartDatasets[0].data = result.datasets;
+        console.log(this.systemStatusGraph.chartDatasets[0])
       })
     );
   }
