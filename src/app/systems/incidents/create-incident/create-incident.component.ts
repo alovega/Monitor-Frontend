@@ -7,6 +7,7 @@ import Swal from 'sweetalert2';
 
 import { AbstractControl, FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { SystemService } from 'src/app/shared/system.service';
+import { LookUpService } from 'src/app/shared/look-up.service';
 
 @Component({
   selector: 'hm-create-incident',
@@ -24,6 +25,7 @@ export class CreateIncidentComponent implements OnInit {
   systemId: string;
   currentSystem: any;
   incident: Incident;
+  users: any;
 
   constructor(
     public router: Router,
@@ -31,11 +33,16 @@ export class CreateIncidentComponent implements OnInit {
     private location: Location,
     private incidentService: IncidentService,
     private formBuilder: FormBuilder,
-    private systemService: SystemService) {
+    private systemService: SystemService,
+    private lookupService: LookUpService
+    ) {
       this.incident = new Incident();
    }
 
   ngOnInit() {
+    this.lookupService.getUsers().subscribe(
+      (users) => this.users = users
+    );
     this.activatedRoute.parent.params.subscribe(
       (param: any) => {
         this.systemId = param['system-id'];
@@ -60,10 +67,10 @@ export class CreateIncidentComponent implements OnInit {
       incidentStatus: ['Investigating', Validators.required],
       message: ['', Validators.required],
       escalationLevel: ['High', Validators.required],
-      priorityLevel: ['1', Validators.required]
+      priorityLevel: ['1', Validators.required],
+      user: ['']
     });
   }
-
   // checkStartTime(control: AbstractControl) {
   //   let hour = 10;
   //   let minute = 15;
@@ -112,7 +119,7 @@ export class CreateIncidentComponent implements OnInit {
             type: 'success',
           }).then(() => {
             this.location.back();
-          })
+          });
         }
       })
     );
@@ -160,7 +167,7 @@ export class CreateIncidentComponent implements OnInit {
             type: 'success',
           }).then(() => {
             this.location.back();
-          })
+          });
         }
       })
     );

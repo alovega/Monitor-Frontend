@@ -25,10 +25,10 @@ export class SystemsComponent implements OnInit {
 
   ngOnInit() {
     this.currentSystemId = this.activatedRoute.snapshot.params['system-id'];
-    let issetCurrentSystem = this.systemService.checkCurrentSystem();
     this.authService.currentUser.subscribe(
       (user) => {
         this.currentUser = user;
+        let issetCurrentSystem = this.systemService.checkCurrentSystem();
         issetCurrentSystem ? this.currentSystem  = issetCurrentSystem : this.systemService.getCurrentSystem()
         .subscribe(systems => {
           this.currentSystem = systems[0];
@@ -42,7 +42,7 @@ export class SystemsComponent implements OnInit {
           this.redirect();
         }
       }
-    )
+    );
 
     // if (this.currentSystem && this.currentSystemId) {
     //   this.redirect();

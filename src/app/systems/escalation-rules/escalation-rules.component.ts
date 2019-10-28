@@ -19,7 +19,7 @@ export class EscalationRulesComponent implements OnInit, AfterViewInit {
   currentSystem: string;
   rules: any[];
   previous: any = [];
-
+  isLoaded = false;
   headElements = ['Name', 'Event Type', 'Description', 'Nth occurrence', 'Duration', 'Escalation Level', 'Date Created', 'Action'];
 
   constructor(
@@ -51,7 +51,7 @@ export class EscalationRulesComponent implements OnInit, AfterViewInit {
         console.log(result);
       })
     );
-
+    this.isLoaded = true;
   }
 
   ngAfterViewInit() {
@@ -97,28 +97,24 @@ export class EscalationRulesComponent implements OnInit, AfterViewInit {
                 'Deleted!',
                 'This rule has been deleted.',
                 'success'
-              )
+              );
             } else {
               Swal.fire(
                 'Failed!',
                 'This rule could not be deleted.',
                 'error'
-              )
-            }
-          }
-        )
+              )}
+          });
         this.rulesService.getRules().subscribe(
           result => {
             this.rules = result;
-          }
-        )
+          });
       } else if (result.dismiss === Swal.DismissReason.cancel) {
         Swal.fire(
           'Cancelled',
           '',
           'error'
-        )
-      }
-    })
+        )}
+    });
   }
 }

@@ -59,7 +59,6 @@ export class IncidentEventsComponent implements OnInit, AfterViewInit {
         console.log('Current events => ' + result);
       })
     );
-
   }
 
   ngAfterViewInit() {
@@ -74,8 +73,9 @@ export class IncidentEventsComponent implements OnInit, AfterViewInit {
     return this.http.post<any>(environment.apiEndpoint + 'get_incident_events/', {
       incident_id: this.incidentId
     }).pipe(
-      tap(events => console.log(events)),
-      map(events => events.data)
+      map(events => events.data),
+      map(events => events.map(a => ({... a.incident_event}))),
+      tap(events => console.log(events))
     );
   }
 
