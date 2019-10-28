@@ -1,17 +1,21 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Output, EventEmitter } from '@angular/core';
 import { Observable,throwError } from 'rxjs';
-import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { Endpoint } from './endpoint';
-import { catchError, retry} from 'rxjs/operators';
+import { catchError, retry,map} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class EndpointService {
-  endpointUrl = 'http://localhost:8000/endpoints';
+  endpointUrl = 'http://localhost:8000/api';
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
+  token = 'MmVmZWQzYTdhNGY2ZjMxNTE4NGQ1ZWZlOTk5MDA3';
+  clientId = '3cd49364-721a-4d3f-8bfa-141d93d6a8f7';
+  @Output() changeSystem: EventEmitter<boolean> = new EventEmitter();
+
   constructor(private http: HttpClient) { 
   }
 
@@ -31,12 +35,14 @@ export class EndpointService {
     return throwError(
       'Something bad happened; please try again later.');
   };
-  public getEndpoints(): Observable<Endpoint> {
+  public getEndpoints(system_id): Observable<any> {
 
-    return this.http.get<Endpoint>(this.endpointUrl).pipe(
-      retry(2),
-      catchError(this.handleError)
-    );
+    return this.http.post<any>(this.endpointUrl + '/get_endpoints/', {
+      system_id: system_id,
+    }).pipe( 
+      map(endpoints => endpoints.data.endpoints,
+      retry(2)
+    ),catchError(this.handleError))
   }
   public addEndpoints(item): Observable<Endpoint>{
     return this.http.post<Endpoint>(this.endpointUrl, JSON.stringify(item), this.httpOptions).pipe(
@@ -51,15 +57,18 @@ export class EndpointService {
     )
   }
 
-  public getItem(id):Observable<Endpoint>{
-    return this.http.get<Endpoint>(this.endpointUrl + '/' + id).pipe(
-      retry(2),
+  public getItem(endpoint_id):Observable<any>{
+    return this.http.post<any>(this.endpointUrl + '/get_endpoint/', {
+      endpoint_id: endpoint_id,
+    }).pipe(map(response => response.data.endpoint,
+      retry(2)
+    ),
       catchError(this.handleError)
     )
   }
 
   public updateItem(id, item): Observable<Endpoint>{
-    return this.http.put<Endpoint>(this.endpointUrl + '/' + id, JSON.stringify(item), this.httpOptions).pipe(
+    return this.http.post<Endpoint>(this.endpointUrl + '/' + id, JSON.stringify(item), this.httpOptions).pipe(
       retry(2),
       catchError(this.handleError)
     )

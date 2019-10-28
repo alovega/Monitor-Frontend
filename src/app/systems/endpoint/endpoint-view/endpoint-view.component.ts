@@ -1,6 +1,7 @@
 import { MdbTablePaginationComponent, MdbTableDirective } from 'angular-bootstrap-md';
 import { Component, OnInit, ViewChild, AfterViewInit, ChangeDetectorRef } from '@angular/core';
 import {EndpointService} from '../endpoint.service';
+import { ActivatedRoute } from '@angular/router';
  
 @Component({
   selector: 'app-endpoint-view',
@@ -14,15 +15,23 @@ export class EndpointViewComponent implements OnInit {
   previous: any = [];
 
   
-  headElements = ['Endpoint', 'Date Created', 'State', 'Action'];
+  headElements = ['Endpoint', 'Endpoint Type', 'Date Created', 'State', 'Action'];
+  currentSystem: any;
+  currentSystemId: any;
   constructor(
     private endpointService: EndpointService,
-    private cdRef: ChangeDetectorRef
+    private cdRef: ChangeDetectorRef,
+    private activatedRoute: ActivatedRoute,
     ) {
       this.elements = []
     }
 
   ngOnInit() {
+    this.activatedRoute.parent.params.subscribe(
+      (param: any) => {
+        this.currentSystemId = param['system-id'];
+        console.log(this.currentSystemId);
+      });
     this.elements = this.showEndpoints()
     this.mdbTable.setDataSource(this.elements);
     this.elements = this.mdbTable.getDataSource();
@@ -37,7 +46,7 @@ export class EndpointViewComponent implements OnInit {
   }
 
   showEndpoints() {
-   return this.endpointService.getEndpoints()
+   return this.endpointService.getEndpoints(this.currentSystemId)
       .subscribe((data) => {
         console.log(data)
         this.elements = data
