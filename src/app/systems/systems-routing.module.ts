@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { SystemsComponent } from './systems.component';
 import { AuthGuardService } from '../shared/helpers/auth-guard.service';
+import { AddSystemComponent } from './add-system/add-system.component';
 
 // const currentSystem = JSON.parse(localStorage.getItem('currentSystem'));
 // const systemId = currentSystem.id.toString();
@@ -10,9 +11,8 @@ import { AuthGuardService } from '../shared/helpers/auth-guard.service';
 
 const routes: Routes = [
   { path: '', component: SystemsComponent, canActivate: [AuthGuardService]},
-  {
-    path: ':system-id', component: SystemsComponent
-  },
+  { path: ':system-id', component: SystemsComponent },
+  { path: ':system-id/edit', component: AddSystemComponent },
   { path: ':system-id/endpoints', loadChildren: () => import('./endpoint/endpoint.module').then(m => m.EndpointModule) },
   { path: ':system-id/recipients', loadChildren: () => import('./recipients/recipients.module').then(m => m.RecipientsModule) },
   { path: ':system-id/notifications', loadChildren: () => import('./notifications/notifications.module').then(m => m.NotificationsModule) },

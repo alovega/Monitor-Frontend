@@ -49,6 +49,17 @@ export class SystemService {
     );
   }
 
+  updateSystem(system: any) {
+    return this.http.post<any>(environment.apiEndpoint + 'update_system/', system).pipe(
+      map(result => result),
+      tap(result => {
+        console.log(result);
+        const currentSystem = result[0];
+        // console.log(currentSystem);
+        // this.changeSystem.emit(result.data);
+      }));
+  }
+
   checkCurrentSystem() {
     if (localStorage.getItem('currentSystem') === null || localStorage.getItem('currentSystem') === 'undefined') {
       // console.log('Not set');

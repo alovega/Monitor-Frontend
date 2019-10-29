@@ -9,8 +9,12 @@ export class SideNavToggleService {
   currentStatus = true;
   constructor() { }
 
-  toggleSideNav() {
-    this.currentStatus = !this.currentStatus;
+  toggleSideNav(status ?: boolean) {
+    if (status != null) {
+      this.currentStatus = status;
+    } else {
+      this.currentStatus = !this.currentStatus;
+    }
     this.showSideNav.next(this.currentStatus);
     // console.log(this.showSideNav);
   }

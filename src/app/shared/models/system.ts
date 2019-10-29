@@ -5,4 +5,7 @@ export class System {
     status:string;
     date_created?: Date;
     date_modified?: Date;
+    admin: number;
+    state: string;
+    admin_id: number;
 }

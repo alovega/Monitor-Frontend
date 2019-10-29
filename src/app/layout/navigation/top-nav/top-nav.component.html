@@ -11,17 +11,22 @@
         <!-- Right -->
         <ul class="navbar-nav ml-auto nav-flex-icons">
             <li class="nav-item mr-2" *ngIf="currentUser">
-              <div class="dropdown" mdbDropdown>
+              <div class="dropdown pb-0" mdbDropdown>
                 <a mdbDropdownToggle color="primary" class="dropdown-toggle nav-link waves-light ml-0 pl-0"
                   mdbWavesEffect>{{ currentSystem.name }}
                 </a>
-                <div class="dropdown-menu dropdown-primary" *ngIf="systems">
+                <div class="dropdown-menu dropdown-primary pb-0" *ngIf="systems">
                   <a class="dropdown-item"  *ngFor="let system of systems" [ngClass]="{'d-none': system.id === currentSystem.id}"
                   routerLink="system/{{system.id}}" (click)="reload(system.id)">
                     {{ system.name }}
                   </a> 
-                  <a class="dropdown-item" (click)="frame.show()" data-target="#basicExample">
+                  <hr class="p-0 mb-0">
+                  <a class="dropdown-item extra-action" color="primary" (click)="frame.show()" data-target="#basicExample">
                     Add system
+                  </a>
+                  <hr class="mt-0 mb-0">
+                  <a class="dropdown-item extra-action mb-0" routerLink="/system/{{currentSystemId}}/edit" color="info">
+                    Edit current system 
                   </a>
                 </div>
               </div>
@@ -58,10 +63,10 @@
 
 <div mdbModal #frame="mdbModal" class="modal fade left" id="frameModalTop" tabindex="-1" role="dialog"
      aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
+  <div class="modal-dialog modal-md" role="document">
     <div class="modal-content">
-      <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">Add new system</h4>
+      <div class="modal-header text-left">
+        <h4 class="modal-title w-100 font-weight-light">Add new system</h4>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="frame.hide()" #closeBtn>
           <span aria-hidden="true">&times;</span>
         </button>
@@ -70,7 +75,7 @@
         <form [formGroup]="addSystemForm" (ngSubmit)="onSubmit()">
             <div class="form-group mb-4">
               <!-- Name -->
-              <label class="form-label">System Name</label>
+              <label class="form-label">Name</label>
               <input formControlName="name" type="text" id="systemName" class="grey lighten-5 form-control" placeholder="System name"
               [ngClass]="{'is-invalid': submitted && addSystemForm.controls.name.errors}" [(ngModel)] = "newSystem.name">
               
@@ -81,7 +86,7 @@
 
             <div class="form-group mb-4">
               <!-- Description -->
-              <label class="form-label">System description</label>
+              <label class="form-label">Description</label>
               <textarea formControlName="description" type="text" id="systemDescription" class="grey lighten-5 form-control" placeholder="System description"
               [ngClass]="{'is-invalid': submitted && addSystemForm.controls.description.errors}" [(ngModel)] = "newSystem.description">
               </textarea>
@@ -90,8 +95,8 @@
               </div>               
             </div>
             
-          <div class="modal-footer d-flex justify-content-right">
-            <button mdbBtn color="primary" class="waves-light" size="sm" mdbWavesEffect>Add</button>
+          <div class="modal-footer d-flex justify-content-right" style="padding-right: 0px !important">
+            <button mdbBtn color="primary" class="waves-light" size="sm" class="float-right w-25" mdbWavesEffect>Add</button>
           </div>
         </form>        
       </div>

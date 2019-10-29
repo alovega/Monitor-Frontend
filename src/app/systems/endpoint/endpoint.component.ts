@@ -15,7 +15,6 @@ export class EndpointComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
   ) {
     this.systemId = this.activatedRoute.snapshot.paramMap.get('system-id');
-    
    }
 
   ngOnInit() {

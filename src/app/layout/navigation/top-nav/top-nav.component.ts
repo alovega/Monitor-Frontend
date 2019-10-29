@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { AddSystemComponent } from '../../../shared/add-system/add-system.component';
 import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
 
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
@@ -54,8 +53,10 @@ export class TopNavComponent implements OnInit, OnChanges {
         this.showToggler = true;
       } else {
         this.showToggler = false;
+        this.sideNavService.toggleSideNav(true);
       }
     });
+
     this.authService.currentUser.subscribe(
       (user) => {
         this.currentUser = user;
