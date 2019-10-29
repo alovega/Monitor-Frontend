@@ -1,7 +1,7 @@
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
-import {EndpointService} from '../endpoint.service'
-import { Router, ActivatedRoute } from '@angular/router'
+import {EndpointService} from '../endpoint.service';
+import { Router, ActivatedRoute } from '@angular/router';
 import {Endpoint} from '../endpoint';
 import { Location } from '@angular/common';
 import { State } from 'src/app/shared/models/state';
@@ -11,33 +11,33 @@ import { of } from 'rxjs';
 
 
 @Component({
-  selector: 'app-endpoint-form',
+  selector: 'hm-endpoint-form',
   templateUrl: './endpoint-create.component.html',
   styleUrls: ['./endpoint-create.component.scss']
 })
 export class EndpointFormComponent implements OnInit {
-  endpointForm: FormGroup
+  endpointForm: FormGroup;
   submitted = false;
   currentSystem: any;
   currentSystemId: any;
-  data:Endpoint;
-  states:State;
-  systems:System;
-  endpoint_types:EndpointType;
-  constructor( 
-    private fb: FormBuilder, 
-    private endpointService:EndpointService, 
+  data: Endpoint;
+  states: State;
+  systems: System;
+  endpoint_types: EndpointType;
+  constructor(
+    private fb: FormBuilder,
+    private endpointService: EndpointService,
     private location: Location,
     private activatedRoute: ActivatedRoute ) {
-    this.createForm()
-    this.data = new Endpoint()
-    of(this.getStates()).subscribe((data:any) => {
+    this.createForm();
+    this.data = new Endpoint();
+    of(this.getStates()).subscribe((data: any) => {
       this.states = data;
     });
-    of(this.getSystems()).subscribe((data:any) => {
+    of(this.getSystems()).subscribe((data: any) => {
       this.systems = data;
     });
-    of(this.getEndpointTypes()).subscribe((data:any) => {
+    of(this.getEndpointTypes()).subscribe((data: any) => {
       this.endpoint_types = data;
     });
    }
@@ -49,7 +49,7 @@ export class EndpointFormComponent implements OnInit {
         // console.log(this.currentSystemId);
       });
   }
-  createForm(){
+  createForm() {
     this.endpointForm = this.fb.group({
         EndpointName: ['', Validators.required],
         Description: ['', [Validators.required, Validators.minLength(10)]],
@@ -57,7 +57,7 @@ export class EndpointFormComponent implements OnInit {
         OptimalResponseTime: ['', Validators.required],
         EndpointType: ['', Validators.required],
         State: ['', Validators.required]
-    })
+    });
   }
   get f() { return this.endpointForm.controls; }
   onSubmit() {
@@ -75,34 +75,32 @@ export class EndpointFormComponent implements OnInit {
   }
 
   addEndpoint() {
-    this.data.system_id = this.currentSystemId
-    console.log(this.data)
+    this.data.system_id = this.currentSystemId;
+    console.log(this.data);
     this.endpointService.addEndpoints(this.data).subscribe(response => {
-      if (response.code === "800.200.001"){
-        this.data = response.data
-        console.log(this.data)
-        console.log('message: %s, code: %s', response.message, response.code)
-        this.location.back()
+      if (response.code === '800.200.001') {
+        this.data = response.data;
+        console.log(this.data);
+        console.log('message: %s, code: %s', response.message, response.code);
+        this.location.back();
+      } else {
+        console.log('error: %s, message: %s', response.code, response.message);
       }
-      else{
-      console.log('error: %s, message: %s', response.code,response.message)
-      }
-    })
+    });
   }
-  getStates(){
+  getStates() {
     this.endpointService.getStates().subscribe((data) => {
-      this.states = data
-    })
+      this.states = data;
+    });
   }
-  getSystems(){
+  getSystems() {
     this.endpointService.getSystems().subscribe((data) => {
-      this.systems = data
-    })
+      this.systems = data;
+    });
   }
-  getEndpointTypes(){
+  getEndpointTypes() {
     this.endpointService.getEndpointTypes().subscribe((data) => {
-      this.endpoint_types = data
-    })
+      this.endpoint_types = data;
+    });
   }
 }
-  

@@ -17,6 +17,8 @@ const routes: Routes = [
   canLoad: [AuthGuardService] },
   { path: ':system-id/system-recipients', loadChildren: () => import('./system-recipients/system-recipients.module')
   .then(m => m.SystemRecipientsModule), canLoad: [AuthGuardService] },
+  { path: ':system-id/recipients', loadChildren: () => import('./recipient/recipient.module').then(m => m.RecipientModule),
+  canLoad: [AuthGuardService] },
   { path: ':system-id/notifications', loadChildren: () => import('./notifications/notifications.module').then(m => m.NotificationsModule),
   canLoad: [AuthGuardService] },
   { path: ':system-id/dashboard', loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule)},

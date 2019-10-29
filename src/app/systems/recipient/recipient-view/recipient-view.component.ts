@@ -1,16 +1,19 @@
+import { Component, OnInit, ViewChild, HostListener, AfterViewInit, ChangeDetectorRef } from '@angular/core';
 import { MdbTablePaginationComponent, MdbTableDirective, MdbTableSortDirective } from 'angular-bootstrap-md';
-import { Component, OnInit, ViewChild, AfterViewInit, HostListener, ChangeDetectorRef } from '@angular/core';
-import {EndpointService} from '../endpoint.service';
-import { ActivatedRoute } from '@angular/router';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { AddSystemComponent } from '../../../shared/add-system/add-system.component';
+import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
+import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
-
+import { RecipientService } from '../recipient.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: 'hm-endpoint-view',
-  templateUrl: './endpoint-view.component.html',
-  styleUrls: ['./endpoint-view.component.scss']
+  selector: 'hm-recipient-view',
+  templateUrl: './recipient-view.component.html',
+  styleUrls: ['./recipient-view.component.scss']
 })
-export class EndpointViewComponent implements OnInit, AfterViewInit {
+export class RecipientViewComponent implements OnInit, AfterViewInit {
   @ViewChild(MdbTablePaginationComponent, { static: true }) mdbTablePagination: MdbTablePaginationComponent;
   @ViewChild(MdbTableDirective, { static: true }) mdbTable: MdbTableDirective;
   @ViewChild(MdbTableSortDirective, { static: true }) mdbTableSort: MdbTableSortDirective;
@@ -18,36 +21,32 @@ export class EndpointViewComponent implements OnInit, AfterViewInit {
   searchText = '';
   previous: any = [];
 
-
-  headElements = ['endpoint', 'description', 'endpointUrl', 'responseTime', 'type',  'dateCreated', 'status', 'action'];
+  headElements = ['userName', 'phoneNumber',  'dateCreated', 'status', 'action'];
   currentSystem: any;
   currentSystemId: any;
-  endpointId: any;
+  recipientId: any;
 
-  constructor(
-    private endpointService: EndpointService,
-    private cdRef: ChangeDetectorRef,
-    private activatedRoute: ActivatedRoute,
-    ) {}
-    @HostListener('input') oninput() {
-      this.searchItems();
-    }
+  constructor(private recipientService: RecipientService, private cdRef: ChangeDetectorRef, private activatedRoute: ActivatedRoute, 
+              private modalService: NgbModal, private formBuilder: FormBuilder) { }
+  @HostListener('input') oninput() {
+    this.searchItems();
+  }
+
   ngOnInit() {
-    this.endpointId = this.activatedRoute.snapshot.params['id'];
     this.activatedRoute.parent.params.subscribe(
       (param: any) => {
         this.currentSystemId = param['system-id'];
         console.log(this.currentSystemId);
       });
-
-    this.endpointService.getEndpoints(this.currentSystemId).subscribe(
+    this.recipientService.getRecipients().subscribe(
       (data) => {
         console.log(data);
         this.elements = data;
         this.mdbTable.setDataSource(this.elements);
         this.elements = this.mdbTable.getDataSource();
         this.previous = this.mdbTable.getDataSource();
-    });
+      }
+    );
   }
 
   ngAfterViewInit() {
@@ -56,7 +55,6 @@ export class EndpointViewComponent implements OnInit, AfterViewInit {
     this.mdbTablePagination.calculateLastItemIndex();
     this.cdRef.detectChanges();
   }
-
   searchItems() {
     const prev = this.mdbTable.getDataSource();
     console.log(prev);
@@ -71,8 +69,8 @@ export class EndpointViewComponent implements OnInit, AfterViewInit {
       this.mdbTable.setDataSource(prev);
     }
   }
-  delete(endpointId) {
-    console.log(endpointId);
+  delete(recipientId) {
+    console.log(recipientId);
     Swal.fire({
       title: 'Are you sure?',
       text: 'You will not be able to recover this endpoint!',
@@ -82,8 +80,8 @@ export class EndpointViewComponent implements OnInit, AfterViewInit {
       cancelButtonText: 'No, keep the endpoint'
     }).then((result) => {
       if (result.value) {
-        console.log(endpointId);
-        this.endpointService.deleteItem(endpointId).subscribe(
+        console.log(recipientId);
+        this.recipientService.deleteItem(recipientId).subscribe(
           response => {
             if (response.code === '800.200.001') {
               Swal.fire(
@@ -100,8 +98,8 @@ export class EndpointViewComponent implements OnInit, AfterViewInit {
             }
           }
         );
-        this.endpointService.getEndpoints(this.currentSystemId).subscribe(
-          response => {
+        this.recipientService.getRecipients(this.currentSystemId).subscribe(
+          (response) => {
             this.elements = response;
             this.mdbTable.setDataSource(this.elements);
           }
