@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { RecipientUpdateComponent } from './recipient-update.component';
+import { SystemRecipientUpdateComponent } from './system-recipient-update.component';
 
 describe('RecipientUpdateComponent', () => {
-  let component: RecipientUpdateComponent;
-  let fixture: ComponentFixture<RecipientUpdateComponent>;
+  let component: SystemRecipientUpdateComponent;
+  let fixture: ComponentFixture<SystemRecipientUpdateComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ RecipientUpdateComponent ]
+      declarations: [ SystemRecipientUpdateComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(RecipientUpdateComponent);
+    fixture = TestBed.createComponent(SystemRecipientUpdateComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

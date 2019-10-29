@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SmsRecipientsComponent } from './sms-recipients.component';
+import { SmsSystemRecipientsComponent } from './sms-system-recipients.component';
 
 describe('SmsRecipientsComponent', () => {
-  let component: SmsRecipientsComponent;
-  let fixture: ComponentFixture<SmsRecipientsComponent>;
+  let component: SmsSystemRecipientsComponent;
+  let fixture: ComponentFixture<SmsSystemRecipientsComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SmsRecipientsComponent ]
+      declarations: [ SmsSystemRecipientsComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(SmsRecipientsComponent);
+    fixture = TestBed.createComponent(SmsSystemRecipientsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

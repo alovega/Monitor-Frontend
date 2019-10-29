@@ -15,7 +15,7 @@ export class EndpointService {
   };
   @Output() changeSystem: EventEmitter<boolean> = new EventEmitter();
 
-  constructor(private http: HttpClient, private lookUpService:LookUpService) { 
+  constructor(private http: HttpClient, private lookUpService: LookUpService) {
   }
 
   // Handle API errors
@@ -33,7 +33,7 @@ export class EndpointService {
     // return an observable with a user-facing error message
     return throwError(
       'Something bad happened; please try again later.');
-  };
+  }
   public getEndpoints(system_id): Observable<any> {
 
     return this.http.post<any>(this.endpointUrl + '/get_endpoints/', {
@@ -67,10 +67,10 @@ export class EndpointService {
   }
 
   public updateItem(endpoint_id, item): Observable<any>{
-    return this.http.post<Endpoint>(this.endpointUrl + '/update_endpoints/',item, this.httpOptions).pipe(
+    return this.http.post<Endpoint>(this.endpointUrl + '/update_endpoints/', item, this.httpOptions).pipe(
       retry(2),
       catchError(this.handleError)
-    )
+    );
   }
   public getStates(){
     return this.lookUpService.getStates()

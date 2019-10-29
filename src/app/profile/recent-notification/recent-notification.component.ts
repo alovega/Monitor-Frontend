@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ProfileService } from '../profile.service';
 
 @Component({
   selector: 'hm-recent-notification',
@@ -6,10 +7,16 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./recent-notification.component.scss']
 })
 export class RecentNotificationComponent implements OnInit {
+  data: any;
 
-  constructor() { }
+  constructor(private profileService: ProfileService) { }
 
   ngOnInit() {
+    this.profileService.getLoggedInuserRecentNotifications().subscribe(
+      (response) => {
+        this.data = response;
+      }
+    );
   }
 
 }

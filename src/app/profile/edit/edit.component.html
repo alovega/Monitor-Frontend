@@ -3,7 +3,7 @@
     <div class="form-group row">
         <label class="col-lg-3 col-form-label form-control-label">First name</label>
         <div class="col-lg-9">
-            <input  formControlName="FirstName" type="text" placeholder="First Name"
+            <input  formControlName="FirstName" type="text" placeholder="First Name" [(ngModel)] = data[0].firstName
             [ngClass]="{ 'is-invalid': submitted && f.FirstName.errors }" class="form-control">
             <div *ngIf="submitted && profileUpdateForm.controls['FirstName'].errors" class="invalid-feedback">
                 <div *ngIf="profileUpdateForm.controls['FirstName'].errors.required">required*.</div>
@@ -14,7 +14,7 @@
     <div class="form-group row">
         <label class="col-lg-3 col-form-label form-control-label">Last name</label>
         <div class="col-lg-9">
-            <input class="form-control" formControlName="LastName" type="text" placeholder="Last Name" 
+            <input class="form-control" formControlName="LastName" type="text" placeholder="Last Name" [(ngModel)] = data[0].lastName
             [ngClass]="{ 'is-invalid': submitted && f.LastName.errors }">
             <div *ngIf="submitted && profileUpdateForm.controls['LastName'].errors" class="invalid-feedback">
                 <div *ngIf="profileUpdateForm.controls['LastName'].errors.required">required*</div>
@@ -25,7 +25,7 @@
     <div class="form-group row">
         <label class="col-lg-3 col-form-label form-control-label">Email</label>
         <div class="col-lg-9">
-            <input class="form-control" formControlName="Email" type="text" placeholder="Email" 
+            <input class="form-control" formControlName="Email" type="text" placeholder="Email" [(ngModel)] = data[0].email
             [ngClass]="{ 'is-invalid': submitted && f.Email.errors }">
             <div *ngIf="submitted && profileUpdateForm.controls['Email'].errors" class="invalid-feedback">
                 <div *ngIf="profileUpdateForm.controls['Email'].errors.required">required*</div>
@@ -36,7 +36,7 @@
     <div class="form-group row">
         <label class="col-lg-3 col-form-label form-control-label">Phone Number</label>
         <div class="col-lg-9">
-            <input class="form-control" formControlName="PhoneNumber" type="text" placeholder="PhoneNumber" 
+            <input class="form-control" formControlName="PhoneNumber" type="text" placeholder="PhoneNumber" [(ngModel)] = data[0].phoneNumber
             [ngClass]="{ 'is-invalid': submitted && f.PhoneNumber.errors }">
             <div *ngIf="submitted && profileUpdateForm.controls['PhoneNumber'].errors" class="invalid-feedback">
                 <div *ngIf="profileUpdateForm.controls['PhoneNumber'].errors.required">required*</div>
@@ -47,7 +47,7 @@
     <div class="form-group row">
         <label class="col-lg-3 col-form-label form-control-label">Username</label>
         <div class="col-lg-9">
-            <input class="form-control" formControlName="Username" type="text" placeholder="Username"
+            <input class="form-control" formControlName="Username" type="text" placeholder="Username" [(ngModel)] = data[0].userName
             [ngClass]="{ 'is-invalid': submitted && f.Username.errors }">
             <div *ngIf="submitted && profileUpdateForm.controls['Username'].errors" class="invalid-feedback">
                 <div *ngIf="profileUpdateForm.controls['Username'].errors.required">required*</div>
@@ -60,7 +60,7 @@
       <div class="col-lg-9">
           <button mdbBtn type="button" class="btn btn-blue-grey waves-light" color="primary" mdbWavesEffect
           (click)="onReset()">Cancel</button>
-          <button  mdbBtn class="btn btn-primary waves-light" color="primary" mdbWavesEffect>Save</button>
+          <button  mdbBtn type="button" class="btn btn-primary waves-light" color="primary" mdbWavesEffect (click)="update()">Save</button>
       </div>
     </div>
   </form>

@@ -1,28 +1,39 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { MustMatch } from 'src/app/shared/must-match.validator';
+import { ProfileService } from '../profile.service';
+import { Profile } from '../profile';
+import { Location } from '@angular/common';
+
+
 @Component({
   selector: 'hm-edit',
   templateUrl: './edit.component.html',
   styleUrls: ['./edit.component.scss']
 })
 export class EditComponent implements OnInit {
-  profileUpdateForm:FormGroup
-  submitted:boolean = false;
-  constructor(private fb: FormBuilder,) {
-    this.createForm()
+  profileUpdateForm: FormGroup;
+  submitted = false;
+  data: any;
+  constructor(private fb: FormBuilder, private profileService: ProfileService, private location: Location) {
+    this.data = new Profile();
+    this.createForm();
    }
 
   ngOnInit() {
+    this.profileService.getLoggedInUserDetail().subscribe(
+      (data) => {
+          this.data = data;
+          console.log(this.data);
+        });
   }
-  createForm(){
+  createForm() {
     this.profileUpdateForm = this.fb.group({
-        FirstName:['',[Validators.required, Validators.minLength(3)]],
-        LastName:['',[Validators.required, Validators.minLength(3)]],
+        FirstName: ['', [Validators.required, Validators.minLength(3)]],
+        LastName: ['', [Validators.required, Validators.minLength(3)]],
         Email: ['', [Validators.required, Validators.email]],
         PhoneNumber: ['', [Validators.required, Validators.minLength(10)]],
         Username: ['', Validators.required],
-    })
+    });
   }
    // convenience getter for easy access to form fields
    get f() { return this.profileUpdateForm.controls; }
@@ -40,4 +51,17 @@ export class EditComponent implements OnInit {
        this.submitted = false;
        this.profileUpdateForm.reset();
    }
+   update() {
+    const user = JSON.parse(localStorage.getItem('currentUser'));
+    this.data[0].token =  user.token;
+    this.profileService.updateLoggedInUser(this.data[0]).subscribe(response => {
+      console.log(this.data[0]);
+      console.log(response);
+      if (response.code === '800.200.001') {
+        console.log('message: %s, code: %s', response.message, response.code);
+        this.location.back();
+      }
+      console.log('message: %s, code: %s', response.message, response.code);
+    });
+  }
 }

@@ -8,16 +8,16 @@ import { from } from 'rxjs';
   styleUrls: ['./profile.component.scss']
 })
 export class ProfileComponent implements OnInit {
-  data:any
+  data: any;
 
-  constructor(private profileService:ProfileService) { }
+  constructor(private profileService: ProfileService) { }
 
   ngOnInit() {
     this.profileService.getLoggedInUserDetail().subscribe(
       (data) => {
-        this.data = data
+        this.data = data;
       }
-    )
+    );
 
   }
 

@@ -1,52 +1,45 @@
 import { MdbTablePaginationComponent, MdbTableDirective, MdbTableSortDirective } from 'angular-bootstrap-md';
-import { RecipientService } from '../recipient.service';
 import { Component, OnInit, ViewChild, AfterViewInit, HostListener, ChangeDetectorRef } from '@angular/core';
+import { RecipientService } from '../system-recipient.service';
 import { ActivatedRoute } from '@angular/router';
 import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'app-email-recipients',
-  templateUrl: './email-recipients.component.html',
-  styleUrls: ['./email-recipients.component.scss']
+  selector: 'hm-sms-system-recipients',
+  templateUrl: './sms-system-recipients.component.html',
+  styleUrls: ['./sms-system-recipients.component.scss']
 })
-export class EmailRecipientsComponent implements OnInit, AfterViewInit {
+export class SmsSystemRecipientsComponent implements OnInit, AfterViewInit {
   @ViewChild(MdbTablePaginationComponent, { static: true }) mdbTablePagination: MdbTablePaginationComponent;
   @ViewChild(MdbTableDirective, { static: true }) mdbTable: MdbTableDirective;
   @ViewChild(MdbTableSortDirective, { static: true }) mdbTableSort: MdbTableSortDirective;
   firstItemIndex: any;
   lastItemIndex: any;
-  currentSystem: any;
-  currentSystemId: any;
-  searchText: string = '';
   elements: any;
-  escalations:any
+  currentSystem: any;
+  searchText = '';
+  currentSystemId: any;
   previous: any = [];
-  headElements: string[] = [ 'email', 'escalationLevels','userName', 'dateCreated', 'status','action'];
-
+  headElements: string[] = [ 'phoneNumber', 'escalationLevels', 'userName', 'dateCreated', 'status', 'action'];
   constructor(
-    private recipientService:RecipientService, 
-    private cdRef: ChangeDetectorRef,
-    private activatedRoute: ActivatedRoute
-    
-    ) {}
-   @HostListener('input') oninput() {
-    this.searchItems();
-  }
+    private recipientService: RecipientService, private cdRef: ChangeDetectorRef, private activatedRoute: ActivatedRoute ) {}
+    @HostListener('input') oninput() {
+      this.searchItems();
+    }
 
-   ngOnInit() {
+  ngOnInit() {
     this.activatedRoute.parent.params.subscribe(
       (param: any) => {
         this.currentSystemId = param['system-id'];
         console.log(this.currentSystemId);
       });
-      this.recipientService.getEmailRecipients(this.currentSystemId)
-       .subscribe((response) => {
-         console.log(response)
-          this.elements = response
-          this.mdbTable.setDataSource(this.elements);
-          this.elements = this.mdbTable.getDataSource();
-          this.previous = this.mdbTable.getDataSource();
-       });
+    this.recipientService.getSmsRecipients(this.currentSystemId).subscribe((response) => {
+      console.log(response);
+      this.elements = response;
+      this.mdbTable.setDataSource(this.elements);
+      this.elements = this.mdbTable.getDataSource();
+      this.previous = this.mdbTable.getDataSource();
+    });
   }
 
   ngAfterViewInit() {
@@ -58,7 +51,7 @@ export class EmailRecipientsComponent implements OnInit, AfterViewInit {
 
   searchItems() {
     const prev = this.mdbTable.getDataSource();
-    console.log(prev)
+    console.log(prev);
 
     if (!this.searchText) {
       this.mdbTable.setDataSource(this.previous);
@@ -70,12 +63,9 @@ export class EmailRecipientsComponent implements OnInit, AfterViewInit {
       this.mdbTable.setDataSource(prev);
     }
   }
-  showRecipients() {
-    return 
-   }
 
-   delete(recipient_id){
-    console.log(recipient_id)
+   delete(recipientId) {
+    console.log(recipientId);
     Swal.fire({
       title: 'Are you sure?',
       text: 'You will not be able to recover this recipient!',
@@ -85,39 +75,38 @@ export class EmailRecipientsComponent implements OnInit, AfterViewInit {
       cancelButtonText: 'No, keep the recipient'
     }).then((result) => {
       if (result.value) {
-        console.log(recipient_id);
-        this.recipientService.deleteItem(recipient_id).subscribe(
+        console.log(recipientId);
+        this.recipientService.deleteItem(recipientId).subscribe(
           response => {
-            console.log(response)
+            console.log(response);
             if (response.code === '800.200.001') {
               Swal.fire(
                 'Deleted!',
                 'This recipient has been deleted.',
                 'success'
-              )
+              );
             } else {
               Swal.fire(
                 'Failed!',
                 'This recipient could not be deleted.',
                 'error'
-              )
+              );
             }
           }
-        )
-        this.recipientService.getEmailRecipients(this.currentSystemId).subscribe(
-          result => {
+        );
+        this.recipientService.getSmsRecipients(this.currentSystemId).subscribe(
+          (result) => {
             this.elements = result;
             this.mdbTable.setDataSource(this.elements);
           }
-        )
+        );
       } else if (result.dismiss === Swal.DismissReason.cancel) {
         Swal.fire(
           'Cancelled',
           '',
           'error'
-        )
+        );
       }
-    })
+    });
   }
 }
-
