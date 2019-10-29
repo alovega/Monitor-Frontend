@@ -1,6 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Router, ActivatedRoute, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
 
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
@@ -19,8 +18,6 @@ export class TopNavComponent implements OnInit, OnChanges {
   currentUser: any;
   systems: any;
   currentSystem: any;
-  currentSystemId: any;
-  systemIsAvailable: boolean = false;
   validatingForm: FormGroup;
   addSystemForm: FormGroup;
   newSystem: System;
@@ -31,7 +28,6 @@ export class TopNavComponent implements OnInit, OnChanges {
   constructor(
     private systemService: SystemService,
     private router: Router,
-    private modalService: NgbModal,
     private formBuilder: FormBuilder,
     private authService: AuthenticationService,
     public breakpointObserver: BreakpointObserver,
@@ -44,35 +40,20 @@ export class TopNavComponent implements OnInit, OnChanges {
     this.systemService.getSystems().subscribe(
       (result => {
         this.systems = result;
-      })
-    );
-
-    this.breakpointObserver.observe(['(max-width: 1199.98px)'])
-    .subscribe((state: BreakpointState) => {
+        console.log(this.systems);
+    }));
+    this.currentSystem = this.systemService.getCurrentSystem();
+    this.authService.currentUser.subscribe(
+      (user) => {
+        this.currentUser = user;
+    });
+    this.breakpointObserver.observe(['(max-width: 1199.98px)']).subscribe((state: BreakpointState) => {
       if (state.matches) {
         this.showToggler = true;
       } else {
         this.showToggler = false;
         this.sideNavService.toggleSideNav(true);
-      }
-    });
-
-    this.authService.currentUser.subscribe(
-      (user) => {
-        this.currentUser = user;
-        let issetCurrentSystem = this.systemService.checkCurrentSystem();
-        issetCurrentSystem ? this.currentSystem  = issetCurrentSystem : this.systemService.getCurrentSystem()
-        .subscribe(systems => {
-          this.currentSystem = systems[0];
-          this.currentSystemId = this.currentSystem.id;
-        });
-        this.systemService.getSystems().subscribe(
-          (result => {
-            this.systems = result;
-          })
-        );
-      });
-    this.systemIsAvailable = true;
+    }});
 
     this.addSystemForm = this.formBuilder.group({
       name: ['', Validators.required],
@@ -86,12 +67,12 @@ export class TopNavComponent implements OnInit, OnChanges {
     }
   }
 
-  reload(systemId: any) {
-    this.systemService.setSystem(systemId).subscribe(
-      (result => {
-        this.currentSystem = result[0];
-      })
-    );
+  changeSystem(systemId: any) {
+    this.systemService.changesystem(systemId).subscribe(
+      () => {
+        // console.log('Current system from subject is');
+        this.currentSystem = this.systemService.getCurrentSystem();
+    });
   }
 
   toggleSideNav(): void {

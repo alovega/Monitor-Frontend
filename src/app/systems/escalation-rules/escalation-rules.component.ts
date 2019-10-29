@@ -16,7 +16,7 @@ export class EscalationRulesComponent implements OnInit, AfterViewInit {
   @ViewChild(MdbTableDirective, { static: true }) mdbTable: MdbTableDirective;
 
   currentSystemId: string;
-  currentSystem: string;
+  currentSystem: any;
   rules: any[];
   previous: any = [];
   isLoaded = false;
@@ -29,19 +29,8 @@ export class EscalationRulesComponent implements OnInit, AfterViewInit {
     private cdRef: ChangeDetectorRef) { }
 
   ngOnInit() {
-    this.activatedRoute.parent.params.subscribe(
-      (param: any) => {
-        this.currentSystemId = param['system-id'];
-        console.log(this.currentSystemId);
-      });
-
-    this.systemService.setSystem(this.currentSystemId).subscribe(
-      (result => {
-        this.currentSystem = result[0];
-        // console.log(this.currentSystem);
-      })
-    );
-
+    this.currentSystem = this.systemService.getCurrentSystem();
+    this.currentSystemId = this.currentSystem.id;
     this.rulesService.getRules().subscribe(
       (result => {
         this.rules = result;

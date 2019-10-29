@@ -11,18 +11,16 @@ import { AddSystemComponent } from './add-system/add-system.component';
 
 const routes: Routes = [
   { path: '', component: SystemsComponent, canActivate: [AuthGuardService]},
-  { path: ':system-id', component: SystemsComponent },
+  // { path: ':system-id', component: SystemsComponent },
   { path: ':system-id/edit', component: AddSystemComponent },
   { path: ':system-id/endpoints', loadChildren: () => import('./endpoint/endpoint.module').then(m => m.EndpointModule) },
   { path: ':system-id/recipients', loadChildren: () => import('./recipients/recipients.module').then(m => m.RecipientsModule) },
   { path: ':system-id/notifications', loadChildren: () => import('./notifications/notifications.module').then(m => m.NotificationsModule) },
-  { path: ':system-id/dashboard', loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule)},
-  { path: ':system-id/incidents', loadChildren: () => import('./incidents/incidents.module').then(m => m.IncidentsModule), canLoad: [AuthGuardService]},
-  { path: ':system-id/rules', loadChildren: () => import('./escalation-rules/escalation-rules.module').then(m => m.EscalationRulesModule), canLoad: [AuthGuardService]},
-  { path: ':system-id/users', loadChildren: () => import('./users/users.module').then(m => m.UsersModule), canLoad: [AuthGuardService] },
-  { path: ':system-id/endpoints', loadChildren: () => import('./endpoint/endpoint.module').then(m => m.EndpointModule) },
-  { path: ':system-id/recipients', loadChildren: () => import('./recipients/recipients.module').then(m => m.RecipientsModule) },
-  { path: ':system-id/events', loadChildren: () => import('./events/events.module').then(m => m.EventsModule), canLoad: [AuthGuardService]},
+  { path: 'dashboard', loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule), canActivate: [AuthGuardService]},
+  { path: 'incidents', loadChildren: () => import('./incidents/incidents.module').then(m => m.IncidentsModule), canLoad: [AuthGuardService]},
+  { path: 'rules', loadChildren: () => import('./escalation-rules/escalation-rules.module').then(m => m.EscalationRulesModule), canLoad: [AuthGuardService]},
+  { path: 'users', loadChildren: () => import('./users/users.module').then(m => m.UsersModule), canLoad: [AuthGuardService] },
+  { path: 'events', loadChildren: () => import('./events/events.module').then(m => m.EventsModule), canLoad: [AuthGuardService]},
 ];
 @NgModule({
   imports: [RouterModule.forChild(routes)],

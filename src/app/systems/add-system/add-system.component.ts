@@ -36,16 +36,9 @@ export class AddSystemComponent implements OnInit {
    }
 
   ngOnInit() {
-    this.activatedRoute.parent.params.subscribe(
-      (param: any) => {
-        this.currentSystemId = param['system-id'];
-        let issetCurrentSystem = this.systemService.checkCurrentSystem();
-        issetCurrentSystem ? this.system  = issetCurrentSystem : this.systemService.getCurrentSystem()
-        .subscribe(systems => {
-          this.system = systems[0];
-          this.currentSystemId = this.system.id;
-        });
-    });
+    this.currentSystem = this.systemService.getCurrentSystem();
+    this.system = this.currentSystem;
+    this.currentSystemId = this.currentSystem.id;
 
     this.editSystemForm = this.formBuilder.group({
       name: ['', Validators.required],
@@ -67,15 +60,12 @@ export class AddSystemComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.editSystemForm.controls);
     this.submitted = true;
     if (this.editSystemForm.invalid) {
       console.log('Invalid');
       return;
     }
 
-    // this.system.incident_type = 'Realtime';
-    console.log(this.system);
     return this.systemService.updateSystem(this.system).subscribe(
       ((result: any) => {
         if (result.code === '800.200.001') {
@@ -100,7 +90,7 @@ export class AddSystemComponent implements OnInit {
   }
 
   public back(): void {
-    this.router.navigate([`system/${this.system.id}/dashboard`]);
+    this.router.navigate([`system/dashboard`]);
   }
 
 }

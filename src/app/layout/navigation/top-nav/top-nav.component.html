@@ -17,7 +17,7 @@
                 </a>
                 <div class="dropdown-menu dropdown-primary pb-0" *ngIf="systems">
                   <a class="dropdown-item"  *ngFor="let system of systems" [ngClass]="{'d-none': system.id === currentSystem.id}"
-                  routerLink="system/{{system.id}}" (click)="reload(system.id)">
+                  routerLink="system" (click)="changeSystem(system.id)">
                     {{ system.name }}
                   </a> 
                   <hr class="p-0 mb-0">
@@ -25,7 +25,7 @@
                     Add system
                   </a>
                   <hr class="mt-0 mb-0">
-                  <a class="dropdown-item extra-action mb-0" routerLink="/system/{{currentSystemId}}/edit" color="info">
+                  <a class="dropdown-item extra-action mb-0" routerLink="/system/{{currentSystem.id}}/edit" color="info">
                     Edit current system 
                   </a>
                 </div>

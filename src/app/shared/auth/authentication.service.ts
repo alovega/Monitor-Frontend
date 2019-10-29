@@ -44,7 +44,6 @@ export class AuthenticationService {
       map(result => {
         if (result.code === '800.200.001') {
           localStorage.setItem('currentUser', JSON.stringify(result.data));
-          environment.accessToken = result.data.token;
           this.currentUserSubject.next(result.data);
           let body = document.getElementsByTagName('body')[0];
           if (this.currentUser) {

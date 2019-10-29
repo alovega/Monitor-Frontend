@@ -24,22 +24,9 @@ export class OpenIncidentsComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.activatedRoute.parent.params.subscribe(
-      (param: any) => {
-        this.currentSystemId = param['system-id'];
-        console.log(this.currentSystemId);
-      });
-
-    this.systemService.setSystem(this.currentSystemId).subscribe(
-      (result => {
-        this.currentSystem = result[0];
-        this.incidents$ = this.incidentService.getOpenIncidents(this.currentSystem);
-        // console.log(this.currentSystem);
-        this.incidentService.getOpenIncidents(this.currentSystem).subscribe(
-          (incident) => console.log(incident)
-        );
-      })
-    );
+    this.currentSystem = this.systemService.getCurrentSystem();
+    this.currentSystemId = this.currentSystem.id;
+    this.incidents$ = this.incidentService.getOpenIncidents(this.currentSystem);
   }
   // showIncidents() {
   //   this.incidentService.getIncidents()

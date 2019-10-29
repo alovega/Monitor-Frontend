@@ -26,10 +26,10 @@
 
     <li class="tab-item">
         <span>
-        <a routerLink="/system/{{systemId}}/incidents/new/realtime" routerLinkActive="active" *ngIf="router.url !== maintenanceUrl">
+        <a routerLink="/system/incidents/new/realtime" routerLinkActive="active" *ngIf="router.url !== maintenanceUrl">
            <button class="float-right" id="create-button">Create incident</button>
         </a>
-        <a routerLink="/system/{{systemId}}/incidents/new/maintenance" routerLinkActive="active" *ngIf="router.url === maintenanceUrl">
+        <a routerLink="/system/incidents/new/maintenance" routerLinkActive="active" *ngIf="router.url === maintenanceUrl">
             <button class="float-right" id="create-button" >Schedule Maintenance</button>
         </a>
         </span>

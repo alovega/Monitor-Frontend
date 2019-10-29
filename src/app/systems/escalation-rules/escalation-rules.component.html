@@ -9,7 +9,7 @@
                 <input class="form-control" type="text" #searchText [(ngModel)]="data" (input)="searchItems(searchText.value)" placeholder="Search">
             </div>
             <div class="col-md-6 top-controls">
-            <a routerLink="/system/{{currentSystemId}}/rules/new" routerLinkActive="active">
+            <a routerLink="/system/rules/new" routerLinkActive="active">
                 <button class="" id="create-button">Add rule</button>
             </a>
             </div>
@@ -46,7 +46,7 @@
           <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{rule.date_created | date:'MMMM d, yyyy' }} </td>
           <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">
               <span mdbIcon class="fas fa-trash-alt mr-2 text-danger" (click)="removeRule(rule.rule_id)"></span>
-              <span mdbIcon class="fas fa-edit text-success" routerLink="/system/{{currentSystemId}}/rules/edit/{{rule.rule_id}}" routerLinkActive="active"></span>
+              <span mdbIcon class="fas fa-edit text-success" routerLink="/system/rules/edit/{{rule.rule_id}}" routerLinkActive="active"></span>
           </td>
           </tr>
           </tbody>
@@ -54,7 +54,7 @@
           <ng-template #noData>
             <td colspan="8">
               <hm-empty-data header="No Existing Escalation Rules" description="New Escalation rules will be displayed here">
-                <a action-button routerLink="/system/{{currentSystemId}}/rules/new">
+                <a action-button routerLink="/system/rules/new">
                     <button type="button" mdbBtn size="sm" color="primary" class="text-white">Add new Rule</button>
                 </a>
               </hm-empty-data>

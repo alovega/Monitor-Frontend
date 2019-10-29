@@ -17,8 +17,7 @@ export class IncidentsComponent implements OnInit {
   incidents: Incident[];
   // private searchTerms = new Subject<string>();
   isHidden = true;
-  public systemId: string;
-  public incidentType: string;
+  public currentSystem: any;
   public maintenanceUrl: string;
   public isLoaded = false;
 
@@ -27,25 +26,13 @@ export class IncidentsComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private incidentService: IncidentService,
     private systemService: SystemService
-  ) {
-    this.systemId = this.activatedRoute.snapshot.paramMap.get('system-id');
-    this.incidentType = this.activatedRoute.snapshot.paramMap.get('incident-type');
-    this.maintenanceUrl = '/system/' + this.systemId + '/incidents/maintenance';
-  }
+  ) { }
 
   ngOnInit() {
-    // console.log(this.router.url === '/system/' + this.systemId + '/incidents/maintenance');
-    // this.incidents$ = this.searchTerms.pipe(
-    //   debounceTime(300),
-    //   distinctUntilChanged(),
-    //   switchMap((term: string) => this.incidentService.searchIncidents(term)),
-    // );
+    this.currentSystem = this.systemService.getCurrentSystem();
+    this.maintenanceUrl = '/system/' + this.currentSystem.id + '/incidents/maintenance';
     this.isLoaded = true;
   }
-
-  // searchIncident(term: string): void {
-  //   this.searchTerms.next(term);
-  // }
 
   searchIncident(searchTerms: string) {
     if (searchTerms.length < 1) {
@@ -55,7 +42,8 @@ export class IncidentsComponent implements OnInit {
       this.incidentService.searchIncidents(searchTerms).subscribe(
         (results: Incident[]) => this.incidents = results.filter(
           (incident) => {
-            return incident.description.indexOf(searchTerms) > -1 || incident.name.indexOf(searchTerms) > -1;
+            return incident.description.toLowerCase().indexOf(searchTerms.toLowerCase()) > -1 || 
+            incident.name.toLowerCase().indexOf(searchTerms.toLowerCase()) > -1;
         }));
       this.isHidden = false;
     }
