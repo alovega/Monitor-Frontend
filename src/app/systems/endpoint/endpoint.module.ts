@@ -13,7 +13,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
 
 
 @NgModule({
-  declarations: [EndpointComponent, EndpointViewComponent, EndpointFormComponent,EndpointUpdateComponent],
+  declarations: [EndpointComponent, EndpointViewComponent, EndpointFormComponent, EndpointUpdateComponent],
   imports: [
     CommonModule,
     TableModule,

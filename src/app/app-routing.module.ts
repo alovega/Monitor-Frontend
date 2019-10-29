@@ -6,7 +6,7 @@ import { AuthGuardService } from './shared/helpers/auth-guard.service';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent},
-  { path: 'profile', loadChildren: () => import('./profile/profile.module').then(m => m.ProfileModule) },
+  { path: 'profile', loadChildren: () => import('./profile/profile.module').then(m => m.ProfileModule), canActivate: [AuthGuardService] },
   { path: 'tables', loadChildren: () => import('./tables/tables.module').then(m => m.TablesModule) },
   { path: 'system', loadChildren: () => import('./systems/systems.module').then(m => m.SystemsModule)},
   { path: '', pathMatch: 'full', redirectTo: 'system', canActivate: [AuthGuardService]},

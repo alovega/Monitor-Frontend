@@ -1,6 +1,6 @@
 import { NgModule, NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MDBBootstrapModule } from 'angular-bootstrap-md';
+import { MDBBootstrapModule, TableModule } from 'angular-bootstrap-md';
 
 import { ProfileRoutingModule } from './profile-routing.module';
 import { ProfileComponent } from './profile.component';
@@ -13,10 +13,11 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 
 @NgModule({
-  declarations: [ProfileComponent,RecentNotificationComponent,EditComponent,DetailsComponent, UserNotificationsComponent],
+  declarations: [ProfileComponent, RecentNotificationComponent, EditComponent, DetailsComponent, UserNotificationsComponent],
   imports: [
     CommonModule,
     ProfileRoutingModule,
+    TableModule,
     FormsModule,
     ReactiveFormsModule,
     SharedModule,

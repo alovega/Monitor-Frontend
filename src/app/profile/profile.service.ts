@@ -52,6 +52,13 @@ constructor(private http: HttpClient) { }
       map(data => data.data)
     );
   }
+  getLoggedInuserNotifications(): Observable<any> {
+    const user = JSON.parse(localStorage.getItem('currentUser'));
+    const getUsersUrl = environment.apiEndpoint + 'get_logged_in_user_notifications/';
+    return this.http.post<any>(getUsersUrl, {token: JSON.stringify(user.token)}).pipe(
+      map(data => data.data)
+    );
+  }
 
 }
 
