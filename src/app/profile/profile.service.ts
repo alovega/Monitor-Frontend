@@ -36,10 +36,10 @@ constructor(private http: HttpClient) { }
     return this.http.post<any>(getUsersUrl, {token: JSON.stringify(user.token)}).pipe(
       map(data => data.data)
     );
-}
+  }
   updateLoggedInUser(data): Observable<any> {
     const getUsersUrl = environment.apiEndpoint + 'edit_logged_in_user_details/';
-    return this.http.post<any>(getUsersUrl, {data}, this.httpOptions).pipe(
+    return this.http.post<any>(getUsersUrl, data, this.httpOptions).pipe(
       retry(2),
       catchError(this.handleError)
     );
