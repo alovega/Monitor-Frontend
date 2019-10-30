@@ -29,23 +29,21 @@ export class NotificationsService {
     // return an observable with a user-facing error message
     return throwError(
       'Something bad happened; please try again later.');
-  };
+  }
   public getEmailNotifications(system_id): Observable<any> {
 
-    return this.http.post<any>(this.notificationUrl + '/get_notifications/', {
-      system_id: system_id,
-    }).pipe( 
+    return this.http.post<any>(this.notificationUrl + '/get_notifications/', system_id).pipe(
       map(response => response.data.notifications.filter(data => data.type === 'Email'),
-      retry(2)
-    ),catchError(this.handleError))
+    ),
+    retry(2),
+    catchError(this.handleError));
   }
   public getSmsNotifications(system_id): Observable<any> {
 
-    return this.http.post<any>(this.notificationUrl + '/get_notifications/', {
-      system_id: system_id,
-    }).pipe( 
+    return this.http.post<any>(this.notificationUrl + '/get_notifications/', system_id).pipe(
       map(response => response.data.notifications.filter(data => data.type === 'Sms'),
-      retry(2)
-    ),catchError(this.handleError))
+    ),
+    retry(2),
+    catchError(this.handleError));
   }
 }
