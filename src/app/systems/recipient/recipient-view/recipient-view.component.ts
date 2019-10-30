@@ -19,7 +19,7 @@ export class RecipientViewComponent implements OnInit, AfterViewInit {
   searchText = '';
   previous: any = [];
 
-  headElements = ['userName', 'phoneNumber',  'dateCreated', 'status', 'action'];
+  headElements = ['userName', 'phoneNumber', 'status', 'dateCreated', 'action'];
   currentSystem: any;
   currentSystemId: any;
   recipientId: any;

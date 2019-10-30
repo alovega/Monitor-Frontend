@@ -19,7 +19,7 @@ export class EndpointViewComponent implements OnInit, AfterViewInit {
   previous: any = [];
 
 
-  headElements = ['endpoint', 'description', 'url', 'type',  'dateCreated', 'status', 'action'];
+  headElements = ['endpoint', 'description', 'url', 'type',   'status', 'dateCreated', 'action'];
   currentSystem: any;
   currentSystemId: any;
   endpointId: any;

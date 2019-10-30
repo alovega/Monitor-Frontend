@@ -21,7 +21,7 @@ export class EmailSystemRecipientsComponent implements OnInit, AfterViewInit {
   elements: any;
   escalations: any;
   previous: any = [];
-  headElements: string[] = [ 'email', 'escalationLevels', 'userName', 'dateCreated', 'status', 'action'];
+  headElements: string[] = ['userName', 'escalationLevel', 'status', 'dateCreated', 'action'];
 
   constructor(
     private systemRecipientService: SystemRecipientService, private cdRef: ChangeDetectorRef,

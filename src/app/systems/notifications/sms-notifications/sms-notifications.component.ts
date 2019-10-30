@@ -20,10 +20,10 @@ export class SmsNotificationsComponent implements OnInit, AfterViewInit {
   currentSystem: any;
   currentSystemId: any;
   previous: any = [];
-  headElements: string[] = [ 'message','recipient', 'dateCreated', 'status'];
+  headElements: string[] = [ 'message', 'recipient', 'status', 'dateCreated'];
 
   constructor(
-    private notificationsService: NotificationsService, 
+    private notificationsService: NotificationsService,
     private cdRef: ChangeDetectorRef,
     private activatedRoute: ActivatedRoute
     ) {}

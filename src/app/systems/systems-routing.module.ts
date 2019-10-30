@@ -13,6 +13,8 @@ const routes: Routes = [
   { path: '', component: SystemsComponent, canActivate: [AuthGuardService]},
   // { path: ':system-id', component: SystemsComponent },
   { path: ':system-id/edit', component: AddSystemComponent },
+  {path: 'system-recipients', loadChildren: () => import('./system-recipients/system-recipients.module').
+  then(m => m.SystemRecipientsModule), canLoad: [AuthGuardService]},
   { path: 'endpoints', loadChildren: () => import('./endpoint/endpoint.module').then(m => m.EndpointModule),
   canLoad: [AuthGuardService] },
   { path: 'recipients', loadChildren: () => import('./recipient/recipient.module').then(m => m.RecipientModule),
