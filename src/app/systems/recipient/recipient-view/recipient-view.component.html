@@ -6,7 +6,7 @@
         <div class="col-md-6 px-0 top-controls" style="top:4px;">
             <input class="form-control" type="text"  [(ngModel)]="searchText" id="search" placeholder="search" mdbInput >
         </div>
-        <button type="button" routerLink="/system/{{currentSystemId}}/recipients/recipient-create" mdbBtn color="primary" mdbWavesEffect>Add Recipient</button>
+        <button type="button" routerLink="/system/recipients/recipient-create" mdbBtn color="primary" mdbWavesEffect>Add Recipient</button>
     </div>
   </div>
   
@@ -23,7 +23,7 @@
             <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{el.dateCreated | date}}</td>
             <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{el.status}}</td>
             <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">
-                <a class="fas fa-edit text-success"  routerLinkActive="active" routerLink="/system/{{currentSystemId}}/recipients/recipient-update/{{el.recipientId}}" ></a>
+                <a class="fas fa-edit text-success"  routerLinkActive="active" routerLink="/system/recipients/recipient-update/{{el.recipientId}}" ></a>
                 <a class="fas fa-trash-alt mr-2 text-danger" [disabled]="elements" (click)="delete(el.recipientId)"></a>
             </td>
             </tr>
