@@ -73,11 +73,11 @@ export class RecipientViewComponent implements OnInit, AfterViewInit {
     console.log(recipientId);
     Swal.fire({
       title: 'Are you sure?',
-      text: 'You will not be able to recover this endpoint!',
+      text: 'You will not be able to recover this recipient!',
       type: 'warning',
       showCancelButton: true,
-      confirmButtonText: 'Yes, delete the endpoint!',
-      cancelButtonText: 'No, keep the endpoint'
+      confirmButtonText: 'Yes, delete the recipient!',
+      cancelButtonText: 'No, keep the recipient'
     }).then((result) => {
       if (result.value) {
         console.log(recipientId);
@@ -86,13 +86,13 @@ export class RecipientViewComponent implements OnInit, AfterViewInit {
             if (response.code === '800.200.001') {
               Swal.fire(
                 'Deleted!',
-                'This endpoint has been deleted.',
+                'This recipient has been deleted.',
                 'success'
               );
             } else {
               Swal.fire(
                 'Failed!',
-                'This endpoint could not be deleted.',
+                'This recipient could not be deleted.',
                 'error'
               );
             }

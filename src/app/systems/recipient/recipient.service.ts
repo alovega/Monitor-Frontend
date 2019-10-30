@@ -61,7 +61,8 @@ constructor(private http: HttpClient, private lookUpService: LookUpService) { }
       );
     }
     public deleteItem(recipientId): Observable<any> {
-      return this.http.post<any>( '/delete_recipient/', {recipientId}, this.httpOptions).pipe(
+      const RecipientUrl = environment.apiEndpoint + 'delete_recipient/';
+      return this.http.post<any>( RecipientUrl, {recipientId}, this.httpOptions).pipe(
         retry(2),
         catchError(this.handleError)
       );
