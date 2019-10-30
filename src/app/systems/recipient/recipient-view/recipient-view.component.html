@@ -20,8 +20,8 @@
             <tr mdbTableCol *ngFor="let el of elements; let i = index ">
             <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{el.userName}}</td>
             <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{el.phoneNumber}}</td>
-            <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{el.dateCreated | date}}</td>
             <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{el.status}}</td>
+            <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{el.dateCreated | date}}</td>
             <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">
                 <a class="fas fa-edit text-success"  routerLinkActive="active" routerLink="/system/recipients/recipient-update/{{el.recipientId}}" ></a>
                 <a class="fas fa-trash-alt mr-2 text-danger" [disabled]="elements" (click)="delete(el.recipientId)"></a>

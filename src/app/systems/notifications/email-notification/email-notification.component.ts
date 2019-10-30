@@ -20,7 +20,7 @@ export class EmailNotificationComponent implements OnInit, AfterViewInit {
   previous: any = [];
   currentSystem: any;
   currentSystemId: any;
-  headElements: string[] = [ 'message', 'recipient', 'dateCreated', 'status'];
+  headElements: string[] = [ 'message', 'recipient', 'status', 'dateCreated'];
 
   constructor(
     private notificationsService: NotificationsService, private cdRef: ChangeDetectorRef,
