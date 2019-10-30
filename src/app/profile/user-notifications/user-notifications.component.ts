@@ -16,7 +16,7 @@ export class UserNotificationsComponent implements OnInit, AfterViewInit {
   searchText = '';
   elements: any;
   previous: any = [];
-  headElements: string[] = [ 'message',  'dateCreated', 'status'];
+  headElements: string[] = ['message', 'status', 'dateCreated'];
 
   constructor(private cdRef: ChangeDetectorRef, private profileService: ProfileService) { }
   @HostListener('input') oninput() {
