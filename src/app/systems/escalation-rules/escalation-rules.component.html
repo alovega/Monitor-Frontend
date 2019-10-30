@@ -27,11 +27,11 @@
   <!-- Grid column -->
   <div class="col-lg-12 col-md-12 text-left">
       <mdb-card>
-      <table mdbTable #tableEl="mdbTable" class="table-responsive-lg">
+      <table mdbTable #tableEl="mdbTable" class="table-responsive ">
           <thead class="text-white">
           <tr>
-          <th *ngFor="let head of headElements; let i = index" scope="col">{{head}}
-          </th>
+          <th *ngFor="let head of headElements; let i = index" style="white-space: nowrap;" scope="col"[mdbTableSort]="rules" [sortBy]="headElements[i]">{{elements[head] | titlecase}} 
+          <mdb-icon fas icon="sort"></mdb-icon></th>
           </tr>
           </thead>
           <tbody *ngIf="rules.length; else noData">
@@ -43,7 +43,7 @@
           <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{rule.nth_event}}</td>
           <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{rule.duration_str}}</td>
           <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{rule.escalation}}</td>
-          <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{rule.date_created | date:'MMMM d, yyyy' }} </td>
+          <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex" style="white-space: nowrap">{{rule.date_created | date:'MMMM d, yyyy' }} </td>
           <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">
               <span mdbIcon class="fas fa-trash-alt mr-2 text-danger" (click)="removeRule(rule.rule_id)"></span>
               <span mdbIcon class="fas fa-edit text-success" routerLink="/system/rules/edit/{{rule.rule_id}}" routerLinkActive="active"></span>

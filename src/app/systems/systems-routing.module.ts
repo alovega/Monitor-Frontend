@@ -14,7 +14,6 @@ const routes: Routes = [
   // { path: ':system-id', component: SystemsComponent },
   { path: ':system-id/edit', component: AddSystemComponent },
   { path: ':system-id/endpoints', loadChildren: () => import('./endpoint/endpoint.module').then(m => m.EndpointModule) },
-  { path: ':system-id/recipients', loadChildren: () => import('./recipients/recipients.module').then(m => m.RecipientsModule) },
   { path: ':system-id/notifications', loadChildren: () => import('./notifications/notifications.module').then(m => m.NotificationsModule) },
   { path: 'dashboard', loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule), canActivate: [AuthGuardService]},
   { path: 'incidents', loadChildren: () => import('./incidents/incidents.module').then(m => m.IncidentsModule), canLoad: [AuthGuardService]},

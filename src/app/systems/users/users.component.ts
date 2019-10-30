@@ -21,8 +21,11 @@ export class UsersComponent implements OnInit, AfterViewInit {
   previous: any = [];
   isLoaded = false;
 
-  headElements = ['Username', 'Email', 'First Name', 'Last Name', 'Active', 'Date Created', 'Action'];
-
+  headElements = ['username', 'email', 'first_name', 'last_name', 'active', 'date_joined', 'action'];
+  elements = {
+    username: 'Username', email: 'Email', first_name: 'First Name', last_name: 'Last Name', active: 'Active',
+    date_joined: 'Date Created', action: 'Action'
+  };
   constructor(
     private activatedRoute: ActivatedRoute,
     private systemService: SystemService,

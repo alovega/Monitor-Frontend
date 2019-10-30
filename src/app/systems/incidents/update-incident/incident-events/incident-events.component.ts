@@ -25,8 +25,11 @@ export class IncidentEventsComponent implements OnInit, AfterViewInit {
   events: any[];
   previous: any = [];
   incidentId: any;
-
-  headElements = ['Event Type', 'Description', 'Method', 'Interface', 'Request', 'Response', 'Stack Trace', 'Code', 'Date Created'];
+  headElements = ['eventtype', 'description', 'stack_trace', 'method', 'interface', 'request', 'response', 'code', 'date_created'];
+  elements = {
+    eventtype: 'Event type', description: 'Description', stack_trace: 'Stack Trace', interface: 'Interface', request: 'Request',
+    response: 'Response', code: 'Code', date_created: 'Date Created', method: 'Method'
+  };
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -49,7 +52,7 @@ export class IncidentEventsComponent implements OnInit, AfterViewInit {
         this.mdbTable.setDataSource(this.events);
         this.events = this.mdbTable.getDataSource();
         this.previous = this.mdbTable.getDataSource();
-        // console.log('Current events => ' + result);
+        // console.log(result);
       })
     );
   }
@@ -66,15 +69,8 @@ export class IncidentEventsComponent implements OnInit, AfterViewInit {
     return this.http.post<any>(environment.apiEndpoint + 'get_incident_events/', {
       incident_id: this.incidentId
     }).pipe(
-      map(events => events.data),
-      tap(events => {
-        if (events) {
-          events.map(a => ({... a.incident_event}));
-        } else {
-          return null;
-        }
-      }),
-    );
+      map(events => events.data.map(a => ({... a.incident_event}))
+    ));
   }
 
   searchItems(search: string) {

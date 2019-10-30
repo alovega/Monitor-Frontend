@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, AfterViewInit, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { MdbTablePaginationComponent, MdbTableDirective } from 'angular-bootstrap-md';
+import { MdbTablePaginationComponent, MdbTableDirective, MdbTableSortDirective } from 'angular-bootstrap-md';
 import Swal from 'sweetalert2';
 
 import { SystemService } from '../../shared/system.service';
@@ -14,14 +14,19 @@ import { EscalationRuleService } from './escalation-rule.service';
 export class EscalationRulesComponent implements OnInit, AfterViewInit {
   @ViewChild(MdbTablePaginationComponent, { static: true }) mdbTablePagination: MdbTablePaginationComponent;
   @ViewChild(MdbTableDirective, { static: true }) mdbTable: MdbTableDirective;
+  @ViewChild(MdbTableSortDirective, { static: true }) mdbTableSort: MdbTableSortDirective;
+
 
   currentSystemId: string;
   currentSystem: any;
   rules: any[];
   previous: any = [];
   isLoaded = false;
-  headElements = ['Name', 'Event Type', 'Description', 'Nth occurrence', 'Duration', 'Escalation Level', 'Date Created', 'Action'];
-
+  headElements = ['name', 'eventtype', 'description', 'nth_event', 'duration', 'escalation', 'date_created', 'action'];
+  elements = {
+    name: 'Name', eventtype: 'Event Type', description: 'Description', nth_event: 'Nth occurrence', duration: 'Duration',
+    escalation: 'Escalation Level', date_created: 'Date Created', action: 'Action'
+  };
   constructor(
     private activatedRoute: ActivatedRoute,
     private systemService: SystemService,
