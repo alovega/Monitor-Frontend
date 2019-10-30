@@ -1,13 +1,14 @@
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import {EndpointService} from '../endpoint.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import {Endpoint} from '../endpoint';
 import { Location } from '@angular/common';
 import { State } from 'src/app/shared/models/state';
 import { System } from 'src/app/shared/models/system';
 import { EndpointType } from 'src/app/shared/models/endpoint-type';
 import { of } from 'rxjs';
+import { SystemService } from 'src/app/shared/system.service';
 
 
 @Component({
@@ -23,12 +24,13 @@ export class EndpointFormComponent implements OnInit {
   data: Endpoint;
   states: State;
   systems: System;
-  endpoint_types: EndpointType;
+  endpointTypes: EndpointType;
   constructor(
     private fb: FormBuilder,
     private endpointService: EndpointService,
+    private systemService: SystemService,
     private location: Location,
-    private activatedRoute: ActivatedRoute ) {
+    private router: Router ) {
     this.createForm();
     this.data = new Endpoint();
     of(this.getStates()).subscribe((data: any) => {
@@ -38,16 +40,17 @@ export class EndpointFormComponent implements OnInit {
       this.systems = data;
     });
     of(this.getEndpointTypes()).subscribe((data: any) => {
-      this.endpoint_types = data;
+      this.endpointTypes = data;
     });
    }
 
+   public back(): void {
+    this.router.navigate(['system/endpoints']);
+  }
+
   ngOnInit() {
-    this.activatedRoute.parent.params.subscribe(
-      (param: any) => {
-        this.currentSystemId = param['system-id'];
-        // console.log(this.currentSystemId);
-      });
+    this.currentSystem = this.systemService.getCurrentSystem();
+    this.currentSystemId = this.currentSystem.id;
   }
   createForm() {
     this.endpointForm = this.fb.group({
@@ -100,7 +103,7 @@ export class EndpointFormComponent implements OnInit {
   }
   getEndpointTypes() {
     this.endpointService.getEndpointTypes().subscribe((data) => {
-      this.endpoint_types = data;
+      this.endpointTypes = data;
     });
   }
 }

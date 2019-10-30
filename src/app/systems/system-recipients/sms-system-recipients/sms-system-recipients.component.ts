@@ -3,6 +3,7 @@ import { Component, OnInit, ViewChild, AfterViewInit, HostListener, ChangeDetect
 import { SystemRecipientService } from '../system-recipient.service';
 import { ActivatedRoute } from '@angular/router';
 import Swal from 'sweetalert2';
+import { SystemService } from 'src/app/shared/system.service';
 
 @Component({
   selector: 'hm-sms-system-recipients',
@@ -20,19 +21,16 @@ export class SmsSystemRecipientsComponent implements OnInit, AfterViewInit {
   searchText = '';
   currentSystemId: any;
   previous: any = [];
-  headElements: string[] = [ 'phoneNumber', 'escalationLevels', 'userName', 'dateCreated', 'status', 'action'];
+  headElements: string[] = [ 'userName', 'escalationLevels', 'status', 'action'];
   constructor(
-    private systemRecipientService: SystemRecipientService, private cdRef: ChangeDetectorRef, private activatedRoute: ActivatedRoute ) {}
+    private systemRecipientService: SystemRecipientService, private cdRef: ChangeDetectorRef, private systemService: SystemService ) {}
     @HostListener('input') oninput() {
       this.searchItems();
     }
 
   ngOnInit() {
-    this.activatedRoute.parent.params.subscribe(
-      (param: any) => {
-        this.currentSystemId = param['system-id'];
-        console.log(this.currentSystemId);
-      });
+    this.currentSystem = this.systemService.getCurrentSystem();
+    this.currentSystemId = this.currentSystem.id;
     this.systemRecipientService.getSmsSystemRecipients(this.currentSystemId).subscribe((response) => {
       console.log(response);
       this.elements = response;

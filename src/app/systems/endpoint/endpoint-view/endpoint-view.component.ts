@@ -3,6 +3,7 @@ import { Component, OnInit, ViewChild, AfterViewInit, HostListener, ChangeDetect
 import {EndpointService} from '../endpoint.service';
 import { ActivatedRoute } from '@angular/router';
 import Swal from 'sweetalert2';
+import { SystemService } from 'src/app/shared/system.service';
 
 
 @Component({
@@ -26,6 +27,7 @@ export class EndpointViewComponent implements OnInit, AfterViewInit {
 
   constructor(
     private endpointService: EndpointService,
+    private systemService: SystemService,
     private cdRef: ChangeDetectorRef,
     private activatedRoute: ActivatedRoute,
     ) {}
@@ -33,12 +35,9 @@ export class EndpointViewComponent implements OnInit, AfterViewInit {
       this.searchItems();
     }
   ngOnInit() {
-    this.endpointId = this.activatedRoute.snapshot.params['id'];
-    this.activatedRoute.parent.params.subscribe(
-      (param: any) => {
-        this.currentSystemId = param['system-id'];
-        console.log(this.currentSystemId);
-      });
+    this.endpointId = this.activatedRoute.snapshot.params.id;
+    this.currentSystem = this.systemService.getCurrentSystem();
+    this.currentSystemId = this.currentSystem.id;
 
     this.endpointService.getEndpoints(this.currentSystemId).subscribe(
       (data) => {

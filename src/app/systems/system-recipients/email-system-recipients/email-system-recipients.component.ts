@@ -3,6 +3,7 @@ import { SystemRecipientService } from '../system-recipient.service';
 import { Component, OnInit, ViewChild, AfterViewInit, HostListener, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import Swal from 'sweetalert2';
+import { SystemService } from 'src/app/shared/system.service';
 
 @Component({
   selector: 'hm-email-system-recipients',
@@ -21,22 +22,19 @@ export class EmailSystemRecipientsComponent implements OnInit, AfterViewInit {
   elements: any;
   escalations: any;
   previous: any = [];
-  headElements: string[] = ['userName', 'escalationLevel', 'status', 'dateCreated', 'action'];
+  headElements: string[] = ['userName', 'escalationLevel', 'status', 'action'];
 
   constructor(
     private systemRecipientService: SystemRecipientService, private cdRef: ChangeDetectorRef,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute, private systemService: SystemService
     ) {}
    @HostListener('input') oninput() {
     this.searchItems();
   }
 
    ngOnInit() {
-    this.activatedRoute.parent.params.subscribe(
-      (param: any) => {
-        this.currentSystemId = param['system-id'];
-        console.log(this.currentSystemId);
-      });
+    this.currentSystem = this.systemService.getCurrentSystem();
+    this.currentSystemId = this.currentSystem.id;
     this.systemRecipientService.getEmailSystemRecipients(this.currentSystemId).subscribe((response) => {
       console.log(response);
       this.elements = response;

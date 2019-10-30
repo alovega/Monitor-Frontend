@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { of } from 'rxjs';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
@@ -20,7 +20,8 @@ export class RecipientCreateComponent implements OnInit {
   states: State;
   users: User;
 
-  constructor(private recipientService: RecipientService, private location: Location, private fb: FormBuilder) {
+  constructor(private recipientService: RecipientService, private location: Location, private fb: FormBuilder, 
+              private router: Router) {
     this.createForm();
     this.data = new Recipient();
     of(this.getStates()).subscribe((data: any) => {
@@ -53,6 +54,9 @@ export class RecipientCreateComponent implements OnInit {
   onReset() {
       this.submitted = false;
       this.recipientsForm.reset();
+  }
+  public back(): void {
+    this.router.navigate(['system/recipients']);
   }
   getStates() {
     this.recipientService.getStates().subscribe((data) => {

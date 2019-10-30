@@ -3,9 +3,10 @@ import { Component, OnInit, ViewChild, AfterViewInit, HostListener, ChangeDetect
 import {NotificationsService} from '../notifications.service';
 import {Notification} from '../notification';
 import { ActivatedRoute } from '@angular/router';
+import { SystemService } from 'src/app/shared/system.service';
 
 @Component({
-  selector: 'app-sms-notifications',
+  selector: 'hm-sms-notifications',
   templateUrl: './sms-notifications.component.html',
   styleUrls: ['./sms-notifications.component.scss']
 })
@@ -16,7 +17,7 @@ export class SmsNotificationsComponent implements OnInit, AfterViewInit {
   firstItemIndex: any;
   lastItemIndex: any;
   elements: any;
-  searchText: string = '';
+  searchText = '';
   currentSystem: any;
   currentSystemId: any;
   previous: any = [];
@@ -25,30 +26,27 @@ export class SmsNotificationsComponent implements OnInit, AfterViewInit {
   constructor(
     private notificationsService: NotificationsService,
     private cdRef: ChangeDetectorRef,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private systemService: SystemService,
     ) {}
     @HostListener('input') oninput() {
       this.searchItems();
     }
 
   ngOnInit() {
-    this.activatedRoute.parent.params.subscribe(
-      (param: any) => {
-        this.currentSystemId = param['system-id'];
-        console.log(this.currentSystemId);
-      });
-      this.notificationsService.getSmsNotifications(this.currentSystemId)
-      .subscribe((data) => {
-        console.log(data)
-        this.elements = data
-        this.mdbTable.setDataSource(this.elements);
-        this.elements = this.mdbTable.getDataSource();
-        this.previous = this.mdbTable.getDataSource();
-      });
+    this.currentSystem = this.systemService.getCurrentSystem();
+    this.currentSystemId = this.currentSystem.id;
+    this.notificationsService.getSmsNotifications(this.currentSystemId)
+    .subscribe((data) => {
+      this.elements = data;
+      this.mdbTable.setDataSource(this.elements);
+      this.elements = this.mdbTable.getDataSource();
+      this.previous = this.mdbTable.getDataSource();
+    });
   }
   searchItems() {
     const prev = this.mdbTable.getDataSource();
-    console.log(prev)
+    console.log(prev);
 
     if (!this.searchText) {
       this.mdbTable.setDataSource(this.previous);

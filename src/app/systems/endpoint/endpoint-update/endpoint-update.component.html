@@ -72,19 +72,13 @@
         </div>
       </div>
     </div>
+    <button mdbBtn type="button" class="btn float-left btn-primary waves-light" color="primary" mdbWavesEffect
+    (click)="back()" size="sm">Go back</button>
       
       <!-- Send button -->
-      <div class="row">
-        <div class="col">
-          <button mdbBtn type="button" class="btn btn-primary waves-light" 
-          color="primary" mdbWavesEffect  [disabled]="!updateForm.valid" (click)="update()"
-          >
-            Update
-          </button>
-        </div>
-      </div>
-      
-    
+    <button mdbBtn type="button" class="btn float-right btn-primary waves-light" 
+      color="primary" mdbWavesEffect  [disabled]="!updateForm.valid" (click)="update()" size="sm"
+      >Update</button>
     </form>
       <!-- Default form contact -->
 </mdb-card>

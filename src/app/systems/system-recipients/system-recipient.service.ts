@@ -4,6 +4,7 @@ import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http
 import { catchError, tap, retry, map} from 'rxjs/operators';
 import { Recipient } from './system-recipient';
 import { LookUpService } from 'src/app/shared/look-up.service';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -32,26 +33,23 @@ handleError(error: HttpErrorResponse) {
     'Something bad happened; please try again later.');
 }
 public getEmailSystemRecipients(systemId): Observable<any> {
-
-  return this.http.post<any>(this.endpointUrl + '/' + 'get_recipients' + '/', {
-    systemId,
-  }).pipe(
-    map(response => response.data.recipients.filter(data => data.type === 'Email'),
+  const systemRecipientUrl = environment.apiEndpoint + 'get_system_recipients/';
+  return this.http.post<any>(systemRecipientUrl, systemId).pipe(
+    map(response => response.data,
     retry(2)),
     catchError(this.handleError),
   );
 }
 public getSmsSystemRecipients(systemId): Observable<any> {
-
-  return this.http.post<any>(this.endpointUrl + '/' + 'get_recipients' + '/', {
-    systemId,
-  }).pipe(
-    map(response => response.data.recipients.filter(data => data.type === 'Sms'),
+  const systemRecipientUrl = environment.apiEndpoint + 'get_system_recipients/';
+  return this.http.post<any>(systemRecipientUrl, systemId).pipe(
+    map(response => response.data,
     retry(2)),
     catchError(this.handleError)
   );
 }
 public addSystemRecipient(item): Observable<any> {
+  const systemRecipientUrl = environment.apiEndpoint + 'get_system_recipients/';
   return this.http.post<any>(this.endpointUrl + '/create_recipients/', item, this.httpOptions).pipe(
     retry(2),
     catchError(this.handleError)
