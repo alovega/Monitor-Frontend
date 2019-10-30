@@ -48,7 +48,6 @@ export class SystemService {
       tap(system => {
         localStorage.setItem('currentSystem', JSON.stringify(system)),
         this.currentSystemSubject.next(system);
-        window.location.reload();
       })
     );
   }

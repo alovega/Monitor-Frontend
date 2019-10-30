@@ -33,7 +33,11 @@ export class IncidentEventsComponent implements OnInit, AfterViewInit {
     private systemService: SystemService,
     private cdRef: ChangeDetectorRef,
     private http: HttpClient
-    ) { }
+    ) {
+      this.activatedRoute.parent.params.subscribe(params => {
+        this.incidentId = params['incident-id'];
+      });
+    }
 
   ngOnInit() {
     this.currentSystem = this.systemService.getCurrentSystem();
@@ -45,7 +49,7 @@ export class IncidentEventsComponent implements OnInit, AfterViewInit {
         this.mdbTable.setDataSource(this.events);
         this.events = this.mdbTable.getDataSource();
         this.previous = this.mdbTable.getDataSource();
-        console.log('Current events => ' + result);
+        // console.log('Current events => ' + result);
       })
     );
   }
@@ -63,8 +67,13 @@ export class IncidentEventsComponent implements OnInit, AfterViewInit {
       incident_id: this.incidentId
     }).pipe(
       map(events => events.data),
-      map(events => events.map(a => ({... a.incident_event}))),
-      tap(events => console.log(events))
+      tap(events => {
+        if (events) {
+          events.map(a => ({... a.incident_event}));
+        } else {
+          return null;
+        }
+      }),
     );
   }
 

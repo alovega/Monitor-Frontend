@@ -39,6 +39,7 @@ export class SystemsComponent implements OnInit {
         (system) => {
           this.currentSystem = system;
           this.currentSystemId = this.currentSystem.id;
+          console.log("Not set");
           console.table(this.currentSystem);
           window.location.reload();
           this.router.navigate(['system/dashboard']);

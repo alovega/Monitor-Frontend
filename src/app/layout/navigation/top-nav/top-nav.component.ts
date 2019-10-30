@@ -79,8 +79,8 @@ export class TopNavComponent implements OnInit, OnChanges {
   changeSystem(systemId: any) {
     this.systemService.changesystem(systemId).subscribe(
       () => {
-        // console.log('Current system from subject is');
         this.currentSystem = this.systemService.getCurrentSystem();
+        window.location.reload();
     });
   }
 

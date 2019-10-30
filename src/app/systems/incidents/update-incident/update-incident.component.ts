@@ -65,13 +65,10 @@ export class UpdateIncidentComponent implements OnInit {
     this.incidentService.getIncident(this.incidentId, this.currentSystem).subscribe(
       (data: any) => {
         this.incident = data;
-        console.log('Incident data is' + data);
         this.updateIncidentForm.patchValue({
           priorityLevel: this.incident.priority_level.toString(),
           incidentStatus: this.incident.status.toString(),
         });
-        // this.initialPriorityLevel = this.incident.priority_level.toString();
-        console.log(this.incident);
       }
     );
   }
