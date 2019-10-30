@@ -1,14 +1,91 @@
-<div class="modal-header">
-    <h4 class="modal-title">Modal Title</h4>
-    <button type="button" class="close" aria-label="Close"
-     (click)="activeModal.dismiss('Cross click')">
-    </button>
+<div class="page">
+  <div class="page-header d-flex row">
+    <div class="col-md-6">
+      Edit system
+    </div>
+    <div class="col-md-6">
+      <button class="float-right back-button" (click)="back()"><i class="fas fa-angle-double-left"></i> dashboard</button>
+    </div>
   </div>
-  <div class="modal-body">
-    <p>My modal content</p>
+  <div class="clearfix"></div>
+  <hr>
+  <div class="page-body">
+    <mdb-card>
+      <form [formGroup]="editSystemForm" (ngSubmit) = "onSubmit()" class="text-center">
+        <div class="form-group mb-4 row">
+          <div class="col-md-6">
+              <label class="form-label">Name</label>
+              <input [ngClass]="{ 'is-invalid': submitted && editSystemForm.controls.name.errors }" type="text" 
+                id="name" formControlName="name" class="grey lighten-5 form-control" placeholder="System name"
+                [(ngModel)] = "system.name">
+
+              <!-- Incident Name Validation errors -->
+              <div *ngIf="submitted && editSystemForm.controls.name.errors" class="invalid-feedback">
+                  <div *ngIf="editSystemForm.controls.name.errors.required">System name is required</div>
+              </div>
+          </div>
+
+          <div class="col-md-6">
+              <label class="form-label">Version</label>
+              <input [ngClass]="{ 'is-invalid': submitted && editSystemForm.controls.version.errors }" type="text" 
+                id="version" formControlName="version" class="grey lighten-5 form-control" placeholder="Version"
+                [(ngModel)] = "system.version">
+
+              <!-- Incident Name Validation errors -->
+              <div *ngIf="submitted && editSystemForm.controls.version.errors" class="invalid-feedback">
+                  <div *ngIf="editSystemForm.controls.version.errors.required">Version is required</div>
+              </div>
+          </div>          
+        </div>
+
+        <div class="form-group mb-4 row">
+            <div class="col-md-6">
+                <label class="form-label">Status</label>
+                <select formControlName="status" [ngClass]="{ 'is-invalid': submitted && editSystemForm.controls.status.errors}"
+                class="grey lighten-5 browser-default custom-select form-control" [(ngModel)] = "system.status">
+                {{states | json}}
+                  <option *ngFor='let state of states' value="{{state.name}}">{{state.name}}</option>
+                </select>
+                <!-- Incident status validation errors -->
+                <div *ngIf="submitted && editSystemForm.controls.status.errors" class="invalid-feedback">
+                    <div *ngIf="editSystemForm.controls.status.errors.required">System status is required</div>
+                </div>
+            </div>
+  
+            <div class="col-md-6">
+                <label class="form-label">Admin</label>
+                <select formControlName="admin" [ngClass]="{ 'is-invalid': submitted && editSystemForm.controls.admin.errors}"
+                class="grey lighten-5 browser-default custom-select form-control" [(ngModel)] = "system.admin_id">
+                  <option *ngFor="let user of users" value="{{user.id}}">{{user.username}}</option>
+                </select>
+                <!-- Incident status validation errors -->
+                <div *ngIf="submitted && editSystemForm.controls.admin.errors" class="invalid-feedback">
+                    <div *ngIf="editSystemForm.controls.admin.errors.required">System admin is required</div>
+                </div>
+            </div>       
+          </div>
+
+          <div class="form-group mb-4 row">
+          <div class="col-md-12">
+              <label class="form-label">Description</label>
+              <textarea [ngClass]="{ 'is-invalid': submitted && editSystemForm.controls.description.errors }" type="text" 
+                id="description" formControlName="description" class="grey lighten-5 form-control" placeholder="System description"
+                [(ngModel)] = "system.description">
+              </textarea>
+              <!-- Incident Name Validation errors -->
+              <div *ngIf="submitted && editSystemForm.controls.description.errors" class="invalid-feedback">
+                  <div *ngIf="editSystemForm.controls.description.errors.required">System description is required</div>
+              </div>
+          </div>          
+        </div>
+
+        <div>
+            <!-- Create button -->
+            <div class="create-button">
+                <button type="submit" mdbBtn mdbWavesEffect class="float-right" color="primary" size="md">Update</button>
+            </div>
+        </div>
+      </form>
+    </mdb-card>
   </div>
-  <div class="modal-footer">
-    <button (click)="activeModal.dismiss('Close clicked')">
-      Close Clicked
-    </button>
-  </div>
+</div>

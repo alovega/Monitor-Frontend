@@ -3,6 +3,7 @@ import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor } from '@angular/c
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { AuthenticationService } from '../auth/authentication.service';
+import { SystemService } from '../system.service';
 
 @Injectable({
   providedIn: 'root'
@@ -17,14 +18,12 @@ export class HttpInterceptorService implements HttpInterceptor {
   currentUser: any;
 
   constructor(
-    private authService: AuthenticationService
+    private authService: AuthenticationService,
+    private systemService: SystemService
   ) { }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    const system = localStorage.getItem('currentSystem');
-    if (system !== 'undefined' || system !==  null) {
-      this.currentSystem = JSON.parse(system);
-    }
+    this.currentSystem = this.systemService.getCurrentSystem();
     this.authService.currentUser.subscribe((user) => this.currentUser = user);
 
     if (this.currentUser) {
@@ -39,11 +38,18 @@ export class HttpInterceptorService implements HttpInterceptor {
       this.currentSystemId = this.currentSystem.id;
       this.systemName = this.currentSystem.name;
     }
-
-    request = request.clone({
+    console.log(request);
+    if ( request.body !== null && request.body.hasOwnProperty('system_id')) {
+      request = request.clone({
+          body: {...request.body, client_id: this.clientId, token: this.accessToken, system: this.systemName}
+      });
+      // console.log(request);
+    } else {
+      request = request.clone({
         body: {...request.body, client_id: this.clientId, token: this.accessToken , system_id: this.currentSystemId,
           system: this.systemName}
-    });
+      });
+    }
 
     return next.handle(request);
   }

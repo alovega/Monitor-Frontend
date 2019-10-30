@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import {  FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import Swal from 'sweetalert2';
 
 import { IncidentService } from '../../incident.service';
 import { Incident } from '../../incident';
 import { SystemService } from 'src/app/shared/system.service';
+import { LookUpService } from 'src/app/shared/look-up.service';
 
 @Component({
   selector: 'hm-update-history',
@@ -22,35 +23,37 @@ export class UpdateHistoryComponent implements OnInit {
   incidentId: string;
   systemId: string;
   currentSystem: any;
+  users: any;
+  escalationLevels: any;
 
   constructor(
     private activatedRoute: ActivatedRoute,
+    private router: Router,
+    private lookupService: LookUpService,
     private incidentService: IncidentService,
     private formBuilder: FormBuilder,
     private location: Location,
     private systemService: SystemService
   ) {
-    // this.incidentId = this.activatedRoute.snapshot.paramMap.get('incident-id');
+    this.activatedRoute.parent.params.subscribe(params => {
+      this.incidentId = params['incident-id'];
+    });
     this.incident = new Incident();
   }
 
   ngOnInit() {
-    this.activatedRoute.parent.params.subscribe(
-      (param: any) => {
-        this.systemId = param['system-id'];
-        this.incidentId = param['incident-id'];
-    });
-
-    let issetCurrentSystem = this.systemService.checkCurrentSystem();
-    issetCurrentSystem ? this.currentSystem  = issetCurrentSystem : this.systemService.getCurrentSystem()
-    .subscribe(systems => {
-      this.currentSystem = systems[0];
-      this.systemId = this.currentSystem.id;
-      this.showIncident();
-    });
+    this.currentSystem = this.systemService.getCurrentSystem();
+    this.systemId = this.currentSystem.id;
     if (this.currentSystem) {
       this.showIncident();
     }
+    this.lookupService.getUsers().subscribe(
+      (users) => this.users = users
+    );
+
+    this.lookupService.getEscalationLevel().subscribe(
+      (levels) => this.escalationLevels = levels
+    );
     // this.showIncident();
     this.createUpdateIncidentForm();
   }
@@ -59,22 +62,20 @@ export class UpdateHistoryComponent implements OnInit {
     this.updateIncidentForm = this.formBuilder.group({
       incidentStatus: ['Investigating', Validators.required],
       message: ['', Validators.required],
-      priorityLevel: ['', Validators.required]
+      priorityLevel: ['', Validators.required],
+      user: [''],
+      escalationLevel: ['', Validators.required]
     });
   }
 
   public showIncident(): void {
-    // console.log('Showing...' + this.currentSystem);
     this.incidentService.getIncident(this.incidentId, this.currentSystem).subscribe(
-      (data: any) => {
-        this.incident = data;
-        // console.log('Incident data is' + this.incident.status);
+      (incident: any) => {
+        this.incident = incident;
         this.updateIncidentForm.patchValue({
           priorityLevel: this.incident.priority_level.toString(),
           incidentStatus: this.incident.status.toString(),
         });
-        // this.initialPriorityLevel = this.incident.priority_level.toString();
-        console.log(this.incident);
       }
     );
   }
@@ -87,12 +88,12 @@ export class UpdateHistoryComponent implements OnInit {
       return ;
     }
     console.log(this.incident);
-    this.incident.state = this.incident.status;
+    this.incident.state = this.updateIncidentForm.controls.incidentStatus.value;
     this.incident.escalation_level = 'Medium';
     return this.incidentService.updateIncident(this.incident).subscribe(
       (incident => {
         if (incident.code === '800.200.001') {
-          this.location.back();
+          this.router.navigate(['system/incidents']);
         }
       })
     );
@@ -111,7 +112,7 @@ export class UpdateHistoryComponent implements OnInit {
         console.log(incidentId);
         this.incidentService.deleteIncident(incidentId).subscribe(
           response => {
-            if (response.code == '800.200.001') {
+            if (response.code === '800.200.001') {
                   Swal.fire(
                     'Deleted!',
                     'This incident has been deleted.',
@@ -141,6 +142,6 @@ export class UpdateHistoryComponent implements OnInit {
   }
 
   back() {
-    this.location.back();
+    this.router.navigate(['system/incidents']);
   }
 }

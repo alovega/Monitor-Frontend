@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, HostListener } from '@angular/core';
 import { SystemService } from './shared/system.service';
 import {
   Router, NavigationStart, NavigationCancel, NavigationEnd , ActivatedRoute, NavigationError
@@ -18,6 +18,10 @@ export class AppComponent implements OnInit {
   currentSystemId: any;
   currentUser: any;
 
+  // @HostListener('document:mousemove', ['$event'])
+  // onMouseMove(e) {
+  //   setTimeout(() => {console.log(e)}, 4000);
+  // }
   constructor(
     private systemService: SystemService,
     private router: Router,
@@ -31,15 +35,11 @@ export class AppComponent implements OnInit {
     this.authService.currentUser.subscribe(
       (user) => {
         this.currentUser = user;
-        let issetCurrentSystem = this.systemService.checkCurrentSystem();
-        issetCurrentSystem ? this.currentSystem  = issetCurrentSystem : this.systemService.getCurrentSystem()
-        .subscribe(systems => {
-          this.currentSystem = systems[0];
-          this.currentSystemId = this.currentSystem.id;
-        });
-      });
+      }
+    );
+    this.currentSystem = this.systemService.getCurrentSystem();
+    this.currentSystem ? this.currentSystemId = this.currentSystem.id : this.currentSystemId = null;
     let body = document.getElementsByTagName('body')[0];
-
     if (this.currentUser) {
       body.classList.remove('body-logged-out');
     } else {

@@ -21,7 +21,7 @@ export class IncidentEventsComponent implements OnInit, AfterViewInit {
   @ViewChild(MdbTableDirective, { static: true }) mdbTable: MdbTableDirective;
 
   currentSystemId: string;
-  currentSystem: string;
+  currentSystem: any;
   events: any[];
   previous: any = [];
   incidentId: any;
@@ -33,22 +33,15 @@ export class IncidentEventsComponent implements OnInit, AfterViewInit {
     private systemService: SystemService,
     private cdRef: ChangeDetectorRef,
     private http: HttpClient
-    ) { }
+    ) {
+      this.activatedRoute.parent.params.subscribe(params => {
+        this.incidentId = params['incident-id'];
+      });
+    }
 
   ngOnInit() {
-    this.activatedRoute.parent.params.subscribe(
-      (param: any) => {
-        this.currentSystemId = param['system-id'];
-        this.incidentId = param['incident-id'];
-        console.log(this.incidentId);
-      });
-
-    this.systemService.setSystem(this.currentSystemId).subscribe(
-      (result => {
-        this.currentSystem = result[0];
-        // console.log(this.currentSystem);
-      })
-    );
+    this.currentSystem = this.systemService.getCurrentSystem();
+    this.currentSystem ? this.currentSystemId = this.currentSystem.id : this.currentSystemId = null;
 
     this.getEvents().subscribe(
       (result => {
@@ -56,7 +49,7 @@ export class IncidentEventsComponent implements OnInit, AfterViewInit {
         this.mdbTable.setDataSource(this.events);
         this.events = this.mdbTable.getDataSource();
         this.previous = this.mdbTable.getDataSource();
-        console.log('Current events => ' + result);
+        // console.log('Current events => ' + result);
       })
     );
   }
@@ -74,8 +67,13 @@ export class IncidentEventsComponent implements OnInit, AfterViewInit {
       incident_id: this.incidentId
     }).pipe(
       map(events => events.data),
-      map(events => events.map(a => ({... a.incident_event}))),
-      tap(events => console.log(events))
+      tap(events => {
+        if (events) {
+          events.map(a => ({... a.incident_event}));
+        } else {
+          return null;
+        }
+      }),
     );
   }
 

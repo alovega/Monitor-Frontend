@@ -65,7 +65,13 @@ export class IncidentService {
   }
 
   searchIncidents(searchKey: string): Observable<any> {
-    return this.http.get<Incident[]>(this.incidentsUrl);
+    return this.http.post<any>(environment.apiEndpoint + 'get_incidents/', {
+      start_date: this.startDate.toISOString(),
+      end_date: this.endDate.toISOString(),
+    }).pipe(
+      map(incidents => incidents.data),
+      // tap(incidents => console.log(incidents))
+    );
   }
 
   getRealtimeIncidents(): Observable<any> {

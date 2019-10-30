@@ -40,25 +40,14 @@ export class UpdateIncidentComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.lookupService.getUsers().subscribe(
-      (users) => this.users = users
-    );
-    this.activatedRoute.parent.params.subscribe(
-      (param: any) => {
-        this.systemId = param['system-id'];
-    });
-
-    let issetCurrentSystem = this.systemService.checkCurrentSystem();
-    issetCurrentSystem ? this.currentSystem  = issetCurrentSystem : this.systemService.getCurrentSystem()
-    .subscribe(systems => {
-      this.currentSystem = systems[0];
-      this.systemId = this.currentSystem.id;
-      this.showIncident();
-    });
+    this.currentSystem = this.systemService.getCurrentSystem();
+    this.systemId = this.currentSystem.id;
     if (this.currentSystem) {
       this.showIncident();
     }
-    // this.showIncident();
+    this.lookupService.getUsers().subscribe(
+      (users) => this.users = users
+    );
     this.createUpdateIncidentForm();
   }
 
@@ -76,13 +65,10 @@ export class UpdateIncidentComponent implements OnInit {
     this.incidentService.getIncident(this.incidentId, this.currentSystem).subscribe(
       (data: any) => {
         this.incident = data;
-        console.log('Incident data is' + data);
         this.updateIncidentForm.patchValue({
           priorityLevel: this.incident.priority_level.toString(),
           incidentStatus: this.incident.status.toString(),
         });
-        // this.initialPriorityLevel = this.incident.priority_level.toString();
-        console.log(this.incident);
       }
     );
   }
@@ -150,6 +136,6 @@ export class UpdateIncidentComponent implements OnInit {
   }
 
   back() {
-    this.router.navigate([`system/${this.systemId}/incidents`]);
+    this.router.navigate(['system/incidents']);
   }
 }

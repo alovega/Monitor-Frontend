@@ -1,9 +1,11 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { SystemService } from '../../../shared/system.service';
 import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
+
+import { SystemService } from '../../../shared/system.service';
 import { AuthenticationService } from 'src/app/shared/auth/authentication.service';
 import { SideNavToggleService } from 'src/app/shared/side-nav-toggle.service';
+
 
 @Component({
   selector: 'hm-side-nav',
@@ -29,6 +31,12 @@ export class SideNavComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.currentSystem = this.systemService.getCurrentSystem();
+    this.currentSystemId = this.currentSystem.id;
+    this.authService.currentUser.subscribe(
+      (user) => {
+        this.currentUser = user;
+    });
     this.hideSideNav = this.sideNavService.currentStatus;
     this.sideNavService.showSideNav.subscribe(
       (toggleStatus) => {
@@ -36,26 +44,6 @@ export class SideNavComponent implements OnInit {
         console.log(toggleStatus);
       }
     );
-    this.systemService.changeSystem.subscribe(
-      systems => {
-        let currentSystem = systems[0];
-        this.currentSystemId = currentSystem.id;
-      }
-    );
-    this.authService.currentUser.subscribe((user) => {
-      this.currentUser = user;
-      this.systemService.changeSystem.subscribe(
-        systems => {
-          let currentSystem = systems[0];
-          this.currentSystemId = currentSystem.id;
-        }
-      );
-      let issetCurrentSystem = this.systemService.checkCurrentSystem();
-      issetCurrentSystem ? this.systemService.getCurrentSystem()
-      .subscribe(systems => this.currentSystemId = systems[0].id) : this.currentSystemId  = this.systemService.checkCurrentSystem();
-      // this.currentSystemId = this.currentSystem.id;
-      // console.log(this.currentSystemId);
-    });
   }
 
   isActive(path) {

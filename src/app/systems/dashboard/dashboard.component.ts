@@ -74,7 +74,7 @@ export class DashboardComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    console.log('Init');
+    this.currentSystem = this.systemService.getCurrentSystem();
     this.graphsService.getErrorRates().subscribe(
       (result => {
         this.errorRateGraph.chartLabels = result.labels;
@@ -86,7 +86,7 @@ export class DashboardComponent implements OnInit {
       (result => {
         this.systemStatusGraph.chartLabels = result.labels;
         this.systemStatusGraph.chartDatasets[0].data = result.datasets;
-        console.log(this.systemStatusGraph.chartDatasets[0])
+        // console.log(this.systemStatusGraph.chartDatasets[0]);
       })
     );
   }

@@ -43,20 +43,10 @@ export class CreateIncidentComponent implements OnInit {
     this.lookupService.getUsers().subscribe(
       (users) => this.users = users
     );
-    this.activatedRoute.parent.params.subscribe(
-      (param: any) => {
-        this.systemId = param['system-id'];
-        this.realtimeUrl = `/system/${this.systemId}/incidents/new/realtime`;
-        this.maintenanceUrl = `/system/${this.systemId}/incidents/new/maintenance`;
-      });
-
-    let issetCurrentSystem = this.systemService.checkCurrentSystem();
-    issetCurrentSystem ? this.currentSystem  = issetCurrentSystem : this.systemService.getCurrentSystem()
-    .subscribe(systems => {
-      this.currentSystem = systems[0];
-      this.systemId = this.currentSystem.id;
-    });
-
+    this.currentSystem = this.systemService.getCurrentSystem();
+    this.systemId = this.currentSystem.id;
+    this.realtimeUrl = `/system/incidents/new/realtime`;
+    this.maintenanceUrl = `/system/incidents/new/maintenance`;
     this.createRealtimeIncidentForm();
     this.createScheduledMaintenanceForm();
   }
@@ -118,7 +108,7 @@ export class CreateIncidentComponent implements OnInit {
             text: 'Realtime incident created successfully!',
             type: 'success',
           }).then(() => {
-            this.location.back();
+          this.router.navigate(['system/incidents']);
           });
         }
       })
@@ -126,7 +116,7 @@ export class CreateIncidentComponent implements OnInit {
   }
 
   public back(): void {
-    this.location.back();
+    this.router.navigate(['system/incidents']);
   }
 
   onSubmitScheduled() {

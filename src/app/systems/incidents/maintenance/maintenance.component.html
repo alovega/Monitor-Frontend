@@ -9,11 +9,11 @@
                 <a id="update-{{incident.incident_id}}" routerLink="/incidents/update/{{incident.incident_id}}" 
                 routerLinkActive="active" *ngIf="incident.status !== 'Completed'; else Open">Update</a>
                 <ng-template #Open>
-                    <a id="update-{{incident.incident_id}}" routerLink="/system/{{systemId}}/incidents/update/{{incident.incident_id}}" routerLinkActive="active">View</a>
+                    <a id="update-{{incident.incident_id}}" routerLink="/system/incidents/update/{{incident.incident_id}}" routerLinkActive="active">View</a>
                 </ng-template>
             </div>
             <strong>
-                <a class="incident-view-link" routerLink="/system/{{systemId}}/incidents/update/{{incident.incident_id}}" routerLinkActive="active">
+                <a class="incident-view-link" routerLink="/system/incidents/update/{{incident.incident_id}}" routerLinkActive="active">
                   <span *ngIf="incident.incident_updates.length; else noUpdates">
                       <span *ngFor="let update of incident.incident_updates; let i=index">
                         <span *ngIf="update.status && i<1" class="incident-status" color="info">[{{ update.status }}] {{ incident.name }}</span>
@@ -39,7 +39,7 @@
 <!-- Zero Scheduled Incidents For the system -->
 <ng-template #noIncidents>
     <hm-empty-data header="No Scheduled Maintenances" description="You will see all scheduled maintenances here">
-      <a action-button routerLink='/system/{{systemId}}/incidents/new/maintenance' routerlinkactive="active"> 
+      <a action-button routerLink='/system/incidents/new/maintenance' routerlinkactive="active"> 
         <button id="create-button" size="sm" color="primary">
           New maintenance 
         </button>

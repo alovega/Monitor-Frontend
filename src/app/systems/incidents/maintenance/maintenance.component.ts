@@ -25,19 +25,8 @@ export class MaintenanceComponent implements OnInit {
    }
 
   ngOnInit() {
-    this.activatedRoute.parent.params.subscribe(
-      (param: any) => {
-        this.systemId = param['system-id'];
-        console.log(this.systemId);
-      });
-
-    let issetCurrentSystem = this.systemService.checkCurrentSystem();
-    issetCurrentSystem ? this.currentSystem  = issetCurrentSystem : this.systemService.getCurrentSystem()
-    .subscribe(systems => {
-      this.currentSystem = systems[0];
-      this.systemId = this.currentSystem.id;
-      this.incidents$ = this.incidentService.getScheduledIncidents();
-    });
+    this.currentSystem = this.systemService.getCurrentSystem();
+    this.systemId = this.currentSystem.id;
     this.incidents$ = this.incidentService.getScheduledIncidents();
     // this.showMaintenanceIncidents();
   }

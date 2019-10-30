@@ -24,35 +24,30 @@ export class SystemsComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.currentSystemId = this.activatedRoute.snapshot.params['system-id'];
+    this.currentSystem = this.systemService.getCurrentSystem();
     this.authService.currentUser.subscribe(
       (user) => {
         this.currentUser = user;
-        let issetCurrentSystem = this.systemService.checkCurrentSystem();
-        issetCurrentSystem ? this.currentSystem  = issetCurrentSystem : this.systemService.getCurrentSystem()
-        .subscribe(systems => {
-          this.currentSystem = systems[0];
+    });
+    // console.log(this.currentSystem);
+    if (this.currentSystem) {
+      this.currentSystemId = this.currentSystem.id;
+      console.log('navigate to sys/dashboard');
+      this.router.navigate(['system/dashboard']);
+    } else {
+      this.systemService.setSystem().subscribe(
+        (system) => {
+          this.currentSystem = system;
           this.currentSystemId = this.currentSystem.id;
-          this.redirect();
-        });
-        if (this.currentSystemId) {
-          this.redirect();
-        } else if (this.currentSystem) {
-          this.currentSystemId = this.currentSystem.id;
-          this.redirect();
+          console.log("Not set");
+          console.table(this.currentSystem);
+          window.location.reload();
+          this.router.navigate(['system/dashboard']);
         }
-      }
-    );
-
-    // if (this.currentSystem && this.currentSystemId) {
-    //   this.redirect();
-    // }
-
-    // this.router.navigateByUrl('/', {skipLocationChange: true}).then(() =>
-    // this.router.navigate([`system/${this.currentSystemId}/incidents`]));
+      );
+    }
   }
 
   redirect() {
-    this.router.navigate([`system/${this.currentSystemId}/incidents`]);
   }
 }

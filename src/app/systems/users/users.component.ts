@@ -15,8 +15,8 @@ export class UsersComponent implements OnInit, AfterViewInit {
   @ViewChild(MdbTablePaginationComponent, { static: true }) mdbTablePagination: MdbTablePaginationComponent;
   @ViewChild(MdbTableDirective, { static: true }) mdbTable: MdbTableDirective;
 
-  currentSystemId: string;
-  currentSystem: string;
+  currentSystemId: any;
+  currentSystem: any;
   users: any[];
   previous: any = [];
   isLoaded = false;
@@ -30,18 +30,8 @@ export class UsersComponent implements OnInit, AfterViewInit {
     private cdRef: ChangeDetectorRef) { }
 
   ngOnInit() {
-    this.activatedRoute.parent.params.subscribe(
-      (param: any) => {
-        this.currentSystemId = param['system-id'];
-        console.log(this.currentSystemId);
-      });
-
-    this.systemService.setSystem(this.currentSystemId).subscribe(
-      (result => {
-        this.currentSystem = result[0];
-        // console.log(this.currentSystem);
-      })
-    );
+    this.currentSystem = this.systemService.getCurrentSystem();
+    this.currentSystemId = this.currentSystem.id;
 
     this.usersService.getUsers().subscribe(
       result => {
