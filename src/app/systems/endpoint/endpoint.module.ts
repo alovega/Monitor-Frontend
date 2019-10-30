@@ -1,7 +1,6 @@
 import { NgModule, NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MDBBootstrapModule, TableModule } from 'angular-bootstrap-md';
-import { MatTableModule } from '@angular/material/table';
 
 import { EndpointRoutingModule } from './endpoint-routing.module';
 import { EndpointComponent } from './endpoint.component';
@@ -13,7 +12,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
 
 
 @NgModule({
-  declarations: [EndpointComponent, EndpointViewComponent, EndpointFormComponent,EndpointUpdateComponent],
+  declarations: [EndpointComponent, EndpointViewComponent, EndpointFormComponent, EndpointUpdateComponent],
   imports: [
     CommonModule,
     TableModule,
@@ -23,7 +22,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
     MDBBootstrapModule.forRoot(),
     SharedModule
   ],
-  schemas:[NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA],
+  schemas: [NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA],
   exports: []
 })
 export class EndpointModule { }

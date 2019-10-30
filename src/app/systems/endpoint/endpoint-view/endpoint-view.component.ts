@@ -3,9 +3,10 @@ import { Component, OnInit, ViewChild, AfterViewInit, HostListener, ChangeDetect
 import {EndpointService} from '../endpoint.service';
 import { ActivatedRoute } from '@angular/router';
 import Swal from 'sweetalert2';
- 
+
+
 @Component({
-  selector: 'app-endpoint-view',
+  selector: 'hm-endpoint-view',
   templateUrl: './endpoint-view.component.html',
   styleUrls: ['./endpoint-view.component.scss']
 })
@@ -14,14 +15,14 @@ export class EndpointViewComponent implements OnInit, AfterViewInit {
   @ViewChild(MdbTableDirective, { static: true }) mdbTable: MdbTableDirective;
   @ViewChild(MdbTableSortDirective, { static: true }) mdbTableSort: MdbTableSortDirective;
   elements: any;
-  searchText: string = '';
+  searchText = '';
   previous: any = [];
 
-  
+
   headElements = ['endpoint', 'description', 'endpointUrl', 'responseTime', 'type',  'dateCreated', 'status', 'action'];
   currentSystem: any;
   currentSystemId: any;
-  endpoint_id:any;
+  endpointId: any;
 
   constructor(
     private endpointService: EndpointService,
@@ -32,7 +33,7 @@ export class EndpointViewComponent implements OnInit, AfterViewInit {
       this.searchItems();
     }
   ngOnInit() {
-    this.endpoint_id = this.activatedRoute.snapshot.params["id"];
+    this.endpointId = this.activatedRoute.snapshot.params['id'];
     this.activatedRoute.parent.params.subscribe(
       (param: any) => {
         this.currentSystemId = param['system-id'];
@@ -41,7 +42,7 @@ export class EndpointViewComponent implements OnInit, AfterViewInit {
 
     this.endpointService.getEndpoints(this.currentSystemId).subscribe(
       (data) => {
-        console.log(data)
+        console.log(data);
         this.elements = data;
         this.mdbTable.setDataSource(this.elements);
         this.elements = this.mdbTable.getDataSource();
@@ -58,7 +59,7 @@ export class EndpointViewComponent implements OnInit, AfterViewInit {
 
   searchItems() {
     const prev = this.mdbTable.getDataSource();
-    console.log(prev)
+    console.log(prev);
 
     if (!this.searchText) {
       this.mdbTable.setDataSource(this.previous);
@@ -70,8 +71,8 @@ export class EndpointViewComponent implements OnInit, AfterViewInit {
       this.mdbTable.setDataSource(prev);
     }
   }
-  delete(endpoint_id){
-    console.log(endpoint_id)
+  delete(endpointId) {
+    console.log(endpointId);
     Swal.fire({
       title: 'Are you sure?',
       text: 'You will not be able to recover this endpoint!',
@@ -81,37 +82,37 @@ export class EndpointViewComponent implements OnInit, AfterViewInit {
       cancelButtonText: 'No, keep the endpoint'
     }).then((result) => {
       if (result.value) {
-        console.log(endpoint_id);
-        this.endpointService.deleteItem(endpoint_id).subscribe(
+        console.log(endpointId);
+        this.endpointService.deleteItem(endpointId).subscribe(
           response => {
             if (response.code === '800.200.001') {
               Swal.fire(
                 'Deleted!',
                 'This endpoint has been deleted.',
                 'success'
-              )
+              );
             } else {
               Swal.fire(
                 'Failed!',
                 'This endpoint could not be deleted.',
                 'error'
-              )
+              );
             }
           }
-        )
+        );
         this.endpointService.getEndpoints(this.currentSystemId).subscribe(
-          result => {
-            this.elements = result;
+          response => {
+            this.elements = response;
             this.mdbTable.setDataSource(this.elements);
           }
-        )
+        );
       } else if (result.dismiss === Swal.DismissReason.cancel) {
         Swal.fire(
           'Cancelled',
           '',
           'error'
-        )
+        );
       }
-    })
+    });
   }
 }

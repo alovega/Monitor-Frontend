@@ -1,8 +1,8 @@
 import { Injectable, Output, EventEmitter } from '@angular/core';
-import { Observable,throwError } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { HttpClient, HttpHeaders, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { Endpoint } from './endpoint';
-import { catchError, retry,map} from 'rxjs/operators';
+import { catchError, retry, map} from 'rxjs/operators';
 import { LookUpService } from 'src/app/shared/look-up.service';
 
 @Injectable({
@@ -15,7 +15,7 @@ export class EndpointService {
   };
   @Output() changeSystem: EventEmitter<boolean> = new EventEmitter();
 
-  constructor(private http: HttpClient, private lookUpService:LookUpService) { 
+  constructor(private http: HttpClient, private lookUpService: LookUpService) {
   }
 
   // Handle API errors
@@ -33,53 +33,50 @@ export class EndpointService {
     // return an observable with a user-facing error message
     return throwError(
       'Something bad happened; please try again later.');
-  };
+  }
   public getEndpoints(system_id): Observable<any> {
 
-    return this.http.post<any>(this.endpointUrl + '/get_endpoints/', {
-      system_id: system_id,
-    }).pipe( 
+    return this.http.post<any>(this.endpointUrl + '/get_endpoints/', system_id).pipe (
       map(response => response.data.endpoints,
       retry(2)
-    ),catchError(this.handleError))
+    ),
+    catchError(this.handleError));
   }
-  public addEndpoints(item): Observable<any>{
+  public addEndpoints(item): Observable<any> {
     return this.http.post<any>(this.endpointUrl + '/create_endpoints/', item, this.httpOptions).pipe(
       retry(2),
       catchError(this.handleError)
     );
   }
-  public deleteItem(endpoint_id):Observable<any>{
-    return this.http.post<Endpoint>(this.endpointUrl + '/delete_endpoint/',{endpoint_id:endpoint_id}, this.httpOptions).pipe(
+  public deleteItem(endpoint_id): Observable<any> {
+    return this.http.post<Endpoint>(this.endpointUrl + '/delete_endpoint/', {endpoint_id}, this.httpOptions).pipe(
       retry(2),
       catchError(this.handleError)
-    )
+    );
   }
 
-  public getItem(endpoint_id):Observable<any>{
-    return this.http.post<any>(this.endpointUrl + '/get_endpoint/', {
-      endpoint_id: endpoint_id
-    }).pipe(map(response => response,
+  public getItem(endpoint_id): Observable<any> {
+    return this.http.post<any>(this.endpointUrl + '/get_endpoint/',  {endpoint_id}).pipe(
+      map(response => response,
       retry(2)
     ),
       catchError(this.handleError)
-    )
+    );
   }
 
-  public updateItem(endpoint_id, item): Observable<any>{
-    return this.http.post<Endpoint>(this.endpointUrl + '/update_endpoints/',item, this.httpOptions).pipe(
+  public updateItem(item): Observable<any> {
+    return this.http.post<Endpoint>(this.endpointUrl + '/update_endpoints/', item, this.httpOptions).pipe(
       retry(2),
       catchError(this.handleError)
-    )
+    );
   }
-  public getStates(){
-    return this.lookUpService.getStates()
+  public getStates(): Observable<any> {
+    return this.lookUpService.getStates();
   }
-  public getEndpointTypes(){
-    return this.lookUpService.getEndpointType()
+  public getEndpointTypes(): Observable<any> {
+    return this.lookUpService.getEndpointType();
   }
-  public getSystems(){
-    return this.lookUpService.getSystems()
+  public getSystems(): Observable<any> {
+    return this.lookUpService.getSystems();
   }
-  
 }

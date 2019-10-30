@@ -1,0 +1,64 @@
+<mdb-card>
+    <!-- Default form contact -->
+    <form [formGroup]="recipientsForm" class="text-center border  p-5" (ngSubmit) = "onSubmit()">
+    
+    <div class="row">
+    
+      <div class="col"><p class="h4 mb-4">Add  Recipient </p></div>
+          
+    </div>
+    <hr>
+      <div class="row">
+        <!-- Phone Number -->
+        <label>Phone Number</label>
+        <input type="text" id="defaultContactFormPhoneNumber" class="form-control mb-4" placeholder="Phone Number"
+        [ngClass]="{ 'is-invalid': submitted && f.EnpointName.errors }" formControlName="PhoneNumber" 
+          [(ngModel)]="data.phoneNumber" >
+          <div *ngIf="recipientsForm.controls['PhoneNumber'].invalid && (recipientsForm.controls['PhoneNumber'].dirty || recipientsForm.controls['PhoneNumber'].touched)" class="invalid-feedback">
+            <div *ngIf="recipientsForm.controls['PhoneNumber'].errors.required">
+                Phone Number is required.
+            </div>
+            <div *ngIf="recipientsForm.controls['PhoneNumber'].errors.minlength">Phone Number must be more than 10 characters</div>
+          </div>
+        </div>
+      <div class="row">
+          <!-- User -->
+          <label>User</label>
+          <select class="browser-default custom-select form-control mb-4" formControlName="userId" [(ngModel)]="data.userId">
+            <option value></option>
+            <option *ngFor="let user of users; let i = index" [value]="users[i].id" >
+                  {{users[i].username}}
+            </option>
+          </select>
+          <div *ngIf="recipientsForm.controls['userId'].invalid && (recipientsForm.controls['userId'].dirty || recipientsForm.controls['userId'].touched)" class="invalid-feedback">
+              <div *ngIf="recipientsForm.controls['userId'].errors.required">
+                  Please Select a User.
+              </div>
+          </div>
+    </div>
+      <div class="row">
+          <!-- State -->
+        <label>State</label>
+        <select class="browser-default custom-select form-control mb-4" formControlName="stateId" [(ngModel)]="data.stateId">
+          <option value></option>
+          <option *ngFor="let type of states; let i = index" [value]="states[i].id">
+            {{states[i].name}}
+          </option>
+        </select>
+        <div *ngIf="recipientsForm.controls['stateId'].invalid && (recipientsForm.controls['stateId'].dirty || recipientsForm.controls['stateId'].touched)" class="invalid-feedback">
+          <div *ngIf="recipientsForm.controls['stateId'].errors.required">
+              Please Select a State.
+          </div>
+        </div>
+      </div>
+      <!-- Send button -->
+      <div class="row">
+          <button mdbBtn type="button" class="btn btn-primary waves-light" color="primary" mdbWavesEffect
+      [disabled]="!recipientsForm.valid" (click)="addRecipient()">Save</button>
+      </div>
+    </form>
+      <!-- Default form contact -->
+    
+    </mdb-card>
+    
+    

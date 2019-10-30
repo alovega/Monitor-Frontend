@@ -1,19 +1,19 @@
 import { Injectable } from '@angular/core';
-import { Observable,throwError, from } from 'rxjs';
+import { Observable, throwError, from } from 'rxjs';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { catchError, tap, retry, map} from 'rxjs/operators';
-import{ Recipient } from './recipient';
+import { Recipient } from './system-recipient';
 import { LookUpService } from 'src/app/shared/look-up.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class RecipientService {
+export class SystemRecipientService {
   endpointUrl = 'http://localhost:8000/api';
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
-constructor(private http: HttpClient, private lookUpService:LookUpService) { }
+constructor(private http: HttpClient, private lookUpService: LookUpService) { }
 
 // Handle API errors
 handleError(error: HttpErrorResponse) {
@@ -30,67 +30,63 @@ handleError(error: HttpErrorResponse) {
   // return an observable with a user-facing error message
   return throwError(
     'Something bad happened; please try again later.');
-};
-public getEmailRecipients(system_id): Observable<any> {
+}
+public getEmailSystemRecipients(systemId): Observable<any> {
 
   return this.http.post<any>(this.endpointUrl + '/' + 'get_recipients' + '/', {
-    system_id: system_id,
+    systemId,
   }).pipe(
     map(response => response.data.recipients.filter(data => data.type === 'Email'),
     retry(2)),
     catchError(this.handleError),
-   
   );
-  
 }
-public getSmsRecipients(system_id): Observable<any> {
+public getSmsSystemRecipients(systemId): Observable<any> {
 
   return this.http.post<any>(this.endpointUrl + '/' + 'get_recipients' + '/', {
-    system_id: system_id,
+    systemId,
   }).pipe(
     map(response => response.data.recipients.filter(data => data.type === 'Sms'),
     retry(2)),
     catchError(this.handleError)
   );
 }
-public addRecipient(item): Observable<any>{
+public addSystemRecipient(item): Observable<any> {
   return this.http.post<any>(this.endpointUrl + '/create_recipients/', item, this.httpOptions).pipe(
     retry(2),
     catchError(this.handleError)
   );
 }
-public deleteItem(recipient_id):Observable<any>{
-  return this.http.post<Recipient>(this.endpointUrl + '/delete_recipient/',{recipient_id:recipient_id}, this.httpOptions).pipe(
+public deleteItem(recipientId): Observable<any> {
+  return this.http.post<Recipient>(this.endpointUrl + '/delete_recipient/', {recipientId}, this.httpOptions).pipe(
     retry(2),
     catchError(this.handleError)
-  )
+  );
 }
 
-public getItem(recipient_id):Observable<any>{
-  return this.http.post<any>(this.endpointUrl + '/get_recipient/',{
-    recipient_id:recipient_id
-  }).pipe(
-    map(response => response,retry(2)),
+public getItem(recipientId): Observable<any> {
+  return this.http.post<any>(this.endpointUrl + '/get_recipient/', {recipientId}).pipe(
+    map(response => response, retry(2)),
     catchError(this.handleError)
-  )
+  );
 }
 
-public updateItem(id, item): Observable<any>{
+public updateItem(id, item): Observable<any> {
   return this.http.post<Recipient>(this.endpointUrl + '/update_recipient/', item, this.httpOptions).pipe(
     retry(2),
     catchError(this.handleError)
-  )
+  );
 }
-public getLevels(){
-  return this.lookUpService.getEscalationLevel()
+public getLevels(): Observable<any> {
+  return this.lookUpService.getEscalationLevel();
 }
-public getNotificationType(){
-  return this.lookUpService.getNotificationType()
+public getNotificationType(): Observable<any> {
+  return this.lookUpService.getNotificationType();
 }
-public getUsers(){
-  return this.lookUpService.getUsers()
+public getUsers(): Observable<any> {
+  return this.lookUpService.getUsers();
 }
-public getStates(){
-  return this.lookUpService.getStates()
+public getStates(): Observable<any> {
+  return this.lookUpService.getStates();
 }
 }

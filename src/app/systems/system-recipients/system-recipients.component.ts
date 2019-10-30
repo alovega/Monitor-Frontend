@@ -2,16 +2,16 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-recipients',
-  templateUrl: './recipients.component.html',
-  styleUrls: ['./recipients.component.scss']
+  selector: 'hm-recipients',
+  templateUrl: './system-recipients.component.html',
+  styleUrls: ['./system-recipients.component.scss']
 })
-export class RecipientsComponent implements OnInit {
+export class SystemRecipientsComponent implements OnInit {
   isHidden = true;
   public systemId: string;
   public incidentType: string;
   public maintenanceUrl: string;
-  search: string = '';
+  search = '';
   constructor(
     public router: Router,
   ) { }

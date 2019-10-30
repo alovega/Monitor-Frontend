@@ -7,7 +7,7 @@
             <th *ngFor="let head of headElements; let i = index" aria-controls="tableSort" scope="col" [mdbTableSort]="elements" [sortBy]="headElements[i]" scope="col">{{head | titlecase}} <mdb-icon fas icon="sort"></mdb-icon></th>
           </tr>
         </thead>
-        <tbody *ngIf="elements.length > 1; else noElements">
+        <tbody *ngIf="elements.length > 0; else noElements">
           <tr mdbTableCol *ngFor="let el of elements; let i = index ">
           <th *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex" scope="row">
               {{el.message}}

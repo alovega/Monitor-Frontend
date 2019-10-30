@@ -8,16 +8,17 @@ import { map, tap} from 'rxjs/operators';
   styleUrls: ['./details.component.scss']
 })
 export class DetailsComponent implements OnInit {
-  data: any
+  data: any;
+  currentUser: any;
 
-  constructor(private profileService:ProfileService) { }
+  constructor(private profileService: ProfileService) { }
 
   ngOnInit() {
     this.profileService.getLoggedInUserDetail().subscribe(
     (data) => {
-        this.data = data
-        console.log(this.data)
-      })
+        this.data = data;
+        console.log(this.data);
+      });
   }
 
 }

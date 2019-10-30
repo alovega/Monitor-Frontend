@@ -1,48 +1,67 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { MustMatch } from 'src/app/shared/must-match.validator';
+import { ProfileService } from '../profile.service';
+import { Profile } from '../profile';
+import { Location } from '@angular/common';
+
+
 @Component({
   selector: 'hm-edit',
   templateUrl: './edit.component.html',
   styleUrls: ['./edit.component.scss']
 })
 export class EditComponent implements OnInit {
-  updateForm:FormGroup
-  submitted:boolean = false;
-  constructor(private fb: FormBuilder,) {
-    
+  profileUpdateForm: FormGroup;
+  submitted = false;
+  data: any;
+  constructor(private fb: FormBuilder, private profileService: ProfileService, private location: Location) {
+    this.data = new Profile();
+    this.createForm();
    }
 
   ngOnInit() {
-    this.createForm()
+    this.profileService.getLoggedInUserDetail().subscribe(
+      (data) => {
+          this.data = data;
+          console.log(this.data);
+        });
   }
-  createForm(){
-    this.updateForm = this.fb.group({
-        FirstName:['',[Validators.required, Validators.minLength(3)]],
-        LastName:['',[Validators.required, Validators.minLength(3)]],
+  createForm() {
+    this.profileUpdateForm = this.fb.group({
+        FirstName: ['', [Validators.required, Validators.minLength(3)]],
+        LastName: ['', [Validators.required, Validators.minLength(3)]],
         Email: ['', [Validators.required, Validators.email]],
         PhoneNumber: ['', [Validators.required, Validators.minLength(10)]],
         Username: ['', Validators.required],
-        Password: ['', [Validators.required, Validators.minLength(6)]],
-        ConfirmPassword:['',Validators.required]
-    },{
-      validator: MustMatch('password', 'confirmPassword')
-    })
+    });
   }
    // convenience getter for easy access to form fields
-   get f() { return this.updateForm.controls; }
+   get f() { return this.profileUpdateForm.controls; }
 
    onSubmit() {
        this.submitted = true;
 
        // stop here if form is invalid
-       if (this.updateForm.invalid) {
+       if (this.profileUpdateForm.invalid) {
            return;
        }
       }
 
    onReset() {
        this.submitted = false;
-       this.updateForm.reset();
+       this.profileUpdateForm.reset();
    }
+   update() {
+    const user = JSON.parse(localStorage.getItem('currentUser'));
+    this.data[0].token =  user.token;
+    this.profileService.updateLoggedInUser(this.data[0]).subscribe(response => {
+      console.log(this.data[0]);
+      console.log(response);
+      if (response.code === '800.200.001') {
+        console.log('message: %s, code: %s', response.message, response.code);
+        this.location.back();
+      }
+      console.log('message: %s, code: %s', response.message, response.code);
+    });
+  }
 }
