@@ -5,8 +5,9 @@ import { EndpointComponent } from './endpoint.component';
 import { EndpointViewComponent } from './endpoint-view/endpoint-view.component';
 import { EndpointFormComponent } from './endpoint-create/endpoint-create.component';
 import { EndpointUpdateComponent } from './endpoint-update/endpoint-update.component';
+import { AuthGuardService } from 'src/app/shared/helpers/auth-guard.service';
 
-const routes: Routes = [{ path: '', component: EndpointComponent,
+const routes: Routes = [{ path: '', component: EndpointComponent, canActivateChild: [AuthGuardService],
 children: [
       {
         path: '',
