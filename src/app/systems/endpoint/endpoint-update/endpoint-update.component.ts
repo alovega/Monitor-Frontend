@@ -77,13 +77,13 @@ onReset() {
 }
 update() {
   this.data[0].endpoint_id = this.endpoint_id;
-  this.endpointService.updateItem(this.endpoint_id, this.data[0]).subscribe(response => {
+  this.endpointService.updateItem(this.data[0]).subscribe(response => {
     if (response.code === '800.200.001') {
       console.log('message: %s, code: %s', response.message, response.code);
       this.location.back();
-    } else{
-      console.log('message: %s, code: %s', response.message, response.code)
-    };
+    } else {
+      console.log('message: %s, code: %s', response.message, response.code);
+    }
   });
 }
 getStates() {

@@ -24,7 +24,7 @@
     <div class="row">
         <!-- State -->
         <label>State</label>
-        <select class="browser-default custom-select form-control mb-4" formControlName="State" >
+        <select class="browser-default custom-select form-control mb-4" formControlName="State" [(ngModel)]="data[0].stateId">
           <option value></option>
           <option *ngFor="let type of states; let i = index" [value]="states[i].id">
             {{states[i].name}}
@@ -39,7 +39,7 @@
       <!-- Send button -->
       <div class="row">
           <button mdbBtn type="button" class="btn btn-primary waves-light" color="primary" mdbWavesEffect
-      [disabled]="!updateForm.valid">Save</button>
+      [disabled]="!updateForm.valid" (click)="updateRecipient()">Save</button>
       </div>
     </form>
       <!-- Default form contact -->

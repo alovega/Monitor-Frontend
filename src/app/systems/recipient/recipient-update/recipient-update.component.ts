@@ -68,4 +68,15 @@ export class RecipientUpdateComponent implements OnInit {
       this.states = data;
     });
   }
+  updateRecipient() {
+    this.data[0].recipientId = this.recipientId;
+    this.recipientService.updateRecipient(this.data[0]).subscribe(response => {
+      if (response.code === '800.200.001') {
+        console.log('message: %s, code: %s', response.message, response.code);
+        this.location.back();
+      } else {
+        console.log('message: %s, code: %s', response.message, response.code);
+      }
+    });
+  }
 }

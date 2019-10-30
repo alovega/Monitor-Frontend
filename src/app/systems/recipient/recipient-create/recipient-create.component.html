@@ -24,14 +24,14 @@
       <div class="row">
           <!-- User -->
           <label>User</label>
-          <select class="browser-default custom-select form-control mb-4" formControlName="User">
+          <select class="browser-default custom-select form-control mb-4" formControlName="userId" [(ngModel)]="data.userId">
             <option value></option>
-            <option *ngFor="let user of users; let i = index" [value]="users[i].id">
+            <option *ngFor="let user of users; let i = index" [value]="users[i].id" >
                   {{users[i].username}}
             </option>
           </select>
-          <div *ngIf="recipientsForm.controls['User'].invalid && (recipientsForm.controls['User'].dirty || recipientsForm.controls['User'].touched)" class="invalid-feedback">
-              <div *ngIf="recipientsForm.controls['User'].errors.required">
+          <div *ngIf="recipientsForm.controls['userId'].invalid && (recipientsForm.controls['userId'].dirty || recipientsForm.controls['userId'].touched)" class="invalid-feedback">
+              <div *ngIf="recipientsForm.controls['userId'].errors.required">
                   Please Select a User.
               </div>
           </div>
@@ -39,14 +39,14 @@
       <div class="row">
           <!-- State -->
         <label>State</label>
-        <select class="browser-default custom-select form-control mb-4" formControlName="State" >
+        <select class="browser-default custom-select form-control mb-4" formControlName="stateId" [(ngModel)]="data.stateId">
           <option value></option>
           <option *ngFor="let type of states; let i = index" [value]="states[i].id">
             {{states[i].name}}
           </option>
         </select>
-        <div *ngIf="recipientsForm.controls['State'].invalid && (recipientsForm.controls['State'].dirty || recipientsForm.controls['State'].touched)" class="invalid-feedback">
-          <div *ngIf="recipientsForm.controls['State'].errors.required">
+        <div *ngIf="recipientsForm.controls['stateId'].invalid && (recipientsForm.controls['stateId'].dirty || recipientsForm.controls['stateId'].touched)" class="invalid-feedback">
+          <div *ngIf="recipientsForm.controls['stateId'].errors.required">
               Please Select a State.
           </div>
         </div>
@@ -54,7 +54,7 @@
       <!-- Send button -->
       <div class="row">
           <button mdbBtn type="button" class="btn btn-primary waves-light" color="primary" mdbWavesEffect
-      [disabled]="!recipientsForm.valid">Save</button>
+      [disabled]="!recipientsForm.valid" (click)="addRecipient()">Save</button>
       </div>
     </form>
       <!-- Default form contact -->

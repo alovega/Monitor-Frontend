@@ -33,18 +33,32 @@ constructor(private http: HttpClient, private lookUpService: LookUpService) { }
     }
 
     public getRecipients(): Observable<any> {
-      const getRecipientsUrl = environment.apiEndpoint + 'get_recipients/';
-      return this.http.post<any>(getRecipientsUrl, this.httpOptions).pipe (
+      const RecipientUrl = environment.apiEndpoint + 'get_recipients/';
+      return this.http.post<any>(RecipientUrl, this.httpOptions).pipe (
         map(response => response.data),
         retry(2),
         catchError(this.handleError));
     }
     public getRecipient(recipientId): Observable<any> {
-      const getRecipientsUrl = environment.apiEndpoint + 'get_recipient/';
-      return this.http.post<any>(getRecipientsUrl, {recipientId}, this.httpOptions).pipe (
+      const RecipientUrl = environment.apiEndpoint + 'get_recipient/';
+      return this.http.post<any>(RecipientUrl, {recipientId}, this.httpOptions).pipe (
         map(response => response),
         retry(2),
         catchError(this.handleError));
+    }
+    public addRecipient(item): Observable<any> {
+      const RecipientUrl = environment.apiEndpoint + 'create_recipient/';
+      return this.http.post<any>(RecipientUrl, item, this.httpOptions).pipe(
+        retry(2),
+        catchError(this.handleError)
+      );
+    }
+    public updateRecipient(item): Observable<any> {
+      const RecipientUrl = environment.apiEndpoint + 'update_recipient/';
+      return this.http.post<any>(RecipientUrl, item, this.httpOptions).pipe(
+        retry(2),
+        catchError(this.handleError)
+      );
     }
     public deleteItem(recipientId): Observable<any> {
       return this.http.post<any>( '/delete_recipient/', {recipientId}, this.httpOptions).pipe(

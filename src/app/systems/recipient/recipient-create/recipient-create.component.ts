@@ -35,9 +35,9 @@ export class RecipientCreateComponent implements OnInit {
   }
   createForm() {
     this.recipientsForm = this.fb.group({
-        User: ['', Validators.required],
+        userId: ['', Validators.required],
         PhoneNumber: ['', [Validators.required, Validators.minLength(10)]],
-        State: ['', Validators.required]
+        stateId: ['', Validators.required]
     });
   }
   get f() { return this.recipientsForm.controls; }
@@ -62,6 +62,17 @@ export class RecipientCreateComponent implements OnInit {
   getUsers() {
     this.recipientService.getUsers().subscribe((data) => {
       this.users = data;
+    });
+  }
+  addRecipient() {
+    this.recipientService.addRecipient(this.data).subscribe(response => {
+      console.log(this.data);
+      if (response.code === '800.200.001') {
+        console.log('message: %s, code: %s', response.message, response.code);
+        this.location.back();
+      } else {
+        console.log('error: %s, message: %s', response.code, response.message);
+      }
     });
   }
 

@@ -64,7 +64,7 @@ export class EndpointService {
     );
   }
 
-  public updateItem(endpoint_id, item): Observable<any> {
+  public updateItem(item): Observable<any> {
     return this.http.post<Endpoint>(this.endpointUrl + '/update_endpoints/', item, this.httpOptions).pipe(
       retry(2),
       catchError(this.handleError)
