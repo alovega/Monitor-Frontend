@@ -1,7 +1,7 @@
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import {EndpointService} from '../endpoint.service';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import {Endpoint} from '../endpoint';
 import { Location } from '@angular/common';
 import { State } from 'src/app/shared/models/state';

@@ -1,6 +1,6 @@
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
-import {RecipientService} from '../system-recipient.service';
+import {SystemRecipientService} from '../system-recipient.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import {Recipient} from '../system-recipient';
 import { Location } from '@angular/common';
@@ -29,7 +29,7 @@ export class SystemRecipientFormComponent implements OnInit {
   States: State;
 
   constructor(
-    private fb: FormBuilder, private recipientService: RecipientService, public location: Location,
+    private fb: FormBuilder, private systemRecipientService: SystemRecipientService, public location: Location,
     public activatedRoute: ActivatedRoute
     ) {
     this.createForm();
@@ -73,23 +73,23 @@ export class SystemRecipientFormComponent implements OnInit {
   }
 
   getEscalationLevels() {
-    this.recipientService.getLevels().subscribe((data) => {
+    this.systemRecipientService.getLevels().subscribe((data) => {
       this.EscalationLevels = data;
     });
   }
 
   getNotificationTypes() {
-    this.recipientService.getNotificationType().subscribe((data) => {
+    this.systemRecipientService.getNotificationType().subscribe((data) => {
       this.NotificationTypes = data;
     });
   }
   getUsers() {
-    this.recipientService.getUsers().subscribe((data) => {
+    this.systemRecipientService.getUsers().subscribe((data) => {
       this.Users = data;
     });
   }
   getStates() {
-    this.recipientService.getStates().subscribe((data) => {
+    this.systemRecipientService.getStates().subscribe((data) => {
       this.States = data;
     });
   }
@@ -105,7 +105,7 @@ export class SystemRecipientFormComponent implements OnInit {
   addRecipient() {
     this.recipient.systemId = this.currentSystemId;
     console.log(this.recipient);
-    this.recipientService.addRecipient(this.recipient).subscribe(response => {
+    this.systemRecipientService.addSystemRecipient(this.recipient).subscribe(response => {
       if (response.code === '800.200.001') {
         this.recipient = response.data;
         console.log('message: %s, code: %s', response.message, response.code);

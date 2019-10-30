@@ -1,6 +1,6 @@
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
-import {RecipientService} from '../system-recipient.service';
+import {SystemRecipientService} from '../system-recipient.service';
 import { Location } from '@angular/common';
 import { Router, ActivatedRoute } from '@angular/router';
 import {Recipient} from '../system-recipient';
@@ -24,7 +24,7 @@ export class SystemRecipientUpdateComponent implements OnInit {
   NotificationTypes: NotificationType;
 
   constructor(
-    private fb: FormBuilder, private recipientService: RecipientService, public router: Router,
+    private fb: FormBuilder, private systemRecipientService: SystemRecipientService, public router: Router,
     public activatedRoute: ActivatedRoute, public location: Location) {
     this.createForm();
     this.recipient = new Recipient();
@@ -41,7 +41,7 @@ export class SystemRecipientUpdateComponent implements OnInit {
   ngOnInit() {
     this.id = this.activatedRoute.snapshot.params['id'];
     console.log(this.id);
-    this.recipientService.getItem(this.id).subscribe(response => {
+    this.systemRecipientService.getItem(this.id).subscribe(response => {
       console.log(response.data.recipient);
       this.recipient = response.data.recipient;
   });
@@ -57,12 +57,12 @@ export class SystemRecipientUpdateComponent implements OnInit {
     });
   }
   getStates() {
-    this.recipientService.getStates().subscribe((data) => {
+    this.systemRecipientService.getStates().subscribe((data) => {
       this.States = data;
     });
   }
   getNotificationTypes() {
-    this.recipientService.getNotificationType().subscribe((data: any) => {
+    this.systemRecipientService.getNotificationType().subscribe((data: any) => {
       this.NotificationTypes = data;
     });
   }
@@ -82,7 +82,7 @@ export class SystemRecipientUpdateComponent implements OnInit {
   update() {
     this.recipient.recipientId = this.recipientId;
     console.log(this.recipient);
-    this.recipientService.updateItem(this.recipientId, this.recipient[0]).subscribe(response => {
+    this.systemRecipientService.updateItem(this.recipientId, this.recipient[0]).subscribe(response => {
       if (response.code === '800.200.001') {
         console.log('message: %s, code: %s', response.message, response.code);
         this.location.back();

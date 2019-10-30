@@ -1,5 +1,5 @@
 import { MdbTablePaginationComponent, MdbTableDirective, MdbTableSortDirective } from 'angular-bootstrap-md';
-import { RecipientService } from '../system-recipient.service';
+import { SystemRecipientService } from '../system-recipient.service';
 import { Component, OnInit, ViewChild, AfterViewInit, HostListener, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import Swal from 'sweetalert2';
@@ -24,7 +24,7 @@ export class EmailSystemRecipientsComponent implements OnInit, AfterViewInit {
   headElements: string[] = [ 'email', 'escalationLevels', 'userName', 'dateCreated', 'status', 'action'];
 
   constructor(
-    private recipientService: RecipientService, private cdRef: ChangeDetectorRef,
+    private systemRecipientService: SystemRecipientService, private cdRef: ChangeDetectorRef,
     private activatedRoute: ActivatedRoute
     ) {}
    @HostListener('input') oninput() {
@@ -37,7 +37,7 @@ export class EmailSystemRecipientsComponent implements OnInit, AfterViewInit {
         this.currentSystemId = param['system-id'];
         console.log(this.currentSystemId);
       });
-    this.recipientService.getEmailRecipients(this.currentSystemId).subscribe((response) => {
+    this.systemRecipientService.getEmailSystemRecipients(this.currentSystemId).subscribe((response) => {
       console.log(response);
       this.elements = response;
       this.mdbTable.setDataSource(this.elements);
@@ -79,7 +79,7 @@ export class EmailSystemRecipientsComponent implements OnInit, AfterViewInit {
     }).then((result) => {
       if (result.value) {
         console.log(recipientId);
-        this.recipientService.deleteItem(recipientId).subscribe(
+        this.systemRecipientService.deleteItem(recipientId).subscribe(
           response => {
             console.log(response);
             if (response.code === '800.200.001') {
@@ -97,9 +97,9 @@ export class EmailSystemRecipientsComponent implements OnInit, AfterViewInit {
             }
           }
         );
-        this.recipientService.getEmailRecipients(this.currentSystemId).subscribe(
-          result => {
-            this.elements = result;
+        this.systemRecipientService.getEmailSystemRecipients(this.currentSystemId).subscribe(
+          response => {
+            this.elements = response;
             this.mdbTable.setDataSource(this.elements);
           }
         );

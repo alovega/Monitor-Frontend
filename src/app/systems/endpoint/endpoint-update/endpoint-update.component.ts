@@ -47,8 +47,9 @@ export class EndpointUpdateComponent implements OnInit {
         this.data = response.data.endpoint;
         console.log(this.data);
         console.log('successfully fetched endpoint %s', response.code);
+      } else {
+        console.log('error %s, message: %s', response.code, response.message);
       }
-      console.log('error %s, message: %s', response.code, response.message);
   });
 }
   createForm() {
@@ -80,8 +81,9 @@ update() {
     if (response.code === '800.200.001') {
       console.log('message: %s, code: %s', response.message, response.code);
       this.location.back();
-    }
-    console.log('message: %s, code: %s', response.message, response.code);
+    } else{
+      console.log('message: %s, code: %s', response.message, response.code)
+    };
   });
 }
 getStates() {

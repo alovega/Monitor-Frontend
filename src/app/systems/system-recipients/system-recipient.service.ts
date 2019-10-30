@@ -8,7 +8,7 @@ import { LookUpService } from 'src/app/shared/look-up.service';
 @Injectable({
   providedIn: 'root'
 })
-export class RecipientService {
+export class SystemRecipientService {
   endpointUrl = 'http://localhost:8000/api';
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -31,7 +31,7 @@ handleError(error: HttpErrorResponse) {
   return throwError(
     'Something bad happened; please try again later.');
 }
-public getEmailRecipients(systemId): Observable<any> {
+public getEmailSystemRecipients(systemId): Observable<any> {
 
   return this.http.post<any>(this.endpointUrl + '/' + 'get_recipients' + '/', {
     systemId,
@@ -41,7 +41,7 @@ public getEmailRecipients(systemId): Observable<any> {
     catchError(this.handleError),
   );
 }
-public getSmsRecipients(systemId): Observable<any> {
+public getSmsSystemRecipients(systemId): Observable<any> {
 
   return this.http.post<any>(this.endpointUrl + '/' + 'get_recipients' + '/', {
     systemId,
@@ -51,7 +51,7 @@ public getSmsRecipients(systemId): Observable<any> {
     catchError(this.handleError)
   );
 }
-public addRecipient(item): Observable<any> {
+public addSystemRecipient(item): Observable<any> {
   return this.http.post<any>(this.endpointUrl + '/create_recipients/', item, this.httpOptions).pipe(
     retry(2),
     catchError(this.handleError)

@@ -39,5 +39,24 @@ constructor(private http: HttpClient, private lookUpService: LookUpService) { }
         retry(2),
         catchError(this.handleError));
     }
+    public getRecipient(recipientId): Observable<any> {
+      const getRecipientsUrl = environment.apiEndpoint + 'get_recipient/';
+      return this.http.post<any>(getRecipientsUrl, {recipientId}, this.httpOptions).pipe (
+        map(response => response),
+        retry(2),
+        catchError(this.handleError));
+    }
+    public deleteItem(recipientId): Observable<any> {
+      return this.http.post<any>( '/delete_recipient/', {recipientId}, this.httpOptions).pipe(
+        retry(2),
+        catchError(this.handleError)
+      );
+    }
+    public getUsers(): Observable<any> {
+      return this.lookUpService.getUsers();
+    }
+    public getStates(): Observable<any> {
+      return this.lookUpService.getStates();
+    }
 
 }

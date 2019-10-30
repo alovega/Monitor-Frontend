@@ -98,7 +98,7 @@ export class RecipientViewComponent implements OnInit, AfterViewInit {
             }
           }
         );
-        this.recipientService.getRecipients(this.currentSystemId).subscribe(
+        this.recipientService.getRecipients().subscribe(
           (response) => {
             this.elements = response;
             this.mdbTable.setDataSource(this.elements);

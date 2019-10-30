@@ -40,18 +40,18 @@ export class LookUpService {
       catchError(this.handleError)
     );
   }
-  public getStates(){
+  public getStates() {
 
     return this.http.get<any>(this.Url).pipe(
-      map(response => response.data.states.filter(state => state['name'] === 'Active'|| state['name'] === 'Disabled' ),retry(2)),
+      map(response => response.data.states.filter( state => state['name'] === 'Active'|| state['name'] === 'Disabled' ),retry(2)),
       catchError(this.handleError)
     );
   }
 
-  public getEndpointType(){
+  public getEndpointType() {
 
     return this.http.get<any>(this.Url).pipe(
-      map(response => response.data.endpoint_types,retry(2)),
+      map(response => response.data.endpoint_types, retry(2)),
       catchError(this.handleError)
     );
   }
