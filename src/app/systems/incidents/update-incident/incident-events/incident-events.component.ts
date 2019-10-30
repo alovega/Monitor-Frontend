@@ -21,7 +21,7 @@ export class IncidentEventsComponent implements OnInit, AfterViewInit {
   @ViewChild(MdbTableDirective, { static: true }) mdbTable: MdbTableDirective;
 
   currentSystemId: string;
-  currentSystem: string;
+  currentSystem: any;
   events: any[];
   previous: any = [];
   incidentId: any;
@@ -36,19 +36,8 @@ export class IncidentEventsComponent implements OnInit, AfterViewInit {
     ) { }
 
   ngOnInit() {
-    this.activatedRoute.parent.params.subscribe(
-      (param: any) => {
-        this.currentSystemId = param['system-id'];
-        this.incidentId = param['incident-id'];
-        console.log(this.incidentId);
-      });
-
-    this.systemService.setSystem(this.currentSystemId).subscribe(
-      (result => {
-        this.currentSystem = result[0];
-        // console.log(this.currentSystem);
-      })
-    );
+    this.currentSystem = this.systemService.getCurrentSystem();
+    this.currentSystem ? this.currentSystemId = this.currentSystem.id : this.currentSystemId = null;
 
     this.getEvents().subscribe(
       (result => {

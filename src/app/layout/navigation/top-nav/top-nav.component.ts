@@ -7,6 +7,7 @@ import { SystemService } from '../../../shared/system.service';
 import { System } from '../../../shared/models/system';
 import { AuthenticationService } from 'src/app/shared/auth/authentication.service';
 import { SideNavToggleService } from 'src/app/shared/side-nav-toggle.service';
+import { LookUpService } from 'src/app/shared/look-up.service';
 
 @Component({
   selector: 'hm-top-nav',
@@ -24,6 +25,7 @@ export class TopNavComponent implements OnInit, OnChanges {
   submitted = false;
   @ViewChild('closeBtn', { static: false }) closeBtn: ElementRef;
   showToggler = false;
+  users: any;
 
   constructor(
     private systemService: SystemService,
@@ -31,7 +33,8 @@ export class TopNavComponent implements OnInit, OnChanges {
     private formBuilder: FormBuilder,
     private authService: AuthenticationService,
     public breakpointObserver: BreakpointObserver,
-    public sideNavService: SideNavToggleService
+    public sideNavService: SideNavToggleService,
+    private lookupService: LookUpService
   ) {
     this.newSystem = new System();
   }
@@ -58,7 +61,13 @@ export class TopNavComponent implements OnInit, OnChanges {
     this.addSystemForm = this.formBuilder.group({
       name: ['', Validators.required],
       description: ['', Validators.required],
+      admin: ['', Validators.required]
     });
+
+    this.lookupService.getUsers().subscribe(
+      (data) => {
+        this.users = data;
+      });
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -88,15 +97,12 @@ export class TopNavComponent implements OnInit, OnChanges {
 
     this.systemService.createSystem(this.newSystem).subscribe(
       (response => {
-        if (response.code === '800.200.001') {
-          console.log(response.data.id);
-          this.systemService.setSystem(response.data.id).subscribe(
-            (newSystem => {
-              this.newSystem = newSystem[0];
-              this.reload(this.newSystem.id);
-              this.closeBtn.nativeElement.click();
-              this.router.navigate(['']);
-            }));
+        console.log(response);
+        if (response) {
+          console.log(response.id);
+          this.changeSystem(response.id);
+          this.closeBtn.nativeElement.click();
+          this.router.navigate(['']);
         }
       })
     );

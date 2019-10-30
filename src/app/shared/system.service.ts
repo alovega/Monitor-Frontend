@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { map, tap, filter} from 'rxjs/operators';
 // import { runInThisContext } from 'vm';
 import { environment } from '../../environments/environment';
+import { HttpWrapperService } from './helpers/http-wrapper.service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,7 @@ export class SystemService {
   public currentSystem: Observable<any>;
   @Output() changeSystem: EventEmitter<boolean> = new EventEmitter();
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private httpWrapperService: HttpWrapperService) {
     this.currentSystemSubject = new BehaviorSubject<any>(JSON.parse(localStorage.getItem('currentSystem')));
     this.currentSystem = this.currentSystemSubject.asObservable();
   }
@@ -24,26 +25,11 @@ export class SystemService {
   }
 
   getSystems(): Observable<any> {
-    return this.http.post<any>(environment.apiEndpoint + 'get_systems/', {}).pipe(
-      map(system => system.data),
-      tap(systems => {
-        this.changeSystem.emit(systems);
-      })
-      // tap(system => {
-      //   if (localStorage.getItem('currentSystem') === null || localStorage.getItem('currentSystem') === 'undefined') {
-      //     this.currentSystem = system[0];
-      //     console.log('Saving new current system ... ');
-      //     localStorage.setItem('currentSystem', JSON.stringify(this.currentSystem));
-      //   }
-      // })
-    );
+    return this.httpWrapperService.post('get_systems/');
   }
 
   createSystem(system: any): Observable<any> {
-    const createSystemUrl = environment.apiEndpoint + 'create_system/';
-    return this.http.post<any>(createSystemUrl, system).pipe(
-      tap(system => console.log(system)),
-    );
+    return this.httpWrapperService.post('create_system/', system);
   }
 
   // setSystem(systemId: string) {
@@ -58,8 +44,7 @@ export class SystemService {
   // }
 
   changesystem(systemId: string) {
-    return this.http.post<any>(environment.apiEndpoint + 'get_system/', {system_id: systemId}).pipe(
-      map(system => system.data),
+    return this.httpWrapperService.post('get_system/', {system_id: systemId}).pipe(
       tap(system => {
         localStorage.setItem('currentSystem', JSON.stringify(system)),
         this.currentSystemSubject.next(system);
@@ -69,22 +54,17 @@ export class SystemService {
   }
 
   updateSystem(system: any) {
-    return this.http.post<any>(environment.apiEndpoint + 'update_system/', system).pipe(
-      map(result => result),
-      tap(result => {
-        console.log(result);
-        const currentSystem = result[0];
-        // console.log(currentSystem);
-        // this.changeSystem.emit(result.data);
-      }));
+    return this.httpWrapperService.post('update_system/', system).pipe(
+      tap(updatedSystem => {
+        localStorage.setItem('currentSystem', JSON.stringify(updatedSystem));
+        this.currentSystemSubject.next(system);
+    }));
   }
 
   checkCurrentSystem() {
     if (localStorage.getItem('currentSystem') === null || localStorage.getItem('currentSystem') === 'undefined') {
-      // console.log('Not set');
       return false;
     } else {
-      console.log('Saved system');
       const system = JSON.parse(localStorage.getItem('currentSystem'));
       console.log(system ? 'true' : 'false');
       return system;
@@ -92,13 +72,11 @@ export class SystemService {
   }
 
   setSystem() {
-    return this.http.post<any>(environment.apiEndpoint + 'get_systems/', {
-    }).pipe(
-      map(response => response.data[0]),
-      tap(system => {
-        console.log(system);
+    return this.httpWrapperService.post('get_systems/', {}).pipe(
+      map(systems => systems[0]),
+      tap((system) => {
         localStorage.setItem('currentSystem', JSON.stringify(system));
         this.currentSystemSubject.next(system);
-      }));
+    }));
   }
 }

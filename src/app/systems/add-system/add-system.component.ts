@@ -60,6 +60,7 @@ export class AddSystemComponent implements OnInit {
   }
 
   onSubmit() {
+    // console.log(this.system);
     this.submitted = true;
     if (this.editSystemForm.invalid) {
       console.log('Invalid');
@@ -68,7 +69,8 @@ export class AddSystemComponent implements OnInit {
 
     return this.systemService.updateSystem(this.system).subscribe(
       ((result: any) => {
-        if (result.code === '800.200.001') {
+        console.log(result);
+        if (result) {
           Swal.fire({
             title: 'Success',
             text: 'System updated successfully!',

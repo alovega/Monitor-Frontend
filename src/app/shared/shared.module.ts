@@ -24,6 +24,7 @@ import { DeleteSwalComponent } from './alerts/delete-swal/delete-swal.component'
 import { LoginComponent } from './auth/login/login.component';
 import { ComponentLoaderComponent } from './component-loader/component-loader.component';
 import { SideNavToggleService } from './side-nav-toggle.service';
+import { HttpWrapperService } from './helpers/http-wrapper.service';
 
 @NgModule({
   declarations: [
@@ -73,7 +74,8 @@ import { SideNavToggleService } from './side-nav-toggle.service';
       useClass: HttpInterceptorService,
       multi: true
     },
-    SideNavToggleService
+    SideNavToggleService,
+    HttpWrapperService
   ],
   schemas: [NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA]
 })

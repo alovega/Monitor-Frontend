@@ -39,8 +39,9 @@ export class SystemsComponent implements OnInit {
         (system) => {
           this.currentSystem = system;
           this.currentSystemId = this.currentSystem.id;
-          this.router.navigate(['system/dashboard']);
+          console.table(this.currentSystem);
           window.location.reload();
+          this.router.navigate(['system/dashboard']);
         }
       );
     }
