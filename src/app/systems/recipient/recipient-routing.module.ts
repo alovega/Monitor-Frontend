@@ -5,9 +5,10 @@ import { RecipientComponent } from './recipient.component';
 import { RecipientViewComponent } from './recipient-view/recipient-view.component';
 import { RecipientUpdateComponent } from './recipient-update/recipient-update.component';
 import { RecipientCreateComponent } from './recipient-create/recipient-create.component';
+import { AuthGuardService } from 'src/app/shared/helpers/auth-guard.service';
 
 const routes: Routes = [
-  { path: '', component: RecipientComponent, children: [
+  { path: '', component: RecipientComponent, canActivateChild: [AuthGuardService], children: [
     {
       path: '',
       pathMatch: 'full',
