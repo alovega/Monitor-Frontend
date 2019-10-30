@@ -3,6 +3,7 @@ import { Component, OnInit, ViewChild, AfterViewInit, HostListener, ChangeDetect
 import {NotificationsService} from '../notifications.service';
 import { Notification } from '../notification';
 import { ActivatedRoute } from '@angular/router';
+import { SystemService } from 'src/app/shared/system.service';
 
 @Component({
   selector: 'hm-email-notification',
@@ -24,18 +25,16 @@ export class EmailNotificationComponent implements OnInit, AfterViewInit {
 
   constructor(
     private notificationsService: NotificationsService, private cdRef: ChangeDetectorRef,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private systemService: SystemService
     ) {}
     @HostListener('input') oninput() {
       this.searchItems();
     }
 
   ngOnInit() {
-    this.activatedRoute.parent.params.subscribe(
-      (param: any) => {
-        this.currentSystemId = param['system-id'];
-        console.log(this.currentSystemId);
-      });
+    this.currentSystem = this.systemService.getCurrentSystem();
+    this.currentSystemId = this.currentSystem.id;
     this.notificationsService.getEmailNotifications(this.currentSystemId)
       .subscribe((data: Notification[]) => {
         this.elements = data;

@@ -12,19 +12,17 @@
       <tbody *ngIf="elements.length > 0; else noElements" >
         <tr mdbTableCol *ngFor="let el of elements; let i = index ">
         <th *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex" scope="row">
-            {{el.phoneNumber}}
+            {{el.userName}}
         </th>
         <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">
           <span *ngFor="let el of el.system_recipients; let i = index ">
             {{el.escalationLevels}}
           </span>
         </td>
-        <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{el.userName}}</td>
-        <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{el.dateCreated | date}}</td>
         <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{el.status}}</td>
         <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">
-          <a mdbIcon class="fas fa-edit text-success" routerLink="/system/{{currentSystemId}}/recipients/recipient-update/{{el.recipient_id}}" routerLinkActive="active"></a>
-          <a class="fas fa-trash-alt mr-2 text-danger" (click)="delete(el.recipient_id)"></a>
+          <a mdbIcon class="fas fa-edit text-success" routerLink="" routerLinkActive="active"></a>
+          <a class="fas fa-trash-alt mr-2 text-danger"></a>
         </td>
         </tr>
       </tbody>

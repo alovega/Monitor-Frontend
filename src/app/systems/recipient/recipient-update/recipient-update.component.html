@@ -36,11 +36,11 @@
           </div>
         </div>
       </div>
+      <button mdbBtn type="button" class="btn float-left btn-primary waves-light" color="primary" mdbWavesEffect
+       (click)="back()" size="sm">Go back</button>
       <!-- Send button -->
-      <div class="row">
-          <button mdbBtn type="button" class="btn btn-primary waves-light" color="primary" mdbWavesEffect
-      [disabled]="!updateForm.valid" (click)="updateRecipient()">Save</button>
-      </div>
+          <button mdbBtn type="button" class="btn float-right btn-primary waves-light" color="primary" mdbWavesEffect
+      [disabled]="!updateForm.valid" (click)="updateRecipient()" size="sm">Save</button>
     </form>
       <!-- Default form contact -->
     </mdb-card>

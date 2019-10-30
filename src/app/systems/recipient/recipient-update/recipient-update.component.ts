@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { of } from 'rxjs';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
@@ -22,7 +22,7 @@ export class RecipientUpdateComponent implements OnInit {
   users: User;
 
   constructor(private recipientService: RecipientService, public activatedRoute: ActivatedRoute, private location: Location,
-              private fb: FormBuilder) {
+              private fb: FormBuilder, private router: Router) {
     this.data = new Recipient();
     this.createForm();
     of(this.getStates()).subscribe((data: any) => {
@@ -31,7 +31,7 @@ export class RecipientUpdateComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.recipientId = this.activatedRoute.snapshot.params["id"];
+    this.recipientId = this.activatedRoute.snapshot.params.id;
     console.log(this.recipientId);
     this.recipientService.getRecipient(this.recipientId).subscribe(response => {
       if (response.code === '800.200.001') {
@@ -48,6 +48,9 @@ export class RecipientUpdateComponent implements OnInit {
         PhoneNumber: ['', Validators.required],
         State: ['', Validators.required]
     });
+  }
+  public back(): void {
+    this.router.navigate(['system/recipients']);
   }
   get f() { return this.updateForm.controls; }
   onSubmit() {

@@ -7,6 +7,7 @@ import { Router, ActivatedRoute} from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { State } from 'src/app/shared/models/state';
 import { EndpointType } from 'src/app/shared/models/endpoint-type';
+import { SystemService } from 'src/app/shared/system.service';
 
 @Component({
   selector: 'hm-endpoint-update',
@@ -16,15 +17,17 @@ import { EndpointType } from 'src/app/shared/models/endpoint-type';
 export class EndpointUpdateComponent implements OnInit {
   currentSystem: any;
   currentSystemId: any;
-  endpoint_id: any;
+  endpointId: any;
   data: any;
   updateForm: FormGroup;
   submitted = false;
   States: State;
-  Endpoint_type: EndpointType;
+  endpointType: EndpointType;
   constructor(
     private fb: FormBuilder,
+    private router: Router,
     public activatedRoute: ActivatedRoute,
+    private systemService: SystemService,
     public endpointService: EndpointService,
     private location: Location) {
       this.data = new Endpoint();
@@ -35,14 +38,11 @@ export class EndpointUpdateComponent implements OnInit {
     }
 
   ngOnInit() {
-    this.activatedRoute.parent.params.subscribe(
-      (param: any) => {
-        this.currentSystemId = param['system-id'];
-        // console.log(this.currentSystemId);
-      });
-    this.endpoint_id = this.activatedRoute.snapshot.params["id"];
-    console.log(this.endpoint_id);
-    this.endpointService.getItem(this.endpoint_id).subscribe(response => {
+    this.currentSystem = this.systemService.getCurrentSystem();
+    this.currentSystemId = this.currentSystem.id;
+    this.endpointId = this.activatedRoute.snapshot.params.id;
+    console.log(this.endpointId);
+    this.endpointService.getItem(this.endpointId).subscribe(response => {
       if (response.code === '800.200.001') {
         this.data = response.data.endpoint;
         console.log(this.data);
@@ -70,13 +70,15 @@ export class EndpointUpdateComponent implements OnInit {
         return;
     }
 }
-
+public back(): void {
+  this.router.navigate(['system/endpoints']);
+}
 onReset() {
     this.submitted = false;
     this.updateForm.reset();
 }
 update() {
-  this.data[0].endpoint_id = this.endpoint_id;
+  this.data[0].endpoint_id = this.endpointId;
   this.endpointService.updateItem(this.data[0]).subscribe(response => {
     if (response.code === '800.200.001') {
       console.log('message: %s, code: %s', response.message, response.code);

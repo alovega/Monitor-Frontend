@@ -24,18 +24,13 @@ export class RecipientViewComponent implements OnInit, AfterViewInit {
   currentSystemId: any;
   recipientId: any;
 
-  constructor(private recipientService: RecipientService, private cdRef: ChangeDetectorRef, private activatedRoute: ActivatedRoute, 
+  constructor(private recipientService: RecipientService, private cdRef: ChangeDetectorRef, private activatedRoute: ActivatedRoute,
               private modalService: NgbModal, private formBuilder: FormBuilder) { }
   @HostListener('input') oninput() {
     this.searchItems();
   }
 
   ngOnInit() {
-    this.activatedRoute.parent.params.subscribe(
-      (param: any) => {
-        this.currentSystemId = param['system-id'];
-        console.log(this.currentSystemId);
-      });
     this.recipientService.getRecipients().subscribe(
       (data) => {
         console.log(data);

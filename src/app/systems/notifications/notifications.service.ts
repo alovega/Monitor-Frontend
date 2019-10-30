@@ -1,5 +1,5 @@
-import { Injectable,Output, EventEmitter } from '@angular/core';
-import { Observable,throwError } from 'rxjs';
+import { Injectable, Output, EventEmitter } from '@angular/core';
+import { Observable, throwError } from 'rxjs';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { catchError, retry, map} from 'rxjs/operators';
 
@@ -30,17 +30,17 @@ export class NotificationsService {
     return throwError(
       'Something bad happened; please try again later.');
   }
-  public getEmailNotifications(system_id): Observable<any> {
+  public getEmailNotifications(systemId): Observable<any> {
 
-    return this.http.post<any>(this.notificationUrl + '/get_notifications/', system_id).pipe(
+    return this.http.post<any>(this.notificationUrl + '/get_notifications/', systemId).pipe(
       map(response => response.data.notifications.filter(data => data.type === 'Email'),
     ),
     retry(2),
     catchError(this.handleError));
   }
-  public getSmsNotifications(system_id): Observable<any> {
+  public getSmsNotifications(systemId): Observable<any> {
 
-    return this.http.post<any>(this.notificationUrl + '/get_notifications/', system_id).pipe(
+    return this.http.post<any>(this.notificationUrl + '/get_notifications/', systemId).pipe(
       map(response => response.data.notifications.filter(data => data.type === 'Sms'),
     ),
     retry(2),

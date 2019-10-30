@@ -44,8 +44,8 @@
       <!-- Endpoint type -->
       <label>Endpoint type</label>
       <select class=" form-control browser-default custom-select mb-4" placeholder="Endpoint type" formControlName="EndpointType" [(ngModel)]="data.endpoint_type">
-          <option *ngFor="let type of endpoint_types; let i = index" [value]="endpoint_types[i].id">
-              {{endpoint_types[i].name}}
+          <option *ngFor="let type of endpointTypes; let i = index" [value]="endpointTypes[i].id">
+              {{endpointTypes[i].name}}
             </option>
       </select>
       <div *ngIf="endpointForm.controls['EndpointType'].invalid && (endpointForm.controls['EndpointType'].dirty || endpointForm.controls['EndpointType'].touched)" class="invalid-feedback">
@@ -86,12 +86,12 @@
       </div>
     </div>
   </div>
+  <button mdbBtn type="button" class="btn float-left btn-primary waves-light" color="primary" mdbWavesEffect
+  (click)="back()" size="sm">Go back</button>
     <!-- Send button -->
-    <button mdbBtn type="button" class="btn btn-primary waves-light" 
+    <button mdbBtn type="button" class="btn float-right btn-primary waves-light" 
         color="primary" mdbWavesEffect  [disabled]="!endpointForm.valid" (click)="addEndpoint()"
-        >
-      Create
-    </button>
+        size="sm">Create</button>
   
   </form>
     <!-- Default form contact -->
