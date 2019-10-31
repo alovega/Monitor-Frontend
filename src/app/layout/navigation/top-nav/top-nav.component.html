@@ -36,6 +36,8 @@
               <mdb-icon fas icon="user"></mdb-icon> Profile<span class="caret"></span></a>
             <div *dropdownMenu class="dropdown-menu dropdown-menu-right dropdown dropdown-primary" role="menu">
               <a class="dropdown-item waves-light" routerLink="profile" mdbWavesEffect> My account</a>
+              <a class="dropdown-item waves-light" routerLink="profile/update-password" mdbWavesEffect>update-password</a>
+              <hr>
               <a class="dropdown-item waves-light" routerLink="profile/user-notifications" mdbWavesEffect>Notifications</a>
               <a class="dropdown-item waves-light" mdbWavesEffect (click)="logout()">Log out</a>
             </div>
