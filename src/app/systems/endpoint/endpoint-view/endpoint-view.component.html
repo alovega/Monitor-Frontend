@@ -13,7 +13,7 @@
 <table mdbTable id="tableSort" #tableEl="mdbTable" class="z-depth-1">
       <thead class="white-text">
           <tr>
-          <th *ngFor="let head of headElements let i = index" aria-controls="tableSort" scope="col" [mdbTableSort]="elements" [sortBy]="headElements[i]">{{head | titlecase}} <mdb-icon fas icon="sort"></mdb-icon></th>
+          <th *ngFor="let head of headElements let i = index" aria-controls="tableSort" scope="col" [mdbTableSort]="elements" [sortBy]="headElements[i]">{{Elements[head] | titlecase}} <mdb-icon fas icon="sort"></mdb-icon></th>
           </tr>
       </thead>
       <tbody *ngIf="elements.length > 0; else noElements">

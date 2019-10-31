@@ -22,6 +22,9 @@ export class SmsNotificationsComponent implements OnInit, AfterViewInit {
   currentSystemId: any;
   previous: any = [];
   headElements: string[] = [ 'message', 'recipient', 'status', 'dateCreated'];
+  Elements = {
+    message: 'Message', recipient: 'Recipient', status: 'Status', dateCreated: 'Date Created'
+  };
 
   constructor(
     private notificationsService: NotificationsService,

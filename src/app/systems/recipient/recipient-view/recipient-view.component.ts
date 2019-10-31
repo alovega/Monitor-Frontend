@@ -20,6 +20,10 @@ export class RecipientViewComponent implements OnInit, AfterViewInit {
   previous: any = [];
 
   headElements = ['userName', 'phoneNumber', 'status', 'dateCreated', 'action'];
+  Elements = {
+    userName: 'User Name', phoneNumber: 'Phone Number', status: 'Status', dateCreated: 'Date Created',
+    action: 'Action'
+  };
   currentSystem: any;
   currentSystemId: any;
   recipientId: any;
