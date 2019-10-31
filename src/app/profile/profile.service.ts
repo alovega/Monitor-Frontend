@@ -59,6 +59,14 @@ constructor(private http: HttpClient) { }
       map(data => data.data)
     );
   }
+  UpdateLoggedInUserPassword(data): Observable<any> {
+    const user = JSON.parse(localStorage.getItem('currentUser'));
+    const getUsersUrl = environment.apiEndpoint + 'update_logged_in_user_password/';
+    return this.http.post<any>(getUsersUrl, data).pipe(
+      retry(2),
+      catchError(this.handleError)
+    );
+  }
 
 }
 

@@ -22,6 +22,9 @@ export class SmsSystemRecipientsComponent implements OnInit, AfterViewInit {
   currentSystemId: any;
   previous: any = [];
   headElements: string[] = [ 'userName', 'escalationLevels', 'status', 'action'];
+  Elements = {
+    userName: 'User Name', escalationLevels: 'Escalation Level', status: 'Status', action: 'Action'
+  };
   constructor(
     private systemRecipientService: SystemRecipientService, private cdRef: ChangeDetectorRef, private systemService: SystemService ) {}
     @HostListener('input') oninput() {

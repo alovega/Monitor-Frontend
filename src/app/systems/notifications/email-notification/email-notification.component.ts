@@ -22,6 +22,9 @@ export class EmailNotificationComponent implements OnInit, AfterViewInit {
   currentSystem: any;
   currentSystemId: any;
   headElements: string[] = [ 'message', 'recipient', 'status', 'dateCreated'];
+  Elements = {
+    message: 'Message', recipient: 'Recipient', status: 'Status', dateCreated: 'Date Created'
+  };
 
   constructor(
     private notificationsService: NotificationsService, private cdRef: ChangeDetectorRef,

@@ -8,6 +8,7 @@ import { System } from '../../../shared/models/system';
 import { AuthenticationService } from 'src/app/shared/auth/authentication.service';
 import { SideNavToggleService } from 'src/app/shared/side-nav-toggle.service';
 import { LookUpService } from 'src/app/shared/look-up.service';
+import { ProfileService } from 'src/app/profile/profile.service';
 
 @Component({
   selector: 'hm-top-nav',
@@ -17,6 +18,7 @@ import { LookUpService } from 'src/app/shared/look-up.service';
 export class TopNavComponent implements OnInit, OnChanges {
   @Input() user;
   currentUser: any;
+  profile: any;
   systems: any;
   currentSystem: any;
   validatingForm: FormGroup;
@@ -32,6 +34,7 @@ export class TopNavComponent implements OnInit, OnChanges {
     private router: Router,
     private formBuilder: FormBuilder,
     private authService: AuthenticationService,
+    private profileService: ProfileService,
     public breakpointObserver: BreakpointObserver,
     public sideNavService: SideNavToggleService,
     private lookupService: LookUpService
@@ -45,6 +48,11 @@ export class TopNavComponent implements OnInit, OnChanges {
         this.systems = result;
         console.log(this.systems);
     }));
+    this.profileService.getLoggedInUserDetail().subscribe(
+      (data) => {
+          this.profile = data;
+          console.log(this.profile);
+        });
     this.currentSystem = this.systemService.getCurrentSystem();
     this.authService.currentUser.subscribe(
       (user) => {
