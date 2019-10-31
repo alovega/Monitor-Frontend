@@ -1,52 +1,28 @@
-<div class="container">
-    <div class="row my-2">
-        <div class="col-lg-8 order-lg-2">
-            <ul class="nav nav-tabs">
-                <li class="nav-item">
-                    <a routerLink="edit" routerLinkActive="active" data-toggle="tab" class="nav-link">Edit</a>
-                </li>
-                <li class="nav-item">
-                    <a routerLink="details" routerLinkActive="active" data-toggle="tab" class="nav-link">Profile</a>
-                </li>
-                <li class="nav-item">
-                    <a routerLink="recent-notifications" routerLinkActive="active" data-toggle="tab" class="nav-link">Recent Notifications</a>
-                </li>
-                
-            </ul>
-            <router-outlet></router-outlet>
-        </div>
-        <div class="col-lg-4 order-lg-1 text-center">
-            <!-- <img src="//placehold.it/150" class="mx-auto img-fluid img-circle d-block" alt="avatar">
-            <h6 class="mt-2">Upload a different photo</h6>
-            <label class="custom-file">
-                <input type="file" id="file" class="custom-file-input">
-                <span class="custom-file-control">Choose file</span>
-            </label> -->
-            <div class="card testimonial-card">
-
-                <!--Background color-->
-                <div class="card-up teal lighten-2">
-                </div>
-        
-                <!--Avatar-->
-                <div class="avatar mx-auto white">
-                    <a class="logo-wrapper waves-effect">
-                        <span style="font-size: 80px; color:#007bff;">HM</span>
-                                
-                    </a>
-                    <!-- <img src="./assets/img/default-profile.png"
-                    alt="avatar mx-auto white" class="rounded-circle img-fluid"> -->
-                </div>
-        
-                <div class="card-body" *ngFor="let data of data;">
-                  <!--Name-->
-                  <h4 class="card-title mt-1">{{data.userName}}</h4>
-                  <hr>
-                  <!--Quotation-->
-                  <p><i class="fas fa-quote-left"></i> Welcome to Hela monitor <b>{{data.userName}}</b>.</p>
-                </div>
-        
-              </div>
+<div class="page-header" *ngFor="let data of data;">
+    <div class="row">
+        <div class="col">
+            <div class="row" style="padding: 10px;">
+                <h4> Profile </h4>
+            </div>
         </div>
     </div>
+    <div class="clearfix"></div> 
 </div>
+
+<ul class="list-group switch-tabs">
+    <div>
+    <li class="tab-item">
+        <a routerLink="edit" routerLinkActive="active">Edit</a>
+    </li>
+    <li class="tab-item">
+        <a routerLink="details" routerLinkActive="active">Profile</a>        
+    </li>
+    <li class="tab-item">
+        <a routerLink="recent-notifications" routerLinkActive="active">Recent Notifications</a>        
+    </li>
+    <div class="clearfix"></div>
+    </div>
+</ul>
+<router-outlet></router-outlet>
+
+

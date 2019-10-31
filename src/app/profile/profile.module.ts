@@ -10,10 +10,11 @@ import { DetailsComponent } from './details/details.component';
 import { UserNotificationsComponent } from './user-notifications/user-notifications.component';
 import { SharedModule } from '../shared/shared.module';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { UpdatePasswordComponent } from './update-password/update-password.component';
 
 
 @NgModule({
-  declarations: [ProfileComponent, RecentNotificationComponent, EditComponent, DetailsComponent, UserNotificationsComponent],
+  declarations: [ProfileComponent, RecentNotificationComponent, EditComponent, DetailsComponent, UserNotificationsComponent, UpdatePasswordComponent],
   imports: [
     CommonModule,
     ProfileRoutingModule,
@@ -23,6 +24,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
     SharedModule,
     MDBBootstrapModule.forRoot()
   ],
-  schemas: [ NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA ]
+  schemas: [ NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA ],
+  exports: [UpdatePasswordComponent]
 })
 export class ProfileModule { }

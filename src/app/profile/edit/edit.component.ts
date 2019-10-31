@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ProfileService } from '../profile.service';
 import { Profile } from '../profile';
 import { Location } from '@angular/common';
+import Swal from 'sweetalert2';
 
 
 @Component({
@@ -54,14 +55,42 @@ export class EditComponent implements OnInit {
    update() {
     const user = JSON.parse(localStorage.getItem('currentUser'));
     this.data[0].token =  user.token;
-    this.profileService.updateLoggedInUser(this.data[0]).subscribe(response => {
-      console.log(this.data[0]);
-      console.log(response);
-      if (response.code === '800.200.001') {
-        console.log('message: %s, code: %s', response.message, response.code);
+    Swal.fire({
+      title: 'Are you sure',
+      text: 'You want to update your details',
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, update the user details',
+      cancelButtonText: 'No, cancel the update'
+    }).then((result) => {
+      if (result.value) {
+        this.profileService.updateLoggedInUser(this.data[0]).subscribe(
+          response => {
+          console.log(this.data[0]);
+          console.log(response);
+          if (response.code === '800.200.001') {
+              Swal.fire(
+                'updated',
+                'Your details has been updated',
+                'success'
+              );
+            } else {
+              Swal.fire(
+                'Failed!',
+                'The user could not be updated.',
+                'error'
+              );
+            }
+          }
+        );
         this.location.back();
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        Swal.fire(
+          'Cancelled',
+          '',
+          'error'
+        );
       }
-      console.log('message: %s, code: %s', response.message, response.code);
     });
   }
 }

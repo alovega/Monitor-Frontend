@@ -6,7 +6,9 @@ import { DetailsComponent } from './details/details.component';
 import { RecentNotificationComponent } from './recent-notification/recent-notification.component';
 import { EditComponent } from './edit/edit.component';
 import { UserNotificationsComponent } from './user-notifications/user-notifications.component';
+import {UpdatePasswordComponent} from './update-password/update-password.component';
 import { AuthGuardService } from '../shared/helpers/auth-guard.service';
+import { from } from 'rxjs';
 
 const routes: Routes = [{ path: '', component: ProfileComponent, canActivateChild: [AuthGuardService],
   children: [
@@ -29,7 +31,8 @@ const routes: Routes = [{ path: '', component: ProfileComponent, canActivateChil
       }
     ]
   },
-  { path: 'user-notifications', component: UserNotificationsComponent }
+  { path: 'user-notifications', component: UserNotificationsComponent },
+  {path: 'update-password', component: UpdatePasswordComponent}
 ];
 
 @NgModule({
