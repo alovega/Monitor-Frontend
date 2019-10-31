@@ -23,7 +23,7 @@
       <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{el.dateCreated | date}}</td>
       </tr>
     </tbody>
-    <tfoot class="grey lighten-5 w-100">
+    <tfoot class="grey lighten-5 w-100" id="">
       <tr>
         <td colspan="4">
           <mdb-table-pagination [tableEl]="tableEl" [searchDataSource]="elements"></mdb-table-pagination>
