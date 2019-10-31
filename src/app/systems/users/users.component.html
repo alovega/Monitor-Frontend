@@ -27,8 +27,8 @@
         <table mdbTable #tableEl="mdbTable" class="table-responsive">
             <thead class="text-white">
             <tr>
-            <th *ngFor="let head of headElements; let i = index" scope="col">{{head}}
-            </th>
+            <th *ngFor="let head of headElements; let i = index" style="white-space: nowrap;" scope="col"[mdbTableSort]="users" [sortBy]="headElements[i]">{{elements[head] | titlecase}} 
+            <mdb-icon fas icon="sort"></mdb-icon></th>
             </tr>
             </thead>
             <tbody *ngIf="users.length; else noData">
@@ -39,7 +39,7 @@
             <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{user.first_name}}</td>
             <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{user.last_name}}</td>
             <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{ user.is_active }}</td>
-            <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{user.date_joined | date:'MMMM d, yyyy'}}</td>
+            <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex" style="white-space: nowrap">{{user.date_joined | date:'MMMM d, yyyy'}}</td>
             <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">
                 <span mdbIcon class="fas fa-trash-alt mr-2 text-danger" (click)="deleteUser(user.id)"></span>
                 <span mdbIcon class="fas fa-edit text-success"></span>

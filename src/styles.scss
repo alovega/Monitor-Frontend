@@ -124,3 +124,7 @@ hm-root:empty + .loading {
   transition: opacity 0 ease-in-out 1s;
   display: block;
 }
+
+th {
+  cursor: pointer;
+}

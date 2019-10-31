@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, AfterViewInit, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { MdbTablePaginationComponent, MdbTableDirective } from 'angular-bootstrap-md';
+import { MdbTablePaginationComponent, MdbTableDirective, MdbTableSortDirective } from 'angular-bootstrap-md';
 import Swal from 'sweetalert2';
 
 import { SystemService } from '../../shared/system.service';
@@ -14,14 +14,21 @@ import { EventsService } from './events.service';
 export class EventsComponent implements OnInit, AfterViewInit {
   @ViewChild(MdbTablePaginationComponent, { static: true }) mdbTablePagination: MdbTablePaginationComponent;
   @ViewChild(MdbTableDirective, { static: true }) mdbTable: MdbTableDirective;
+  // @ViewChild(MdbTableSortDirective, { static: true }) mdbTableSort: MdbTableSortDirective;
+
 
   currentSystemId: string;
   currentSystem: any;
   events: any[];
   previous: any = [];
   isLoaded = false;
+  search = '';
 
-  headElements = ['Event Type', 'Description', 'Method', 'Interface', 'Request', 'Response', 'Stack Trace', 'Code', 'Date Created'];
+  headElements = ['eventtype', 'description', 'stack_trace', 'method', 'interface', 'request', 'response', 'code', 'date_created'];
+  elements = {
+    eventtype: 'Event type', description: 'Description', stack_trace: 'Stack Trace', interface: 'Interface', request: 'Request',
+    response: 'Response', code: 'Code', date_created: 'Date Created', method: 'Method'
+  };
 
   constructor(
     private activatedRoute: ActivatedRoute,

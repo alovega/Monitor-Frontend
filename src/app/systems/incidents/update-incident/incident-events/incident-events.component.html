@@ -6,8 +6,8 @@
       <table mdbTable #tableEl="mdbTable" class="table-responsive-lg">
           <thead class="text-white">
           <tr>
-          <th *ngFor="let head of headElements; let i = index" scope="col">{{head}}
-          </th>
+          <th *ngFor="let head of headElements; let i = index" style="white-space: nowrap;" scope="col"[mdbTableSort]="events" [sortBy]="headElements[i]">{{elements[head] | titlecase}} 
+          <mdb-icon fas icon="sort"></mdb-icon></th>
           </tr>
           </thead>
           <tbody *ngIf="events.length; else noData">
@@ -15,19 +15,19 @@
           <th *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex"
               scope="row">{{event.eventtype}}</th>
           <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{event.description}}</td>
-          <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{event.method}}</td>
           <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{event.stack_trace}}</td>
+          <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{event.method}}</td>
           <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{event.interface}}</td>
           <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{event.request}}</td>
           <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{event.response}}</td>
           <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{event.code}}</td>
-          <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{event.date_created | date:'MMMM d, yyyy'}}</td>
+          <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex" style = "white-space: nowrap;">{{event.date_created | date:'MMMM d, yyyy'}}</td>
           </tr>
           </tbody>
           <tfoot class="w-100">
           <ng-template #noData>
             <td colspan="9">
-              <hm-empty-data header="No Logged Events" description="This incident is not associated with any logged event">
+              <hm-empty-data header="No Logged Events" description="New Events will be displayed here">
               </hm-empty-data>
             </td>
           </ng-template>            

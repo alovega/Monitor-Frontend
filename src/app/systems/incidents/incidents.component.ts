@@ -18,7 +18,6 @@ export class IncidentsComponent implements OnInit {
   // private searchTerms = new Subject<string>();
   isHidden = true;
   public currentSystem: any;
-  public maintenanceUrl: string;
   public isLoaded = false;
 
   constructor(
@@ -30,7 +29,6 @@ export class IncidentsComponent implements OnInit {
 
   ngOnInit() {
     this.currentSystem = this.systemService.getCurrentSystem();
-    this.maintenanceUrl = '/system/' + this.currentSystem.id + '/incidents/maintenance';
     this.isLoaded = true;
   }
 
