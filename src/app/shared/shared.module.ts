@@ -25,6 +25,7 @@ import { LoginComponent } from './auth/login/login.component';
 import { ComponentLoaderComponent } from './component-loader/component-loader.component';
 import { SideNavToggleService } from './side-nav-toggle.service';
 import { HttpWrapperService } from './helpers/http-wrapper.service';
+import { LoaderService } from './loader.service';
 
 @NgModule({
   declarations: [
@@ -75,7 +76,8 @@ import { HttpWrapperService } from './helpers/http-wrapper.service';
       multi: true
     },
     SideNavToggleService,
-    HttpWrapperService
+    HttpWrapperService,
+    LoaderService
   ],
   schemas: [NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA]
 })

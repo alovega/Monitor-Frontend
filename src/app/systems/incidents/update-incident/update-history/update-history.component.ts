@@ -25,6 +25,7 @@ export class UpdateHistoryComponent implements OnInit {
   currentSystem: any;
   users: any;
   escalationLevels: any;
+  isLoaded = false;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -56,6 +57,7 @@ export class UpdateHistoryComponent implements OnInit {
     );
     // this.showIncident();
     this.createUpdateIncidentForm();
+    this.isLoaded = true;
   }
 
   createUpdateIncidentForm() {
