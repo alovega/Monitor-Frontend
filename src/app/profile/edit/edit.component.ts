@@ -4,6 +4,7 @@ import { ProfileService } from '../profile.service';
 import { Profile } from '../profile';
 import { Location } from '@angular/common';
 import Swal from 'sweetalert2';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -15,7 +16,8 @@ export class EditComponent implements OnInit {
   profileUpdateForm: FormGroup;
   submitted = false;
   data: any;
-  constructor(private fb: FormBuilder, private profileService: ProfileService, private location: Location) {
+  constructor(private fb: FormBuilder, private profileService: ProfileService, private location: Location,
+              private router: Router) {
     this.data = new Profile();
     this.createForm();
    }
@@ -52,6 +54,9 @@ export class EditComponent implements OnInit {
        this.submitted = false;
        this.profileUpdateForm.reset();
    }
+   public back(): void {
+    this.router.navigate(['profile/details']);
+  }
    update() {
     const user = JSON.parse(localStorage.getItem('currentUser'));
     this.data[0].token =  user.token;
@@ -83,7 +88,7 @@ export class EditComponent implements OnInit {
             }
           }
         );
-        this.location.back();
+        this.back();
       } else if (result.dismiss === Swal.DismissReason.cancel) {
         Swal.fire(
           'Cancelled',

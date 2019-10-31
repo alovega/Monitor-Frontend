@@ -1,7 +1,3 @@
-mdb-card{
-    margin: auto;
-    width:449px;
-}
 
 .invalid-feedback{
     text-align: left;
@@ -9,3 +5,8 @@ mdb-card{
     position: relative;
     top:-11px
     }
+label{
+    font-weight: 500;
+    font-size: 0.9em;
+    align-items: flex-start;
+}

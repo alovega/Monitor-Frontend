@@ -1,13 +1,13 @@
+<div class="row">
+    <div class="col col-6"><p class="h4 mb-4">Edit an Endpoint </p></div>
+    <div class="col-md-6">
+        <button class="float-right back-button" (click)="back()"><i class="fas fa-angle-double-left"></i> back to Endpoints</button>
+      </div>     
+  </div>
+  <hr>
 <mdb-card>
 <!-- Default form contact -->
 <form [formGroup]="updateForm" class="text-center border  p-5" (ngSubmit) = "onSubmit()">
-    <div class="row">
-      <div class="col col-md-auto">
-      </div>
-      <div class="col col-6"><p class="h4 mb-4">Edit  Endpoint </p></div>
-          
-    </div>
-    <hr>
     <div class="row">
       <div class="col">
         <!-- Name -->
@@ -72,8 +72,6 @@
         </div>
       </div>
     </div>
-    <button mdbBtn type="button" class="btn float-left btn-primary waves-light" color="primary" mdbWavesEffect
-    (click)="back()" size="sm">Go back</button>
       
       <!-- Send button -->
     <button mdbBtn type="button" class="btn float-right btn-primary waves-light" 

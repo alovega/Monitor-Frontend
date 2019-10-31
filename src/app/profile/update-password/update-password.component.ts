@@ -4,6 +4,7 @@ import { ProfileService } from '../profile.service';
 import { Profile } from '../profile';
 import { Location } from '@angular/common';
 import Swal from 'sweetalert2';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'hm-update-password',
@@ -16,7 +17,8 @@ export class UpdatePasswordComponent implements OnInit {
   profile: Profile;
   confirmPassword: any;
   data: any;
-  constructor(private fb: FormBuilder, private profileService: ProfileService, private location: Location) {
+  constructor(private fb: FormBuilder, private profileService: ProfileService, private location: Location,
+              private router: Router) {
     this.profile = new Profile();
     this.createForm();
    }
@@ -45,6 +47,9 @@ export class UpdatePasswordComponent implements OnInit {
       if (this.passwordUpdateForm.invalid) {
           return;
       }
+    }
+    public back(): void {
+      this.router.navigate(['profile/details']);
     }
     update() {
       const user = JSON.parse(localStorage.getItem('currentUser'));
