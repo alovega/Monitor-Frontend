@@ -2,13 +2,13 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import {SystemRecipientService} from '../system-recipient.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import {Recipient} from '../system-recipient';
 import { Location } from '@angular/common';
 import { of } from 'rxjs';
 import { EscalationLevel } from 'src/app/shared/models/escalation-level';
 import { State } from 'src/app/shared/models/state';
 import { User } from 'src/app/shared/models/user';
 import { NotificationType } from 'src/app/shared/models/notification-type';
+import { SystemRecipient } from '../system-recipient';
 
 
 @Component({
@@ -22,7 +22,7 @@ export class SystemRecipientFormComponent implements OnInit {
   submitted = false;
   currentSystem: any;
   currentSystemId: any;
-  recipient: Recipient;
+  recipient: SystemRecipient;
   EscalationLevels: EscalationLevel;
   NotificationTypes: NotificationType;
   Users: User;
@@ -33,7 +33,7 @@ export class SystemRecipientFormComponent implements OnInit {
     public activatedRoute: ActivatedRoute
     ) {
     this.createForm();
-    this.recipient = new Recipient();
+    this.recipient = new SystemRecipient();
     of(this.getEscalationLevels()).subscribe((data: any) => {
       console.log(data);
       this.EscalationLevels = data;

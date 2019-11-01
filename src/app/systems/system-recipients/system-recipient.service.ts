@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable, throwError, from } from 'rxjs';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { catchError, tap, retry, map} from 'rxjs/operators';
-import { Recipient } from './system-recipient';
+import { SystemRecipient } from './system-recipient';
 import { LookUpService } from 'src/app/shared/look-up.service';
 import { environment } from 'src/environments/environment';
 
@@ -56,22 +56,33 @@ public addSystemRecipient(item): Observable<any> {
   );
 }
 public deleteItem(recipientId): Observable<any> {
-  return this.http.post<Recipient>(this.endpointUrl + '/delete_recipient/', {recipientId}, this.httpOptions).pipe(
+  return this.http.post<SystemRecipient>(this.endpointUrl + '/delete_recipient/', {recipientId}, this.httpOptions).pipe(
     retry(2),
     catchError(this.handleError)
   );
 }
 
 public getItem(recipientId): Observable<any> {
-  return this.http.post<any>(this.endpointUrl + '/get_recipient/', {recipientId}).pipe(
-    map(response => response, retry(2)),
+  const systemRecipientUrl = environment.apiEndpoint + 'get_system_recipient/';
+  return this.http.post<any>(systemRecipientUrl, recipientId).pipe(
+    map(response => response),
+    retry(2),
     catchError(this.handleError)
   );
 }
 
-public updateItem(id, item): Observable<any> {
-  return this.http.post<Recipient>(this.endpointUrl + '/update_recipient/', item, this.httpOptions).pipe(
+public updateItem(item): Observable<any> {
+  const systemRecipientUrl = environment.apiEndpoint + 'update_system_recipient/';
+  return this.http.post<SystemRecipient>(systemRecipientUrl, item, this.httpOptions).pipe(
     retry(2),
+    catchError(this.handleError)
+  );
+}
+public getSystemRecipients(systemId, escalationLevelId) {
+  const systemRecipientUrl = environment.apiEndpoint + 'get_system_recipients/';
+  return this.http.post<any>(systemRecipientUrl, {systemId, escalationLevelId}).pipe(
+    map(response => response.data,
+    retry(2)),
     catchError(this.handleError)
   );
 }

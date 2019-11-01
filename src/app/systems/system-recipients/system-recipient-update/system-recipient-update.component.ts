@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import {SystemRecipientService} from '../system-recipient.service';
 import { Location } from '@angular/common';
 import { Router, ActivatedRoute } from '@angular/router';
-import {Recipient} from '../system-recipient';
+import {SystemRecipient} from '../system-recipient';
 import { of } from 'rxjs';
 import { EscalationLevel } from 'src/app/shared/models/escalation-level';
 import { NotificationType } from 'src/app/shared/models/notification-type';
@@ -19,7 +19,7 @@ export class SystemRecipientUpdateComponent implements OnInit {
   id: number;
   recipientId: string;
   submitted = false;
-  recipient: Recipient;
+  recipient: SystemRecipient;
   States: State;
   NotificationTypes: NotificationType;
 
@@ -27,7 +27,7 @@ export class SystemRecipientUpdateComponent implements OnInit {
     private fb: FormBuilder, private systemRecipientService: SystemRecipientService, public router: Router,
     public activatedRoute: ActivatedRoute, public location: Location) {
     this.createForm();
-    this.recipient = new Recipient();
+    this.recipient = new SystemRecipient();
     of(this.getStates()).subscribe((data: any) => {
       console.log(data);
       this.States = data;
@@ -39,19 +39,18 @@ export class SystemRecipientUpdateComponent implements OnInit {
    }
 
   ngOnInit() {
-    this.id = this.activatedRoute.snapshot.params['id'];
+    this.id = this.activatedRoute.snapshot.params.id;
     console.log(this.id);
     this.systemRecipientService.getItem(this.id).subscribe(response => {
-      console.log(response.data.recipient);
+      console.log(response);
       this.recipient = response.data.recipient;
   });
   }
+  public back(): void {
+    this.router.navigate(['system/system-recipients']);
+  }
   createForm() {
     this.updateForm = this.fb.group({
-        FirstName: ['', [Validators.required, Validators.minLength(3)]],
-        LastName: ['', [Validators.required, Validators.minLength(3)]],
-        Email: ['', [Validators.required, Validators.email]],
-        PhoneNumber: ['', [Validators.required, Validators.minLength(10)]],
         NotificationType: ['', Validators.required],
         State: ['', Validators.required]
     });
@@ -80,9 +79,9 @@ export class SystemRecipientUpdateComponent implements OnInit {
     this.updateForm.reset();
   }
   update() {
-    this.recipient.recipientId = this.recipientId;
+    this.recipient.systemRecipientId = this.id = this.activatedRoute.snapshot.params.id;;
     console.log(this.recipient);
-    this.systemRecipientService.updateItem(this.recipientId, this.recipient[0]).subscribe(response => {
+    this.systemRecipientService.updateItem(this.recipient).subscribe(response => {
       if (response.code === '800.200.001') {
         console.log('message: %s, code: %s', response.message, response.code);
         this.location.back();

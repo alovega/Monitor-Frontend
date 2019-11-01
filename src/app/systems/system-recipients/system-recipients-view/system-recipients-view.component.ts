@@ -1,55 +1,67 @@
-import { MdbTablePaginationComponent, MdbTableDirective, MdbTableSortDirective } from 'angular-bootstrap-md';
-import { Component, OnInit, ViewChild, AfterViewInit, HostListener, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ViewChild, HostListener, ChangeDetectorRef, AfterViewInit} from '@angular/core';
+import { MdbTableSortDirective, MdbTableDirective, MdbTablePaginationComponent } from 'angular-bootstrap-md';
+import Swal from 'sweetalert2';
 import { SystemRecipientService } from '../system-recipient.service';
 import { ActivatedRoute } from '@angular/router';
-import Swal from 'sweetalert2';
 import { SystemService } from 'src/app/shared/system.service';
+import { of } from 'rxjs';
 
 @Component({
-  selector: 'hm-sms-system-recipients',
-  templateUrl: './sms-system-recipients.component.html',
-  styleUrls: ['./sms-system-recipients.component.scss']
+  selector: 'hm-system-recipients-view',
+  templateUrl: './system-recipients-view.component.html',
+  styleUrls: ['./system-recipients-view.component.scss']
 })
-export class SmsSystemRecipientsComponent implements OnInit, AfterViewInit {
+export class SystemRecipientsViewComponent implements OnInit, AfterViewInit {
   @ViewChild(MdbTablePaginationComponent, { static: true }) mdbTablePagination: MdbTablePaginationComponent;
   @ViewChild(MdbTableDirective, { static: true }) mdbTable: MdbTableDirective;
   @ViewChild(MdbTableSortDirective, { static: true }) mdbTableSort: MdbTableSortDirective;
   firstItemIndex: any;
   lastItemIndex: any;
-  elements: any;
   currentSystem: any;
-  searchText = '';
   currentSystemId: any;
+  searchText = '';
+  escalationLevelId: any;
+  EscalationLevels: any;
+  elements: any;
+  escalations: any;
   previous: any = [];
-  headElements: string[] = [ 'userName', 'escalationLevels', 'status', 'action'];
+  headElements: string[] = ['userName', 'escalationLevel', 'notificationType', 'status', 'dateCreated', 'action'];
   Elements = {
-    userName: 'User Name', escalationLevels: 'Escalation Level', status: 'Status', action: 'Action'
+    userName: 'User Name', escalationLevel: 'Escalation Level', notificationType: 'Notification Type', status: 'Status',
+    dateCreated: 'Date Created', action: 'Action'
   };
-  constructor(
-    private systemRecipientService: SystemRecipientService, private cdRef: ChangeDetectorRef, private systemService: SystemService ) {}
-    @HostListener('input') oninput() {
-      this.searchItems();
-    }
+  level: any;
+
+  constructor(private systemRecipientService: SystemRecipientService, private cdRef: ChangeDetectorRef,
+              private activatedRoute: ActivatedRoute, private systemService: SystemService) {
+                of(this.getEscalationLevels()).subscribe( data => {
+                  console.log(data);
+                  this.EscalationLevels = data;
+                });
+              }
+  @HostListener('input') oninput() {
+   this.searchItems();
+ }
 
   ngOnInit() {
+    console.log(this.level);
     this.currentSystem = this.systemService.getCurrentSystem();
     this.currentSystemId = this.currentSystem.id;
-    this.systemRecipientService.getSmsSystemRecipients(this.currentSystemId).subscribe((response) => {
-      console.log(response);
+    this.getEscalationLevels();
+  }
+  ngAfterViewInit() {
+  }
+
+  changeLevel(level: any) {
+    this.currentSystem = this.systemService.getCurrentSystem();
+    const currentSystemId = this.currentSystem.id;
+    this.systemRecipientService.getSystemRecipients(currentSystemId, level).subscribe(response => {
       this.elements = response;
       this.mdbTable.setDataSource(this.elements);
       this.elements = this.mdbTable.getDataSource();
       this.previous = this.mdbTable.getDataSource();
     });
   }
-
-  ngAfterViewInit() {
-    this.mdbTablePagination.setMaxVisibleItemsNumberTo(5);
-    this.mdbTablePagination.calculateFirstItemIndex();
-    this.mdbTablePagination.calculateLastItemIndex();
-    this.cdRef.detectChanges();
-  }
-
   searchItems() {
     const prev = this.mdbTable.getDataSource();
     console.log(prev);
@@ -64,7 +76,11 @@ export class SmsSystemRecipientsComponent implements OnInit, AfterViewInit {
       this.mdbTable.setDataSource(prev);
     }
   }
-
+  getEscalationLevels() {
+    this.systemRecipientService.getLevels().subscribe(data => {
+      this.EscalationLevels = data;
+    });
+  }
    delete(recipientId) {
     console.log(recipientId);
     Swal.fire({
@@ -95,8 +111,8 @@ export class SmsSystemRecipientsComponent implements OnInit, AfterViewInit {
             }
           }
         );
-        this.systemRecipientService.getSmsSystemRecipients(this.currentSystemId).subscribe(
-          (response) => {
+        this.systemRecipientService.getEmailSystemRecipients(this.currentSystemId).subscribe(
+          response => {
             this.elements = response;
             this.mdbTable.setDataSource(this.elements);
           }
@@ -110,4 +126,5 @@ export class SmsSystemRecipientsComponent implements OnInit, AfterViewInit {
       }
     });
   }
+
 }
