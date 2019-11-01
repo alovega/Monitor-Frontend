@@ -42,7 +42,7 @@ export class EndpointViewComponent implements OnInit, AfterViewInit {
     this.currentSystem = this.systemService.getCurrentSystem();
     this.currentSystemId = this.currentSystem.id;
 
-    this.endpointService.getEndpoints(this.currentSystemId).subscribe(
+    this.endpointService.getEndpoints().subscribe(
       (data) => {
         console.log(data);
         this.elements = data;

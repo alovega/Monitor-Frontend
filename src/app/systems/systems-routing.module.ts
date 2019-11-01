@@ -29,6 +29,7 @@ const routes: Routes = [
   canLoad: [AuthGuardService]},
   { path: 'users', loadChildren: () => import('./users/users.module').then(m => m.UsersModule), canLoad: [AuthGuardService] },
   { path: 'events', loadChildren: () => import('./events/events.module').then(m => m.EventsModule), canLoad: [AuthGuardService]},
+  { path: 'quick-setup', loadChildren: () => import('./setup-system/setup-system.module').then(m => m.SetupSystemModule) },
 ];
 @NgModule({
   imports: [RouterModule.forChild(routes)],
