@@ -38,7 +38,7 @@ constructor(private http: HttpClient) { }
     );
   }
   updateLoggedInUser(data): Observable<any> {
-    const getUsersUrl = environment.apiEndpoint + 'edit_logged_in_user_details/';
+    const getUsersUrl = environment.apiEndpoint + 'edit_logged_in_user/';
     return this.http.post<any>(getUsersUrl, data, this.httpOptions).pipe(
       retry(2),
       catchError(this.handleError)
