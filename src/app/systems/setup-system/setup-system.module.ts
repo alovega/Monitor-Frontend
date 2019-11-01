@@ -7,10 +7,11 @@ import { ToastrModule } from 'ngx-toastr';
 import { SetupSystemRoutingModule } from './setup-system-routing.module';
 import { SetupSystemComponent } from './setup-system.component';
 import { AddEndpointsComponent } from './add-endpoints/add-endpoints.component';
+import { AddRulesComponent } from './add-rules/add-rules.component';
 
 
 @NgModule({
-  declarations: [SetupSystemComponent, AddEndpointsComponent],
+  declarations: [SetupSystemComponent, AddEndpointsComponent, AddRulesComponent],
   imports: [
     CommonModule,
     SetupSystemRoutingModule,
