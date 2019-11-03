@@ -1,35 +1,29 @@
 <mdb-card>
-  <div class="container">
-    <div class="row">
-      <div class="col">
-          <h5>{{data.userName}}</h5> 
-          <h6>Details</h6>
-          <p>First Name: {{data.firstName}} </p> 
-          <p>Last Name: {{data.lastName}}</p>
-          <p>Email: {{data.email}}</p>
-          <p>Phone Number: {{data.phoneNumber}}</p>
-      </div>
-      <div class="col">
-          <h6 style="padding-left:4px;">Role</h6>
-          <span class="badge badge-primary">{{data.role}}</span>
-          <hr>
-      </div>
-    </div>
-  </div>
-
+    <h6>Profile</h6>
+    <p id=header>Details about your profile</p>
+    <div class="d-flex flex-column" *ngIf="data">
+        <hr>
+        <div class="p-2">
+            <div id="header">Name</div>
+            <div id="details"> {{data.firstName}} {{data.lastName}} </div>
+        </div>
+        <hr>
+        <div class="p-2">
+          <div id="header">User Name</div>
+          <div id="details">{{data.userName}}</div>
+        </div>
+        <hr>
+        <div class="p-2">
+          <h6>Contact Details</h6>
+          <div id="header"> Email</div>
+          <div id="details">{{data.email}}</div>
+          <div id="header">Phone Number </div>
+           <div id="details">{{data.phoneNumber}}</div>
+        </div>
+        <hr>
+        <div class="p-2">
+            <div id="header">Role</div>
+            <div id="details">{{data.role}}</div>
+          </div>
+        </div>
 </mdb-card>
-
-<div class="tab-content py-4">
-  <div class="tab-pane active">
-      <div class="row">
-          
-      </div>
-      <div class="row">
-        <div class="col-md-6" >
-        </div>
-        <div class="col-md-6">
-          
-        </div>
-      </div>   
-  </div>
-</div>

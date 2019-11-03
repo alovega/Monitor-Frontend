@@ -31,14 +31,14 @@
                 </div>
               </div>
           </li>
-          <li class="nav-item dropdown" dropdown>
-            <a dropdownToggle mdbWavesEffect type="button" *ngIf="profile" class="nav-link dropdown-toggle waves-light" mdbWavesEffect>
+          <li class="nav-item mr-2"><a class="dropdown-item waves-light" id="notifications"routerLink="profile/user-notifications" mdbWavesEffect><mdb-icon fas icon="bell"></mdb-icon></a></li>
+          <li class="nav-item dropdown" dropdown *ngIf="currentUser; else login">
+            <a dropdownToggle mdbWavesEffect type="button" class="nav-link dropdown-toggle waves-light" mdbWavesEffect>
               <mdb-icon fas icon="user"></mdb-icon> Welcome {{profile.userName}}<span class="caret"></span></a>
             <div *dropdownMenu class="dropdown-menu dropdown-menu-right dropdown dropdown-primary" role="menu">
               <a class="dropdown-item waves-light" routerLink="profile" mdbWavesEffect><mdb-icon fas icon="sign-in-alt"></mdb-icon> Profile</a>
               <a class="dropdown-item waves-light" routerLink="profile/update-password" mdbWavesEffect><mdb-icon fas icon="users-cog"></mdb-icon> Change password</a>
               <hr>
-              <a class="dropdown-item waves-light" routerLink="profile/user-notifications" mdbWavesEffect><mdb-icon fas icon="envelope"></mdb-icon> Notifications</a>
               <a class="dropdown-item waves-light" mdbWavesEffect (click)="logout()"><mdb-icon fas icon="sign-out-alt"></mdb-icon> Log out</a>
             </div>
           </li>

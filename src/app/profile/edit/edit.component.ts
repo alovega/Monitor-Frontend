@@ -59,7 +59,8 @@ export class EditComponent implements OnInit {
   }
    update() {
     const user = JSON.parse(localStorage.getItem('currentUser'));
-    this.data[0].token =  user.token;
+    console.log(user.token);
+    this.data.token =  user.token;
     Swal.fire({
       title: 'Are you sure',
       text: 'You want to update your details',
@@ -69,9 +70,9 @@ export class EditComponent implements OnInit {
       cancelButtonText: 'No, cancel the update'
     }).then((result) => {
       if (result.value) {
-        this.profileService.updateLoggedInUser(this.data[0]).subscribe(
+        this.profileService.updateLoggedInUser(this.data).subscribe(
           response => {
-          console.log(this.data[0]);
+          console.log(this.data);
           console.log(response);
           if (response.code === '800.200.001') {
               Swal.fire(
