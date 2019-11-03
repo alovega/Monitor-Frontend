@@ -29,7 +29,6 @@ export class AddEndpointsComponent implements OnInit {
   endpointTypes: EndpointType;
   endpoints: any;
   selectedEndpoint: Endpoint;
-  @ViewChild('openBtn', { static: false }) openBtn: ElementRef;
   @ViewChild('closeUpdateModal', { static: false }) closeUpdateModal: ElementRef;
   @ViewChild('closeAddModal', { static: false }) closeAddModal: ElementRef;
 
@@ -106,9 +105,8 @@ export class AddEndpointsComponent implements OnInit {
       console.log('Invalid');
       return;
     }
-    
+
     this.data.system_id = this.currentSystemId;
-    // console.log(this.data);
     this.endpointService.addEndpoints(this.data).subscribe(response => {
       if (response.code === '800.200.001') {
         this.submitted = false;
@@ -129,7 +127,8 @@ export class AddEndpointsComponent implements OnInit {
     }
 
     this.selectedEndpoint.endpoint_id = this.selectedEndpoint.id;
-    this.selectedEndpoint.state = this.selectedEndpoint.status;
+    this.selectedEndpoint.state = this.selectedEndpoint.state;
+    console.log(this.selectedEndpoint);
     this.endpointService.updateItem( this.selectedEndpoint).subscribe(response => {
       console.log(response);
       if (response.code === '800.200.001') {

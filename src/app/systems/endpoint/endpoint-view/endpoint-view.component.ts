@@ -102,7 +102,7 @@ export class EndpointViewComponent implements OnInit, AfterViewInit {
             }
           }
         );
-        this.endpointService.getEndpoints(this.currentSystemId).subscribe(
+        this.endpointService.getEndpoints().subscribe(
           response => {
             this.elements = response;
             this.mdbTable.setDataSource(this.elements);

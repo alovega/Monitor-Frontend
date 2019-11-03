@@ -35,187 +35,79 @@
     <div class="modal-content">
       <div class="modal-body mx-2">
         <h4 class="popup-heading modal-header">Add an endpoint</h4>
-            <form [formGroup]="endpointForm" class="text-center p-2" (ngSubmit) = "onSubmitAddForm()">
-                <div class="row">
-                <div class="col-md-12">
-                    <!-- Name -->
-                    <label class="form-label">Name</label>
-                    <input mdbInput MdbValidate type="text" id="defaultContactFormName" class="form-control mb-3 grey lighten-4"
-                    [ngClass]="{ 'is-invalid': submitted && endpointForm.controls.EndpointName.errors }"
-                    placeholder="Name" formControlName="EndpointName" [(ngModel)]="data.name" >
-                    <div *ngIf="endpointForm.controls.EndpointName.invalid && (endpointForm.controls.EndpointName.dirty || endpointForm.controls.EndpointName.touched)" class="invalid-feedback">
-                    <div *ngIf="endpointForm.controls.EndpointName.errors.required">
-                        Endpoint Name is required.
-                    </div>
-                    </div>
+            <form [formGroup]="addRuleForm" (ngSubmit)="onSubmitAddRule()" class="text-center">
+              <div class="form-group mb-3">
+                <!-- Name -->
+                <label class="form-label">Name</label>
+                <input formControlName="ruleName" type="text" id="incidentName" class="grey lighten-5 form-control" placeholder="Rule name"
+                [ngClass]="{'is-invalid': submitted && addRuleForm.controls.ruleName.errors}" [(ngModel)] = "escalationRule.name">
+                
+                <div *ngIf="submitted && addRuleForm.controls.ruleName.errors" class="invalid-feedback">
+                  <div *ngIf="addRuleForm.controls.ruleName.errors.required">Rule Name is required</div>
+                </div>                
+              </div>
+              
+              <!-- Rule Configuration -->
+              <div class="form-group mb-3 row">
+                <div class="col-md-6">
+                    <!-- Escalation Levels -->
+                    <label class="form-label">Escalation level</label>
+                    <select formControlName="escalationLevel" class="grey lighten-5 browser-default custom-select form-control inline-rule"
+                    [ngClass]="{ 'is-invalid': submitted && addRuleForm.controls.escalationLevel.errors }"
+                    [(ngModel)] = "escalationRule.escalation">
+                        <option *ngFor="let level of escalationLevels" selected value="level.name">{{level.name}}</option>
+                    </select>               
                 </div>
-                <div class="col-md-12">
-                    <!-- Endpoint -->
-                    <label class="form-label">URL</label>
-                    <input type="text" id="defaultContactFormEndpoint" class="form-control mb-3 grey lighten-4" placeholder="URL" formControlName="URL" [(ngModel)]="data.url" >
-                    <div *ngIf="endpointForm.controls.URL.invalid && (endpointForm.controls.URL.dirty || endpointForm.controls.URL.touched)" class="invalid-feedback">
-                    <div *ngIf="endpointForm.controls.URL.errors.required">
-                        A URL is required.
-                    </div>
-                    </div>
-                </div>
-                </div>
-                <div class="row">
-                <div class="col-md-12">
-                    <!-- Optimal response time -->
-                    <label class="form-label">Optimal response time</label>
-                    <input type="text" id="defaultContactFormEndpoint" class="form-control mb-3 grey lighten-4" placeholder="Optimal response time" formControlName="OptimalResponseTime" [(ngModel)]="data.optimal_response_time" >
-                    <div *ngIf="endpointForm.controls.OptimalResponseTime.invalid && (endpointForm.controls.OptimalResponseTime.dirty || endpointForm.controls.OptimalResponseTime.touched)" class="invalid-feedback">
-                    <div *ngIf="endpointForm.controls.OptimalResponseTime.errors.required">
-                        Optimal response time is required.
-                    </div>
-                    </div>
-                </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6">
-                        <!-- Endpoint type -->
-                        <label class="form-label">Type</label>
-                        <select class=" form-control browser-default custom-select mb-3 grey lighten-4" placeholder="Endpoint type" formControlName="EndpointType" [(ngModel)]="data.endpoint_type">
-                            <option *ngFor="let endpointType of endpointTypes" [value]="endpointType.id">
-                                {{endpointType.name}}
-                            </option>
-                        </select>
-                        <div *ngIf="endpointForm.controls.EndpointType.invalid && (endpointForm.controls.EndpointType.dirty || endpointForm.controls.EndpointType.touched)" class="invalid-feedback">
-                        <div *ngIf="endpointForm.controls.EndpointType.errors.required">
-                            EnpointType is required.
-                        </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <!-- State -->
-                        <label class="form-label">State</label>
-                        <select class=" form-control browser-default custom-select mb-3 grey lighten-4" placeholder="State" formControlName="State" [(ngModel)]="data.state">
-                            <option *ngFor="let state of states" [value]="state.id">
-                                {{state.name}}
-                            </option>
-                        </select>
-                        <div *ngIf="endpointForm.controls.State.invalid && (endpointForm.controls.State.dirty || endpointForm.controls.State.touched)" class="invalid-feedback">
-                        <div *ngIf="endpointForm.controls.State.errors.required">
-                            State is required.
-                        </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                <div class="col-md-12">
-                    <!-- Message -->
-                    <label class="form-label">Description</label>
-                    <div class="form-group">
-                    <textarea class="form-control rounded-2 grey lighten-4" id="exampleFormControlTextarea2" rows="3" placeholder="Description" formControlName="Description" [(ngModel)]="data.description" ></textarea>
-                    </div>
-                    <div *ngIf="endpointForm.controls.Description.invalid && (endpointForm.controls.Description.dirty || endpointForm.controls.Description.touched)" class="invalid-feedback">
-                    <div *ngIf="endpointForm.controls.Description.errors.required">
-                        Description is required.
-                    </div>
-                    <div *ngIf="endpointForm.controls.Description.errors.minlength">
-                        Description is should be more than 10.
-                        </div>
-                    </div>
-                </div>
-                </div>
-                <!-- Send button -->
-                <div class="modal-footer d-flex justify-content-end">
-                <div class="popup-close" data-dismiss="modal" aria-label="Close" (click)="frame.hide()" #closeAddModal>Cancel</div>
-                <button mdbBtn type="submit" class="btn float-right btn-primary waves-light" 
-                    color="primary" mdbWavesEffect  [disabled]="!endpointForm.valid" size="sm">
-                    <span *ngIf="submitted" class="spinner-border spinner-border-sm mr-1"></span> Create
-                </button>
-                </div>
-            </form>
-      </div>
-    </div>
-  </div>
-</div>
-
-
-<div mdbModal style="overflow-y: auto" #editModal="mdbModal" class="modal fade left" id="frameModalTop" tabindex="-1" role="dialog"
-     aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-body mx-2">
-        <h4 class="popup-heading modal-header">Edit endpoint</h4>
-        <form [formGroup]="updateForm" class="text-center p-2" (ngSubmit)="onSubmitUpdateForm()">
-                <div class="row">
-                  <div class="col-md-12">
-                    <!-- Name -->
-                    <label class="form-label">Endpoint Name</label>
-                    <input mdbInput MdbValidate type="text" id="defaultContactFormName" class="form-control mb-3 grey lighten-4"
-                      [ngClass]="{'is-invalid': submitted && updateForm.controls.EndpointName.errors }"
-                      placeholder="Name" formControlName="EndpointName" [(ngModel)]="selectedEndpoint.name" >
-                    <div *ngIf="updateForm.controls.EndpointName.invalid && (updateForm.controls.EndpointName.dirty || updateForm.controls.EndpointName.touched)" class="invalid-feedback">
-                      <div *ngIf="updateForm.controls.EndpointName.errors.required">
-                          Endpoint Name is required.
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-md-12">
-                    <!-- Endpoint -->
-                    <label class="form-label">Url</label>
-                    <input type="text" id="defaultContactFormUrl" class="form-control mb-3 grey lighten-4" placeholder="Url" formControlName="Url" [(ngModel)]="selectedEndpoint.url" 
-                    [ngClass]="{'is-invalid': submitted && updateForm.controls.Url.errors }">
-                    <div *ngIf="updateForm.controls['Url'].invalid && (updateForm.controls['Url'].dirty || updateForm.controls['Url'].touched)" class="invalid-feedback">
-                      <div *ngIf="updateForm.controls['Url'].errors.required">
-                        Url is required.
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-md-6">
-                    <!-- Optimal response time -->
-                    <label class="form-label">Response time</label>
-                    <input type="text" id="defaultContactFormEndpoint" class="form-control mb-3 grey lighten-4" placeholder="Optimal response time" formControlName="OptimalResponseTime" [(ngModel)]="selectedEndpoint.optimal_response_time" 
-                    [ngClass]="{'is-invalid': submitted && updateForm.controls.OptimalResponseTime.errors }">
-                    <div *ngIf="updateForm.controls.OptimalResponseTime.invalid && (updateForm.controls.OptimalResponseTime.dirty || updateForm.controls.OptimalResponseTime.touched)" class="invalid-feedback">
-                      <div *ngIf="updateForm.controls.OptimalResponseTime.errors.required">
-                        Optimal response time is required.
-                      </div>
-                    </div>
-                  </div>
 
                 <div class="col-md-6">
-                    <!-- State -->
-                    <label class="form-label">State</label>
-                    <select class=" form-control browser-default custom-select mb-3 grey lighten-4" formControlName="State" [(ngModel)]="selectedEndpoint.status"
-                    [ngClass]="{'is-invalid': submitted && updateForm.controls.State.errors }">>
-                      <option *ngFor="let state of states" [value]="state.id">
-                        {{state.name}}
-                      </option>
+                    <!-- Nth Event -->
+                    <label class="form-label">Number of events </label>
+                    <input formControlName="nEvents" type="number" id="nthEvent" class="grey lighten-5 form-control inline-rule" placeholder="10"
+                    [ngClass]="{ 'is-invalid': submitted && addRuleForm.controls.nEvents.errors }"
+                    [(ngModel)] = "escalationRule.nth_event">
+                </div>
+              </div>
+
+              <div class="form-group mb-3 row">
+                <div class="col-md-6">
+                    <!-- Event Type -->
+                    <label class="form-label">Event type </label>
+                    <select formControlName="eventType" class="grey lighten-5 browser-default custom-select form-control inline-rule"
+                    [ngClass]="{'is-invalid': submitted && addRuleForm.controls.eventType.errors}"
+                    [(ngModel)] = "escalationRule.eventtype">
+                        <option selected value="Error">Error</option>
+                        <option value="Warning">Warning</option>
+                        <option value="Critical">Critical</option>
+                        <option value="Info">Info</option>
                     </select>
-                    <div *ngIf="updateForm.controls['State'].invalid && (updateForm.controls['State'].dirty || updateForm.controls['State'].touched)" class="invalid-feedback">
-                        <div *ngIf="updateForm.controls['State'].errors.required">
-                            State is required.
-                        </div>
-                    </div>
-                  </div>
                 </div>
-                <div class="row">
-                  <div class="col-md-12">
-                    <!-- Message -->
-                    <label>Description</label>
-                    <div class="form-group">
-                      <textarea class="form-control rounded-2 mb-3 grey lighten-4" id="exampleFormControlTextarea2" rows="3" placeholder="Description" formControlName="Description" [(ngModel)]="selectedEndpoint.description" ></textarea>
-                    </div>
-                    <div *ngIf="updateForm.controls['Description'].invalid && (updateForm.controls['Description'].dirty || updateForm.controls['Description'].touched)" class="invalid-feedback">
-                      <div *ngIf="updateForm.controls['Description'].errors.required">
-                        Description is required.
-                      </div>
-                    </div>
-                  </div>
+
+                <div class="col-md-6">
+                    <!-- Duration -->
+                    <label class="form-label">Duration </label>
+                    <input type="number" formControlName="duration" class="grey lighten-5 form-control inline-rule"
+                    placeholder="3600" [ngClass]="{'is-invalid': submitted && addRuleForm.controls.duration.errors}"
+                    [(ngModel)] = "escalationRule.duration"> 
                 </div>
-                  
-                <div class="modal-footer d-flex justify-content-end">
-                <div class="popup-close" data-dismiss="modal" aria-label="Close" (click)="editModal.hide()" #closeUpdateModal>Cancel</div>
-                <button mdbBtn type="submit" class="btn float-right btn-primary waves-light" 
-                    color="primary" mdbWavesEffect  [disabled]="!updateForm.valid"
-                    size="sm"><span *ngIf="submitted" class="spinner-border spinner-border-sm mr-1"></span>Update Endpoint</button>
-                </div>
+              </div>
+
+              <div class="form-group mb-4">
+                <!-- Rule Description -->
+                <label class="form-label">Description</label>
+                <textarea class="grey lighten-5 form-control rounded-2" formControlName="ruleDescription"
+                    id="exampleFormControlTextarea2" rows="3" placeholder="Elevated error occurrence"
+                    [ngClass]="{'is-invalid': submitted && addRuleForm.controls.ruleDescription.errors}"
+                    [(ngModel)] = "escalationRule.description">
+                </textarea>
+
+                <div *ngIf="submitted && addRuleForm.controls.ruleDescription.errors" class="invalid-feedback">
+                  <div *ngIf="addRuleForm.controls.ruleDescription.errors.required">Rule Description is required</div>
+                </div>  
+              </div>
+              <!-- Create button -->
+              <div class="create-button">
+                  <button mdbBtn mdbWavesEffect class="float-right" color="primary" size="md">Add</button>
+              </div>
             </form>
       </div>
     </div>
