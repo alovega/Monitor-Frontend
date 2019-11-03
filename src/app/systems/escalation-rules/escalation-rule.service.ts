@@ -37,6 +37,7 @@ export class EscalationRuleService {
     return this.http.post<any>(getRuleUrl, {
       rule_id: ruleId
     }).pipe(
+      tap(rule => console.log(rule)),
       map(rule => rule.data),
     );
   }

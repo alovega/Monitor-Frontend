@@ -180,7 +180,7 @@
                 <div class="col-md-6">
                     <!-- State -->
                     <label class="form-label">State</label>
-                    <select class=" form-control browser-default custom-select mb-3 grey lighten-4" formControlName="State" [(ngModel)]="selectedEndpoint.status"
+                    <select class=" form-control browser-default custom-select mb-3 grey lighten-4" formControlName="State" [(ngModel)]="selectedEndpoint.state"
                     [ngClass]="{'is-invalid': submitted && updateForm.controls.State.errors }">>
                       <option *ngFor="let state of states" [value]="state.id">
                         {{state.name}}

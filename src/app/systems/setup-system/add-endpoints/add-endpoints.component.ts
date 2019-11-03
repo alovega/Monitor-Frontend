@@ -11,6 +11,7 @@ import { System } from '../../../shared/models/system';
 import { EndpointType } from '../../../shared/models/endpoint-type';
 import { EndpointService } from '../../endpoint/endpoint.service';
 import { SystemService } from 'src/app/shared/system.service';
+import { SetupService } from '../setup.service';
 
 @Component({
   selector: 'hm-add-endpoints',
@@ -31,6 +32,7 @@ export class AddEndpointsComponent implements OnInit {
   selectedEndpoint: Endpoint;
   @ViewChild('closeUpdateModal', { static: false }) closeUpdateModal: ElementRef;
   @ViewChild('closeAddModal', { static: false }) closeAddModal: ElementRef;
+  @ViewChild('openBtn', { static: false }) openBtn: ElementRef;
 
   constructor(
     private fb: FormBuilder,
@@ -38,7 +40,8 @@ export class AddEndpointsComponent implements OnInit {
     private systemService: SystemService,
     private location: Location,
     private router: Router,
-    private toastr: ToastrService ) {
+    private toastr: ToastrService,
+    private setupService: SetupService) {
     this.data = new Endpoint();
     of(this.getStates()).subscribe((data: any) => {
       this.states = data;
@@ -51,6 +54,8 @@ export class AddEndpointsComponent implements OnInit {
     });
     this.selectedEndpoint = new Endpoint();
     this.data = new Endpoint();
+    // this.setupService.nextUrl.next('rules');
+    // this.setupService.previousUrl.next(null);
    }
 
    public back(): void {
@@ -58,8 +63,11 @@ export class AddEndpointsComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.setupService.nextUrl.next('rules');
+    this.setupService.previousUrl.next(null);
     this.currentSystem = this.systemService.getCurrentSystem();
     this.currentSystemId = this.currentSystem.id;
+    console.log(this.setupService.nextUrl.value);
     this.endpointService.getEndpoints().subscribe(
       (endpoints) => {
         this.endpoints = endpoints;
@@ -82,19 +90,21 @@ export class AddEndpointsComponent implements OnInit {
       EndpointType: ['', Validators.required],
       State: ['', Validators.required]
     });
-    // console.log(this.endpointForm);
+    console.log('Sijsfdbksf')
+    console.log(this.endpointForm);
   }
 
-  updateEndpoint(endpoint_id: string) {
-    this.endpointService.getItem(endpoint_id).subscribe(
+  updateEndpoint(endpointId: string) {
+    this.endpointService.getItem(endpointId).subscribe(
       (res => {
         // console.log(res);
         if (res.code === '800.200.001') {
+          this.submitted = false;
           this.selectedEndpoint = res.data.endpoint[0];
           this.openBtn.nativeElement.click();
         }
       })
-    )
+    );
   }
 
   onSubmitAddForm() {
@@ -108,18 +118,17 @@ export class AddEndpointsComponent implements OnInit {
 
     this.data.system_id = this.currentSystemId;
     this.endpointService.addEndpoints(this.data).subscribe(response => {
+      this.submitted = false;
+      this.closeAddModal.nativeElement.click();
       if (response.code === '800.200.001') {
-        this.submitted = false;
-        this.closeAddModal.nativeElement.click();
-        this.toastr.success('Endpoint Created successfully !');
+        this.toastr.success('Endpoint Created successfully!', 'Success');
       } else {
-        console.log('error: %s, message: %s', response.code, response.message);
+        this.toastr.error('Endpoint could not be created!', 'Error');
       }
     });
   }
 
   onSubmitUpdateForm() {
-    // console.log(this.updateForm.controls.EndpointName.errors);
     this.submitted = true;
     // stop here if form is invalid
     if (this.updateForm.invalid) {
@@ -127,16 +136,14 @@ export class AddEndpointsComponent implements OnInit {
     }
 
     this.selectedEndpoint.endpoint_id = this.selectedEndpoint.id;
-    this.selectedEndpoint.state = this.selectedEndpoint.state;
-    console.log(this.selectedEndpoint);
+    // this.selectedEndpoint.state = this.selectedEndpoint.state__name;
     this.endpointService.updateItem( this.selectedEndpoint).subscribe(response => {
-      console.log(response);
+      this.submitted = false;
+      this.closeUpdateModal.nativeElement.click();
       if (response.code === '800.200.001') {
-        this.submitted = false;
-        this.closeUpdateModal.nativeElement.click();
-        this.toastr.success('Endpoint updated successfully !');
+        this.toastr.success('Endpoint updated successfully!', 'Success');
       } else {
-        console.log('message: %s, code: %s', response.message, response.code);
+        this.toastr.error('Endpoint could not be updated!', 'Error');
       }
     });
   }

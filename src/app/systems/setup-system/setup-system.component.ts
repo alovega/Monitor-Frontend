@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { SetupService } from './setup.service';
 
 @Component({
   selector: 'hm-setup-system',
@@ -6,10 +7,22 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./setup-system.component.scss']
 })
 export class SetupSystemComponent implements OnInit {
-
-  constructor() { }
+  previousUrl: any;
+  nextUrl: any;
+  constructor(
+    private setupService: SetupService
+  ) {
+    // this.setupService.previousUrl.next(null);
+    // this.setupService.nextUrl.next('rules');
+  }
 
   ngOnInit() {
+    this.previousUrl = this.setupService.currentPreviousUrl.subscribe(
+      (url) => this.previousUrl = url
+    );
+    this.nextUrl = this.setupService.currentNextUrl.subscribe(
+      (url) => this.nextUrl = url
+    );
   }
 
 }

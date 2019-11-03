@@ -1,8 +1,9 @@
 <div class="row">
     <div class="col col-6"><p class="h5 mb-4">Add escalation rules </p></div>
     <div class="col-md-6">
+        <button data-toggle="modal" #openAddModal (click)="frame.show()" class="d-none"> </button>
         <button class="float-right back-button" data-toggle="modal" data-target="#"
-        (click)="frame.show()"><i class="fas fa-plus"></i> Add rule</button>
+        (click)="addRule()"><i class="fas fa-plus"></i> Add rule</button>
     </div>     
 </div>
 <div class="row">
@@ -20,10 +21,10 @@
     <button data-toggle="modal" data-target="#editEndpoint" (click)="editModal.show();" class="d-none" #openBtn> </button>
     <div class="col-md-6">
         <ul class="endpoints-list">
-            <li class="endpoint-item" *ngFor="let endpoint of endpoints" (click)="updateEndpoint(endpoint.id)">
+            <li class="endpoint-item" *ngFor="let rule of escalationRules" (click)="editRule(rule.id)">
                <span>
                 <mdb-icon fas icon="check-circle" class="green-text pr-1 pl-1"></mdb-icon>
-               </span> {{endpoint.name}}
+               </span> {{rule.name}}
             </li>
         </ul>
     </div>
@@ -54,9 +55,9 @@
                     <label class="form-label">Escalation level</label>
                     <select formControlName="escalationLevel" class="grey lighten-5 browser-default custom-select form-control inline-rule"
                     [ngClass]="{ 'is-invalid': submitted && addRuleForm.controls.escalationLevel.errors }"
-                    [(ngModel)] = "escalationRule.escalation">
-                        <option *ngFor="let level of escalationLevels" selected value="level.name">{{level.name}}</option>
-                    </select>               
+                    [(ngModel)] = "escalationRule.escalation_level">
+                        <option *ngFor="let level of escalationLevels" selected value="{{level.name}}">{{level.name}}</option>
+                    </select>
                 </div>
 
                 <div class="col-md-6">
@@ -105,9 +106,103 @@
                 </div>  
               </div>
               <!-- Create button -->
-              <div class="create-button">
-                  <button mdbBtn mdbWavesEffect class="float-right" color="primary" size="md">Add</button>
+              <!-- Edit button -->
+              <div class="modal-footer d-flex justify-content-end">
+                <div class="popup-close" data-dismiss="modal" aria-label="Close" (click)="frame.hide()" #closeddModal>Cancel</div>
+                <button mdbBtn type="submit" class="btn float-right btn-primary waves-light" 
+                    color="primary" mdbWavesEffect [disabled]="!addRuleForm.valid"
+                    size="sm"><span *ngIf="submitted" class="spinner-border spinner-border-sm mr-1"></span>Add Rule</button>
+                </div>
+            </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div mdbModal style="overflow-y: auto" #editModal="mdbModal" class="modal fade left" id="frameModalTop" tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body mx-2">
+        <h4 class="popup-heading modal-header">Add an endpoint</h4>
+            <form [formGroup]="editRuleForm" (ngSubmit)="onSubmitEditRule()" class="text-center">
+              <div class="form-group mb-3">
+                <!-- Name -->
+                <label class="form-label">Name</label>
+                <input formControlName="ruleName" type="text" id="incidentName" class="grey lighten-5 form-control" placeholder="Rule name"
+                [ngClass]="{'is-invalid': submitted && editRuleForm.controls.ruleName.errors}" [(ngModel)] = "escalationRule.name">
+                
+                <div *ngIf="submitted && editRuleForm.controls.ruleName.errors" class="invalid-feedback">
+                  <div *ngIf="editRuleForm.controls.ruleName.errors.required">Rule Name is required</div>
+                </div>                
               </div>
+              
+              <!-- Rule Configuration -->
+              <div class="form-group mb-3 row">
+                <div class="col-md-6">
+                    <!-- Escalation Levels -->
+                    <label class="form-label">Escalation level</label>
+                    <select formControlName="escalationLevel" class="grey lighten-5 browser-default custom-select form-control inline-rule"
+                    [ngClass]="{ 'is-invalid': submitted && editRuleForm.controls.escalationLevel.errors }"
+                    [(ngModel)] = "escalationRule.escalation_level">
+                        <option *ngFor="let level of escalationLevels" selected value="{{level.name}}">{{level.name}}</option>
+                    </select>
+                </div>
+
+                <div class="col-md-6">
+                    <!-- Nth Event -->
+                    <label class="form-label">Number of events </label>
+                    <input formControlName="nEvents" type="number" id="nthEvent" class="grey lighten-5 form-control inline-rule" placeholder="10"
+                    [ngClass]="{ 'is-invalid': submitted && editRuleForm.controls.nEvents.errors }"
+                    [(ngModel)] = "escalationRule.nth_event">
+                </div>
+              </div>
+
+              <div class="form-group mb-3 row">
+                <div class="col-md-6">
+                    <!-- Event Type -->
+                    <label class="form-label">Event type </label>
+                    <select formControlName="eventType" class="grey lighten-5 browser-default custom-select form-control inline-rule"
+                    [ngClass]="{'is-invalid': submitted && editRuleForm.controls.eventType.errors}"
+                    [(ngModel)] = "escalationRule.eventtype">
+                        <option selected value="Error">Error</option>
+                        <option value="Warning">Warning</option>
+                        <option value="Critical">Critical</option>
+                        <option value="Info">Info</option>
+                    </select>
+                </div>
+
+                <div class="col-md-6">
+                    <!-- Duration -->
+                    <label class="form-label">Duration </label>
+                    <input type="number" formControlName="duration" class="grey lighten-5 form-control inline-rule"
+                    placeholder="3600" [ngClass]="{'is-invalid': submitted && editRuleForm.controls.duration.errors}"
+                    [(ngModel)] = "escalationRule.duration"> 
+                </div>
+              </div>
+
+              <div class="form-group mb-4">
+                <!-- Rule Description -->
+                <label class="form-label">Description</label>
+                <textarea class="grey lighten-5 form-control rounded-2" formControlName="ruleDescription"
+                    id="exampleFormControlTextarea2" rows="3" placeholder="Elevated error occurrence"
+                    [ngClass]="{'is-invalid': submitted && editRuleForm.controls.ruleDescription.errors}"
+                    [(ngModel)] = "escalationRule.description">
+                </textarea>
+
+                <div *ngIf="submitted && editRuleForm.controls.ruleDescription.errors" class="invalid-feedback">
+                  <div *ngIf="editRuleForm.controls.ruleDescription.errors.required">Rule Description is required</div>
+                </div>  
+              </div>
+
+              <!-- Edit button -->
+              <div class="modal-footer d-flex justify-content-end">
+                <div class="popup-close" data-dismiss="modal" aria-label="Close" (click)="editModal.hide()" #closeUpdateModal>Cancel</div>
+                <button mdbBtn type="submit" class="btn float-right btn-primary waves-light" 
+                    color="primary" mdbWavesEffect [disabled]="!editRuleForm.valid"
+                    size="sm"><span *ngIf="submitted" class="spinner-border spinner-border-sm mr-1"></span>Edit Rule</button>
+                </div>
             </form>
       </div>
     </div>
