@@ -21,19 +21,6 @@
                   Escalation rule name is required</div>
               </div>
             </div>
-            
-            <div class="form-group mb-4">
-              <!-- Rule Description -->
-              <label class="form-label">Description</label>
-              <textarea class="grey lighten-5 form-control rounded-2" formControlName="ruleDescription"
-                  id="exampleFormControlTextarea2" rows="3" placeholder="Elevated error occurrence"
-                  [ngClass]="{ 'is-invalid': submitted && form.ruleDescription.errors }" [(ngModel)] = "escalationRule.description">
-              </textarea>
-
-              <div *ngIf="submitted && form.ruleDescription.errors" class="invalid-feedback">
-                <div *ngIf="form.ruleDescription.errors.required">Rule Description is required</div>
-              </div>            
-            </div>
 
             <div class="form-group">
               <!-- Rule Configuration -->
@@ -43,7 +30,7 @@
 
                     <!-- Escalation Levels -->
                     <select formControlName="escalationLevel" class="grey lighten-5 browser-default custom-select form-control inline-rule"
-                    [ngClass]="{ 'is-invalid': submitted && form.escalationLevel.errors }" [(ngModel)] = "escalationRule.escalation">
+                    [ngClass]="{ 'is-invalid': submitted && form.escalationLevel.errors }" [(ngModel)] = "escalationRule.escalation_level">
                         <option selected value="High">High</option>
                         <option value="Medium">Medium</option>
                         <option value="Low">Low</option>
@@ -80,6 +67,19 @@
                   </div>
               </div>
             </div>
+
+            <div class="form-group mb-4">
+                <!-- Rule Description -->
+                <label class="form-label">Description</label>
+                <textarea class="grey lighten-5 form-control rounded-2" formControlName="ruleDescription"
+                    id="exampleFormControlTextarea2" rows="3" placeholder="Elevated error occurrence"
+                    [ngClass]="{ 'is-invalid': submitted && form.ruleDescription.errors }" [(ngModel)] = "escalationRule.description">
+                </textarea>
+  
+                <div *ngIf="submitted && form.ruleDescription.errors" class="invalid-feedback">
+                  <div *ngIf="form.ruleDescription.errors.required">Rule Description is required</div>
+                </div>            
+              </div>
               <!-- Update button -->
               <div class="create-button">
                   <button type="submit" mdbWavesEffect class="btn btn-md btn-primary float-right" size="md">Update rule</button>
