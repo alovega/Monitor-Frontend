@@ -1,5 +1,5 @@
 export class SystemRecipient {
-    notificationTypeId: string;
+    escalations: [];
     systemRecipientId: string;
     recipientId: string;
     systemId: string;

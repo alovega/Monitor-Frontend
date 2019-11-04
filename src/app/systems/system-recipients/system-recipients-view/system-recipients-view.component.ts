@@ -23,6 +23,7 @@ export class SystemRecipientsViewComponent implements OnInit, AfterViewInit {
   escalationLevelId: any;
   EscalationLevels: any;
   elements: any;
+  all: any;
   escalations: any;
   previous: any = [];
   headElements: string[] = ['userName', 'escalationLevel', 'notificationType', 'status', 'dateCreated', 'action'];
@@ -47,21 +48,47 @@ export class SystemRecipientsViewComponent implements OnInit, AfterViewInit {
     console.log(this.level);
     this.currentSystem = this.systemService.getCurrentSystem();
     this.currentSystemId = this.currentSystem.id;
-    this.getEscalationLevels();
-  }
-  ngAfterViewInit() {
-  }
-
-  changeLevel(level: any) {
-    this.currentSystem = this.systemService.getCurrentSystem();
-    const currentSystemId = this.currentSystem.id;
-    this.systemRecipientService.getSystemRecipients(currentSystemId, level).subscribe(response => {
+    this.systemRecipientService.getSystemRecipients(this.currentSystemId).subscribe(response => {
       this.elements = response;
       this.mdbTable.setDataSource(this.elements);
       this.elements = this.mdbTable.getDataSource();
       this.previous = this.mdbTable.getDataSource();
     });
+    this.getEscalationLevels();
   }
+  ngAfterViewInit() {
+  }
+
+  filterSystemRecipients(level: any) {
+    console.log(level)
+    if (level === 'all') {
+      this.systemRecipientService.getSystemRecipients(this.currentSystemId).subscribe(response => {
+      console.log(response);
+      this.elements = response;
+      this.mdbTable.setDataSource(this.elements);
+      this.elements = this.mdbTable.getDataSource();
+      this.previous = this.mdbTable.getDataSource();
+      });
+    } else {
+      this.systemRecipientService.getSystemRecipients(this.currentSystemId).subscribe(response => {
+        response = response.filter((item) => item.escalationLevel === level);
+        console.log(response);
+        this.elements = response;
+        this.mdbTable.setDataSource(this.elements);
+        this.elements = this.mdbTable.getDataSource();
+        this.previous = this.mdbTable.getDataSource();
+      });
+    }
+  }
+  // changeLevel(level: any) {
+  //   this.currentSystem = this.systemService.getCurrentSystem();
+  //   const currentSystemId = this.currentSystem.id;
+  //   if (level === '0') {
+
+  //   } else {
+  //     this.elements =this.cacheElements.filter((item) => item.escalationLevelId == level)
+  //   }
+  // }
   searchItems() {
     const prev = this.mdbTable.getDataSource();
     console.log(prev);

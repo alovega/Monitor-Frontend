@@ -7,14 +7,13 @@ import {MatTableModule} from '@angular/material/table';
 import { SystemRecipientsRoutingModule } from './system-recipients-routing.module';
 import { SystemRecipientsComponent } from './system-recipients.component';
 import { SystemRecipientFormComponent } from './system-recipient-create/system-recipient-create.component';
-import { EmailSystemRecipientsComponent } from './email-system-recipients/email-system-recipients.component';
 import { SystemRecipientUpdateComponent } from './system-recipient-update/system-recipient-update.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { SystemRecipientsViewComponent } from './system-recipients-view/system-recipients-view.component';
 
 
 @NgModule({
-  declarations: [SystemRecipientsComponent, SystemRecipientFormComponent, EmailSystemRecipientsComponent,SystemRecipientUpdateComponent,
+  declarations: [SystemRecipientsComponent, SystemRecipientFormComponent, SystemRecipientUpdateComponent,
      SystemRecipientsViewComponent],
   imports: [
     CommonModule,
@@ -26,6 +25,6 @@ import { SystemRecipientsViewComponent } from './system-recipients-view/system-r
     MDBBootstrapModule.forRoot()
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
-  exports: [SystemRecipientFormComponent, EmailSystemRecipientsComponent, SystemRecipientUpdateComponent, SystemRecipientsViewComponent]
+  exports: []
 })
 export class SystemRecipientsModule { }

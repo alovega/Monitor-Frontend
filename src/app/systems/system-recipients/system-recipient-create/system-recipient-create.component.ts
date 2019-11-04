@@ -1,4 +1,4 @@
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import {SystemRecipientService} from '../system-recipient.service';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -18,62 +18,59 @@ import { SystemRecipient } from '../system-recipient';
 })
 export class SystemRecipientFormComponent implements OnInit {
 
-  recipientForm: FormGroup;
+  systemRecipientForm: FormGroup;
   submitted = false;
   currentSystem: any;
+  escalationIndex: any;
   currentSystemId: any;
-  recipient: SystemRecipient;
+  escalations: any;
+  systemRecipient: SystemRecipient;
   EscalationLevels: EscalationLevel;
   NotificationTypes: NotificationType;
-  Users: User;
+  Recipients: any;
   States: State;
 
   constructor(
     private fb: FormBuilder, private systemRecipientService: SystemRecipientService, public location: Location,
     public activatedRoute: ActivatedRoute
     ) {
-    this.createForm();
-    this.recipient = new SystemRecipient();
-    of(this.getEscalationLevels()).subscribe((data: any) => {
+    this.systemRecipient = new SystemRecipient();
+    of(this.getRecipients()).subscribe((data: any) => {
       console.log(data);
-      this.EscalationLevels = data;
+      this.Recipients = data;
     });
-    of(this.getNotificationTypes()).subscribe((data: any) => {
-      console.log(data);
-      this.NotificationTypes = data;
-    });
-    of(this.getUsers()).subscribe((data: any) => {
-      console.log(data);
-      this.Users = data;
-    });
-    of(this.getStates()).subscribe((data: any) => {
-      console.log(data);
-      this.States = data;
-    });
+    this.getEscalationLevels();
    }
 
   ngOnInit() {
-    this.activatedRoute.parent.params.subscribe(
-      (param: any) => {
-        this.currentSystemId = param['system-id'];
-        // console.log(this.currentSystemId);
-      });
+    this.getNotificationTypes();
+    this.createForm();
   }
   createForm() {
-    this.recipientForm = this.fb.group({
-        FirstName: ['', [Validators.required, Validators.minLength(3)]],
-        LastName: ['', [Validators.required, Validators.minLength(3)]],
-        Email: ['', [Validators.required, Validators.email]],
-        PhoneNumber: ['', [Validators.required, Validators.minLength(10)]],
-        User: ['', Validators.required],
-        NotificationType: ['', Validators.required],
-        EscalationLevel: ['', Validators.required],
-        State: ['', Validators.required]
+    this.systemRecipientForm = this.fb.group({
+        Recipient: ['', Validators.required],
+        escalations: this.fb.array([this.escalation])
     });
+  }
+  get escalation(): FormGroup {
+    return this.fb.group({
+      NotificationType: ['', Validators.required],
+      EscalationLevel: ['', Validators.required]
+    });
+  }
+
+
+  addEscalations() {
+    (this.systemRecipientForm.controls.escalations as FormArray).push(this.escalation);
+  }
+
+  deleteEscalations(index) {
+    (this.systemRecipientForm.controls.escalations as FormArray).removeAt(index);
   }
 
   getEscalationLevels() {
     this.systemRecipientService.getLevels().subscribe((data) => {
+      console.log(data);
       this.EscalationLevels = data;
     });
   }
@@ -81,11 +78,13 @@ export class SystemRecipientFormComponent implements OnInit {
   getNotificationTypes() {
     this.systemRecipientService.getNotificationType().subscribe((data) => {
       this.NotificationTypes = data;
+      console.log(this.NotificationTypes);
     });
   }
-  getUsers() {
-    this.systemRecipientService.getUsers().subscribe((data) => {
-      this.Users = data;
+  getRecipients() {
+    this.systemRecipientService.getRecipients().subscribe((data) => {
+      console.log(data);
+      this.Recipients = data;
     });
   }
   getStates() {
@@ -93,21 +92,22 @@ export class SystemRecipientFormComponent implements OnInit {
       this.States = data;
     });
   }
-  get f() { return this.recipientForm.controls; }
+  get f() { return this.systemRecipientForm.controls; }
   onSubmit() {
     this.submitted = true;
     // stop here if form is invalid
-    if (this.recipientForm.invalid) {
+    if (this.systemRecipientForm.invalid) {
         return;
     }
   }
 
   addRecipient() {
-    this.recipient.systemId = this.currentSystemId;
-    console.log(this.recipient);
-    this.systemRecipientService.addSystemRecipient(this.recipient).subscribe(response => {
+    console.log(this.systemRecipient);
+    this.systemRecipient.systemId = this.currentSystemId;
+    console.log(this.systemRecipient);
+    this.systemRecipientService.addSystemRecipient(this.systemRecipient).subscribe(response => {
       if (response.code === '800.200.001') {
-        this.recipient = response.data;
+        this.systemRecipient = response.data;
         console.log('message: %s, code: %s', response.message, response.code);
         this.location.back();
       }

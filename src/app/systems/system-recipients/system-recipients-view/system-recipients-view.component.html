@@ -6,15 +6,16 @@
         <div class="col-md-6 px-0 top-controls" style="top:4px;">
             <input class="form-control" type="text"  [(ngModel)]="searchText" id="search" placeholder="search" mdbInput >
         </div>
-        <button type="button" routerLink="/system/system-recipients/system-recipient-create " mdbBtn color="primary" mdbWavesEffect>Add System Recipient</button>
+        <button type="button" routerLink="/system/system-recipients/system-recipient-create" mdbBtn color="primary" mdbWavesEffect>Add System Recipient</button>
     </div>
   </div>
   <div class="row">
     <div class="col col-sm-4">
       <label>EscalationLevel:</label>
       <div id="select">
-          <select class="browser-default custom-select" (change)="changeLevel($event.target.value)">
-              <option *ngFor="let level of EscalationLevels" [value]="level.id" >
+          <select class="browser-default custom-select" (change)="filterSystemRecipients($event.target.value)">
+              <option value="all">All</option>
+              <option *ngFor="let level of EscalationLevels" [value]="level.name" >
                   {{level.name}}
               </option>
           </select>

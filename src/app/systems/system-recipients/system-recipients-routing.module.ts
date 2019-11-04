@@ -1,7 +1,5 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-
-import { EmailSystemRecipientsComponent } from './email-system-recipients/email-system-recipients.component';
 import { SystemRecipientFormComponent } from './system-recipient-create/system-recipient-create.component';
 import { SystemRecipientUpdateComponent } from './system-recipient-update/system-recipient-update.component';
 import { SystemRecipientsComponent } from './system-recipients.component';
@@ -18,19 +16,9 @@ const routes: Routes = [{ path: '', component: SystemRecipientsComponent, canAct
         path: 'system-recipients',
         component: SystemRecipientsViewComponent
       },
-      {
-        path: 'email-recipient',
-        component: EmailSystemRecipientsComponent
-      },
     ] },
-    {
-      path: 'system-recipient-create',
-      component: SystemRecipientFormComponent
-    },
-    {
-      path: 'system-recipient-update/:id',
-      component: SystemRecipientUpdateComponent
-    },
+    {path: 'system-recipient-update/:id', component: SystemRecipientUpdateComponent},
+    {path: 'system-recipient-create', component: SystemRecipientFormComponent}
   ];
 
 @NgModule({
