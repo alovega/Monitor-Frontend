@@ -45,8 +45,8 @@
           <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{rule.escalation}}</td>
           <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex" style="white-space: nowrap">{{rule.date_created | date:'MMMM d, yyyy' }} </td>
           <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">
-              <span mdbIcon class="fas fa-trash-alt mr-2 text-danger" (click)="removeRule(rule.rule_id)"></span>
-              <span mdbIcon class="fas fa-edit text-success" routerLink="/system/rules/edit/{{rule.rule_id}}" routerLinkActive="active"></span>
+              <span mdbIcon class="fas fa-trash-alt mr-2 text-danger" (click)="removeRule(rule.id)"></span>
+              <span mdbIcon class="fas fa-edit text-success" routerLink="/system/rules/edit/{{rule.id}}" routerLinkActive="active"></span>
           </td>
           </tr>
           </tbody>

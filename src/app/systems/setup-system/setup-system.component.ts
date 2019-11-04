@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SetupService } from './setup.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'hm-setup-system',
@@ -10,7 +11,8 @@ export class SetupSystemComponent implements OnInit {
   previousUrl: any;
   nextUrl: any;
   constructor(
-    private setupService: SetupService
+    private setupService: SetupService,
+    private toastr: ToastrService
   ) {
     // this.setupService.previousUrl.next(null);
     // this.setupService.nextUrl.next('rules');
@@ -23,6 +25,11 @@ export class SetupSystemComponent implements OnInit {
     this.nextUrl = this.setupService.currentNextUrl.subscribe(
       (url) => this.nextUrl = url
     );
+  }
+
+  public finish() {
+    this.toastr.success('All set !');
+    // window.location.reload();
   }
 
 }

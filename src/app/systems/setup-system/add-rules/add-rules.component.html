@@ -1,10 +1,10 @@
 <div class="row">
     <div class="col col-6"><p class="h5 mb-4">Add escalation rules </p></div>
-    <div class="col-md-6">
-        <button data-toggle="modal" #openAddModal (click)="frame.show()" class="d-none"> </button>
+    <div class="col-md-6" *ngIf="escalationRules.length">
         <button class="float-right back-button" data-toggle="modal" data-target="#"
         (click)="addRule()"><i class="fas fa-plus"></i> Add rule</button>
-    </div>     
+    </div>   
+    <button data-toggle="modal" #openAddModal (click)="frame.show()" class="d-none"> </button>
 </div>
 <div class="row">
     <div class="col-md-6">
@@ -20,13 +20,20 @@
     </div>
     <button data-toggle="modal" data-target="#editEndpoint" (click)="editModal.show();" class="d-none" #openBtn> </button>
     <div class="col-md-6">
-        <ul class="endpoints-list">
+        <ul class="endpoints-list" *ngIf="escalationRules.length; else noData" >
             <li class="endpoint-item" *ngFor="let rule of escalationRules" (click)="editRule(rule.id)">
                <span>
                 <mdb-icon fas icon="check-circle" class="green-text pr-1 pl-1"></mdb-icon>
                </span> {{rule.name}}
             </li>
         </ul>
+
+        <ng-template #noData class="text-center w-75 m-auto">
+            <hm-empty-data header="No rules to display" description="Escalation rules are the primary configurations of your system, add some to view them here.">
+                <button action-button class="back-button" data-toggle="modal" data-target="#"
+                (click)="addRule()"><i class="fas fa-plus"></i> Add rule</button>
+            </hm-empty-data>
+        </ng-template>
     </div>
 </div>
 
@@ -35,7 +42,7 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-body mx-2">
-        <h4 class="popup-heading modal-header">Add an endpoint</h4>
+        <h4 class="popup-heading modal-header">Add an escalation rule</h4>
             <form [formGroup]="addRuleForm" (ngSubmit)="onSubmitAddRule()" class="text-center">
               <div class="form-group mb-3">
                 <!-- Name -->
@@ -75,7 +82,7 @@
                     <label class="form-label">Event type </label>
                     <select formControlName="eventType" class="grey lighten-5 browser-default custom-select form-control inline-rule"
                     [ngClass]="{'is-invalid': submitted && addRuleForm.controls.eventType.errors}"
-                    [(ngModel)] = "escalationRule.eventtype">
+                    [(ngModel)] = "escalationRule.event_type">
                         <option selected value="Error">Error</option>
                         <option value="Warning">Warning</option>
                         <option value="Critical">Critical</option>
@@ -108,7 +115,7 @@
               <!-- Create button -->
               <!-- Edit button -->
               <div class="modal-footer d-flex justify-content-end">
-                <div class="popup-close" data-dismiss="modal" aria-label="Close" (click)="frame.hide()" #closeddModal>Cancel</div>
+                <div class="popup-close" data-dismiss="modal" aria-label="Close" (click)="frame.hide()" #closeAddModal>Cancel</div>
                 <button mdbBtn type="submit" class="btn float-right btn-primary waves-light" 
                     color="primary" mdbWavesEffect [disabled]="!addRuleForm.valid"
                     size="sm"><span *ngIf="submitted" class="spinner-border spinner-border-sm mr-1"></span>Add Rule</button>
@@ -118,7 +125,6 @@
     </div>
   </div>
 </div>
-
 
 <div mdbModal style="overflow-y: auto" #editModal="mdbModal" class="modal fade left" id="frameModalTop" tabindex="-1" role="dialog"
      aria-labelledby="myModalLabel" aria-hidden="true">
@@ -200,7 +206,7 @@
               <div class="modal-footer d-flex justify-content-end">
                 <div class="popup-close" data-dismiss="modal" aria-label="Close" (click)="editModal.hide()" #closeUpdateModal>Cancel</div>
                 <button mdbBtn type="submit" class="btn float-right btn-primary waves-light" 
-                    color="primary" mdbWavesEffect [disabled]="!editRuleForm.valid"
+                    color="primary" mdbWavesEffect [disabled]="editRuleForm.invalid"
                     size="sm"><span *ngIf="submitted" class="spinner-border spinner-border-sm mr-1"></span>Edit Rule</button>
                 </div>
             </form>

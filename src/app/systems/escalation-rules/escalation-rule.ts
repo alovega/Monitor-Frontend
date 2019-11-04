@@ -4,7 +4,7 @@ export class EscalationRule {
     system_name: string;
     name: string;
     date_modified: string;
-    eventtype ?: string;
+    eventtype: string;
     event_type ?: string;
     escalation: string;
     escalation_level ?: string;

@@ -8,6 +8,7 @@ import { SetupSystemRoutingModule } from './setup-system-routing.module';
 import { SetupSystemComponent } from './setup-system.component';
 import { AddEndpointsComponent } from './add-endpoints/add-endpoints.component';
 import { AddRulesComponent } from './add-rules/add-rules.component';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 
 @NgModule({
@@ -22,7 +23,8 @@ import { AddRulesComponent } from './add-rules/add-rules.component';
       timeOut: 10000,
       positionClass: 'toast-top-right',
       preventDuplicates: true,
-    })
+    }),
+    SharedModule
   ],
   schemas: [
     NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA

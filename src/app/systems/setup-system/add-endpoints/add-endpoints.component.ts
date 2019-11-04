@@ -67,12 +67,8 @@ export class AddEndpointsComponent implements OnInit {
     this.setupService.previousUrl.next(null);
     this.currentSystem = this.systemService.getCurrentSystem();
     this.currentSystemId = this.currentSystem.id;
+    this.getEndpoints();
     console.log(this.setupService.nextUrl.value);
-    this.endpointService.getEndpoints().subscribe(
-      (endpoints) => {
-        this.endpoints = endpoints;
-        console.log(endpoints);
-    });
 
     this.updateForm = this.fb.group({
         EndpointName: ['', Validators.required],
@@ -90,10 +86,15 @@ export class AddEndpointsComponent implements OnInit {
       EndpointType: ['', Validators.required],
       State: ['', Validators.required]
     });
-    console.log('Sijsfdbksf')
-    console.log(this.endpointForm);
   }
 
+  public getEndpoints() {
+    this.endpointService.getEndpoints().subscribe(
+      (endpoints) => {
+        this.endpoints = endpoints;
+        console.log(endpoints);
+    });
+  }
   updateEndpoint(endpointId: string) {
     this.endpointService.getItem(endpointId).subscribe(
       (res => {
@@ -121,7 +122,8 @@ export class AddEndpointsComponent implements OnInit {
       this.submitted = false;
       this.closeAddModal.nativeElement.click();
       if (response.code === '800.200.001') {
-        this.toastr.success('Endpoint Created successfully!', 'Success');
+        this.getEndpoints();
+        this.toastr.success('Endpoint added successfully!', 'Success');
       } else {
         this.toastr.error('Endpoint could not be created!', 'Error');
       }
@@ -141,7 +143,8 @@ export class AddEndpointsComponent implements OnInit {
       this.submitted = false;
       this.closeUpdateModal.nativeElement.click();
       if (response.code === '800.200.001') {
-        this.toastr.success('Endpoint updated successfully!', 'Success');
+          this.getEndpoints();
+          this.toastr.success('Endpoint updated successfully!', 'Success');
       } else {
         this.toastr.error('Endpoint could not be updated!', 'Error');
       }
