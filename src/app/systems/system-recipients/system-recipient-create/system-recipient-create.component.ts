@@ -39,7 +39,12 @@ export class SystemRecipientFormComponent implements OnInit {
       console.log(data);
       this.Recipients = data;
     });
-    this.getEscalationLevels();
+    of(this.getEscalationLevels()).subscribe((data: any) => {
+      this.EscalationLevels = data;
+    });
+    of(this.getNotificationTypes()).subscribe((data: any) => {
+      this.NotificationTypes = data;
+    });
    }
 
   ngOnInit() {
@@ -49,10 +54,10 @@ export class SystemRecipientFormComponent implements OnInit {
   createForm() {
     this.systemRecipientForm = this.fb.group({
         Recipient: ['', Validators.required],
-        escalations: this.fb.array([this.escalation])
+        escalations: this.fb.array([this.escalations])
     });
   }
-  get escalation(): FormGroup {
+  get escalation() {
     return this.fb.group({
       NotificationType: ['', Validators.required],
       EscalationLevel: ['', Validators.required]
@@ -61,7 +66,7 @@ export class SystemRecipientFormComponent implements OnInit {
 
 
   addEscalations() {
-    (this.systemRecipientForm.controls.escalations as FormArray).push(this.escalation);
+    (this.systemRecipientForm.controls.escalations as FormArray).push(this.escalations);
   }
 
   deleteEscalations(index) {
@@ -69,20 +74,20 @@ export class SystemRecipientFormComponent implements OnInit {
   }
 
   getEscalationLevels() {
-    this.systemRecipientService.getLevels().subscribe((data) => {
+    return this.systemRecipientService.getLevels().subscribe((data) => {
       console.log(data);
       this.EscalationLevels = data;
     });
   }
 
   getNotificationTypes() {
-    this.systemRecipientService.getNotificationType().subscribe((data) => {
+    return this.systemRecipientService.getNotificationType().subscribe((data) => {
       this.NotificationTypes = data;
       console.log(this.NotificationTypes);
     });
   }
   getRecipients() {
-    this.systemRecipientService.getRecipients().subscribe((data) => {
+    return this.systemRecipientService.getRecipients().subscribe((data) => {
       console.log(data);
       this.Recipients = data;
     });

@@ -13,7 +13,7 @@
       <!-- User -->
       <label>Recipient</label>
       <select class="browser-default custom-select form-control mb-4" formControlName="Recipient" [(ngModel)]="systemRecipient.recipientId">
-        <option value></option>
+        <option value=""></option>
         <option *ngFor="let recipient of Recipients; let i = index" [value]="recipient.id">
               {{recipient.userName}}
         </option>
@@ -32,10 +32,10 @@
   </div>
     <div  formArrayName="escalations">
         <div class="row"
-        *ngFor="let escalations of systemRecipientForm['controls'].escalations['controls'];
+        *ngFor="let escalation of systemRecipientForm['controls'].escalations['controls'];
         let escalationsIndex = index
         "
-        [formGroupName]="escalationsIndex">
+        [formGroupName]="escalations">
           <div class="col">
               <label>Escalation Level</label>{{EscalationLevels}}
               <select class="browser-default custom-select form-control mb-4" formControlName="EscalationLevel" [(ngModel)]="systemRecipient.escalations">
@@ -44,8 +44,8 @@
                     {{level.name}}
               </option>
             </select>
-            <div *ngIf="escalationIndex.controls['EscalationLevel'].invalid && (escalationIndex.controls['EscalationLevel'].dirty || escalationIndex.controls['EscalationLevel'].touched)" class="invalid-feedback">
-                <div *ngIf="escalationIndex.controls['EscalationLevel'].errors.required">
+            <div *ngIf="escalationIndex.controls.escalations.controls.EscalationLevel.invalid && (escalationIndex.controls.EscalationLevel.dirty || escalationIndex.controls.EscalationLevel.touched)" class="invalid-feedback">
+                <div *ngIf="escalationIndex.controls.escalations.controls.EscalationLevels.errors.required">
                     Please Select an escalation level.
                 </div>
             </div>
@@ -69,7 +69,7 @@
   
   <!-- Send button -->
   <button mdbBtn type="button" size="sm" class="btn float-right btn-primary waves-light" color="primary" mdbWavesEffect
-  [disabled]="!recipientForm.valid" (click)="addRecipient()">Save</button>
+  [disabled]="!systemRecipientForm.valid" (click)="addRecipient()">Save</button>
 
 </form>
   <!-- Default form contact -->

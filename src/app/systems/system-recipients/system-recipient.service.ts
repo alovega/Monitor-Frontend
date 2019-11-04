@@ -65,7 +65,12 @@ public getItem(systemRecipientId): Observable<any> {
 }
 
 public updateItem(item): Observable<any> {
-  return this.httpWrapperService.post('update_system_recipient/', item);
+  // return this.httpWrapperService.post('update_system_recipient/', item);
+  const systemRecipientUrl = environment.apiEndpoint + 'update_system_recipient/';
+  return this.http.post<any>(systemRecipientUrl, item).pipe(
+    retry(2),
+    catchError(this.handleError)
+  );
 }
 public getSystemRecipients(systemId) {
   const systemRecipientUrl = environment.apiEndpoint + 'get_system_recipients/';
