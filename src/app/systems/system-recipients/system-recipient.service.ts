@@ -57,7 +57,8 @@ public addSystemRecipient(item): Observable<any> {
   );
 }
 public deleteItem(systemRecipientId): Observable<any> {
-  return this.httpWrapperService.post('delete_recipient/', systemRecipientId);
+  const systemRecipientUrl = environment.apiEndpoint + 'delete_system_recipient/';
+  return this.http.post(systemRecipientUrl, {systemRecipientId});
 }
 
 public getItem(systemRecipientId): Observable<any> {

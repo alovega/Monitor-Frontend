@@ -108,8 +108,9 @@ export class SystemRecipientCreateComponent implements OnInit {
     this.systemRecipientService.addSystemRecipient(data).subscribe(response => {
       if (response.code === '800.200.001') {
         this.systemRecipient = response.data;
-        console.log(this.systemRecipient)
-        console.log('message: %s, code: %s, data: %s', response.message, response.code, response.data);
+        console.log(this.systemRecipient);
+        console.log(response);
+        this.back();
       }
       console.log('error: %s, message: %s', response.code, response.message);
     });

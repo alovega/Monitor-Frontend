@@ -39,7 +39,7 @@
             <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{el.dateCreated | date}}</td>
             <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">
                 <a class="fas fa-edit text-success"  routerLinkActive="active" routerLink="/system/system-recipients/system-recipient-update/{{el.systemRecipientId}}" ></a>
-                <a class="fas fa-trash-alt mr-2 text-danger" [disabled]="elements"></a>
+                <a class="fas fa-trash-alt mr-2 text-danger" [disabled]="elements" (click)="delete(el.systemRecipientId)"></a>
             </td>
             </tr>
         </tbody>

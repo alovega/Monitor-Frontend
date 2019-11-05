@@ -60,7 +60,6 @@ export class SystemRecipientsViewComponent implements OnInit, AfterViewInit {
   }
 
   filterSystemRecipients(level: any) {
-    console.log(level)
     if (level === 'all') {
       this.systemRecipientService.getSystemRecipients(this.currentSystemId).subscribe(response => {
       console.log(response);
@@ -80,15 +79,6 @@ export class SystemRecipientsViewComponent implements OnInit, AfterViewInit {
       });
     }
   }
-  // changeLevel(level: any) {
-  //   this.currentSystem = this.systemService.getCurrentSystem();
-  //   const currentSystemId = this.currentSystem.id;
-  //   if (level === '0') {
-
-  //   } else {
-  //     this.elements =this.cacheElements.filter((item) => item.escalationLevelId == level)
-  //   }
-  // }
   searchItems() {
     const prev = this.mdbTable.getDataSource();
     console.log(prev);
@@ -108,8 +98,8 @@ export class SystemRecipientsViewComponent implements OnInit, AfterViewInit {
       this.EscalationLevels = data;
     });
   }
-   delete(recipientId) {
-    console.log(recipientId);
+   delete(systemRecipientId) {
+    console.log(systemRecipientId);
     Swal.fire({
       title: 'Are you sure?',
       text: 'You will not be able to recover this recipient!',
@@ -119,8 +109,8 @@ export class SystemRecipientsViewComponent implements OnInit, AfterViewInit {
       cancelButtonText: 'No, keep the recipient'
     }).then((result) => {
       if (result.value) {
-        console.log(recipientId);
-        this.systemRecipientService.deleteItem(recipientId).subscribe(
+        console.log(systemRecipientId);
+        this.systemRecipientService.deleteItem(systemRecipientId).subscribe(
           response => {
             console.log(response);
             if (response.code === '800.200.001') {
@@ -138,7 +128,7 @@ export class SystemRecipientsViewComponent implements OnInit, AfterViewInit {
             }
           }
         );
-        this.systemRecipientService.getEmailSystemRecipients(this.currentSystemId).subscribe(
+        this.systemRecipientService.getSystemRecipients(this.currentSystemId).subscribe(
           response => {
             this.elements = response;
             this.mdbTable.setDataSource(this.elements);
