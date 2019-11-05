@@ -25,6 +25,7 @@ export class IncidentEventsComponent implements OnInit, AfterViewInit {
   events: any[];
   previous: any = [];
   incidentId: any;
+  loading = true;
   headElements = ['eventtype', 'description', 'stack_trace', 'method', 'interface', 'request', 'response', 'code', 'date_created'];
   elements = {
     eventtype: 'Event type', description: 'Description', stack_trace: 'Stack Trace', interface: 'Interface', request: 'Request',
@@ -53,6 +54,7 @@ export class IncidentEventsComponent implements OnInit, AfterViewInit {
         this.events = this.mdbTable.getDataSource();
         this.previous = this.mdbTable.getDataSource();
         // console.log(result);
+        this.loading = false;
       })
     );
   }

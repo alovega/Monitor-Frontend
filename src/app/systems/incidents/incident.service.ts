@@ -12,16 +12,6 @@ import { environment } from '../../../environments/environment';
 
 export class IncidentService {
   incidentsUrl = 'assets/demo-incidents.json';
-  startDate = new Date(
-    new Date().getFullYear(),
-    new Date().getMonth() - 3,
-    new Date().getDate()
-  );
-  endDate = new Date(
-    new Date().getFullYear(),
-    new Date().getMonth() + 3,
-    new Date().getDate()
-  );
 
   httpOptions = {
     headers: new HttpHeaders({'Content-Type' : 'application/x-www-form-urlencoded'})
@@ -43,8 +33,6 @@ export class IncidentService {
 
   getIncidents(): Observable<Incident[]> {
     return this.http.post<any>(environment.apiEndpoint + 'get_incidents/', {
-      start_date: this.startDate.toISOString(),
-      end_date: this.endDate.toISOString(),
     }).pipe(
       map(incidents => incidents.data),
       // tap(incidents => console.log(incidents))
@@ -54,8 +42,6 @@ export class IncidentService {
   getOpenIncidents(currentSystem: any): Observable<Incident[]> {
     // console.log(currentSystem);
     return this.http.post<any>(environment.apiEndpoint + 'get_incidents/', {
-      start_date: this.startDate.toISOString(),
-      end_date: this.endDate.toISOString(),
     }).pipe(
       map(incidents => incidents.data.filter(incident => incident.status !== 'Completed').filter(
         incident => incident.status !== 'Resolved'
@@ -66,8 +52,6 @@ export class IncidentService {
 
   searchIncidents(searchKey: string): Observable<any> {
     return this.http.post<any>(environment.apiEndpoint + 'get_incidents/', {
-      start_date: this.startDate.toISOString(),
-      end_date: this.endDate.toISOString(),
     }).pipe(
       map(incidents => incidents.data),
       // tap(incidents => console.log(incidents))
@@ -76,8 +60,6 @@ export class IncidentService {
 
   getRealtimeIncidents(): Observable<any> {
     return this.http.post<any>(environment.apiEndpoint + 'get_incidents/', {
-      start_date: this.startDate.toISOString(),
-      end_date: this.endDate.toISOString(),
     }).pipe(
       tap(incidents => console.log(incidents)),
       map(incidents => incidents.data.filter(incident => incident.type === 'Realtime')),
@@ -86,8 +68,6 @@ export class IncidentService {
 
   getScheduledIncidents(): Observable<Incident[]> {
     return this.http.post<any>(environment.apiEndpoint + 'get_incidents/', {
-      start_date: this.startDate.toISOString(),
-      end_date: this.endDate.toISOString(),
     }).pipe(
       map(incidents => incidents.data.filter(incident => incident.type === 'Scheduled')),
       // tap(incidents => console.log(incidents))

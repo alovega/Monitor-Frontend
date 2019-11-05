@@ -11,10 +11,10 @@ import { SystemService } from '../../../shared/system.service';
   styleUrls: ['./maintenance.component.scss']
 })
 export class MaintenanceComponent implements OnInit {
-  incidents$: Observable<Incident[]>;
   incidents: Incident[];
   systemId: string;
   currentSystem: any;
+  loading = true;
 
   constructor(
     private incidentService: IncidentService,
@@ -27,15 +27,16 @@ export class MaintenanceComponent implements OnInit {
   ngOnInit() {
     this.currentSystem = this.systemService.getCurrentSystem();
     this.systemId = this.currentSystem.id;
-    this.incidents$ = this.incidentService.getScheduledIncidents();
-    // this.showMaintenanceIncidents();
+    this.showMaintenanceIncidents();
   }
 
-  // public showMaintenanceIncidents() {
-  //   this.incidentService.getIncidents()
-  //   .subscribe((results: Incident[]) => {
-  //     this.incidents = results.filter(result => result.type === 'Scheduled');
-  //     });
-  // }
+  public showMaintenanceIncidents() {
+    return this.incidentService.getScheduledIncidents().subscribe(
+      (response) => {
+        this.incidents = response;
+        this.loading = false;
+      }
+    );
+  }
 
 }

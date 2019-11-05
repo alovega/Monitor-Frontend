@@ -25,7 +25,7 @@ export class UpdateHistoryComponent implements OnInit {
   currentSystem: any;
   users: any;
   escalationLevels: any;
-  isLoaded = false;
+  loading = true;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -55,9 +55,8 @@ export class UpdateHistoryComponent implements OnInit {
     this.lookupService.getEscalationLevel().subscribe(
       (levels) => this.escalationLevels = levels
     );
-    // this.showIncident();
+    this.showIncident();
     this.createUpdateIncidentForm();
-    this.isLoaded = true;
   }
 
   createUpdateIncidentForm() {
@@ -78,6 +77,7 @@ export class UpdateHistoryComponent implements OnInit {
           priorityLevel: this.incident.priority_level.toString(),
           incidentStatus: this.incident.status.toString(),
         });
+        this.loading = false;
       }
     );
   }
