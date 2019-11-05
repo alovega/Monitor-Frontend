@@ -26,6 +26,7 @@ import { ComponentLoaderComponent } from './component-loader/component-loader.co
 import { SideNavToggleService } from './side-nav-toggle.service';
 import { HttpWrapperService } from './helpers/http-wrapper.service';
 import { LoaderService } from './loader.service';
+import { EndpointStatusComponent } from './endpoint-status/endpoint-status.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import { LoaderService } from './loader.service';
     LoaderComponent,
     DeleteSwalComponent,
     LoginComponent,
-    ComponentLoaderComponent
+    ComponentLoaderComponent,
+    EndpointStatusComponent
   ],
   imports: [
     CommonModule,
@@ -67,7 +69,8 @@ import { LoaderService } from './loader.service';
     LoaderComponent,
     DeleteSwalComponent,
     LoginComponent,
-    ComponentLoaderComponent
+    ComponentLoaderComponent,
+    EndpointStatusComponent
   ],
   providers: [SystemService,
     {
