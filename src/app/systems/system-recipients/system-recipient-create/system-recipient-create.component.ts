@@ -4,10 +4,7 @@ import {SystemRecipientService} from '../system-recipient.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { of } from 'rxjs';
-import { EscalationLevel } from 'src/app/shared/models/escalation-level';
 import { State } from 'src/app/shared/models/state';
-import { User } from 'src/app/shared/models/user';
-import { NotificationType } from 'src/app/shared/models/notification-type';
 import { SystemRecipient } from '../system-recipient';
 
 
@@ -16,7 +13,7 @@ import { SystemRecipient } from '../system-recipient';
   templateUrl: './system-recipient-create.component.html',
   styleUrls: ['./system-recipient-create.component.scss']
 })
-export class SystemRecipientFormComponent implements OnInit {
+export class SystemRecipientCreateComponent implements OnInit {
 
   systemRecipientForm: FormGroup;
   submitted = false;
@@ -25,52 +22,46 @@ export class SystemRecipientFormComponent implements OnInit {
   currentSystemId: any;
   escalations: any;
   systemRecipient: SystemRecipient;
-  EscalationLevels: EscalationLevel;
-  NotificationTypes: NotificationType;
+  EscalationLevels: any;
+  NotificationTypes: any;
   Recipients: any;
   States: State;
 
   constructor(
     private fb: FormBuilder, private systemRecipientService: SystemRecipientService, public location: Location,
-    public activatedRoute: ActivatedRoute
+    public activatedRoute: ActivatedRoute, public router: Router
     ) {
     this.systemRecipient = new SystemRecipient();
-    of(this.getRecipients()).subscribe((data: any) => {
-      console.log(data);
-      this.Recipients = data;
-    });
-    of(this.getEscalationLevels()).subscribe((data: any) => {
-      this.EscalationLevels = data;
-    });
-    of(this.getNotificationTypes()).subscribe((data: any) => {
-      this.NotificationTypes = data;
-    });
+    of(this.getRecipients()).subscribe();
+    of(this.getEscalationLevels()).subscribe();
+    of(this.getNotificationTypes()).subscribe();
    }
 
   ngOnInit() {
-    this.getNotificationTypes();
     this.createForm();
+    console.log(this.escalationsArray);
   }
   createForm() {
     this.systemRecipientForm = this.fb.group({
         Recipient: ['', Validators.required],
-        escalations: this.fb.array([this.escalations])
+        escalations: this.fb.array([this.addEscalationGroup()])
     });
   }
-  get escalation() {
+  addEscalationGroup() {
     return this.fb.group({
       NotificationType: ['', Validators.required],
       EscalationLevel: ['', Validators.required]
     });
   }
-
-
   addEscalations() {
-    (this.systemRecipientForm.controls.escalations as FormArray).push(this.escalations);
+    this.escalationsArray.push(this.addEscalationGroup());
   }
 
   deleteEscalations(index) {
-    (this.systemRecipientForm.controls.escalations as FormArray).removeAt(index);
+    this.escalationsArray.removeAt(index);
+  }
+  get escalationsArray() {
+    return this.systemRecipientForm.get('escalations') as FormArray;
   }
 
   getEscalationLevels() {
@@ -79,11 +70,13 @@ export class SystemRecipientFormComponent implements OnInit {
       this.EscalationLevels = data;
     });
   }
-
+  public back(): void {
+    this.router.navigate(['system/system-recipients']);
+  }
   getNotificationTypes() {
     return this.systemRecipientService.getNotificationType().subscribe((data) => {
+      console.log(data);
       this.NotificationTypes = data;
-      console.log(this.NotificationTypes);
     });
   }
   getRecipients() {
@@ -98,11 +91,11 @@ export class SystemRecipientFormComponent implements OnInit {
     });
   }
   get f() { return this.systemRecipientForm.controls; }
+
   onSubmit() {
     this.submitted = true;
-    // stop here if form is invalid
-    if (this.systemRecipientForm.invalid) {
-        return;
+    if (this.systemRecipientForm.valid) {
+        console.log({...this.systemRecipientForm.value});
     }
   }
 

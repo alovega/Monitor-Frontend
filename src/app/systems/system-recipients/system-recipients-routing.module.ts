@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { SystemRecipientFormComponent } from './system-recipient-create/system-recipient-create.component';
+import { SystemRecipientCreateComponent } from './system-recipient-create/system-recipient-create.component';
 import { SystemRecipientUpdateComponent } from './system-recipient-update/system-recipient-update.component';
 import { SystemRecipientsComponent } from './system-recipients.component';
 import { SystemRecipientsViewComponent } from './system-recipients-view/system-recipients-view.component';
@@ -18,7 +18,7 @@ const routes: Routes = [{ path: '', component: SystemRecipientsComponent, canAct
       },
     ] },
     {path: 'system-recipient-update/:id', component: SystemRecipientUpdateComponent},
-    {path: 'system-recipient-create', component: SystemRecipientFormComponent}
+    {path: 'system-recipient-create', component: SystemRecipientCreateComponent}
   ];
 
 @NgModule({
