@@ -5,9 +5,10 @@ import { Incident } from '../incident';
 import { IncidentService } from '../incident.service';
 import Swal from 'sweetalert2';
 
-import { AbstractControl, FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
+import { FormArray, FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { SystemService } from 'src/app/shared/system.service';
 import { LookUpService } from 'src/app/shared/look-up.service';
+import { EndpointService } from '../../endpoint/endpoint.service';
 
 @Component({
   selector: 'hm-create-incident',
@@ -25,8 +26,7 @@ export class CreateIncidentComponent implements OnInit {
   systemId: string;
   currentSystem: any;
   incident: Incident;
-  users: any;
-
+  endpoints: any[];
   constructor(
     public router: Router,
     private activatedRoute: ActivatedRoute,
@@ -34,21 +34,25 @@ export class CreateIncidentComponent implements OnInit {
     private incidentService: IncidentService,
     private formBuilder: FormBuilder,
     private systemService: SystemService,
-    private lookupService: LookUpService
+    private lookupService: LookUpService,
+    private endpointService: EndpointService
     ) {
       this.incident = new Incident();
    }
 
   ngOnInit() {
-    this.lookupService.getUsers().subscribe(
-      (users) => this.users = users
-    );
     this.currentSystem = this.systemService.getCurrentSystem();
     this.systemId = this.currentSystem.id;
-    this.realtimeUrl = `/system/incidents/new/realtime`;
-    this.maintenanceUrl = `/system/incidents/new/maintenance`;
-    this.createRealtimeIncidentForm();
-    this.createScheduledMaintenanceForm();
+    this.realtimeUrl = '/system/incidents/new/realtime';
+    this.maintenanceUrl = '/system/incidents/new/maintenance';
+    this.endpointService.getEndpoints().subscribe(
+      (res) => {
+        this.endpoints = res;
+        console.log(this.endpoints);
+        this.createRealtimeIncidentForm();
+        this.createScheduledMaintenanceForm();
+      }
+    );
   }
 
   createRealtimeIncidentForm() {
@@ -58,7 +62,13 @@ export class CreateIncidentComponent implements OnInit {
       message: ['', Validators.required],
       escalationLevel: ['High', Validators.required],
       priorityLevel: ['1', Validators.required],
-      user: ['']
+      user: [''],
+      endpoints: new FormArray([])
+    });
+
+    this.endpoints.forEach((o, i) => {
+      const control = new FormControl(i === 0); // if first item set to true, else false
+      (this.realtimeIncidentForm.controls.endpoints as FormArray).push(control);
     });
   }
   // checkStartTime(control: AbstractControl) {
@@ -93,11 +103,15 @@ export class CreateIncidentComponent implements OnInit {
 
   onSubmitRealtime() {
     this.submitted = true;
+    console.log(this.realtimeIncidentForm);
     if (this.realtimeIncidentForm.invalid) {
       console.log('Invalid');
       return;
     }
 
+    const selectedPreferences = this.realtimeIncidentForm.value.endpoints
+    .map((checked, index) => checked ? this.endpoints[index].id : null)
+    .filter(value => value !== null);
     this.incident.incident_type = 'Realtime';
     console.log(this.incident);
     return this.incidentService.createIncident(this.incident).subscribe(
