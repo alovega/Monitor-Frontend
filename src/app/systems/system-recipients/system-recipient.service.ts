@@ -50,8 +50,8 @@ public getSmsSystemRecipients(systemId): Observable<any> {
   );
 }
 public addSystemRecipient(item): Observable<any> {
-  const systemRecipientUrl = environment.apiEndpoint + 'get_system_recipients/';
-  return this.http.post<any>(this.endpointUrl + '/create_recipients/', item, this.httpOptions).pipe(
+  const systemRecipientUrl = environment.apiEndpoint + 'create_system_recipient/';
+  return this.http.post<any>(systemRecipientUrl, item).pipe(
     retry(2),
     catchError(this.handleError)
   );

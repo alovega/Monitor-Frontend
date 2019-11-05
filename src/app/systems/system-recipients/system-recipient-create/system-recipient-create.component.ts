@@ -6,7 +6,7 @@ import { Location } from '@angular/common';
 import { of } from 'rxjs';
 import { State } from 'src/app/shared/models/state';
 import { SystemRecipient } from '../system-recipient';
-
+import { SystemService } from 'src/app/shared/system.service';
 
 @Component({
   selector: 'hm-recipient-form',
@@ -29,17 +29,19 @@ export class SystemRecipientCreateComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder, private systemRecipientService: SystemRecipientService, public location: Location,
-    public activatedRoute: ActivatedRoute, public router: Router
+    public activatedRoute: ActivatedRoute, public router: Router, private systemService: SystemService
     ) {
     this.systemRecipient = new SystemRecipient();
     of(this.getRecipients()).subscribe();
     of(this.getEscalationLevels()).subscribe();
     of(this.getNotificationTypes()).subscribe();
+    console.log(this.systemRecipient);
    }
 
   ngOnInit() {
     this.createForm();
-    console.log(this.escalationsArray);
+    this.currentSystem = this.systemService.getCurrentSystem();
+    this.currentSystemId = this.currentSystem.id;
   }
   createForm() {
     this.systemRecipientForm = this.fb.group({
@@ -100,14 +102,14 @@ export class SystemRecipientCreateComponent implements OnInit {
   }
 
   addRecipient() {
-    console.log(this.systemRecipient);
-    this.systemRecipient.systemId = this.currentSystemId;
-    console.log(this.systemRecipient);
-    this.systemRecipientService.addSystemRecipient(this.systemRecipient).subscribe(response => {
+    const data = this.systemRecipientForm.value;
+    data.systemId = this.currentSystemId;
+    console.log(data);
+    this.systemRecipientService.addSystemRecipient(data).subscribe(response => {
       if (response.code === '800.200.001') {
         this.systemRecipient = response.data;
-        console.log('message: %s, code: %s', response.message, response.code);
-        this.location.back();
+        console.log(this.systemRecipient)
+        console.log('message: %s, code: %s, data: %s', response.message, response.code, response.data);
       }
       console.log('error: %s, message: %s', response.code, response.message);
     });
