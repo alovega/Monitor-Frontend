@@ -1,15 +1,8 @@
-export class Recipient {
+export class SystemRecipient {
+    escalations: [];
+    systemRecipientId: string;
+    notificationTypeId: string;
     recipientId: string;
-    firstName: string;
-    lastName: string;
-    email: string;
-    phoneNumber: string;
     systemId: string;
-    state: string;
-    escalationLevel: string;
-    notificationType: string;
-    user: number;
-    dateCreated?: string;
-    dateModified?: string;
+    stateId: string;
 }
-

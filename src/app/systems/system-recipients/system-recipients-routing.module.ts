@@ -1,35 +1,24 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-
-import { SmsSystemRecipientsComponent } from './sms-system-recipients/sms-system-recipients.component';
-import { EmailSystemRecipientsComponent } from './email-system-recipients/email-system-recipients.component';
-import { SystemRecipientFormComponent } from './system-recipient-create/system-recipient-create.component';
+import { SystemRecipientCreateComponent } from './system-recipient-create/system-recipient-create.component';
 import { SystemRecipientUpdateComponent } from './system-recipient-update/system-recipient-update.component';
 import { SystemRecipientsComponent } from './system-recipients.component';
+import { SystemRecipientsViewComponent } from './system-recipients-view/system-recipients-view.component';
+import { AuthGuardService } from 'src/app/shared/helpers/auth-guard.service';
 
-const routes: Routes = [{ path: '', component: SystemRecipientsComponent, children: [
+const routes: Routes = [{ path: '', component: SystemRecipientsComponent, canActivateChild: [AuthGuardService], children: [
       {
         path: '',
         pathMatch: 'full',
-        redirectTo: 'email-recipient'
+        redirectTo: 'system-recipients'
       },
       {
-        path: 'email-recipient',
-        component: EmailSystemRecipientsComponent
-      },
-      {
-        path: 'sms-recipient',
-        component: SmsSystemRecipientsComponent
+        path: 'system-recipients',
+        component: SystemRecipientsViewComponent
       },
     ] },
-    {
-      path: 'recipient-create',
-      component: SystemRecipientFormComponent
-    },
-    {
-      path: 'recipient-update/:id',
-      component: SystemRecipientUpdateComponent
-    },
+    {path: 'system-recipient-update/:id', component: SystemRecipientUpdateComponent},
+    {path: 'system-recipient-create', component: SystemRecipientCreateComponent}
   ];
 
 @NgModule({

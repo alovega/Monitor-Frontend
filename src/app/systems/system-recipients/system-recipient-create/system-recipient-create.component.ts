@@ -1,91 +1,90 @@
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import {SystemRecipientService} from '../system-recipient.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import {Recipient} from '../system-recipient';
 import { Location } from '@angular/common';
 import { of } from 'rxjs';
-import { EscalationLevel } from 'src/app/shared/models/escalation-level';
 import { State } from 'src/app/shared/models/state';
-import { User } from 'src/app/shared/models/user';
-import { NotificationType } from 'src/app/shared/models/notification-type';
-
+import { SystemRecipient } from '../system-recipient';
+import { SystemService } from 'src/app/shared/system.service';
 
 @Component({
   selector: 'hm-recipient-form',
   templateUrl: './system-recipient-create.component.html',
   styleUrls: ['./system-recipient-create.component.scss']
 })
-export class SystemRecipientFormComponent implements OnInit {
+export class SystemRecipientCreateComponent implements OnInit {
 
-  recipientForm: FormGroup;
+  systemRecipientForm: FormGroup;
   submitted = false;
   currentSystem: any;
+  escalationIndex: any;
   currentSystemId: any;
-  recipient: Recipient;
-  EscalationLevels: EscalationLevel;
-  NotificationTypes: NotificationType;
-  Users: User;
+  escalations: any;
+  systemRecipient: SystemRecipient;
+  EscalationLevels: any;
+  NotificationTypes: any;
+  Recipients: any;
   States: State;
 
   constructor(
     private fb: FormBuilder, private systemRecipientService: SystemRecipientService, public location: Location,
-    public activatedRoute: ActivatedRoute
+    public activatedRoute: ActivatedRoute, public router: Router, private systemService: SystemService
     ) {
-    this.createForm();
-    this.recipient = new Recipient();
-    of(this.getEscalationLevels()).subscribe((data: any) => {
-      console.log(data);
-      this.EscalationLevels = data;
-    });
-    of(this.getNotificationTypes()).subscribe((data: any) => {
-      console.log(data);
-      this.NotificationTypes = data;
-    });
-    of(this.getUsers()).subscribe((data: any) => {
-      console.log(data);
-      this.Users = data;
-    });
-    of(this.getStates()).subscribe((data: any) => {
-      console.log(data);
-      this.States = data;
-    });
+    this.systemRecipient = new SystemRecipient();
+    of(this.getRecipients()).subscribe();
+    of(this.getEscalationLevels()).subscribe();
+    of(this.getNotificationTypes()).subscribe();
+    console.log(this.systemRecipient);
    }
 
   ngOnInit() {
-    this.activatedRoute.parent.params.subscribe(
-      (param: any) => {
-        this.currentSystemId = param['system-id'];
-        // console.log(this.currentSystemId);
-      });
+    this.createForm();
+    this.currentSystem = this.systemService.getCurrentSystem();
+    this.currentSystemId = this.currentSystem.id;
   }
   createForm() {
-    this.recipientForm = this.fb.group({
-        FirstName: ['', [Validators.required, Validators.minLength(3)]],
-        LastName: ['', [Validators.required, Validators.minLength(3)]],
-        Email: ['', [Validators.required, Validators.email]],
-        PhoneNumber: ['', [Validators.required, Validators.minLength(10)]],
-        User: ['', Validators.required],
-        NotificationType: ['', Validators.required],
-        EscalationLevel: ['', Validators.required],
-        State: ['', Validators.required]
+    this.systemRecipientForm = this.fb.group({
+        Recipient: ['', Validators.required],
+        escalations: this.fb.array([this.addEscalationGroup()])
     });
+  }
+  addEscalationGroup() {
+    return this.fb.group({
+      NotificationType: ['', Validators.required],
+      EscalationLevel: ['', Validators.required]
+    });
+  }
+  addEscalations() {
+    this.escalationsArray.push(this.addEscalationGroup());
+  }
+
+  deleteEscalations(index) {
+    this.escalationsArray.removeAt(index);
+  }
+  get escalationsArray() {
+    return this.systemRecipientForm.get('escalations') as FormArray;
   }
 
   getEscalationLevels() {
-    this.systemRecipientService.getLevels().subscribe((data) => {
+    return this.systemRecipientService.getLevels().subscribe((data) => {
+      console.log(data);
       this.EscalationLevels = data;
     });
   }
-
+  public back(): void {
+    this.router.navigate(['system/system-recipients']);
+  }
   getNotificationTypes() {
-    this.systemRecipientService.getNotificationType().subscribe((data) => {
+    return this.systemRecipientService.getNotificationType().subscribe((data) => {
+      console.log(data);
       this.NotificationTypes = data;
     });
   }
-  getUsers() {
-    this.systemRecipientService.getUsers().subscribe((data) => {
-      this.Users = data;
+  getRecipients() {
+    return this.systemRecipientService.getRecipients().subscribe((data) => {
+      console.log(data);
+      this.Recipients = data;
     });
   }
   getStates() {
@@ -93,23 +92,25 @@ export class SystemRecipientFormComponent implements OnInit {
       this.States = data;
     });
   }
-  get f() { return this.recipientForm.controls; }
+  get f() { return this.systemRecipientForm.controls; }
+
   onSubmit() {
     this.submitted = true;
-    // stop here if form is invalid
-    if (this.recipientForm.invalid) {
-        return;
+    if (this.systemRecipientForm.valid) {
+        console.log({...this.systemRecipientForm.value});
     }
   }
 
   addRecipient() {
-    this.recipient.systemId = this.currentSystemId;
-    console.log(this.recipient);
-    this.systemRecipientService.addSystemRecipient(this.recipient).subscribe(response => {
+    const data = this.systemRecipientForm.value;
+    data.systemId = this.currentSystemId;
+    console.log(data);
+    this.systemRecipientService.addSystemRecipient(data).subscribe(response => {
       if (response.code === '800.200.001') {
-        this.recipient = response.data;
-        console.log('message: %s, code: %s', response.message, response.code);
-        this.location.back();
+        this.systemRecipient = response.data;
+        console.log(this.systemRecipient);
+        console.log(response);
+        this.back();
       }
       console.log('error: %s, message: %s', response.code, response.message);
     });

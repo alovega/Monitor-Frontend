@@ -34,11 +34,12 @@ constructor(private http: HttpClient) { }
     const user = JSON.parse(localStorage.getItem('currentUser'));
     const getUsersUrl = environment.apiEndpoint + 'get_logged_in_user_details/';
     return this.http.post<any>(getUsersUrl, {token: JSON.stringify(user.token)}).pipe(
-      map(data => data.data)
+      tap(res => console.log(res)),
+      map(response => response.data)
     );
   }
   updateLoggedInUser(data): Observable<any> {
-    const getUsersUrl = environment.apiEndpoint + 'edit_logged_in_user_details/';
+    const getUsersUrl = environment.apiEndpoint + 'edit_logged_in_user/';
     return this.http.post<any>(getUsersUrl, data, this.httpOptions).pipe(
       retry(2),
       catchError(this.handleError)

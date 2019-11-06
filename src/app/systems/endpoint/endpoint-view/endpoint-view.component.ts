@@ -44,7 +44,6 @@ export class EndpointViewComponent implements OnInit, AfterViewInit {
 
     this.endpointService.getEndpoints().subscribe(
       (data) => {
-        console.log(data);
         this.elements = data;
         this.mdbTable.setDataSource(this.elements);
         this.elements = this.mdbTable.getDataSource();

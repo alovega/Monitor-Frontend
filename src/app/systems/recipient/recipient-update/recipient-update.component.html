@@ -16,7 +16,7 @@
             <label style="position: relative; right: 185px;">Phone Number</label>
             <input type="text" id="defaultContactFormPhoneNumber" class="form-control mb-4" placeholder="Phone Number"
             [ngClass]="{ 'is-invalid': submitted && f.EnpointName.errors }" formControlName="PhoneNumber" 
-              [(ngModel)]="data[0].phoneNumber" >
+              [(ngModel)]="data.phoneNumber" >
               <div *ngIf="updateForm.controls['PhoneNumber'].invalid && (updateForm.controls['PhoneNumber'].dirty || updateForm.controls['PhoneNumber'].touched)" class="invalid-feedback">
                 <div *ngIf="updateForm.controls['PhoneNumber'].errors.required">
                     Phone Number is required.
@@ -27,10 +27,10 @@
         <div class="col">
             <!-- State -->
             <label style="position: relative; right: 215px;">State</label>
-            <select class="browser-default custom-select form-control mb-4" formControlName="State" [(ngModel)]="data[0].stateId">
+            <select class="browser-default custom-select form-control mb-4" formControlName="State" [(ngModel)]="data.stateId">
               <option value></option>
-              <option *ngFor="let type of states; let i = index" [value]="states[i].id">
-                {{states[i].name}}
+              <option *ngFor="let type of states; let i = index" [value]="type.id">
+                {{type.name}}
               </option>
             </select>
             <div *ngIf="updateForm.controls['State'].invalid && (updateForm.controls['State'].dirty || updateForm.controls['State'].touched)" class="invalid-feedback">

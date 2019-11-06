@@ -7,7 +7,7 @@
                     <label>First Name</label>
                     <input type="text" id="defaultContactFirstName" class="form-control mb-4" placeholder="First Name"
                     [ngClass]="{ 'is-invalid': submitted && f.FirstName.errors }" formControlName="FirstName" 
-                      [(ngModel)]="data[0].firstName" >
+                      [(ngModel)]="data.firstName" >
                       <div *ngIf="profileUpdateForm.controls['FirstName'].invalid && (profileUpdateForm.controls['FirstName'].dirty || profileUpdateForm.controls['FirstName'].touched)" class="invalid-feedback">
                         <div *ngIf="profileUpdateForm.controls['FirstName'].errors.required">
                             First name is required.
@@ -20,7 +20,7 @@
                         <label>Last Name</label>
                         <input type="text" id="defaultContactFormLastName" class="form-control mb-4" placeholder="Last Name"
                         [ngClass]="{ 'is-invalid': submitted && f.LastName.errors }" formControlName="LastName" 
-                            [(ngModel)]="data[0].lastName" >
+                            [(ngModel)]="data.lastName" >
                         <div *ngIf="profileUpdateForm.controls['LastName'].invalid && (profileUpdateForm.controls['LastName'].dirty || profileUpdateForm.controls['LastName'].touched)" class="invalid-feedback">
                             <div *ngIf="profileUpdateForm.controls['LastName'].errors.required">
                                 Last Name is required.
@@ -36,7 +36,7 @@
                     <label>Username</label>
                     <input type="text" id="defaultContactFormUserName" class="form-control mb-4" placeholder="username"
                         [ngClass]="{ 'is-invalid': submitted && f.UserName.errors }" formControlName="Username" 
-                        [(ngModel)]="data[0].userName" >
+                        [(ngModel)]="data.userName" >
                     <div *ngIf="profileUpdateForm.controls['Username'].invalid && (profileUpdateForm.controls['userName'].dirty || profileUpdateForm.controls['Username'].touched)" class="invalid-feedback">
                         <div *ngIf="profileUpdateForm.controls['UserName'].errors.required">
                             Username is required.
@@ -49,7 +49,7 @@
                     <label>Email</label>
                     <input type="text" id="defaultContactFormEmail" class="form-control mb-4" placeholder="Email"
                     [ngClass]="{ 'is-invalid': submitted && f.Email.errors }" formControlName="Email" 
-                        [(ngModel)]="data[0].email" >
+                        [(ngModel)]="data.email" >
                         <div *ngIf="profileUpdateForm.controls['Email'].invalid && (profileUpdateForm.controls['Email'].dirty || profileUpdateForm.controls['Email'].touched)" class="invalid-feedback">
                             <div *ngIf="profileUpdateForm.controls['Email'].errors.required">
                                 Email is required.
@@ -66,7 +66,7 @@
                     <label>Phone Number</label>
                     <input type="text" id="defaultContactFormPhoneNumber" class="form-control mb-4" placeholder="Phone Number"
                         [ngClass]="{ 'is-invalid': submitted && f.EnpointName.errors }" formControlName="PhoneNumber" 
-                        [(ngModel)]="data[0].phoneNumber" >
+                        [(ngModel)]="data.phoneNumber" >
                     <div *ngIf="profileUpdateForm.controls['PhoneNumber'].invalid && (profileUpdateForm.controls['PhoneNumber'].dirty || profileUpdateForm.controls['PhoneNumber'].touched)" class="invalid-feedback">
                         <div *ngIf="profileUpdateForm.controls['PhoneNumber'].errors.required">
                             Phone Number is required.

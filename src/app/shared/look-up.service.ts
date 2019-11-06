@@ -3,8 +3,6 @@ import {throwError} from 'rxjs';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { catchError, map, retry} from 'rxjs/operators';
 
-import { System } from './models/system';
-
 
 @Injectable({
   providedIn: 'root'
@@ -32,18 +30,20 @@ export class LookUpService {
   // return an observable with a user-facing error message
   return throwError(
     'Something bad happened; please try again later.');
-  };
-  public getSystems(){
+  }
+  public getSystems() {
 
     return this.http.get<any>(this.Url).pipe(
-      map(response => response.data.systems,retry(2)),
+      map(response => response.data.systems),
+      retry(2),
       catchError(this.handleError)
     );
   }
   public getStates() {
 
     return this.http.get<any>(this.Url).pipe(
-      map(response => response.data.states.filter( state => state['name'] === 'Active'|| state['name'] === 'Disabled' ),retry(2)),
+      map(response => response.data.states.filter( state => state.name === 'Active' || state.name === 'Disabled')),
+      retry(2),
       catchError(this.handleError)
     );
   }
@@ -51,42 +51,56 @@ export class LookUpService {
   public getEndpointType() {
 
     return this.http.get<any>(this.Url).pipe(
-      map(response => response.data.endpoint_types, retry(2)),
+      map(response => response.data.endpoint_types),
+      retry(2),
       catchError(this.handleError)
     );
   }
-  public getEscalationLevel(){
+  public getEscalationLevel() {
 
     return this.http.get<any>(this.Url).pipe(
-      map(response => response.data.escalation_levels,retry(2)),
+      map(response => response.data.escalation_levels),
+      retry(2),
       catchError(this.handleError)
     );
   }
-  public getNotificationType(){
+  public getNotificationType() {
 
     return this.http.get<any>(this.Url).pipe(
-      map(response => response.data.notification_types,retry(2)),
+      map(response => response.data.notification_types),
+      retry(2),
       catchError(this.handleError)
     );
   }
-  public getEventType(){
+  public getEventType() {
 
     return this.http.get<any>(this.Url).pipe(
-      map(response => response.data.event_types,retry(2)),
+      map(response => response.data.event_types),
+      retry(2),
       catchError(this.handleError)
     );
   }
-  public getUsers(){
+  public getUsers() {
 
     return this.http.get<any>(this.Url).pipe(
-      map(response => response.data.users,retry(2)),
+      map(response => response.data.users),
+      retry(2),
       catchError(this.handleError)
     );
   }
-  public getIncidentType(){
+  public getIncidentType() {
 
     return this.http.get<any>(this.Url).pipe(
-      map(response => response.data.incident_types,retry(2)),
+      map(response => response.data.incident_types),
+      retry(2),
+      catchError(this.handleError)
+    );
+  }
+  public getRecipients() {
+
+    return this.http.get<any>(this.Url).pipe(
+      map(response => response.data.recipients),
+      retry(2),
       catchError(this.handleError)
     );
   }
