@@ -1,7 +1,11 @@
 import { Injectable } from '@angular/core';
-import {throwError} from 'rxjs';
+import {  throwError } from 'rxjs';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
-import { catchError, map, retry} from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { catchError, map, retry, tap} from 'rxjs/operators';
+
+import { environment } from '../../environments/environment';
+import { System } from './models/system';
 
 
 @Injectable({
@@ -102,6 +106,13 @@ export class LookUpService {
       map(response => response.data.recipients),
       retry(2),
       catchError(this.handleError)
+    );
+  }
+
+  public getEndpointStates(): Observable<any> {
+    return this.http.post(environment.apiEndpoint + 'get_lookup', {}).pipe(
+      tap(res => console.log(res)),
+      map((response: any) => response.data.endpoint_states)
     );
   }
 }

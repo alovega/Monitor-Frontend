@@ -5,9 +5,10 @@ import { Incident } from '../incident';
 import { IncidentService } from '../incident.service';
 import Swal from 'sweetalert2';
 
-import { AbstractControl, FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { SystemService } from 'src/app/shared/system.service';
 import { LookUpService } from 'src/app/shared/look-up.service';
+import { EndpointService } from '../../endpoint/endpoint.service';
 
 @Component({
   selector: 'hm-create-incident',
@@ -17,6 +18,7 @@ import { LookUpService } from 'src/app/shared/look-up.service';
 export class CreateIncidentComponent implements OnInit {
   realtimeIncidentForm: FormGroup;
   scheduledMaintenanceForm: FormGroup;
+  affectedEndpoints: FormGroup;
   submitted = false;
   datePicker: any;
   timePicker: any;
@@ -25,8 +27,6 @@ export class CreateIncidentComponent implements OnInit {
   systemId: string;
   currentSystem: any;
   incident: Incident;
-  users: any;
-
   constructor(
     public router: Router,
     private activatedRoute: ActivatedRoute,
@@ -34,19 +34,17 @@ export class CreateIncidentComponent implements OnInit {
     private incidentService: IncidentService,
     private formBuilder: FormBuilder,
     private systemService: SystemService,
-    private lookupService: LookUpService
+    private lookupService: LookUpService,
+    private endpointService: EndpointService
     ) {
       this.incident = new Incident();
    }
 
   ngOnInit() {
-    this.lookupService.getUsers().subscribe(
-      (users) => this.users = users
-    );
     this.currentSystem = this.systemService.getCurrentSystem();
     this.systemId = this.currentSystem.id;
-    this.realtimeUrl = `/system/incidents/new/realtime`;
-    this.maintenanceUrl = `/system/incidents/new/maintenance`;
+    this.realtimeUrl = '/system/incidents/new/realtime';
+    this.maintenanceUrl = '/system/incidents/new/maintenance';
     this.createRealtimeIncidentForm();
     this.createScheduledMaintenanceForm();
   }
@@ -61,6 +59,7 @@ export class CreateIncidentComponent implements OnInit {
       user: ['']
     });
   }
+
   // checkStartTime(control: AbstractControl) {
   //   let hour = 10;
   //   let minute = 15;
@@ -97,14 +96,12 @@ export class CreateIncidentComponent implements OnInit {
       console.log('Invalid');
       return;
     }
-
     this.incident.incident_type = 'Realtime';
-    console.log(this.incident);
     return this.incidentService.createIncident(this.incident).subscribe(
       ((result: any) => {
         if (result.code === '800.200.001') {
           Swal.fire({
-            title: 'Success',
+            title: 'Incident creation success',
             text: 'Realtime incident created successfully!',
             type: 'success',
           }).then(() => {
@@ -147,12 +144,11 @@ export class CreateIncidentComponent implements OnInit {
     this.incident.incident_type = 'Scheduled';
     this.incident.scheduled_for = scheduledFor;
     this.incident.scheduled_until = scheduledUntil;
-    console.log(this.incident);
     return this.incidentService.createIncident(this.incident).subscribe(
       ((result: any) => {
         if (result.code === '800.200.001') {
           Swal.fire({
-            title: 'Success',
+            title: 'Incident creation success',
             text: 'Scheduled incident created successfully!',
             type: 'success',
           }).then(() => {
