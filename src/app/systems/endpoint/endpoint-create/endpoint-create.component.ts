@@ -9,6 +9,7 @@ import { System } from 'src/app/shared/models/system';
 import { EndpointType } from 'src/app/shared/models/endpoint-type';
 import { of } from 'rxjs';
 import { SystemService } from 'src/app/shared/system.service';
+import { ToastrService } from 'ngx-toastr';
 
 
 @Component({
@@ -30,6 +31,7 @@ export class EndpointFormComponent implements OnInit {
     private endpointService: EndpointService,
     private systemService: SystemService,
     private location: Location,
+    private toastr: ToastrService,
     private router: Router ) {
     this.createForm();
     this.data = new Endpoint();
@@ -84,10 +86,10 @@ export class EndpointFormComponent implements OnInit {
       if (response.code === '800.200.001') {
         this.data = response.data;
         console.log(this.data);
-        console.log('message: %s, code: %s', response.message, response.code);
+        this.toastr.success('message: %s, code: %s', response.message, response.code);
         this.location.back();
       } else {
-        console.log('error: %s, message: %s', response.code, response.message);
+        this.toastr.error('error: %s, message: %s', response.code, response.message);
       }
     });
   }

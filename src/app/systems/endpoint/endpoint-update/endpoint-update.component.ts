@@ -8,6 +8,7 @@ import { Component, OnInit } from '@angular/core';
 import { State } from 'src/app/shared/models/state';
 import { EndpointType } from 'src/app/shared/models/endpoint-type';
 import { SystemService } from 'src/app/shared/system.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'hm-endpoint-update',
@@ -29,6 +30,7 @@ export class EndpointUpdateComponent implements OnInit {
     public activatedRoute: ActivatedRoute,
     private systemService: SystemService,
     public endpointService: EndpointService,
+    private toastr: ToastrService,
     private location: Location) {
       this.data = new Endpoint();
       this.createForm();
@@ -46,7 +48,7 @@ export class EndpointUpdateComponent implements OnInit {
       if (response.code === '800.200.001') {
         this.data = response.data;
         console.log(this.data);
-        console.log('successfully fetched endpoint %s', response.code);
+        this.toastr.success('successfully fetched endpoint %s', response.code);
       } else {
         console.log('error %s, message: %s', response.code, response.message);
       }
@@ -81,10 +83,10 @@ update() {
   this.data.endpoint_id = this.endpointId;
   this.endpointService.updateItem(this.data).subscribe(response => {
     if (response.code === '800.200.001') {
-      console.log('message: %s, code: %s', response.message, response.code);
+      this.toastr.success('message: %s, code: %s', response.message, response.code);
       this.location.back();
     } else {
-      console.log('message: %s, code: %s', response.message, response.code);
+      this.toastr.error('message: %s, code: %s', response.message, response.code);
     }
   });
 }
