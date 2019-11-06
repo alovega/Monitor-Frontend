@@ -5,6 +5,7 @@ import { Location } from '@angular/common';
 
 import { EscalationRule } from '../escalation-rule';
 import { EscalationRuleService } from '../escalation-rule.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'hm-create-rule',
@@ -21,7 +22,8 @@ export class CreateRuleComponent implements OnInit {
     private formBuilder: FormBuilder,
     private ruleService: EscalationRuleService,
     private activatedRoute: ActivatedRoute,
-    private location: Location) {
+    private location: Location,
+    private toastr: ToastrService) {
 
     this.escalationRule = new EscalationRule();
     this.ruleId = this.activatedRoute.snapshot.params['rule-id'];
@@ -56,13 +58,14 @@ export class CreateRuleComponent implements OnInit {
     this.escalationRule.escalation_level = this.escalationRule.escalation;
     this.escalationRule.status = 'Active';
     this.escalationRule.state = this.escalationRule.status;
-    console.log(this.escalationRule);
 
     this.ruleService.createRule(this.escalationRule).subscribe(
       response => {
         if (response.code === '800.200.001') {
-          console.log(this.escalationRule);
+          this.toastr.success('Escalation rule was created successfully', 'Create rule success');
           this.location.back();
+        } else {
+          this.toastr.error('Escalation rule could not be created', 'Create rule error');
         }
       });
   }

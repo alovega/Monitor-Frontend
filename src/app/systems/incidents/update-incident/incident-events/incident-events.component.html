@@ -1,5 +1,5 @@
 <!-- Grid Row -->
-<div class="row mt-5 wow animated fadeIn" data-wow-delay="0.1s">
+<div class="row mt-5 wow animated fadeIn">
   <!-- Grid column -->
   <div class="col-lg-12 col-md-12 text-left">
       <mdb-card>
@@ -11,6 +11,9 @@
           </tr>
           </thead>
           <tbody *ngIf="events.length; else noData">
+          <div [ngClass] = "{'d-none': !loading}">
+            <hm-loader></hm-loader>
+          </div>
           <tr *ngFor="let event of events; let i = index">
           <th *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex"
               scope="row">{{event.eventtype}}</th>
@@ -41,7 +44,6 @@
       </mdb-card>
   </div>
 </div>
-
 
 <!-- <mdb-card>
 <table mdbTable id="rules-list">

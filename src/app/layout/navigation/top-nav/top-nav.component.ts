@@ -109,15 +109,14 @@ export class TopNavComponent implements OnInit, OnChanges {
 
     this.systemService.createSystem(this.newSystem).subscribe(
       (response => {
-        console.log(response);
         this.submitted = false;
-        this.closeBtn.nativeElement.click();
         if (response) {
           this.changeSystem(response.id);
-          this.toastr.success('System created successfully', 'Success !');
-          this.router.navigate(['/system/quick-setup']);
+          this.closeBtn.nativeElement.click();
+          this.toastr.success('System creation success !', 'System created successfully');
+          this.router.navigate(['/system/quick-setup/endpoints']);
         } else {
-          this.toastr.success('System could not be created', 'Error !');
+          this.toastr.success('System creation error !', 'System could not be created');
         }
       })
     );

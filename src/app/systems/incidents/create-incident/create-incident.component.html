@@ -18,7 +18,7 @@
           <form [formGroup]="realtimeIncidentForm" (ngSubmit)="onSubmitRealtime()" class="text-center">
 
             <div class="form-group mb-4 row">
-              <div class="col-md-4">
+              <div class="col-md-6">
                 <!-- Name -->
                 <label class="form-label">Incident Name</label>
                 <input [ngClass]="{ 'is-invalid': submitted && realtimeIncidentForm.controls.incidentName.errors }" type="text" 
@@ -32,7 +32,7 @@
               </div>
 
               <!-- Incident Status -->
-              <div class="col-md-4">
+              <div class="col-md-6">
                   <label class="form-label">Incident status</label>
                   <select formControlName="incidentStatus" [ngClass]="{ 'is-invalid': submitted && realtimeIncidentForm.controls.incidentStatus.errors}"
                   class="grey lighten-5 browser-default custom-select form-control" [(ngModel)] = "incident.state">
@@ -44,21 +44,6 @@
                   <!-- Incident status validation errors -->
                   <div *ngIf="submitted && realtimeIncidentForm.controls.incidentStatus.errors" class="invalid-feedback">
                       <div *ngIf="realtimeIncidentForm.controls.incidentStatus.errors.required">Incident status is required</div>
-                  </div>
-              </div>
-
-              <div class="col-md-4">
-                <!-- Escalation Levels -->
-                <label class="form-label">Escalation level</label>
-                <select formControlName="escalationLevel" class="grey lighten-5 browser-default custom-select form-control inline-rule"
-                [ngClass]="{ 'is-invalid': submitted && realtimeIncidentForm.controls.escalationLevel.errors }" [(ngModel)] = "incident.escalation_level">
-                    <option selected value="High">High</option>
-                    <option value="Medium">Medium</option>
-                    <option value="Low">Low</option>
-                </select>
-                  <!-- Escalation level validation errors -->
-                  <div *ngIf="submitted && realtimeIncidentForm.controls.escalationLevel.errors" class="invalid-feedback">
-                      <div *ngIf="realtimeIncidentForm.controls.escalationLevel.errors.required">Escalation Level is required</div>
                   </div>
               </div>
             </div>
@@ -73,8 +58,7 @@
                       <option value="3">Level 3</option>
                       <option value="4">Level 4</option>
                       <option value="5">Level 5</option>
-                    </select>  
-                    
+                    </select>
                     <!-- Priority level validation errors -->
                     <div *ngIf="submitted && realtimeIncidentForm.controls.priorityLevel.errors" class="invalid-feedback">
                         <div *ngIf="realtimeIncidentForm.controls.priorityLevel.errors.required">Priority Level is required</div>
@@ -82,11 +66,18 @@
                 </div>
 
                 <div class="col-md-6">
-                    <label class="form-label" for="">Assigned user</label>
-                    <select formControlName="user" [ngClass]="{ 'is-invalid': submitted && realtimeIncidentForm.controls.user.errors }" 
-                    class="grey lighten-5 browser-default custom-select" [(ngModel)] = "incident.user">
-                      <option selected [value]="user.id" *ngFor="let user of users">{{user.username}}</option>
-                    </select>  
+                  <!-- Escalation Levels -->
+                  <label class="form-label">Escalation level</label>
+                  <select formControlName="escalationLevel" class="grey lighten-5 browser-default custom-select form-control inline-rule"
+                  [ngClass]="{ 'is-invalid': submitted && realtimeIncidentForm.controls.escalationLevel.errors }" [(ngModel)] = "incident.escalation_level">
+                      <option selected value="High">High</option>
+                      <option value="Medium">Medium</option>
+                      <option value="Low">Low</option>
+                  </select>
+                    <!-- Escalation level validation errors -->
+                    <div *ngIf="submitted && realtimeIncidentForm.controls.escalationLevel.errors" class="invalid-feedback">
+                        <div *ngIf="realtimeIncidentForm.controls.escalationLevel.errors.required">Escalation Level is required</div>
+                    </div>
                 </div>
             </div>
 
@@ -98,11 +89,10 @@
               [(ngModel)] = "incident.description">
               </textarea>
               <!-- Message errors -->
-              <div *ngIf="submitted && realtimeIncidentForm.controls.message.errors" class="invalid-feedback">
-                  <div *ngIf="realtimeIncidentForm.controls.message.errors.required">Incident message is required</div>
+              <div *ngIf="submitted && realtimeIncidentForm.controls['message'].errors" class="invalid-feedback">
+                  <div *ngIf="realtimeIncidentForm.controls['message'].errors.required">Incident message is required</div>
               </div>
             </div>
-
             <!-- Create button -->
             <div class="create-button">
                 <button type="submit" mdbBtn mdbWavesEffect class="float-right" color="primary" size="md">Create</button>

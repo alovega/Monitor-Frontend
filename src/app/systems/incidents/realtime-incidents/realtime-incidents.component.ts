@@ -11,9 +11,10 @@ import { SystemService } from '../../../shared/system.service';
   styleUrls: ['./realtime-incidents.component.scss']
 })
 export class RealtimeIncidentsComponent implements OnInit {
-  incidents$: Observable<Incident[]>;
+  incidents: Incident[];
   systemId: string;
   currentSystem: any;
+  loading = true;
 
   constructor(
     private incidentService: IncidentService,
@@ -24,15 +25,15 @@ export class RealtimeIncidentsComponent implements OnInit {
   ngOnInit() {
     this.currentSystem = this.systemService.getCurrentSystem();
     this.systemId = this.currentSystem.id;
-    this.incidents$ = this.incidentService.getRealtimeIncidents();
+    this.showRealtimeIncidents();
   }
 
-  // TODO Replace service call with getRealtimeIncidents
-  // public showRealtimeIncidents() {
-  //   return this.incidentService.getIncidents()
-  //   .subscribe((results: any[]) => {
-  //     console.log(results);
-  //     this.incidents$ = results.filter(result => result.type === 'Realtime');
-  //   });
-  // }
+  public showRealtimeIncidents() {
+    return this.incidentService.getRealtimeIncidents().subscribe(
+      (response) => {
+        this.incidents = response;
+        this.loading = false;
+      }
+    );
+  }
 }

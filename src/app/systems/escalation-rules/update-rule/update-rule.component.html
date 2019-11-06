@@ -30,7 +30,7 @@
 
                     <!-- Escalation Levels -->
                     <select formControlName="escalationLevel" class="grey lighten-5 browser-default custom-select form-control inline-rule"
-                    [ngClass]="{ 'is-invalid': submitted && form.escalationLevel.errors }" [(ngModel)] = "escalationRule.escalation_level">
+                    [ngClass]="{ 'is-invalid': submitted && form.escalationLevel.errors }" [(ngModel)] = "escalationRule.escalation">
                         <option selected value="High">High</option>
                         <option value="Medium">Medium</option>
                         <option value="Low">Low</option>

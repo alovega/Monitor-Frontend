@@ -21,7 +21,7 @@
     <button data-toggle="modal" data-target="#editEndpoint" (click)="editModal.show();" class="d-none" #openBtn> </button>
     <div class="col-md-6">
         <ul class="endpoints-list" *ngIf="escalationRules.length; else noData" >
-            <li class="endpoint-item" *ngFor="let rule of escalationRules" (click)="editRule(rule.id)">
+            <li class="endpoint-item" *ngFor="let rule of escalationRules" (click)="editRule(rule.rule_id)">
                <span>
                 <mdb-icon fas icon="check-circle" class="green-text pr-1 pl-1"></mdb-icon>
                </span> {{rule.name}}
@@ -151,7 +151,7 @@
                     <label class="form-label">Escalation level</label>
                     <select formControlName="escalationLevel" class="grey lighten-5 browser-default custom-select form-control inline-rule"
                     [ngClass]="{ 'is-invalid': submitted && editRuleForm.controls.escalationLevel.errors }"
-                    [(ngModel)] = "escalationRule.escalation_level">
+                    [(ngModel)] = "escalationRule.escalation">
                         <option *ngFor="let level of escalationLevels" selected value="{{level.name}}">{{level.name}}</option>
                     </select>
                 </div>

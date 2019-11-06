@@ -13,9 +13,10 @@ import { SystemService } from '../../../shared/system.service';
 })
 
 export class OpenIncidentsComponent implements OnInit {
-  incidents$: Observable<Incident[]>;
+  incidents: Incident[];
   currentSystem: any;
   currentSystemId: any;
+  loading = true;
 
   constructor(
     private systemService: SystemService,
@@ -26,13 +27,15 @@ export class OpenIncidentsComponent implements OnInit {
   ngOnInit() {
     this.currentSystem = this.systemService.getCurrentSystem();
     this.currentSystemId = this.currentSystem.id;
-    this.incidents$ = this.incidentService.getOpenIncidents(this.currentSystem);
+    this.showIncidents();
   }
-  // showIncidents() {
-  //   this.incidentService.getIncidents()
-  //   .subscribe((results: Incident[]) => {
-  //     this.incidents = results.filter(result => result.status !== 'Completed' && result.status !== 'Resolved' );
-  //   });
-  // }
+  showIncidents() {
+    this.incidentService.getOpenIncidents(this.currentSystem).subscribe(
+      (results) => {
+        this.incidents = results;
+        this.loading = false;
+      }
+    );
+  }
 
 }
