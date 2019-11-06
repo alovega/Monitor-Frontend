@@ -78,8 +78,8 @@ onReset() {
     this.updateForm.reset();
 }
 update() {
-  this.data[0].endpoint_id = this.endpointId;
-  this.endpointService.updateItem(this.data[0]).subscribe(response => {
+  this.data.endpoint_id = this.endpointId;
+  this.endpointService.updateItem(this.data).subscribe(response => {
     if (response.code === '800.200.001') {
       console.log('message: %s, code: %s', response.message, response.code);
       this.location.back();

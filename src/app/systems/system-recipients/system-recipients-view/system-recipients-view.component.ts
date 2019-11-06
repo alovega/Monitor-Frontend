@@ -23,6 +23,7 @@ export class SystemRecipientsViewComponent implements OnInit, AfterViewInit {
   escalationLevelId: any;
   EscalationLevels: any;
   elements: any;
+  all: any;
   escalations: any;
   previous: any = [];
   headElements: string[] = ['userName', 'escalationLevel', 'notificationType', 'status', 'dateCreated', 'action'];
@@ -47,20 +48,36 @@ export class SystemRecipientsViewComponent implements OnInit, AfterViewInit {
     console.log(this.level);
     this.currentSystem = this.systemService.getCurrentSystem();
     this.currentSystemId = this.currentSystem.id;
-    this.getEscalationLevels();
-  }
-  ngAfterViewInit() {
-  }
-
-  changeLevel(level: any) {
-    this.currentSystem = this.systemService.getCurrentSystem();
-    const currentSystemId = this.currentSystem.id;
-    this.systemRecipientService.getSystemRecipients(currentSystemId, level).subscribe(response => {
+    this.systemRecipientService.getSystemRecipients(this.currentSystemId).subscribe(response => {
       this.elements = response;
       this.mdbTable.setDataSource(this.elements);
       this.elements = this.mdbTable.getDataSource();
       this.previous = this.mdbTable.getDataSource();
     });
+    this.getEscalationLevels();
+  }
+  ngAfterViewInit() {
+  }
+
+  filterSystemRecipients(level: any) {
+    if (level === 'all') {
+      this.systemRecipientService.getSystemRecipients(this.currentSystemId).subscribe(response => {
+      console.log(response);
+      this.elements = response;
+      this.mdbTable.setDataSource(this.elements);
+      this.elements = this.mdbTable.getDataSource();
+      this.previous = this.mdbTable.getDataSource();
+      });
+    } else {
+      this.systemRecipientService.getSystemRecipients(this.currentSystemId).subscribe(response => {
+        response = response.filter((item) => item.escalationLevel === level);
+        console.log(response);
+        this.elements = response;
+        this.mdbTable.setDataSource(this.elements);
+        this.elements = this.mdbTable.getDataSource();
+        this.previous = this.mdbTable.getDataSource();
+      });
+    }
   }
   searchItems() {
     const prev = this.mdbTable.getDataSource();
@@ -81,8 +98,8 @@ export class SystemRecipientsViewComponent implements OnInit, AfterViewInit {
       this.EscalationLevels = data;
     });
   }
-   delete(recipientId) {
-    console.log(recipientId);
+   delete(systemRecipientId) {
+    console.log(systemRecipientId);
     Swal.fire({
       title: 'Are you sure?',
       text: 'You will not be able to recover this recipient!',
@@ -92,8 +109,8 @@ export class SystemRecipientsViewComponent implements OnInit, AfterViewInit {
       cancelButtonText: 'No, keep the recipient'
     }).then((result) => {
       if (result.value) {
-        console.log(recipientId);
-        this.systemRecipientService.deleteItem(recipientId).subscribe(
+        console.log(systemRecipientId);
+        this.systemRecipientService.deleteItem(systemRecipientId).subscribe(
           response => {
             console.log(response);
             if (response.code === '800.200.001') {
@@ -111,7 +128,7 @@ export class SystemRecipientsViewComponent implements OnInit, AfterViewInit {
             }
           }
         );
-        this.systemRecipientService.getEmailSystemRecipients(this.currentSystemId).subscribe(
+        this.systemRecipientService.getSystemRecipients(this.currentSystemId).subscribe(
           response => {
             this.elements = response;
             this.mdbTable.setDataSource(this.elements);
