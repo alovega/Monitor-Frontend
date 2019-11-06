@@ -18,6 +18,7 @@ import { EndpointService } from '../../endpoint/endpoint.service';
 export class CreateIncidentComponent implements OnInit {
   realtimeIncidentForm: FormGroup;
   scheduledMaintenanceForm: FormGroup;
+  affectedEndpoints: FormGroup;
   submitted = false;
   datePicker: any;
   timePicker: any;
@@ -48,9 +49,9 @@ export class CreateIncidentComponent implements OnInit {
     this.endpointService.getEndpoints().subscribe(
       (res) => {
         this.endpoints = res;
-        console.log(this.endpoints);
         this.createRealtimeIncidentForm();
         this.createScheduledMaintenanceForm();
+        console.log(this.createRealtimeIncidentForm);
       }
     );
   }
@@ -63,13 +64,23 @@ export class CreateIncidentComponent implements OnInit {
       escalationLevel: ['High', Validators.required],
       priorityLevel: ['1', Validators.required],
       user: [''],
-      endpoints: new FormArray([])
+      affectedEndpoints: this.formBuilder.group({
+        endpoints: this.buildEndpointsList(),
+        state: ['']
+      })
     });
 
-    this.endpoints.forEach((o, i) => {
-      const control = new FormControl(i === 0); // if first item set to true, else false
-      (this.realtimeIncidentForm.controls.endpoints as FormArray).push(control);
+    // this.endpoints.forEach((o, i) => {
+    //   const control = new FormControl(i === 0);
+    //   (this.realtimeIncidentForm.controls.affectedEndpoints as FormArray).push(control);
+    // });
+  }
+
+  buildEndpointsList() {
+    const arr = this.endpoints.map(endpoint => {
+      return this.formBuilder.control(endpoint.selected);
     });
+    return this.formBuilder.array(arr);
   }
   // checkStartTime(control: AbstractControl) {
   //   let hour = 10;
