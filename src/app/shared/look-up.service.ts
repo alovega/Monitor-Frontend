@@ -104,4 +104,12 @@ export class LookUpService {
       catchError(this.handleError)
     );
   }
+
+  public getEndpointStates() {
+    return this.http.get<any>(this.Url).pipe(
+      map(response => response.data.endpoint_states),
+      retry(2),
+      catchError(this.handleError)
+    );
+  }
 }

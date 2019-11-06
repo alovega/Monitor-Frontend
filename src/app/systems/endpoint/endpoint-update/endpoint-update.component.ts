@@ -8,6 +8,7 @@ import { Component, OnInit } from '@angular/core';
 import { State } from 'src/app/shared/models/state';
 import { EndpointType } from 'src/app/shared/models/endpoint-type';
 import { SystemService } from 'src/app/shared/system.service';
+import { LookUpService } from 'src/app/shared/look-up.service';
 
 @Component({
   selector: 'hm-endpoint-update',
@@ -29,7 +30,8 @@ export class EndpointUpdateComponent implements OnInit {
     public activatedRoute: ActivatedRoute,
     private systemService: SystemService,
     public endpointService: EndpointService,
-    private location: Location) {
+    private location: Location,
+    private lookupService: LookUpService) {
       this.data = new Endpoint();
       this.createForm();
       of(this.getStates()).subscribe((data: any) => {
@@ -89,7 +91,7 @@ update() {
   });
 }
 getStates() {
-  this.endpointService.getStates().subscribe((data) => {
+  this.lookupService.getEndpointStates().subscribe((data) => {
     this.States = data;
   });
 }
