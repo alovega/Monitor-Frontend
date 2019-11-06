@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
-import { catchError, retry, map} from 'rxjs/operators';
+import { catchError, retry, map, tap} from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 
 
@@ -34,7 +34,8 @@ constructor(private http: HttpClient) { }
     const user = JSON.parse(localStorage.getItem('currentUser'));
     const getUsersUrl = environment.apiEndpoint + 'get_logged_in_user_details/';
     return this.http.post<any>(getUsersUrl, {token: JSON.stringify(user.token)}).pipe(
-      map(data => data.data)
+      tap(res => console.log(res)),
+      map(response => response.data)
     );
   }
   updateLoggedInUser(data): Observable<any> {
