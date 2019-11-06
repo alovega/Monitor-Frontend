@@ -48,7 +48,7 @@ export class EndpointUpdateComponent implements OnInit {
       if (response.code === '800.200.001') {
         this.data = response.data;
         console.log(this.data);
-        this.toastr.success('successfully fetched endpoint %s', response.code);
+        this.toastr.success('successfully fetched endpoint', response.code);
       } else {
         console.log('error %s, message: %s', response.code, response.message);
       }
@@ -83,10 +83,10 @@ update() {
   this.data.endpoint_id = this.endpointId;
   this.endpointService.updateItem(this.data).subscribe(response => {
     if (response.code === '800.200.001') {
-      this.toastr.success('message: %s, code: %s', response.message, response.code);
+      this.toastr.success(response.message, response.code);
       this.location.back();
     } else {
-      this.toastr.error('message: %s, code: %s', response.message, response.code);
+      this.toastr.error(response.message, response.code);
     }
   });
 }

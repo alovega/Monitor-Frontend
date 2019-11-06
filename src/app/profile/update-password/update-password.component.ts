@@ -5,6 +5,7 @@ import { Profile } from '../profile';
 import { Location } from '@angular/common';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'hm-update-password',
@@ -18,7 +19,7 @@ export class UpdatePasswordComponent implements OnInit {
   confirmPassword: any;
   data: any;
   constructor(private fb: FormBuilder, private profileService: ProfileService, private location: Location,
-              private router: Router) {
+              private router: Router, private toastr: ToastrService) {
     this.profile = new Profile();
     this.createForm();
    }

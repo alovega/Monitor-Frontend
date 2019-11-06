@@ -7,6 +7,7 @@ import { Recipient } from '../recipient';
 import { State } from 'src/app/shared/models/state';
 import { User } from 'src/app/shared/models/user';
 import { RecipientService } from '../recipient.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'hm-recipient-create',
@@ -20,8 +21,8 @@ export class RecipientCreateComponent implements OnInit {
   states: State;
   users: User;
 
-  constructor(private recipientService: RecipientService, private location: Location, private fb: FormBuilder, 
-              private router: Router) {
+  constructor(private recipientService: RecipientService, private location: Location, private fb: FormBuilder,
+              private router: Router, private toastr: ToastrService) {
     this.createForm();
     this.data = new Recipient();
     of(this.getStates()).subscribe((data: any) => {
@@ -72,10 +73,10 @@ export class RecipientCreateComponent implements OnInit {
     this.recipientService.addRecipient(this.data).subscribe(response => {
       console.log(this.data);
       if (response.code === '800.200.001') {
-        console.log('message: %s, code: %s', response.message, response.code);
+        this.toastr.success(response.message, response.code);
         this.location.back();
       } else {
-        console.log('error: %s, message: %s', response.code, response.message);
+        this.toastr.error(response.code, response.message);
       }
     });
   }

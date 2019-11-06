@@ -7,6 +7,7 @@ import { Recipient } from '../recipient';
 import { State } from 'src/app/shared/models/state';
 import { User } from 'src/app/shared/models/user';
 import { RecipientService } from '../recipient.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'hm-recipient-update',
@@ -22,7 +23,7 @@ export class RecipientUpdateComponent implements OnInit {
   users: User;
 
   constructor(private recipientService: RecipientService, public activatedRoute: ActivatedRoute, private location: Location,
-              private fb: FormBuilder, private router: Router) {
+              private fb: FormBuilder, private router: Router, private toastr: ToastrService) {
     this.data = new Recipient();
     this.createForm();
     of(this.getStates()).subscribe((data: any) => {
@@ -37,9 +38,9 @@ export class RecipientUpdateComponent implements OnInit {
       if (response.code === '800.200.001') {
         this.data = response.data;
         console.log(this.data);
-        console.log('successfully fetched endpoint %s', response.code);
+        this.toastr.success('successfully fetched recipient', response.code);
       } else {
-        console.log('error %s, message: %s', response.code, response.message);
+        this.toastr.error(response.code, response.message);
       }
     });
   }
@@ -75,10 +76,10 @@ export class RecipientUpdateComponent implements OnInit {
     this.data.recipientId = this.recipientId;
     this.recipientService.updateRecipient(this.data).subscribe(response => {
       if (response.code === '800.200.001') {
-        console.log('message: %s, code: %s', response.message, response.code);
+        this.toastr.success(response.message, response.code);
         this.location.back();
       } else {
-        console.log('message: %s, code: %s', response.message, response.code);
+        this.toastr.error(response.message, response.code);
       }
     });
   }
