@@ -5,7 +5,7 @@ import { Incident } from '../incident';
 import { IncidentService } from '../incident.service';
 import Swal from 'sweetalert2';
 
-import { FormArray, FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { SystemService } from 'src/app/shared/system.service';
 import { LookUpService } from 'src/app/shared/look-up.service';
 import { EndpointService } from '../../endpoint/endpoint.service';
@@ -27,7 +27,6 @@ export class CreateIncidentComponent implements OnInit {
   systemId: string;
   currentSystem: any;
   incident: Incident;
-  endpoints: any[];
   constructor(
     public router: Router,
     private activatedRoute: ActivatedRoute,
@@ -46,14 +45,8 @@ export class CreateIncidentComponent implements OnInit {
     this.systemId = this.currentSystem.id;
     this.realtimeUrl = '/system/incidents/new/realtime';
     this.maintenanceUrl = '/system/incidents/new/maintenance';
-    this.endpointService.getEndpoints().subscribe(
-      (res) => {
-        this.endpoints = res;
-        this.createRealtimeIncidentForm();
-        this.createScheduledMaintenanceForm();
-        console.log(this.createRealtimeIncidentForm);
-      }
-    );
+    this.createRealtimeIncidentForm();
+    this.createScheduledMaintenanceForm();
   }
 
   createRealtimeIncidentForm() {
@@ -63,25 +56,10 @@ export class CreateIncidentComponent implements OnInit {
       message: ['', Validators.required],
       escalationLevel: ['High', Validators.required],
       priorityLevel: ['1', Validators.required],
-      user: [''],
-      affectedEndpoints: this.formBuilder.group({
-        endpoints: this.buildEndpointsList(),
-        state: ['']
-      })
+      user: ['']
     });
-
-    // this.endpoints.forEach((o, i) => {
-    //   const control = new FormControl(i === 0);
-    //   (this.realtimeIncidentForm.controls.affectedEndpoints as FormArray).push(control);
-    // });
   }
 
-  buildEndpointsList() {
-    const arr = this.endpoints.map(endpoint => {
-      return this.formBuilder.control(endpoint.selected);
-    });
-    return this.formBuilder.array(arr);
-  }
   // checkStartTime(control: AbstractControl) {
   //   let hour = 10;
   //   let minute = 15;
@@ -114,22 +92,16 @@ export class CreateIncidentComponent implements OnInit {
 
   onSubmitRealtime() {
     this.submitted = true;
-    console.log(this.realtimeIncidentForm);
     if (this.realtimeIncidentForm.invalid) {
       console.log('Invalid');
       return;
     }
-
-    const selectedPreferences = this.realtimeIncidentForm.value.endpoints
-    .map((checked, index) => checked ? this.endpoints[index].id : null)
-    .filter(value => value !== null);
     this.incident.incident_type = 'Realtime';
-    console.log(this.incident);
     return this.incidentService.createIncident(this.incident).subscribe(
       ((result: any) => {
         if (result.code === '800.200.001') {
           Swal.fire({
-            title: 'Success',
+            title: 'Incident creation success',
             text: 'Realtime incident created successfully!',
             type: 'success',
           }).then(() => {
@@ -172,12 +144,11 @@ export class CreateIncidentComponent implements OnInit {
     this.incident.incident_type = 'Scheduled';
     this.incident.scheduled_for = scheduledFor;
     this.incident.scheduled_until = scheduledUntil;
-    console.log(this.incident);
     return this.incidentService.createIncident(this.incident).subscribe(
       ((result: any) => {
         if (result.code === '800.200.001') {
           Swal.fire({
-            title: 'Success',
+            title: 'Incident creation success',
             text: 'Scheduled incident created successfully!',
             type: 'success',
           }).then(() => {
