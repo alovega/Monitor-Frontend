@@ -3,6 +3,9 @@ import { SystemService } from './shared/system.service';
 import {
   Router, NavigationStart, NavigationCancel, NavigationEnd , ActivatedRoute, NavigationError
 } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
+
+
 import { AuthenticationService } from './shared/auth/authentication.service';
 
 
@@ -26,7 +29,8 @@ export class AppComponent implements OnInit {
     private systemService: SystemService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private authService: AuthenticationService
+    private authService: AuthenticationService,
+    private toastr: ToastrService
   ) {
     this.authService.currentUser.subscribe(user => this.currentUser = user);
   }
@@ -45,38 +49,7 @@ export class AppComponent implements OnInit {
     } else {
       body.classList.add('body-logged-out');
     }
-    // this.loading = false;
-    // this.router.events.subscribe((event: Event) => {
-    //   switch (true) {
-    //     case event instanceof NavigationStart: {
-    //       this.loading = true;
-    //       // setTimeout(() => this.loading = false, 100);
-    //       break;
-    //     }
-
-    //     case event instanceof NavigationEnd:
-    //     case event instanceof NavigationCancel:
-    //     case event instanceof NavigationError: {
-    //       this.loading = false;
-    //       break;
-    //     }
-    //     default: {
-    //       break;
-    //     }
-    //   }
-    // });
-    // this.router.events
-    // .subscribe((event) => {
-    //   if (event instanceof NavigationStart) {
-    //     this.loading = true;
-    //   } else if (
-    //     event instanceof NavigationError ||
-    //     event instanceof NavigationCancel ||
-    //     event instanceof NavigationEnd
-    //   ) {
-    //     setTimeout(() => this.loading = false, 500);
-    //   }
-    // });
+    // setTimeout(() => this.toastr.success('Hello world!', 'Toastr fun!'))
   }
 
   logout() {

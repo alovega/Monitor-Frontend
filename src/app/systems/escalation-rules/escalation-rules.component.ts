@@ -86,6 +86,7 @@ export class EscalationRulesComponent implements OnInit, AfterViewInit {
       if (result.value) {
         this.rulesService.deleteRule(ruleId).subscribe(
           response => {
+            console.log(ruleId);
             if (response.code === '800.200.001') {
               Swal.fire(
                 'Deleted!',

@@ -43,7 +43,6 @@
                 <label class="form-label">Status</label>
                 <select formControlName="status" [ngClass]="{ 'is-invalid': submitted && editSystemForm.controls.status.errors}"
                 class="grey lighten-5 browser-default custom-select form-control" [(ngModel)] = "system.status">
-                {{states | json}}
                   <option *ngFor='let state of states' value="{{state.name}}">{{state.name}}</option>
                 </select>
                 <!-- Incident status validation errors -->
