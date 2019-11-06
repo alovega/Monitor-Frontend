@@ -5,6 +5,7 @@ import { Location } from '@angular/common';
 
 import { EscalationRule } from '../escalation-rule';
 import { EscalationRuleService } from '../escalation-rule.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'hm-update-rule',
@@ -21,7 +22,8 @@ export class UpdateRuleComponent implements OnInit {
     private formBuilder: FormBuilder,
     private ruleService: EscalationRuleService,
     private activatedRoute: ActivatedRoute,
-    private location: Location) {
+    private location: Location,
+    private toastr: ToastrService) {
 
     this.escalationRule = new EscalationRule();
     this.ruleId = this.activatedRoute.snapshot.params['rule-id'];
@@ -51,20 +53,19 @@ export class UpdateRuleComponent implements OnInit {
 
   onSubmit() {
     this.submitted = true;
-    // console.log(this.escalationRuleForm.value);
     if (this.escalationRuleForm.invalid) {
       console.log('Invalid');
       return;
     }
-
     this.escalationRule.rule_id = this.ruleId;
     this.escalationRule.event_type = this.escalationRule.eventtype;
-    this.escalationRule.escalation_level = this.escalationRule.escalation;
     this.ruleService.updateRule(this.escalationRule).subscribe(
       response => {
-        if (response.code === '800.200.001'){
+        if (response.code === '800.200.001') {
+          this.toastr.success('Rule was successfully updated', 'Success');
           this.location.back();
-          console.log(this.escalationRule);
+        } else {
+          this.toastr.error('Rule could not be updated', 'Error');
         }
       });
     // console.log(formData.getAll());

@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { Router, ActivatedRoute, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
+import { ToastrService } from 'ngx-toastr';
 
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { SystemService } from '../../../shared/system.service';
@@ -37,7 +38,8 @@ export class TopNavComponent implements OnInit, OnChanges {
     private profileService: ProfileService,
     public breakpointObserver: BreakpointObserver,
     public sideNavService: SideNavToggleService,
-    private lookupService: LookUpService
+    private lookupService: LookUpService,
+    private toastr: ToastrService
   ) {
     this.newSystem = new System();
   }
@@ -85,6 +87,8 @@ export class TopNavComponent implements OnInit, OnChanges {
   }
 
   changeSystem(systemId: any) {
+    // this.toastr.success('Success loaded top nav!');
+
     this.systemService.changesystem(systemId).subscribe(
       () => {
         this.currentSystem = this.systemService.getCurrentSystem();
@@ -106,11 +110,14 @@ export class TopNavComponent implements OnInit, OnChanges {
     this.systemService.createSystem(this.newSystem).subscribe(
       (response => {
         console.log(response);
+        this.submitted = false;
+        this.closeBtn.nativeElement.click();
         if (response) {
-          console.log(response.id);
           this.changeSystem(response.id);
-          this.closeBtn.nativeElement.click();
-          this.router.navigate(['']);
+          this.toastr.success('System created successfully', 'Success !');
+          this.router.navigate(['/system/quick-setup']);
+        } else {
+          this.toastr.success('System could not be created', 'Error !');
         }
       })
     );
