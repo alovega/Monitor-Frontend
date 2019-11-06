@@ -44,7 +44,7 @@ export class EndpointUpdateComponent implements OnInit {
     console.log(this.endpointId);
     this.endpointService.getItem(this.endpointId).subscribe(response => {
       if (response.code === '800.200.001') {
-        this.data = response.data.endpoint;
+        this.data = response.data;
         console.log(this.data);
         console.log('successfully fetched endpoint %s', response.code);
       } else {

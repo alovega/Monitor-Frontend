@@ -37,7 +37,7 @@ export class EndpointService {
   public getEndpoints(system_id): Observable<any> {
 
     return this.http.post<any>(this.endpointUrl + '/get_endpoints/', system_id).pipe (
-      map(response => response.data.endpoints,
+      map(response => response.data,
       retry(2)
     ),
     catchError(this.handleError));

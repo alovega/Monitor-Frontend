@@ -34,7 +34,7 @@ constructor(private http: HttpClient) { }
     const user = JSON.parse(localStorage.getItem('currentUser'));
     const getUsersUrl = environment.apiEndpoint + 'get_logged_in_user_details/';
     return this.http.post<any>(getUsersUrl, {token: JSON.stringify(user.token)}).pipe(
-      map(data => data.data[0])
+      map(data => data.data)
     );
   }
   updateLoggedInUser(data): Observable<any> {
