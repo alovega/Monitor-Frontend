@@ -42,7 +42,8 @@ export class SystemRecipientUpdateComponent implements OnInit {
     this.id = this.activatedRoute.snapshot.params.id;
     console.log(this.id);
     this.systemRecipientService.getItem(this.id).subscribe(response => {
-      this.recipient = response.data.recipient;
+      console.log(response);
+      this.recipient = response;
   });
   }
   public back(): void {
@@ -60,7 +61,7 @@ export class SystemRecipientUpdateComponent implements OnInit {
     });
   }
   getNotificationTypes() {
-    this.systemRecipientService.getNotificationType().subscribe((data: any) => {
+    this.systemRecipientService.getNotificationType().subscribe((data) => {
       this.NotificationTypes = data;
     });
   }
@@ -78,8 +79,14 @@ export class SystemRecipientUpdateComponent implements OnInit {
     this.updateForm.reset();
   }
   update() {
-    this.recipient.systemRecipientId = this.id = this.activatedRoute.snapshot.params.id;
-    this.systemRecipientService.updateItem(this.recipient);
-    this.back();
-  }
+    this.recipient.systemRecipientId = this.activatedRoute.snapshot.params.id;
+    this.systemRecipientService.updateItem(this.recipient).subscribe(response => {
+      if (response.code === '800.200.001') {
+        console.log('message: %s, code: %s', response.message, response.code);
+        this.location.back();
+      } else {
+        console.log('message: %s, code: %s', response.message, response.code);
+      }
+  });
+}
 }

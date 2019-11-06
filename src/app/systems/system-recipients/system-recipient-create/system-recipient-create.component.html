@@ -1,139 +1,88 @@
-<mdb-card>
-<!-- Default form contact -->
-<form [formGroup]="recipientForm" class="text-center border  p-5" (ngSubmit) = "onSubmit()">
-
 <div class="row">
 
-  <div class="col"><p class="h4 mb-4">Add System Recipient </p></div>
-      
-</div>
+    <div class="col"><p class="h4 mb-4">Add System Recipient </p></div>
+    <div class="col-md-6">
+        <button class="float-right back-button" (click)="back()"><i class="fas fa-angle-double-left"></i> Back to SystemRecipients</button>
+      </div>
+        
+  </div>
 <hr>
-  
+<mdb-card>
+<!-- Default form contact -->
+<form [formGroup]="systemRecipientForm" class="text-center border  p-5" (ngSubmit) = "onSubmit()">
   <div class="row">
-    <div class="col">
-      <!-- First Name -->
-      <label>FirstName</label>
-      <input type="text" id="defaultContactFormFirstName" class="form-control mb-4" placeholder="First Name"
-      [ngClass]="{ 'is-invalid': submitted && f.FirstName.errors }" formControlName="FirstName" 
-        [(ngModel)]="recipient.first_name" >
-        <div *ngIf="recipientForm.controls['FirstName'].invalid && (recipientForm.controls['FirstName'].dirty || recipientForm.controls['FirstName'].touched)" class="invalid-feedback">
-          <div *ngIf="recipientForm.controls['FirstName'].errors.required">
-              First Name is required.
-          </div>
-          <div *ngIf="recipientForm.controls['FirstName'].errors.minlength">Must be more than one character</div>
-        </div>
-    </div>
-    <div class="col">
-        <!-- Last Name -->
-        <label>Last Name</label>
-        <input type="text" id="defaultContactFormLastName" class="form-control mb-4" placeholder="Last Name"
-        [ngClass]="{ 'is-invalid': submitted && f.EnpointName.errors }" formControlName="LastName" 
-          [(ngModel)]="recipient.last_name" >
-          <div *ngIf="recipientForm.controls['LastName'].invalid && (recipientForm.controls['LastName'].dirty || recipientForm.controls['LastName'].touched)" class="invalid-feedback">
-            <div *ngIf="recipientForm.controls['LastName'].errors.required">
-                Last Name is required.
-            </div>
-            <div *ngIf="recipientForm.controls['LastName'].errors.minlength">Last Name must be more than one character</div>
-          </div>
-      </div>
-  </div>
-  <div class="row">
-      <div class="col">
-        <!-- Email -->
-        <label>Email</label>
-        <input type="email" id="defaultContactFormEmail" class="form-control mb-4" placeholder="Email"
-        [ngClass]="{ 'is-invalid': submitted && f.EnpointName.errors }" formControlName="Email" 
-          [(ngModel)]="recipient.email" >
-          <div *ngIf="recipientForm.controls['Email'].invalid && (recipientForm.controls['Email'].dirty || recipientForm.controls['Email'].touched)" class="invalid-feedback">
-            <div *ngIf="recipientForm.controls['Email'].errors.required">
-                Email Name is required.
-            </div>
-            <div *ngIf="recipientForm.controls['Email'].errors.email">Email must be a valid email address</div>
-          </div>
-      </div>
-    <div class="col">
-      <!-- Phone Number -->
-    <label>Phone Number</label>
-    <input type="text" id="defaultContactFormPhoneNumber" class="form-control mb-4" placeholder="Phone Number"
-    [ngClass]="{ 'is-invalid': submitted && f.EnpointName.errors }" formControlName="PhoneNumber" 
-      [(ngModel)]="recipient.phone_number" >
-      <div *ngIf="recipientForm.controls['PhoneNumber'].invalid && (recipientForm.controls['PhoneNumber'].dirty || recipientForm.controls['PhoneNumber'].touched)" class="invalid-feedback">
-        <div *ngIf="recipientForm.controls['PhoneNumber'].errors.required">
-            Phone Number is required.
-        </div>
-        <div *ngIf="recipientForm.controls['PhoneNumber'].errors.minlength">Phone Number must be more than 10 characters</div>
-      </div>
-    </div>
-      
-  </div>
-  <div class="row">
-    <div class="col">
-      <!-- User -->
-      <label>User</label>
-      <select class="browser-default custom-select form-control mb-4" formControlName="User" [(ngModel)]="recipient.user">
-        <option value></option>
-        <option *ngFor="let user of Users; let i = index" [value]="Users[i].id">
-              {{Users[i].username}}
+    <div class="col-6">
+      <!-- Recipient -->
+      <label for="recipient">Recipient</label>
+      <select id=recipient class="browser-default custom-select form-control mb-4" formControlName="Recipient">
+        <option [ngValue]="null"></option>
+        <option *ngFor="let recipient of Recipients; let i = index" [value]="recipient.id">
+              {{recipient.userName}}
         </option>
       </select>
-      <div *ngIf="recipientForm.controls['User'].invalid && (recipientForm.controls['User'].dirty || recipientForm.controls['User'].touched)" class="invalid-feedback">
-          <div *ngIf="recipientForm.controls['User'].errors.required">
-              Please Select a User.
-          </div>
-      </div>
-    </div>
-    <div class="col">
-      <!-- Escalation Level -->
-      <label for="EscalationLevel">Escalation Level</label>
-      <select class="browser-default custom-select form-control mb-4" formControlName="EscalationLevel" [(ngModel)]="recipient.escalation_level">
-        <option value></option>
-        <option *ngFor="let level of EscalationLevels; let i = index" [value]="EscalationLevels[i].id">
-          {{EscalationLevels[i].name}}
-        </option>
-      </select>
-      <div *ngIf="recipientForm.controls['EscalationLevel'].invalid && (recipientForm.controls['EscalationLevel'].dirty || recipientForm.controls['EscalationLevel'].touched)" class="invalid-feedback">
-          <div *ngIf="recipientForm.controls['EscalationLevel'].errors.required">
-             Please Select an EscalationLevel.
+      <div *ngIf="systemRecipientForm.controls['Recipient'].invalid && (systemRecipientForm.controls['Recipient'].dirty || systemRecipientForm.controls['Recipient'].touched)" class="invalid-feedback">
+          <div *ngIf="systemRecipientForm.controls['Recipient'].errors.required">
+              Please Select a Recipient.
           </div>
       </div>
     </div>
   </div>
+  <!--separator-->
   <div class="row">
     <div class="col">
-      <!-- Notification Type -->
-   <label for="NotificationType">Notification Type</label>
-   <select class="browser-default custom-select form-control mb-4" formControlName="NotificationType" [(ngModel)]="recipient.notification_type">
-      <option value></option>
-     <option *ngFor="let type of NotificationTypes; let i = index" [value]="NotificationTypes[i].id">
-       {{NotificationTypes[i].name}}
-     </option>
-   </select>
-   <div *ngIf="recipientForm.controls['NotificationType'].invalid && (recipientForm.controls['NotificationType'].dirty || recipientForm.controls['NotificationType'].touched)" class="invalid-feedback">
-      <div *ngIf="recipientForm.controls['NotificationType'].errors.required">
-          Please Select a Notification Type.
-      </div>
-  </div>
-    </div>
-    <div class="col">
-      <!-- State -->
-  <label>State</label>
-  <select class="browser-default custom-select form-control mb-4" formControlName="State" [(ngModel)]="recipient.state" >
-      <option value></option>
-      <option *ngFor="let type of States; let i = index" [value]="States[i].id">
-        {{States[i].name}}
-      </option>
-  </select>
-  <div *ngIf="recipientForm.controls['State'].invalid && (recipientForm.controls['State'].dirty || recipientForm.controls['State'].touched)" class="invalid-feedback">
-      <div *ngIf="recipientForm.controls['State'].errors.required">
-          Please Select a State.
-      </div>
-  </div>
+      <hr>
     </div>
   </div>
+    <!--Escalations form options-->
+    <div class="row"  formArrayName="escalations">
+        <div class="col-12"
+        *ngFor="let escalation of escalationsArray.controls; let escalationIndex = index;"
+        [formGroupName]="escalationIndex">
+        <div class="row">
+          <div class="col-8">
+            <h4>Escalations {{escalationIndex + 1}}</h4>
+          </div>
+          <div class="col-4 control-buttons">
+            <img src="../../../../assets/icons/add.svg" alt="" (click)="addEscalations()">
+            <img src="../../../../assets/icons/remove.svg" alt="" width="24" height="24" (click)="deleteEscalations(escalationsIndex)">
+          </div>
+        </div>
+        <hr>
+        <div class="row">
+          <div class="col">
+              <label>Escalation Level</label>
+              <select class="browser-default custom-select form-control mb-4" formControlName="EscalationLevel">
+              <option [ngValue]="null"></option>
+              <option *ngFor="let level of EscalationLevels; let i = index" [value]="level.id">
+                    {{level.name}}
+              </option>
+            </select>
+            <div *ngIf="escalation.controls['EscalationLevel'].invalid && (escalation.controls['EscalationLevel.dirty'] || escalation.controls['EscalationLevel'].touched)" class="invalid-feedback">
+                <div *ngIf="escalation.controls['EscalationLevel'].errors.required">
+                    Please Select an escalation level.
+                </div>
+            </div>
+          </div>
+          <div class="col">
+              <label> Notification Type </label>
+              <select class="browser-default custom-select form-control mb-4" formControlName="NotificationType">
+              <option *ngFor="let type of NotificationTypes; let i = index" [value]="type.id">
+                    {{type.name}}
+              </option>
+            </select>
+            <div *ngIf="escalation.controls['NotificationType'].invalid && (escalation.controls['NotificationType'].dirty || escalation.controls['NotificationType'].touched)" class="invalid-feedback">
+                <div *ngIf="escalation.controls['NotificationType'].errors.required">
+                    Please Select a notification type.
+                </div>
+            </div>
+          </div>
+        </div>
+        </div>
+    </div>
   
   <!-- Send button -->
-  <button mdbBtn type="button" class="btn btn-primary waves-light" color="primary" mdbWavesEffect
-  [disabled]="!recipientForm.valid" (click)="addRecipient()">Save</button>
+  <button mdbBtn type="submit" size="sm" class="btn float-right btn-primary waves-light" color="primary" mdbWavesEffect
+  [disabled]="!systemRecipientForm.valid" (click)="addRecipient()">Save</button>
 
 </form>
   <!-- Default form contact -->

@@ -47,8 +47,8 @@
       <!-- Endpoint type -->
       <label>Endpoint type</label>
       <select class=" form-control browser-default custom-select mb-4" placeholder="Endpoint type" formControlName="EndpointType" [(ngModel)]="data.endpoint_type">
-          <option *ngFor="let type of endpointTypes; let i = index" [value]="endpointTypes[i].id">
-              {{endpointTypes[i].name}}
+          <option *ngFor="let type of endpointTypes; let i = index" [value]="type.id">
+              {{type.name}}
             </option>
       </select>
       <div *ngIf="endpointForm.controls['EndpointType'].invalid && (endpointForm.controls['EndpointType'].dirty || endpointForm.controls['EndpointType'].touched)" class="invalid-feedback">
@@ -61,8 +61,8 @@
       <!-- State -->
       <label>State</label>
       <select class=" form-control browser-default custom-select mb-4" placeholder="State" formControlName="State" [(ngModel)]="data.state">
-          <option *ngFor="let type of states; let i = index" [value]="states[i].id">
-              {{states[i].name}}
+          <option *ngFor="let type of states; let i = index" [value]="type.id">
+              {{type.name}}
             </option>
       </select>
       <div *ngIf="endpointForm.controls['State'].invalid && (endpointForm.controls['State'].dirty || endpointForm.controls['State'].touched)" class="invalid-feedback">
