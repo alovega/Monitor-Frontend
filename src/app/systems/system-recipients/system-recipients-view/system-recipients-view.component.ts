@@ -57,6 +57,10 @@ export class SystemRecipientsViewComponent implements OnInit, AfterViewInit {
     this.getEscalationLevels();
   }
   ngAfterViewInit() {
+    this.mdbTablePagination.setMaxVisibleItemsNumberTo(10);
+    this.mdbTablePagination.calculateFirstItemIndex();
+    this.mdbTablePagination.calculateLastItemIndex();
+    this.cdRef.detectChanges();
   }
 
   filterSystemRecipients(level: any) {

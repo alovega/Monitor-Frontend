@@ -33,7 +33,6 @@ export class RecipientViewComponent implements OnInit, AfterViewInit {
   @HostListener('input') oninput() {
     this.searchItems();
   }
-
   ngOnInit() {
     this.recipientService.getRecipients().subscribe(
       (data) => {
@@ -42,12 +41,11 @@ export class RecipientViewComponent implements OnInit, AfterViewInit {
         this.mdbTable.setDataSource(this.elements);
         this.elements = this.mdbTable.getDataSource();
         this.previous = this.mdbTable.getDataSource();
-      }
-    );
+      });
   }
 
   ngAfterViewInit() {
-    this.mdbTablePagination.setMaxVisibleItemsNumberTo(5);
+    this.mdbTablePagination.setMaxVisibleItemsNumberTo(10);
     this.mdbTablePagination.calculateFirstItemIndex();
     this.mdbTablePagination.calculateLastItemIndex();
     this.cdRef.detectChanges();

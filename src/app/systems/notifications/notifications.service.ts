@@ -33,7 +33,7 @@ export class NotificationsService {
   public getEmailNotifications(systemId): Observable<any> {
 
     return this.http.post<any>(this.notificationUrl + '/get_notifications/', systemId).pipe(
-      map(response => response.data.notifications.filter(data => data.type === 'Email'),
+      map(response => response.data.filter(data => data.type === 'Email'),
     ),
     retry(2),
     catchError(this.handleError));
@@ -41,7 +41,7 @@ export class NotificationsService {
   public getSmsNotifications(systemId): Observable<any> {
 
     return this.http.post<any>(this.notificationUrl + '/get_notifications/', systemId).pipe(
-      map(response => response.data.notifications.filter(data => data.type === 'Sms'),
+      map(response => response.data.filter(data => data.type === 'Sms'),
     ),
     retry(2),
     catchError(this.handleError));

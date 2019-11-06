@@ -13,7 +13,7 @@
 <table mdbTable id="tableSort" #tableEl="mdbTable" class="z-depth-1">
       <thead class="white-text">
           <tr>
-          <th *ngFor="let head of headElements let i = index" aria-controls="tableSort" scope="col" [mdbTableSort]="elements" [sortBy]="headElements[i]">{{Elements[head] | titlecase}} <mdb-icon fas icon="sort"></mdb-icon></th>
+          <th *ngFor="let head of headElements; let i = index" aria-controls="tableSort" scope="col" [mdbTableSort]="elements" [sortBy]="headElements[i]">{{Elements[head] | titlecase}} <mdb-icon fas icon="sort"></mdb-icon></th>
           </tr>
       </thead>
       <tbody *ngIf="elements.length > 0; else noElements">
@@ -28,17 +28,17 @@
           <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{el.dateCreated | date}}</td>
           <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">
               <a class="fas fa-edit text-success"  routerLinkActive="active" routerLink="/system/endpoints/endpoint-update/{{el.id}}" ></a>
-              <a class="fas fa-trash-alt mr-2 text-danger" [disabled]="elements" (click)="delete(el.id)"></a>
+              <a class="fas fa-trash-alt mr-2 text-danger"  (click)="delete(el.id)"></a>
           </td>
           </tr>
       </tbody>
       <tfoot class="grey lighten-5 w-100">
               <tr mdbTableCol>
-                <td colspan="8">
+                <td colspan="9">
                   <mdb-table-pagination [tableEl]="tableEl" [searchDataSource]="elements"></mdb-table-pagination>
                 </td>
               </tr>
-          </tfoot>
+      </tfoot>
 </table>
 <ng-template #noElements>
   <td colspan="7">
