@@ -1,10 +1,10 @@
 import { NgModule, NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { BrowserModule } from '@angular/platform-browser';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
+
 
 import { SystemsRoutingModule } from './systems-routing.module';
 import { SystemsComponent } from './systems.component';
@@ -22,7 +22,7 @@ import { AuthGuardService } from '../shared/helpers/auth-guard.service';
     SweetAlert2Module.forRoot(),
     MDBBootstrapModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
   providers: [
     AuthGuardService
