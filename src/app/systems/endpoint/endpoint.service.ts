@@ -4,6 +4,7 @@ import { HttpClient, HttpHeaders, HttpErrorResponse, HttpParams } from '@angular
 import { Endpoint } from './endpoint';
 import { catchError, retry, map, tap} from 'rxjs/operators';
 import { LookUpService } from 'src/app/shared/look-up.service';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -34,9 +35,9 @@ export class EndpointService {
     return throwError(
       'Something bad happened; please try again later.');
   }
-  public getEndpoints(): Observable<any> {
-
-    return this.http.post<any>(this.endpointUrl + '/get_endpoints/', system_id).pipe (
+  public getEndpoints(systemId): Observable<any> {
+    const endpointUrl = environment.apiEndpoint + 'get_endpoints/';
+    return this.http.post<any>(endpointUrl, systemId).pipe (
       map(response => response.data,
       retry(2)
     ),
