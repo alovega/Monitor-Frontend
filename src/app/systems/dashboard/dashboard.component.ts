@@ -11,6 +11,7 @@ import { GraphsService } from './graphs.service';
 export class DashboardComponent implements OnInit {
   currentSystem: any;
   currentSystemId: any;
+  data: any;
   public errorRateGraph = {
     chartType: 'line',
     chartDatasets: [
@@ -39,16 +40,19 @@ export class DashboardComponent implements OnInit {
     }
   };
 
-  public systemStatusGraph = {
+  public responseTimeGraph = {
     chartType: 'bar',
-    chartDatasets: [
-      { data: [], label: 'System Status per hour' },
-    ],
+    chartDatasets: [],
     chartLabels: [],
     chartColors: [
       {
-        backgroundColor: ['rgba(54, 162, 235, 0.2)', 'rgba(255, 99, 132, 0.2)'],
-        borderColor: ['rgba(54, 162, 235, 1)', 'rgba(255,99,132,1)',],
+        backgroundColor: 'rgba(105, 0, 132, .2)',
+        borderColor: 'rgba(200, 99, 132, .7)',
+        borderWidth: 2,
+      },
+      {
+        backgroundColor: 'rgba(0, 137, 132, .2)',
+        borderColor: 'rgba(0, 10, 130, .7)',
         borderWidth: 2,
       }
     ],
@@ -67,6 +71,7 @@ export class DashboardComponent implements OnInit {
       }
     }
   };
+  systemId: any;
 
   constructor(
     public graphsService: GraphsService,
@@ -75,6 +80,7 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit() {
     this.currentSystem = this.systemService.getCurrentSystem();
+    this.systemId = this.currentSystem.id;
     this.graphsService.getErrorRates().subscribe(
       (result => {
         this.errorRateGraph.chartLabels = result.labels;
@@ -82,12 +88,17 @@ export class DashboardComponent implements OnInit {
       })
     );
 
-    this.graphsService.getSystemStatus().subscribe(
-      (result => {
-        this.systemStatusGraph.chartLabels = result.labels;
-        this.systemStatusGraph.chartDatasets[0].data = result.datasets;
-        // console.log(this.systemStatusGraph.chartDatasets[0]);
-      })
-    );
+    this.graphsService.getSystemStatus(this.systemId).subscribe(
+      (response) => {
+        this.data = []
+        Object.keys(response.datasets).forEach(key => {
+          this.responseTimeGraph.chartDatasets.push(response.datasets[key]);
+          this.responseTimeGraph.chartLabels.push(response.datasets[key].data)
+          console.log(this.responseTimeGraph.chartLabels.concat(response.datasets[key].chartLabels));
+          console.log(response.datasets[key].data);
+        });
+        this.responseTimeGraph.chartLabels = response.labels;
+        console.log(this.responseTimeGraph.chartLabels);
+      });
   }
 }
