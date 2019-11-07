@@ -1,0 +1,41 @@
+<div class="m-auto" style="position:fixed; right: 0; left: 0; z-index: 2; " [ngClass] = "{'d-none': isLoaded}">
+    <hm-component-loader></hm-component-loader>
+</div>
+<div class="page-header">
+    <h3 class="page-header-title float-left">Incidents</h3>
+    <div class="float-right"> 
+        <input class="form-control" type="text" placeholder="Search" #search (input)="searchIncident(search.value)">
+        <div class="search-results" [style.display]="isHidden? 'none': 'block'">
+            <hm-search-incidents [incidents]="incidents"></hm-search-incidents>
+        </div>
+    </div>
+    <div class="clearfix"></div> 
+</div>
+
+<ul class="list-group switch-tabs d-flex">
+    <div>
+    <li class="tab-item">
+        <a routerLink="open" routerLinkActive="active">Open</a>
+    </li>
+    <li class="tab-item">
+        <a routerLink="realtime" routerLinkActive="active">Realtime Incidents</a>        
+    </li>
+    <li class="tab-item">
+        <a routerLink="maintenance" routerLinkActive="active">Maintenance</a>        
+    </li>
+
+    <li class="tab-item">
+        <span>
+        <a routerLink="/system/incidents/new/realtime" routerLinkActive="active" *ngIf="router.url !== '/system/incidents/maintenance'">
+           <button class="float-right" id="create-button">Create incident</button>
+        </a>
+        <a routerLink="/system/incidents/new/maintenance" routerLinkActive="active" *ngIf="router.url === '/system/incidents/maintenance'">
+            <button class="float-right" id="create-button" >Schedule Maintenance</button>
+        </a>
+        </span>
+    </li>
+    <div class="clearfix"></div>
+    </div>
+</ul>
+
+<router-outlet></router-outlet>

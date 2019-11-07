@@ -1,0 +1,91 @@
+<div class="row">
+
+    <div class="col"><p class="h4 mb-4">Add System Recipient </p></div>
+    <div class="col-md-6">
+        <button class="float-right back-button" (click)="back()"><i class="fas fa-angle-double-left"></i> Back to SystemRecipients</button>
+      </div>
+        
+  </div>
+<hr>
+<mdb-card>
+<!-- Default form contact -->
+<form [formGroup]="systemRecipientForm" class="text-center border  p-5" (ngSubmit) = "onSubmit()">
+  <div class="row">
+    <div class="col-6">
+      <!-- Recipient -->
+      <label for="recipient">Recipient</label>
+      <select id=recipient class="browser-default custom-select form-control mb-4" formControlName="Recipient">
+        <option [ngValue]="null"></option>
+        <option *ngFor="let recipient of Recipients; let i = index" [value]="recipient.id">
+              {{recipient.userName}}
+        </option>
+      </select>
+      <div *ngIf="systemRecipientForm.controls['Recipient'].invalid && (systemRecipientForm.controls['Recipient'].dirty || systemRecipientForm.controls['Recipient'].touched)" class="invalid-feedback">
+          <div *ngIf="systemRecipientForm.controls['Recipient'].errors.required">
+              Please Select a Recipient.
+          </div>
+      </div>
+    </div>
+  </div>
+  <!--separator-->
+  <div class="row">
+    <div class="col">
+      <hr>
+    </div>
+  </div>
+    <!--Escalations form options-->
+    <div class="row"  formArrayName="escalations">
+        <div class="col-12"
+        *ngFor="let escalation of escalationsArray.controls; let escalationIndex = index;"
+        [formGroupName]="escalationIndex">
+        <div class="row">
+          <div class="col-8">
+            <h4>Escalations {{escalationIndex + 1}}</h4>
+          </div>
+          <div class="col-4 control-buttons">
+            <img src="../../../../assets/icons/add.svg" alt="" (click)="addEscalations()">
+            <img src="../../../../assets/icons/remove.svg" alt="" width="24" height="24" (click)="deleteEscalations(escalationsIndex)">
+          </div>
+        </div>
+        <hr>
+        <div class="row">
+          <div class="col">
+              <label>Escalation Level</label>
+              <select class="browser-default custom-select form-control mb-4" formControlName="EscalationLevel">
+              <option [ngValue]="null"></option>
+              <option *ngFor="let level of EscalationLevels; let i = index" [value]="level.id">
+                    {{level.name}}
+              </option>
+            </select>
+            <div *ngIf="escalation.controls['EscalationLevel'].invalid && (escalation.controls['EscalationLevel.dirty'] || escalation.controls['EscalationLevel'].touched)" class="invalid-feedback">
+                <div *ngIf="escalation.controls['EscalationLevel'].errors.required">
+                    Please Select an escalation level.
+                </div>
+            </div>
+          </div>
+          <div class="col">
+              <label> Notification Type </label>
+              <select class="browser-default custom-select form-control mb-4" formControlName="NotificationType">
+              <option *ngFor="let type of NotificationTypes; let i = index" [value]="type.id">
+                    {{type.name}}
+              </option>
+            </select>
+            <div *ngIf="escalation.controls['NotificationType'].invalid && (escalation.controls['NotificationType'].dirty || escalation.controls['NotificationType'].touched)" class="invalid-feedback">
+                <div *ngIf="escalation.controls['NotificationType'].errors.required">
+                    Please Select a notification type.
+                </div>
+            </div>
+          </div>
+        </div>
+        </div>
+    </div>
+  
+  <!-- Send button -->
+  <button mdbBtn type="submit" size="sm" class="btn float-right btn-primary waves-light" color="primary" mdbWavesEffect
+  [disabled]="!systemRecipientForm.valid" (click)="addRecipient()">Save</button>
+
+</form>
+  <!-- Default form contact -->
+
+</mdb-card>
+

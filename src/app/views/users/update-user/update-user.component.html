@@ -1,0 +1,51 @@
+<!-- Grid Row -->
+<div class="row wow animate fadeIn" data-wow-delay="0.1s">
+    <!-- Grid column -->
+    <div class="col-md-1"></div>
+      <!-- Grid column -->
+    <div class="col-md-10">
+      <div class="page-header d-flex row">
+        <div class="col-md-6">
+        Update user
+        </div>
+
+        <div class="col-md-6">
+          <button class="float-right back-button"><i class="fas fa-angle-double-left"></i> back to users</button>
+        </div>
+      </div>
+      <hr>
+      <div class="page-body">
+        <div class="new-rule">
+          <mdb-card class="card">
+            <form [formGroup]="updateUserForm" class="text-center">
+            <!-- Name -->
+            <label class="form-label">User Name</label>
+            <input type="text" id="userName" formControlName="ruleName" class="grey lighten-5 form-control mb-4"
+            placeholder="Username">
+            
+            <label class="form-label">First Name</label>
+            <input type="text" id="firstName" formControlName="ruleName" class="grey lighten-5 form-control mb-4"
+            placeholder="first name">
+
+            <label class="form-label">Last Name</label>
+            <input type="text" id="lastName" formControlName="ruleName" class="grey lighten-5 form-control mb-4"
+            placeholder="last name">
+  
+            <!-- Email -->
+            <label class="form-label">Email</label>
+            <input type="email" id="email" formControlName="ruleName" class="grey lighten-5 form-control mb-4"
+            placeholder="email">
+              <!-- Create button -->
+              <div class="create-button">
+                  <button id="create-button" mdbWavesEffect class="float-right" color="primary" size="md">Update user</button>
+              </div>
+            </form>
+          </mdb-card>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Grid column -->
+    <div class="col-md-1"></div>
+  </div>
+  <!-- Grid Row -->

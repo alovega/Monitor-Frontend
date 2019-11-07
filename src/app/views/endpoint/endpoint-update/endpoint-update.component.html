@@ -1,0 +1,82 @@
+<div class="row">
+  <div class="col col-6"><p class="h4 mb-4">Edit an Endpoint </p></div>
+  <div class="col-md-6">
+      <button class="float-right back-button" (click)="back()"><i class="fas fa-angle-double-left"></i> back to Endpoints</button>
+    </div>     
+</div>
+<hr>
+<mdb-card>
+<!-- Default form contact -->
+<form [formGroup]="updateForm" class="text-center border  p-5" (ngSubmit) = "onSubmit()">
+  <div class="row">
+    <div class="col">
+      <!-- Name -->
+      <label>Endpoint Name</label>
+      <input mdbInput MdbValidate type="text" id="defaultContactFormName" class="form-control mb-4"
+        [ngClass]="{ 'is-invalid': submitted && f.EnpointName.errors }"
+        placeholder="Name" formControlName="EndpointName" [(ngModel)]="data.name" >
+      <div *ngIf="updateForm.controls['EndpointName'].invalid && (updateForm.controls['EndpointName'].dirty || updateForm.controls['EndpointName'].touched)" class="invalid-feedback">
+        <div *ngIf="updateForm.controls['EndpointName'].errors.required">
+            Endpoint Name is required.
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <!-- Endpoint -->
+      <label>Url</label>
+      <input type="text" id="defaultContactFormUrl" class="form-control mb-4" placeholder="Url" formControlName="Url" [(ngModel)]="data.url" >
+      <div *ngIf="updateForm.controls['Url'].invalid && (updateForm.controls['Url'].dirty || updateForm.controls['Url'].touched)" class="invalid-feedback">
+        <div *ngIf="updateForm.controls['Url'].errors.required">
+          Url is required.
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <!-- Optimal response time -->
+      <label>response_time</label>
+      <input type="text" id="defaultContactFormEndpoint" class="form-control mb-4" placeholder="Optimal response time" formControlName="OptimalResponseTime" [(ngModel)]="data.optimal_response_time" >
+      <div *ngIf="updateForm.controls['OptimalResponseTime'].invalid && (updateForm.controls['OptimalResponseTime'].dirty || updateForm.controls['OptimalResponseTime'].touched)" class="invalid-feedback">
+        <div *ngIf="updateForm.controls['OptimalResponseTime'].errors.required">
+          Optimal response time is required.
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <!-- State -->
+      <label>State</label>
+      <select class=" form-control browser-default custom-select mb-4" formControlName="State" [(ngModel)]="data.state">
+        <option *ngFor="let type of States; let i = index" [value]="States[i].id">
+          {{States[i].name}}
+        </option>
+      </select>
+      <div *ngIf="updateForm.controls['State'].invalid && (updateForm.controls['State'].dirty || updateForm.controls['State'].touched)" class="invalid-feedback">
+          <div *ngIf="updateForm.controls['State'].errors.required">
+              State is required.
+          </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <!-- Message -->
+      <label>Description</label>
+      <div class="form-group">
+        <textarea class="form-control rounded-0" id="exampleFormControlTextarea2" rows="3" placeholder="Description" formControlName="Description" [(ngModel)]="data.description" ></textarea>
+      </div>
+      <div *ngIf="updateForm.controls['Description'].invalid && (updateForm.controls['Description'].dirty || updateForm.controls['Description'].touched)" class="invalid-feedback">
+        <div *ngIf="updateForm.controls['Description'].errors.required">
+          Description is required.
+        </div>
+      </div>
+    </div>
+  </div>
+    
+    <!-- Send button -->
+  <button mdbBtn type="button" class="btn float-right btn-primary waves-light" 
+    color="primary" mdbWavesEffect  [disabled]="!updateForm.valid" (click)="update()" size="sm"
+    >Update</button>
+  </form>
+    <!-- Default form contact -->
+</mdb-card>

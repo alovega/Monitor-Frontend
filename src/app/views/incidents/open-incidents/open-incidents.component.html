@@ -1,0 +1,53 @@
+<div class="full-page">
+  <div [ngClass]="{'d-none': !loading}">
+    <hm-loader></hm-loader>
+  </div> 
+<div *ngIf="incidents.length; else noIncidents">
+    <a *ngFor="let incident of incidents" routerLink="/system/incidents/update/{{incident.incident_id}}" routerLinkActive="active">
+        <mdb-card class="open-incident mb-4">
+            <mdb-card-body>
+            <a routerLink="/system/incidents/update/{{incident.incident_id}}" routerLinkActive="active" class="update-incident-button float-right">
+                <button mdbBtn mdbWavesEffect color="info" size="sm">Update</button>
+            </a>
+            <h5 class="open-incident-title">{{ incident.name }}</h5>
+            <div class="incident-info">
+              <span *ngIf="incident.incident_updates.length; else noUpdates">
+                  <span *ngFor="let update of incident.incident_updates; let i=index">
+                    <span *ngIf="update.status && i<1" class="incident-status" color="info">{{ update.status }}</span>
+                    <div *ngIf="update.status && i<1" class="last-update-time"><small>Last updated on: {{ incident.date_modified | date:'MMMM d, y' }} at {{ incident.date_modified | date:'h:mm:ss a' }}</small></div>
+                  </span> 
+              </span>               
+              <ng-template #noUpdates>
+                <span class="incident-status" color="info">
+                    {{ incident.status }}
+                </span>
+                <div class="last-update-time"><small>Last updated on: {{ incident.date_modified | date:'MMMM d, y' }} at {{ incident.date_modified | date:'h:mm:ss a' }}</small></div>
+              </ng-template>
+            </div>
+              <div class="affected-systems">
+                  <span class="affected-systems-title"><small>Affected System : </small></span> 
+                    <div class="system">
+                      {{ incident.affected_system }} 
+                      <mdb-icon fas icon="check-circle" class="green-text pr-3"></mdb-icon>
+                </div>
+              </div>
+              <div class="affected-systems" *ngIf="incident.incident_updates">
+                  <span *ngFor="let update of incident.incident_updates; let i=index">
+                      <span *ngIf="update.user_name && i<1" class=""><small class="affected-systems-title">Assigned User : </small> {{update.user_name}}</span>
+                    </span>
+              </div>
+            </mdb-card-body>
+        </mdb-card>
+    </a>
+</div>
+
+<ng-template #noIncidents>
+  <hm-empty-data header="No open incidents" description="New incidents and scheduled maintenances will be displayed here">
+      <a action-button routerLink='/system/incidents/new/realtime' routerlinkactive="active"> 
+        <button id="create-button" size="sm" color="primary">
+            Create new incident
+        </button>
+      </a>
+  </hm-empty-data>
+</ng-template>
+</div>
