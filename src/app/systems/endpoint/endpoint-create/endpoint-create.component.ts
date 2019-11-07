@@ -10,6 +10,7 @@ import { EndpointType } from 'src/app/shared/models/endpoint-type';
 import { of } from 'rxjs';
 import { SystemService } from 'src/app/shared/system.service';
 import { LookUpService } from 'src/app/shared/look-up.service';
+import { ToastrService } from 'ngx-toastr';
 
 
 @Component({
@@ -32,7 +33,8 @@ export class EndpointFormComponent implements OnInit {
     private systemService: SystemService,
     private location: Location,
     private router: Router,
-    private lookupService: LookUpService ) {
+    private lookupService: LookUpService,
+    private toastr: ToastrService) {
     this.createForm();
     this.data = new Endpoint();
     this.getStates();
@@ -84,10 +86,10 @@ export class EndpointFormComponent implements OnInit {
       if (response.code === '800.200.001') {
         this.data = response.data;
         console.log(this.data);
-        console.log('message: %s, code: %s', response.message, response.code);
+        this.toastr.success( response.message, response.code);
         this.location.back();
       } else {
-        console.log('error: %s, message: %s', response.code, response.message);
+        this.toastr.error(response.code, response.message);
       }
     });
   }

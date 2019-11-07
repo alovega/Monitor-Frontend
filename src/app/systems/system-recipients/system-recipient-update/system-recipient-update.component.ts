@@ -8,6 +8,7 @@ import { of } from 'rxjs';
 import { EscalationLevel } from 'src/app/shared/models/escalation-level';
 import { NotificationType } from 'src/app/shared/models/notification-type';
 import { State } from 'src/app/shared/models/state';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'hm-recipient-update',
@@ -25,7 +26,7 @@ export class SystemRecipientUpdateComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder, private systemRecipientService: SystemRecipientService, public router: Router,
-    public activatedRoute: ActivatedRoute, public location: Location) {
+    public activatedRoute: ActivatedRoute, public location: Location, private toastr: ToastrService) {
     this.createForm();
     this.recipient = new SystemRecipient();
     of(this.getStates()).subscribe((data: any) => {
@@ -82,10 +83,10 @@ export class SystemRecipientUpdateComponent implements OnInit {
     this.recipient.systemRecipientId = this.activatedRoute.snapshot.params.id;
     this.systemRecipientService.updateItem(this.recipient).subscribe(response => {
       if (response.code === '800.200.001') {
-        console.log('message: %s, code: %s', response.message, response.code);
+        this.toastr.success( response.message, response.code);
         this.location.back();
       } else {
-        console.log('message: %s, code: %s', response.message, response.code);
+        this.toastr.error(response.message, response.code);
       }
   });
 }

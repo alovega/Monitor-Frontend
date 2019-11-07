@@ -19,9 +19,9 @@ export class GraphsService {
     )
   }
 
-  getSystemStatus(): Observable<any>{
-    return this.http.post<any>(environment.apiEndpoint + 'get_system_status/', {}).pipe(
+  getSystemStatus(systemId): Observable<any>{
+    return this.http.post<any>(environment.apiEndpoint + 'get_response_time_data/', {systemId}).pipe(
       map(response => response.data)
-    )
+    );
   }
 }

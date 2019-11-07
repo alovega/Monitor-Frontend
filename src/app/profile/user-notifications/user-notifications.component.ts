@@ -16,7 +16,7 @@ export class UserNotificationsComponent implements OnInit, AfterViewInit {
   searchText = '';
   elements: any;
   previous: any = [];
-  headElements: string[] = ['message', 'status', 'dateCreated'];
+  headElements = ['message', 'status', 'dateCreated'];
   Elements = {
     message: 'Message', status: 'Status', dateCreated: 'Date Created'
   };
@@ -28,7 +28,7 @@ export class UserNotificationsComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.profileService.getLoggedInuserNotifications().subscribe(
-      (response) => {
+      response => {
         this.elements = response;
         this.mdbTable.setDataSource(this.elements);
         this.elements = this.mdbTable.getDataSource();
