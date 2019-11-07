@@ -54,7 +54,17 @@ export class DashboardComponent implements OnInit {
         backgroundColor: 'rgba(0, 137, 132, .2)',
         borderColor: 'rgba(0, 10, 130, .7)',
         borderWidth: 2,
-      }
+      },
+      {
+        backgroundColor: 'rgba(109, 137, 132, .2)',
+        borderColor: 'rgba(91, 127, 0, 0.7)',
+        borderWidth: 2,
+      },
+      {
+        backgroundColor: 'rgba(109, 137, 132, .2)',
+        borderColor: 'rgba(255, 255, 0, 1.0)',
+        borderWidth: 2,
+      },
     ],
     chartOptions: {
       responsive: true,

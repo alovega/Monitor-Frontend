@@ -19,9 +19,9 @@ export class EndpointViewComponent implements OnInit, AfterViewInit {
   searchText = '';
   previous: any = [];
 
-  headElements = ['endpoint', 'description', 'url', 'endpointType', 'status', 'dateCreated', 'action'];
+  headElements = ['name', 'description', 'url', 'endpointType', 'status', 'dateCreated', 'action'];
   Elements = {
-    endpoint: 'Endpoint', description: 'description', url: 'Url', dateCreated: 'Date Created', status: 'Status', action: 'Action',
+    name: 'Endpoint', description: 'description', url: 'Url', dateCreated: 'Date Created', status: 'Status', action: 'Action',
     endpointType: 'Type'
   };
   currentSystem: any;
