@@ -27,6 +27,7 @@ import { LoaderService } from './loader.service';
 import { EndpointStatusComponent } from './endpoint-status/endpoint-status.component';
 import { GraphsService } from './graphs.service';
 import { SystemStatusService } from './system-status.service';
+import { LoginComponent } from './auth/login/login.component';
 
 @NgModule({
   declarations: [
@@ -40,6 +41,8 @@ import { SystemStatusService } from './system-status.service';
     TimePickerComponent,
     EmptyDataComponent,
     LoaderComponent,
+    // DeleteSwalComponent,
+    LoginComponent,
     ComponentLoaderComponent,
     EndpointStatusComponent
   ],
