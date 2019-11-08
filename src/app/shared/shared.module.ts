@@ -24,7 +24,6 @@ import { ComponentLoaderComponent } from './component-loader/component-loader.co
 import { SideNavToggleService } from './side-nav-toggle.service';
 import { HttpWrapperService } from './helpers/http-wrapper.service';
 import { LoaderService } from './loader.service';
-import { AppPasswordDirective } from './app-password.directive';
 import { EndpointStatusComponent } from './endpoint-status/endpoint-status.component';
 import { GraphsService } from './graphs.service';
 import { SystemStatusService } from './system-status.service';
@@ -45,7 +44,6 @@ import { LoginComponent } from './auth/login/login.component';
     // DeleteSwalComponent,
     LoginComponent,
     ComponentLoaderComponent,
-    AppPasswordDirective,
     EndpointStatusComponent
   ],
   imports: [

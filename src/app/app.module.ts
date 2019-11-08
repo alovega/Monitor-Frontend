@@ -15,6 +15,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SharedModule } from './shared/shared.module';
 import { AuthGuardService } from './shared/helpers/auth-guard.service';
 import { AuthenticationService } from './shared/auth/authentication.service';
+import { ShowHidePasswordModule } from 'ngx-show-hide-password';
 // import { EndpointModule } from './endpoint/endpoint.module';
 // import { RecipientsModule } from './recipients/recipients.module';
 
@@ -24,6 +25,7 @@ import { AuthenticationService } from './shared/auth/authentication.service';
   ],
   imports: [
     BrowserModule,
+    ShowHidePasswordModule,
     MDBBootstrapModule.forRoot(),
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyBBCMBffWFPoWuR8mMDe56nDKI4A9mf55k'

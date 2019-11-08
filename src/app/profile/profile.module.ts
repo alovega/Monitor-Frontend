@@ -14,7 +14,7 @@ import { UpdatePasswordComponent } from './update-password/update-password.compo
 
 
 @NgModule({
-  declarations: [ProfileComponent, RecentNotificationComponent, EditComponent, DetailsComponent, 
+  declarations: [ProfileComponent, RecentNotificationComponent, EditComponent, DetailsComponent,
                 UserNotificationsComponent, UpdatePasswordComponent],
   imports: [
     CommonModule,
