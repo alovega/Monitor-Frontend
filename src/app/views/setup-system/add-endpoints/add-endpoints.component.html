@@ -18,10 +18,16 @@
     <button data-toggle="modal" data-target="#editEndpoint" (click)="editModal.show();" class="d-none" #openBtn> </button>
     <div class="col-md-6">
         <ul class="endpoints-list" *ngIf="endpoints.length; else noEndpoints">
-            <li class="endpoint-item" *ngFor="let endpoint of endpoints" (click)="updateEndpoint(endpoint.id)">
-               <span>
-                <mdb-icon fas icon="check-circle" class="green-text pr-1 pl-1"></mdb-icon>
-               </span> {{endpoint.name}}
+            <li *ngFor="let endpoint of endpoints">
+              <div class="row">
+               <div class="col-md-5 endpoint-item" (click)="updateEndpoint(endpoint.id)">
+                  {{endpoint.name}}
+               </div>
+                <!-- <mdb-icon fas icon="check-circle" class="green-text pr-1 pl-1"></mdb-icon> -->
+                <div class="col-md-5">
+                  <hm-endpoint-status status = "{{endpoint.status}}"></hm-endpoint-status>
+                </div>
+              </div>
             </li>
         </ul>
         <ng-template #noEndpoints class="text-center w-75 m-auto">
