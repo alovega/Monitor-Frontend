@@ -38,7 +38,6 @@ export class RecipientUpdateComponent implements OnInit {
       if (response.code === '800.200.001') {
         this.data = response.data;
         console.log(this.data);
-        this.toastr.success('successfully fetched recipient');
       } else {
         this.toastr.error(response.message);
       }

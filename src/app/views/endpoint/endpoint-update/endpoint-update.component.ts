@@ -50,7 +50,6 @@ export class EndpointUpdateComponent implements OnInit {
       if (response.code === '800.200.001') {
         this.data = response.data;
         console.log(this.data);
-        this.toastr.success('successfully fetched endpoint');
       } else {
         this.toastr.error(response.message);
       }

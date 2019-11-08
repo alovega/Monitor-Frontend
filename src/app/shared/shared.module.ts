@@ -28,6 +28,7 @@ import { AppPasswordDirective } from './app-password.directive';
 import { EndpointStatusComponent } from './endpoint-status/endpoint-status.component';
 import { GraphsService } from './graphs.service';
 import { SystemStatusService } from './system-status.service';
+import { LoginComponent } from './auth/login/login.component';
 
 @NgModule({
   declarations: [
@@ -41,15 +42,11 @@ import { SystemStatusService } from './system-status.service';
     TimePickerComponent,
     EmptyDataComponent,
     LoaderComponent,
-<<<<<<< HEAD
-    DeleteSwalComponent,
+    // DeleteSwalComponent,
     LoginComponent,
     ComponentLoaderComponent,
-    AppPasswordDirective
-=======
-    ComponentLoaderComponent,
+    AppPasswordDirective,
     EndpointStatusComponent
->>>>>>> 4f7cf4ef02e215898e4ba0556919df7e124e25c9
   ],
   imports: [
     CommonModule,

@@ -47,7 +47,6 @@ export class DashboardComponent implements OnInit {
     chartLabels: [],
     chartColors: [
       {
-        backgroundColor: 'rgba(105, 0, 132, .2)',
         borderColor: 'rgba(200, 99, 132, .7)',
         borderWidth: 2,
       },
@@ -57,12 +56,10 @@ export class DashboardComponent implements OnInit {
         borderWidth: 2,
       },
       {
-        backgroundColor: 'rgba(109, 137, 132, .2)',
         borderColor: 'rgba(91, 127, 0, 0.7)',
         borderWidth: 2,
       },
       {
-        backgroundColor: 'rgba(109, 137, 132, .2)',
         borderColor: 'rgba(255, 255, 0, 1.0)',
         borderWidth: 2,
       },
@@ -76,7 +73,7 @@ export class DashboardComponent implements OnInit {
           },
           scaleLabel: {
             display: true,
-            labelString: 'System Status per hour'
+            labelString: 'Response time in seconds'
           }
         }]
       }

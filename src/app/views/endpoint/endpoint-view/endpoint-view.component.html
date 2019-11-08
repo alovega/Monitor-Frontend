@@ -25,7 +25,7 @@
           <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{el.Url}}</td>
           <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{el.type}}</td>
           <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex"><hm-endpoint-status status="{{el.status}}"></hm-endpoint-status></td>
-          <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{el.dateCreated | date}}</td>
+          <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{el.dateCreated |  date:'MM/dd/yyyy   hh:mm:ss a'}}</td>
           <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">
               <a class="fas fa-edit text-success"  routerLinkActive="active" routerLink="/dashboard/endpoints/endpoint-update/{{el.id}}" ></a>
               <a class="fas fa-trash-alt mr-2 text-danger"  (click)="delete(el.id)"></a>
