@@ -21,7 +21,7 @@
                 <span class="incident-status" color="info">
                     {{ incident.status }}
                 </span>
-                <div class="last-update-time"><small>Last updated on: {{ incident.date_modified | date:'MMMM d, y' }} at {{ incident.date_modified | date:'h:mm:ss a' }}</small></div>
+                <div class="last-update-time"><small>Last updated on: {{ incident.date_modified | date:'MM/dd/yyyy   hh:mm:ss a'}}</small></div>
               </ng-template>
             </div>
               <div class="affected-systems">

@@ -17,7 +17,7 @@ export class AuthGuardService implements CanActivate, CanLoad, CanActivateChild 
     if (currentUser) {
         return true;
     }
-    this.router.navigate(['/login'], { queryParams: { returnUrl: state.url }});
+    this.router.navigate(['auth/login'], { queryParams: { returnUrl: state.url }});
     return false;
   }
 
@@ -26,7 +26,7 @@ export class AuthGuardService implements CanActivate, CanLoad, CanActivateChild 
     if (currentUser) {
       return true;
     }
-    this.router.navigate(['/login']);
+    this.router.navigate(['auth/login']);
     return false;
   }
 
@@ -35,7 +35,7 @@ export class AuthGuardService implements CanActivate, CanLoad, CanActivateChild 
     if (currentUser) {
       return true;
     }
-    this.router.navigate(['/login'], { queryParams: { returnUrl: state.url }});
+    this.router.navigate(['auth/login'], { queryParams: { returnUrl: state.url }});
     return false;
   }
 }

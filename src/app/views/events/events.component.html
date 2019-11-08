@@ -39,7 +39,7 @@
           <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{event.request}}</td>
           <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{event.response}}</td>
           <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{event.code}}</td>
-          <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex" style = "white-space: nowrap;">{{event.date_created | date:'MMMM d, yyyy'}}</td>
+          <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex" style = "white-space: nowrap;">{{event.date_created | date:'MM/dd/yyyy   hh:mm:ss a'}}</td>
           </tr>
           </tbody>
           <tfoot class="w-100">

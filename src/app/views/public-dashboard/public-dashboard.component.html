@@ -9,30 +9,45 @@
             </div>
         </div>
     </div>
-    <div class="endpoints-status"></div>
-    <div class="incidents-history">
-
-    </div>
-</div>
-
-
-<button type="button" mdbBtn color="primary" class="relative waves-light" (click)="frame.show()" mdbWavesEffect>Launch demo modal</button>
-
-<div mdbModal #frame="mdbModal" class="modal fade left" id="frameModalTop" tabindex="-1" role="dialog"
-     aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-md" role="document">
-    <div class="modal-content">
-      <div class="modal-header text-left">
-        <h4 class="modal-title w-100 font-weight-light">Add new system</h4>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="frame.hide()" #closeBtn>
-          <span aria-hidden="true">&times;</span>
-        </button>
-        dvfkbnfkbngbkgfnbk
-            
-          <div class="modal-footer d-flex justify-content-right" style="padding-right: 0px !important">
-            <button mdbBtn color="primary" class="waves-light" size="sm" class="float-right w-25" mdbWavesEffect>Add</button>
-          </div>     
+    <div class="endpoints-status">
+      <h5>Service status</h5>
+      <div class="card">
+        <ul class="list-group-horizontal-lg">
+          <li class="list-group-item" *ngFor="let endpoint of endpoints">
+            <div class="endpoint-content">
+              <div class="endpoint-column">
+                <div class="d-flex flex-wrap w-100">
+                    {{endpoint.name}}
+                    <div class="description endpoint-column fa fa-question-circle mt-1 ml-1">
+                        <span class="tooltip-text">{{endpoint.description}}</span>
+                    </div>
+                </div>
+              </div>
+              <div class="endpoint-column" style="text-align: right;">
+                  <span *ngIf="endpoint.status === 'Operational'" class="operational">Operational</span>
+                  <span *ngIf="endpoint.status === 'Degraded Performance'" class="degraded">
+                    Degraded Performance
+                  </span>
+                  <span *ngIf="endpoint.status === 'Minor Outage'" class="minor">
+                    Minor Outage
+                  </span>
+                  <span *ngIf="endpoint.status === 'Major Outage'" class="major">
+                    Major Outage
+                  </span>
+                  <span *ngIf="endpoint.status === 'Under Maintenance'" class="under-maintenance">
+                      Under Maintenance
+                  </span>
+                <!-- <hm-endpoint-status status="{{endpoint.status}}"></hm-endpoint-status> -->
+              </div>
+            </div>
+          </li>
+        </ul>
       </div>
     </div>
-  </div>
+    <div class="incidents-history">
+      <h5>Past Incidents</h5>
+      <div class="card">
+
+      </div>
+    </div>
 </div>
