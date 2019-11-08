@@ -11,9 +11,6 @@ import { ToastrModule } from 'ngx-toastr';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ErrorsModule } from './errors/errors.module';
-import { FooterComponent } from './layout/footer/footer.component';
-import { TopNavComponent } from './layout/navigation/top-nav/top-nav.component';
-import { SideNavComponent } from './layout/navigation/side-nav/side-nav.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SharedModule } from './shared/shared.module';
 import { AuthGuardService } from './shared/helpers/auth-guard.service';
@@ -23,7 +20,7 @@ import { AuthenticationService } from './shared/auth/authentication.service';
 
 @NgModule({
   declarations: [
-    AppComponent, FooterComponent, TopNavComponent, SideNavComponent
+    AppComponent,
   ],
   imports: [
     BrowserModule,

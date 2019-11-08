@@ -1,0 +1,50 @@
+.endpoints-list {
+    list-style: none;
+}
+
+.endpoint-item {
+    padding: 0px 0px 20px 0px;
+    font-size: 16px;
+    max-width: 90%;
+    font-weight: 600;
+    letter-spacing: 0.1px;
+    opacity: 0.9;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    cursor: pointer;
+}
+
+.endpoint-item:hover{
+    text-decoration: underline;
+}
+
+.popup-heading {
+    width: 100%;
+    font-weight: 500;
+    opacity: .9;
+    // font-size: 14px;
+}
+
+.popup-close {
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    color: #0052CC;
+}
+
+.popup-close:hover {
+    text-decoration: underline;
+}
+
+.form-label {
+    font-weight: 500;
+    opacity: 0.8;
+    text-align: left;
+    float: left;
+    margin-bottom: 1px !important;
+}
+
+// .modal-size {
+//     max-width: 50% !important;
+// }

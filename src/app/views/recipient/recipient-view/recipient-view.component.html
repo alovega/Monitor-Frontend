@@ -1,0 +1,50 @@
+<div class="row">
+    <div class="col col-md-8">
+        <h2>Recipient</h2>
+    </div>
+    <div class="col-6 col-md-4 d-flex justify-content-end">
+        <div class="col-md-6 px-0 top-controls" style="top:4px;">
+            <input class="form-control" type="text"  [(ngModel)]="searchText" id="search" placeholder="search" mdbInput >
+        </div>
+        <button type="button" routerLink="/dashboard/recipients/recipient-create" mdbBtn color="primary" mdbWavesEffect>Add Recipient</button>
+    </div>
+  </div>
+  
+  <table mdbTable id="tableSort" #tableEl="mdbTable" class="z-depth-1">
+        <thead class="white-text">
+            <tr>
+            <th *ngFor="let head of headElements let i = index" aria-controls="tableSort" scope="col" [mdbTableSort]="elements" [sortBy]="headElements[i]">{{Elements[head] | titlecase}} <mdb-icon fas icon="sort"></mdb-icon></th>
+            </tr>
+        </thead>
+        <tbody *ngIf="elements.length > 0; else noElements">
+            <tr mdbTableCol *ngFor="let el of elements; let i = index ">
+            <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{el.userName}}</td>
+            <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{el.phoneNumber}}</td>
+            <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{el.status}}</td>
+            <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{el.dateCreated | date}}</td>
+            <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">
+                <a class="fas fa-edit text-success"  routerLinkActive="active" routerLink="/dashboard/recipients/recipient-update/{{el.recipientId}}" ></a>
+                <a class="fas fa-trash-alt mr-2 text-danger" [disabled]="elements" (click)="delete(el.recipientId)"></a>
+            </td>
+            </tr>
+        </tbody>
+        <tfoot class="grey lighten-5 w-100">
+                <tr mdbTableCol>
+                  <td colspan="6">
+                    <mdb-table-pagination [tableEl]="tableEl" [searchDataSource]="elements"></mdb-table-pagination>
+                  </td>
+                </tr>
+            </tfoot>
+  </table>
+  <ng-template #noElements>
+    <td colspan="7">
+      <hm-empty-data header="No Existing Recipients" description="New Recipients will be displayed here">
+        <div action-button>
+        <a href="" routerLink="/dashboard/recipients/recipient-create">
+          <button action-button type="button" mdbBtn size="sm" color="primary" class="text-white">Add new Endpoint</button>
+        </a>
+        </div>
+      </hm-empty-data>
+    </td>
+  </ng-template>            
+  <router-outlet></router-outlet>

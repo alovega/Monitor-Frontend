@@ -9,6 +9,7 @@ import { System } from 'src/app/shared/models/system';
 import { EndpointType } from 'src/app/shared/models/endpoint-type';
 import { of } from 'rxjs';
 import { SystemService } from 'src/app/shared/system.service';
+import { LookUpService } from 'src/app/shared/look-up.service';
 import { ToastrService } from 'ngx-toastr';
 
 
@@ -31,13 +32,12 @@ export class EndpointFormComponent implements OnInit {
     private endpointService: EndpointService,
     private systemService: SystemService,
     private location: Location,
-    private toastr: ToastrService,
-    private router: Router ) {
+    private router: Router,
+    private lookupService: LookUpService,
+    private toastr: ToastrService) {
     this.createForm();
     this.data = new Endpoint();
-    of(this.getStates()).subscribe((data: any) => {
-      this.states = data;
-    });
+    this.getStates();
     of(this.getSystems()).subscribe((data: any) => {
       this.systems = data;
     });
@@ -94,7 +94,7 @@ export class EndpointFormComponent implements OnInit {
     });
   }
   getStates() {
-    this.endpointService.getStates().subscribe((data) => {
+    this.lookupService.getEndpointStates().subscribe((data) => {
       this.states = data;
     });
   }

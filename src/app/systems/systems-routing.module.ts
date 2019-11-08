@@ -23,8 +23,8 @@ const routes: Routes = [
    canLoad: [AuthGuardService] },
   { path: 'dashboard', loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule),
    canActivate: [AuthGuardService]},
-  { path: 'incidents', loadChildren: () => import('./incidents/incidents.module').then(m => m.IncidentsModule),
-  canLoad: [AuthGuardService]},
+  // { path: 'incidents', loadChildren: () => import('./incidents/incidents.module').then(m => m.IncidentsModule),
+  // canLoad: [AuthGuardService]},s
   { path: 'rules', loadChildren: () => import('./escalation-rules/escalation-rules.module').then(m => m.EscalationRulesModule),
   canLoad: [AuthGuardService]},
   { path: 'users', loadChildren: () => import('./users/users.module').then(m => m.UsersModule), canLoad: [AuthGuardService] },
