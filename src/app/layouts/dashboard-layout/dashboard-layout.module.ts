@@ -16,6 +16,7 @@ import { TopNavComponent } from 'src/app/layout/navigation/top-nav/top-nav.compo
 import { IncidentsModule } from 'src/app/views/incidents/incidents.module';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { DashboardComponent } from 'src/app/views/dashboard/dashboard.component';
+import { EditSystemComponent } from 'src/app/views/edit-system/edit-system.component';
 
 
 @NgModule({
@@ -25,6 +26,7 @@ import { DashboardComponent } from 'src/app/views/dashboard/dashboard.component'
     SideNavComponent,
     FooterComponent,
     DashboardComponent,
+    EditSystemComponent
   ],
   imports: [
     CommonModule,

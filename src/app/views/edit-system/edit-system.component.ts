@@ -10,11 +10,11 @@ import { SystemService } from '../../shared/system.service';
 import { LookUpService } from 'src/app/shared/look-up.service';
 
 @Component({
-  selector: 'hm-add-system',
-  templateUrl: './add-system.component.html',
-  styleUrls: ['./add-system.component.scss']
+  selector: 'hm-edit-system',
+  templateUrl: './edit-system.component.html',
+  styleUrls: ['./edit-system.component.scss']
 })
-export class AddSystemComponent implements OnInit {
+export class EditSystemComponent implements OnInit {
   editSystemForm: FormGroup;
   currentSystemId: any;
   currentSystem: any;
@@ -92,7 +92,7 @@ export class AddSystemComponent implements OnInit {
   }
 
   public back(): void {
-    this.router.navigate([`system/dashboard`]);
+    this.router.navigate(['dashboard']);
   }
 
 }

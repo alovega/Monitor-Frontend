@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AddSystemComponent } from './add-system.component';
+import { EditSystemComponent } from './edit-system.component';
 
-describe('AddSystemComponent', () => {
-  let component: AddSystemComponent;
-  let fixture: ComponentFixture<AddSystemComponent>;
+describe('EditSystemComponent', () => {
+  let component: EditSystemComponent;
+  let fixture: ComponentFixture<EditSystemComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AddSystemComponent ]
+      declarations: [ EditSystemComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AddSystemComponent);
+    fixture = TestBed.createComponent(EditSystemComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

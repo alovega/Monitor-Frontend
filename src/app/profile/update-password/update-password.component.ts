@@ -50,7 +50,7 @@ export class UpdatePasswordComponent implements OnInit {
       }
     }
     public back(): void {
-      this.router.navigate(['profile/details']);
+      this.router.navigate(['dashboard/profile/details']);
     }
     update() {
       const user = JSON.parse(localStorage.getItem('currentUser'));
