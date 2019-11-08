@@ -43,7 +43,6 @@ export class SystemRecipientUpdateComponent implements OnInit {
     this.id = this.activatedRoute.snapshot.params.id;
     console.log(this.id);
     this.systemRecipientService.getItem(this.id).subscribe(response => {
-      console.log(response);
       this.recipient = response;
   });
   }
@@ -83,10 +82,10 @@ export class SystemRecipientUpdateComponent implements OnInit {
     this.recipient.systemRecipientId = this.activatedRoute.snapshot.params.id;
     this.systemRecipientService.updateItem(this.recipient).subscribe(response => {
       if (response.code === '800.200.001') {
-        this.toastr.success( response.message, response.code);
+        this.toastr.success( response.message);
         this.location.back();
       } else {
-        this.toastr.error(response.message, response.code);
+        this.toastr.error(response.message);
       }
   });
 }

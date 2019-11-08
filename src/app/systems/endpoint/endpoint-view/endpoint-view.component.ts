@@ -79,8 +79,8 @@ export class EndpointViewComponent implements OnInit, AfterViewInit {
       text: 'You will not be able to recover this endpoint!',
       type: 'warning',
       showCancelButton: true,
-      confirmButtonText: 'Yes, delete the endpoint!',
-      cancelButtonText: 'No, keep the endpoint'
+      confirmButtonText: 'Yes, delete endpoint!',
+      cancelButtonText: 'No, keep endpoint'
     }).then((result) => {
       if (result.value) {
         console.log(endpointId);
