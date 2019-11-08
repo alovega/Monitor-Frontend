@@ -86,10 +86,10 @@ export class EndpointFormComponent implements OnInit {
       if (response.code === '800.200.001') {
         this.data = response.data;
         console.log(this.data);
-        this.toastr.success( response.message, response.code);
+        this.toastr.success( response.message);
         this.location.back();
       } else {
-        this.toastr.error(response.code, response.message);
+        this.toastr.error(response.message);
       }
     });
   }

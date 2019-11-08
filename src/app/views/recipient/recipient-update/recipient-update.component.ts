@@ -38,9 +38,9 @@ export class RecipientUpdateComponent implements OnInit {
       if (response.code === '800.200.001') {
         this.data = response.data;
         console.log(this.data);
-        this.toastr.success('successfully fetched recipient', response.code);
+        this.toastr.success('successfully fetched recipient');
       } else {
-        this.toastr.error(response.code, response.message);
+        this.toastr.error(response.message);
       }
     });
   }
@@ -76,10 +76,10 @@ export class RecipientUpdateComponent implements OnInit {
     this.data.recipientId = this.recipientId;
     this.recipientService.updateRecipient(this.data).subscribe(response => {
       if (response.code === '800.200.001') {
-        this.toastr.success(response.message, response.code);
+        this.toastr.success(response.message);
         this.location.back();
       } else {
-        this.toastr.error(response.message, response.code);
+        this.toastr.error(response.message);
       }
     });
   }

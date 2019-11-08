@@ -4,7 +4,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { RecipientService } from '../recipient.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'hm-recipient-view',
@@ -28,8 +28,7 @@ export class RecipientViewComponent implements OnInit, AfterViewInit {
   currentSystemId: any;
   recipientId: any;
 
-  constructor(private recipientService: RecipientService, private cdRef: ChangeDetectorRef, private activatedRoute: ActivatedRoute,
-              private modalService: NgbModal, private formBuilder: FormBuilder) { }
+  constructor(private recipientService: RecipientService, private cdRef: ChangeDetectorRef, private router: Router) { }
   @HostListener('input') oninput() {
     this.searchItems();
   }
@@ -64,6 +63,9 @@ export class RecipientViewComponent implements OnInit, AfterViewInit {
       this.mdbTable.setDataSource(prev);
     }
   }
+  public back(): void {
+    this.router.navigate(['system/recipients']);
+  }
   delete(recipientId) {
     console.log(recipientId);
     Swal.fire({
@@ -71,8 +73,8 @@ export class RecipientViewComponent implements OnInit, AfterViewInit {
       text: 'You will not be able to recover this recipient!',
       type: 'warning',
       showCancelButton: true,
-      confirmButtonText: 'Yes, delete the recipient!',
-      cancelButtonText: 'No, keep the recipient'
+      confirmButtonText: 'Yes, delete recipient!',
+      cancelButtonText: 'No, keep recipient'
     }).then((result) => {
       if (result.value) {
         console.log(recipientId);
@@ -84,6 +86,7 @@ export class RecipientViewComponent implements OnInit, AfterViewInit {
                 'This recipient has been deleted.',
                 'success'
               );
+              this.back();
             } else {
               Swal.fire(
                 'Failed!',

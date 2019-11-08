@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild, HostListener, ChangeDetectorRef, AfterVie
 import { MdbTableSortDirective, MdbTableDirective, MdbTablePaginationComponent } from 'angular-bootstrap-md';
 import Swal from 'sweetalert2';
 import { SystemRecipientService } from '../system-recipient.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { SystemService } from 'src/app/shared/system.service';
 import { of } from 'rxjs';
 
@@ -34,7 +34,7 @@ export class SystemRecipientsViewComponent implements OnInit, AfterViewInit {
   level: any;
 
   constructor(private systemRecipientService: SystemRecipientService, private cdRef: ChangeDetectorRef,
-              private activatedRoute: ActivatedRoute, private systemService: SystemService) {
+              private router: Router, private systemService: SystemService) {
                 of(this.getEscalationLevels()).subscribe( data => {
                   console.log(data);
                   this.EscalationLevels = data;
@@ -61,6 +61,9 @@ export class SystemRecipientsViewComponent implements OnInit, AfterViewInit {
     this.mdbTablePagination.calculateFirstItemIndex();
     this.mdbTablePagination.calculateLastItemIndex();
     this.cdRef.detectChanges();
+  }
+  public back(): void {
+    this.router.navigate(['system/system-recipients']);
   }
 
   filterSystemRecipients(level: any) {
@@ -109,8 +112,8 @@ export class SystemRecipientsViewComponent implements OnInit, AfterViewInit {
       text: 'You will not be able to recover this recipient!',
       type: 'warning',
       showCancelButton: true,
-      confirmButtonText: 'Yes, delete the recipient!',
-      cancelButtonText: 'No, keep the recipient'
+      confirmButtonText: 'Yes, delete recipient!',
+      cancelButtonText: 'No, keep recipient'
     }).then((result) => {
       if (result.value) {
         console.log(systemRecipientId);
@@ -123,6 +126,7 @@ export class SystemRecipientsViewComponent implements OnInit, AfterViewInit {
                 'This recipient has been deleted.',
                 'success'
               );
+
             } else {
               Swal.fire(
                 'Failed!',

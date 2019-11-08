@@ -104,17 +104,17 @@ export class DashboardComponent implements OnInit {
       })
     );
 
-    // this.graphsService.getResponseTimes(this.currentSystem.id).subscribe(
-    //   (response) => {
-    //     console.log(response);
-    //     Object.keys(response.datasets).forEach(key => {
-    //       this.responseTimeGraph.chartDatasets.push(response.datasets[key]);
-    //       this.responseTimeGraph.chartLabels.push(response.datasets[key].data);
-    //       console.log(this.responseTimeGraph.chartLabels.concat(response.datasets[key].chartLabels));
-    //       console.log(response.datasets[key].data);
-    //     });
-    //     this.responseTimeGraph.chartLabels = response.labels;
-    //     console.log(this.responseTimeGraph.chartLabels);
-    //   });
+    this.graphsService.getResponseTimes(this.currentSystem.id).subscribe(
+      (response) => {
+        console.log(response);
+        Object.keys(response.datasets).forEach(key => {
+          this.responseTimeGraph.chartDatasets.push(response.datasets[key]);
+          this.responseTimeGraph.chartLabels.push(response.datasets[key].data);
+          console.log(this.responseTimeGraph.chartLabels.concat(response.datasets[key].chartLabels));
+          console.log(response.datasets[key].data);
+        });
+        this.responseTimeGraph.chartLabels = response.labels;
+        console.log(this.responseTimeGraph.chartLabels);
+      });
   }
 }
