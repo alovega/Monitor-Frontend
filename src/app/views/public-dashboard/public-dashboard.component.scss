@@ -1,0 +1,45 @@
+.page-layout {
+    // margin: 2em 3em;
+}
+
+.status-container {
+    margin: 5em 3em;
+}
+
+// .status-container .current-status{
+//     border-radius: 4px;
+// }
+
+.page-status {
+    color: white;
+    border: 1px solid rgba(0,0,0,0.1);
+    text-shadow: 0 1px 0 rgba(0,0,0,0.1);
+    margin-bottom: 70px;
+    padding: 0.75rem 1.25rem;
+    text-align: left;
+    font-weight: 500;
+    font-size: 1.25rem;
+    line-height: 1.8125rem;
+    border-radius: 4px;
+}
+
+.status-critical {
+    background-color: #e74c3c;
+}
+
+.status-minor{
+    background-color: #f1c40f;
+    
+}
+
+.status-major{
+    background-color: #e67e22;
+}
+
+.status-maintenance {
+    background-color: #3498DB;
+}
+
+.status-operational {
+    background-color: #2fc662;
+}

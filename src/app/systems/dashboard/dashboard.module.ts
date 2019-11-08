@@ -6,10 +6,12 @@ import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { DashboardRoutingModule } from './dashboard-routing.module';
 import { DashboardComponent } from './dashboard.component';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { PublicDashboardComponent } from './public-dashboard/public-dashboard.component';
+import { SystemStatusService } from './system-status.service';
 
 
 @NgModule({
-  declarations: [DashboardComponent],
+  declarations: [DashboardComponent, PublicDashboardComponent],
   imports: [
     CommonModule,
     DashboardRoutingModule,
@@ -17,7 +19,10 @@ import { SharedModule } from 'src/app/shared/shared.module';
     MDBBootstrapModule,
     SharedModule
   ],
-  schemas:[
+  providers: [
+    SystemStatusService
+  ],
+  schemas: [
     NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA
   ]
 })

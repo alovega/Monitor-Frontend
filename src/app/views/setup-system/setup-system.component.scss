@@ -1,0 +1,39 @@
+.navbar {
+    background-color: #ffffff !important;
+    border: 0px !important;
+}
+
+.page-header {
+    margin-bottom: 30px;
+}
+
+.page-header-title {
+    font-weight: 500;
+    opacity: 0.9;
+}
+
+.switch-tabs:before {
+    display: table;
+    line-height: 0;
+    content: "";
+}
+
+.page-directions {
+    position: fixed;
+    bottom: 54px;
+    left: 266px;
+    right: 16px;
+    // background-color: gray;
+    // width: 100%;
+    // bottom: 100;
+    // padding-left: 0px !important;
+    // padding-right: -5rem;
+}
+
+#toast-container > div {
+  opacity: 1;
+}
+
+.direction-link {
+    cursor: pointer;
+}

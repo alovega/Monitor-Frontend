@@ -76,6 +76,7 @@ export class AddRulesComponent implements OnInit {
   }
 
   editRule(ruleId: string) {
+    console.log(this.escalationRules);
     this.ruleService.getRule(ruleId).subscribe(
       (rule) => {
         this.escalationRule = rule;
@@ -92,7 +93,7 @@ export class AddRulesComponent implements OnInit {
     }
 
     this.escalationRule.state = 'Active';
-    console.log(this.escalationRule);
+    // console.log(this.escalationRule);
     console.log(this.addRuleForm.controls.escalationLevel.value);
     this.ruleService.createRule(this.escalationRule).subscribe(
       response => {
@@ -113,6 +114,7 @@ export class AddRulesComponent implements OnInit {
       console.log('Invalid');
       return;
     }
+    // console.log(this.escalationRule);
     this.escalationRule.event_type = this.escalationRule.eventtype;
     this.escalationRule.state = 'Active';
     this.ruleService.updateRule(this.escalationRule).subscribe(

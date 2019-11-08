@@ -61,6 +61,7 @@ export class UpdateRuleComponent implements OnInit {
     this.escalationRule.event_type = this.escalationRule.eventtype;
     this.ruleService.updateRule(this.escalationRule).subscribe(
       response => {
+        console.log(response);
         if (response.code === '800.200.001') {
           this.toastr.success('Rule was successfully updated', 'Success');
           this.location.back();

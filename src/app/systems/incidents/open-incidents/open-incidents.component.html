@@ -1,6 +1,9 @@
 <div class="full-page">
-<div *ngIf="(incidents$ | async).length; else noIncidents">
-      <a *ngFor="let incident of incidents$ | async" routerLink="/system/incidents/update/{{incident.incident_id}}" routerLinkActive="active">
+  <div [ngClass]="{'d-none': !loading}">
+    <hm-loader></hm-loader>
+  </div> 
+<div *ngIf="incidents.length; else noIncidents">
+    <a *ngFor="let incident of incidents" routerLink="/system/incidents/update/{{incident.incident_id}}" routerLinkActive="active">
         <mdb-card class="open-incident mb-4">
             <mdb-card-body>
             <a routerLink="/system/incidents/update/{{incident.incident_id}}" routerLinkActive="active" class="update-incident-button float-right">
@@ -26,16 +29,16 @@
                     <div class="system">
                       {{ incident.affected_system }} 
                       <mdb-icon fas icon="check-circle" class="green-text pr-3"></mdb-icon>
-                    </div>
+                </div>
               </div>
-              <div class="affected-systems" *ngIf="incident.incident_updates.length">
+              <div class="affected-systems" *ngIf="incident.incident_updates">
                   <span *ngFor="let update of incident.incident_updates; let i=index">
                       <span *ngIf="update.user_name && i<1" class=""><small class="affected-systems-title">Assigned User : </small> {{update.user_name}}</span>
                     </span>
               </div>
             </mdb-card-body>
         </mdb-card>
-      </a>
+    </a>
 </div>
 
 <ng-template #noIncidents>

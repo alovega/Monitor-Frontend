@@ -1,8 +1,7 @@
-<div class="m-auto" style="position:fixed; right: 0; left: 0; z-index: 2; " [ngClass] = "{'d-none': isLoaded}">
-    <hm-component-loader></hm-component-loader>
-</div>
-
 <div *ngIf="incident && currentSystem">
+    <div [ngClass] = "{'d-none': !loading}">
+    <hm-loader></hm-loader>
+    </div>
     <div class="update-history">
         <div *ngIf="incident.incident_updates.length >= 1">
             <mdb-card class="mb-4" *ngFor="let incident_update of incident.incident_updates">

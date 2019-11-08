@@ -9,7 +9,6 @@ import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { SystemsRoutingModule } from './systems-routing.module';
 import { SystemsComponent } from './systems.component';
 import { SharedModule } from '../shared/shared.module';
-// import { NgbdModalContent, NgbdModalComponent } from './add-system/add-system.component';
 import { AddSystemComponent } from './add-system/add-system.component';
 import { AuthGuardService } from '../shared/helpers/auth-guard.service';
 

@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
-import { LoaderService } from '../loader.service';
 
 @Component({
   selector: 'hm-loader',
@@ -8,15 +7,10 @@ import { LoaderService } from '../loader.service';
   styleUrls: ['./loader.component.scss']
 })
 export class LoaderComponent implements OnInit {
-  showLoader: boolean;
-  constructor(
-    public loaderService: LoaderService
-  ) {
-    console.log('At the component its' + this.loaderService.visibility.value);
+  constructor() {
 
   }
 
   ngOnInit() {
-    // this.showLoader = this.loaderService.visibility.value;
   }
 }

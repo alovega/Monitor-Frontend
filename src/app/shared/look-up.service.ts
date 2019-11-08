@@ -1,7 +1,11 @@
 import { Injectable } from '@angular/core';
-import {throwError} from 'rxjs';
+import {  throwError } from 'rxjs';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
-import { catchError, map, retry} from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { catchError, map, retry, tap} from 'rxjs/operators';
+
+import { environment } from '../../environments/environment';
+import { System } from './models/system';
 
 
 @Injectable({
@@ -59,6 +63,7 @@ export class LookUpService {
   public getEscalationLevel() {
 
     return this.http.get<any>(this.Url).pipe(
+      tap(res => console.log(res)),
       map(response => response.data.escalation_levels),
       retry(2),
       catchError(this.handleError)
@@ -100,6 +105,14 @@ export class LookUpService {
 
     return this.http.get<any>(this.Url).pipe(
       map(response => response.data.recipients),
+      retry(2),
+      catchError(this.handleError)
+    );
+  }
+
+  public getEndpointStates() {
+    return this.http.get<any>(this.Url).pipe(
+      map(response => response.data.endpoint_states),
       retry(2),
       catchError(this.handleError)
     );

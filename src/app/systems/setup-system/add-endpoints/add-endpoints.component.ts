@@ -101,7 +101,7 @@ export class AddEndpointsComponent implements OnInit {
         // console.log(res);
         if (res.code === '800.200.001') {
           this.submitted = false;
-          this.selectedEndpoint = res.data.endpoint[0];
+          this.selectedEndpoint = res.data;
           this.openBtn.nativeElement.click();
         }
       })

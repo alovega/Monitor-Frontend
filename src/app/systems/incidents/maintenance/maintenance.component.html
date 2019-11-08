@@ -1,8 +1,11 @@
 <div class="full-page">
-<table mdbTable id="incident-list" *ngIf="(incidents$ | async).length > 0; else noIncidents">
+  <div [ngClass]="{'d-none': !loading}">
+    <hm-loader></hm-loader>
+  </div>
+<table mdbTable id="incident-list" *ngIf="incidents.length > 0; else noIncidents">
   <tbody>
     <!-- Incident Item -->
-    <tr mdbTableCol class="incident-item" *ngFor="let incident of incidents$ | async">
+    <tr mdbTableCol class="incident-item" *ngFor="let incident of incidents">
       <td scope="row">
           <div class="incident-description">
             <div class="action-buttons float-right">
