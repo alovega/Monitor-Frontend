@@ -42,7 +42,8 @@ export class DashboardComponent implements OnInit {
 
   public responseTimeGraph = {
     chartType: 'bar',
-    chartDatasets: [],
+    chartDatasets: [
+    ],
     chartLabels: [],
     chartColors: [
       {
@@ -100,10 +101,9 @@ export class DashboardComponent implements OnInit {
 
     this.graphsService.getSystemStatus(this.systemId).subscribe(
       (response) => {
-        this.data = []
         Object.keys(response.datasets).forEach(key => {
           this.responseTimeGraph.chartDatasets.push(response.datasets[key]);
-          this.responseTimeGraph.chartLabels.push(response.datasets[key].data)
+          this.responseTimeGraph.chartLabels.push(response.datasets[key].data);
           console.log(this.responseTimeGraph.chartLabels.concat(response.datasets[key].chartLabels));
           console.log(response.datasets[key].data);
         });
