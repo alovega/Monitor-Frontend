@@ -29,6 +29,7 @@ export class UserNotificationsComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     this.profileService.getLoggedInuserNotifications().subscribe(
       response => {
+        console.log(response);
         this.elements = response;
         this.mdbTable.setDataSource(this.elements);
         this.elements = this.mdbTable.getDataSource();
