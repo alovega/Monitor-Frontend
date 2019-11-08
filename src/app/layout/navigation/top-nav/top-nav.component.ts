@@ -126,7 +126,6 @@ export class TopNavComponent implements OnInit, OnChanges {
   logout() {
     this.authService.logout();
     // this.currentUser = null;
-    this.router.navigate(['/login']);
+    this.router.navigate(['/auth/login']);
   }
-
 }

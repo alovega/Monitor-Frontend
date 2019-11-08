@@ -45,12 +45,6 @@ export class AuthenticationService {
         if (result.code === '800.200.001') {
           localStorage.setItem('currentUser', JSON.stringify(result.data));
           this.currentUserSubject.next(result.data);
-          let body = document.getElementsByTagName('body')[0];
-          if (this.currentUser) {
-            body.classList.remove('body-logged-out');
-          } else {
-            body.classList.add('body-logged-out');
-          }
           return result.data;
         } else {
           return null;

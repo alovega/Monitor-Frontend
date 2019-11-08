@@ -12,6 +12,8 @@ import { EndpointType } from '../../../shared/models/endpoint-type';
 import { EndpointService } from '../../endpoint/endpoint.service';
 import { SystemService } from 'src/app/shared/system.service';
 import { SetupService } from '../setup.service';
+import { LookUpService } from '../../../shared/look-up.service';
+
 
 @Component({
   selector: 'hm-add-endpoints',
@@ -41,11 +43,9 @@ export class AddEndpointsComponent implements OnInit {
     private location: Location,
     private router: Router,
     private toastr: ToastrService,
-    private setupService: SetupService) {
+    private setupService: SetupService,
+    private lookupService: LookUpService) {
     this.data = new Endpoint();
-    of(this.getStates()).subscribe((data: any) => {
-      this.states = data;
-    });
     of(this.getSystems()).subscribe((data: any) => {
       this.systems = data;
     });
@@ -64,7 +64,8 @@ export class AddEndpointsComponent implements OnInit {
     this.currentSystem = this.systemService.getCurrentSystem();
     this.currentSystemId = this.currentSystem.id;
     this.getEndpoints();
-    console.log(this.setupService.nextUrl.value);
+    this.getStates();
+    // console.log(this.setupService.nextUrl.value);
 
     this.updateForm = this.fb.group({
         EndpointName: ['', Validators.required],
@@ -148,7 +149,7 @@ export class AddEndpointsComponent implements OnInit {
   }
 
   getStates() {
-    this.endpointService.getStates().subscribe((data) => {
+    this.lookupService.getEndpointStates().subscribe((data) => {
       this.states = data;
     });
   }

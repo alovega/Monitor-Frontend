@@ -5,6 +5,7 @@ import { first } from 'rxjs/operators';
 import Swal from 'sweetalert2';
 
 import { AuthenticationService } from '../../shared/auth/authentication.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'hm-login',
@@ -23,7 +24,8 @@ export class LoginComponent implements OnInit {
     private authService: AuthenticationService,
     private route: ActivatedRoute,
     private router: Router,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private toastr: ToastrService
   ) {
     if (this.authService.currentUserValue) {
       this.router.navigate(['/']);
@@ -37,13 +39,6 @@ export class LoginComponent implements OnInit {
     });
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
 
-    this.authService.currentUser.subscribe((user) => this.currentUser = user);
-    let body = document.getElementsByTagName('body')[0];
-    if (this.currentUser) {
-      body.classList.remove('body-logged-out');
-    } else {
-      body.classList.add('body-logged-out');
-    }
   }
 
   get f() { return this.loginForm.controls; }
@@ -64,21 +59,13 @@ export class LoginComponent implements OnInit {
               if (data) {
                 this.router.navigate([this.returnUrl]);
               } else {
-                Swal.fire(
-                  '',
-                  'Invalid credentials supplied. Try again',
-                  'warning'
-                );
+                this.toastr.warning('Invalid credentials supplied. Try again', 'Warning');
                 this.loading = false;
-                this.loginForm.reset();
               }
             },
             error => {
                 this.error = error;
-                Swal.fire(
-                  'Error',
-                  'An error has occurred',
-                  'error');
+                this.toastr.error('Could not login at this time. Try again later', 'Error');
                 this.loading = false;
             });
 }
