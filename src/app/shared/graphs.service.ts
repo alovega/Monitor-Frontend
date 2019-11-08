@@ -1,0 +1,28 @@
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { tap, map } from 'rxjs/operators';
+
+import { environment } from '../../environments/environment';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class GraphsService {
+  constructor(
+    private http: HttpClient
+  ) { }
+
+  getErrorRates(): Observable<any> {
+    return this.http.post<any>(environment.apiEndpoint + 'get_error_rates/', {}).pipe(
+      map(response => response.data)
+    );
+  }
+
+  getResponseTimes(systemId): Observable<any> {
+    return this.http.post<any>(environment.apiEndpoint + 'get_response_time_data/', {systemId}).pipe(
+      tap(res => console.log(res)),
+      map(response => response.data)
+    );
+  }
+}

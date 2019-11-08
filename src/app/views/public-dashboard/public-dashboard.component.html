@@ -1,0 +1,38 @@
+<div class="page-layout">
+    <div class="page-header">
+        
+    </div>
+    <div class="status-container">
+        <div class="current-status">
+            <div class="{{systemStatus.current_state.state}} page-status">
+                {{systemStatus.current_state.description}}
+            </div>
+        </div>
+    </div>
+    <div class="endpoints-status"></div>
+    <div class="incidents-history">
+
+    </div>
+</div>
+
+
+<button type="button" mdbBtn color="primary" class="relative waves-light" (click)="frame.show()" mdbWavesEffect>Launch demo modal</button>
+
+<div mdbModal #frame="mdbModal" class="modal fade left" id="frameModalTop" tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-md" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-left">
+        <h4 class="modal-title w-100 font-weight-light">Add new system</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="frame.hide()" #closeBtn>
+          <span aria-hidden="true">&times;</span>
+        </button>
+        dvfkbnfkbngbkgfnbk
+            
+          <div class="modal-footer d-flex justify-content-right" style="padding-right: 0px !important">
+            <button mdbBtn color="primary" class="waves-light" size="sm" class="float-right w-25" mdbWavesEffect>Add</button>
+          </div>     
+      </div>
+    </div>
+  </div>
+</div>

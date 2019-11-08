@@ -63,6 +63,7 @@ export class LookUpService {
   public getEscalationLevel() {
 
     return this.http.get<any>(this.Url).pipe(
+      tap(res => console.log(res)),
       map(response => response.data.escalation_levels),
       retry(2),
       catchError(this.handleError)

@@ -1,0 +1,92 @@
+.page-header {
+    font-size: 20px;
+    font-weight: 500;
+}
+
+.priority-level{
+    float: right;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.update-history-header, .update-history-header{
+    font-size: 16px;
+    font-weight: 500;
+    margin: 40px 0px 10px 0px;
+}
+
+.new-rule .card{
+    padding: 25px;
+    margin-bottom: 50px;
+}
+
+.update-history .last-update-time{
+    opacity: 0.5;
+    margin-bottom: 5px;
+}
+
+.update-status{
+    width: 80px;
+    border-radius: 3px;
+    font-size: 12px;
+    font-weight: 400;
+    text-transform: uppercase;
+    color: rgb(11, 11, 80) !important;
+    background-color: rgb(184, 228, 228);
+    padding: 3px;
+    margin: 7px 0px 7px 0px;
+}
+
+.update-description {
+    margin-bottom: 15px;
+}
+
+.affected-systems-title {
+    text-transform: uppercase;
+    margin-right: 2px;
+    opacity: 0.8;
+}
+
+.affected-systems .system {
+    display: inline;
+}
+
+.delete-button {
+    margin-top: 10px;
+}
+
+.form-label {
+    float: left;
+    font-size: 13px;
+    opacity: 0.7;
+    font-weight: 500;
+    margin-bottom: 5px !important;
+}
+
+.inline-rule{
+    width: 150px;
+    margin: 0px 10px;
+}
+
+.rule-text{
+    font-size: 13px;
+    opacity: 0.7;
+    font-weight: 500;
+    margin-bottom: 20px !important;
+    margin-bottom: 5px;
+}
+
+#create-button{
+    font-size: 14px;
+    background-color: #0052CC !important;
+    border: 1px solid #0052CC;
+    border-radius: 4px;
+    color: #ffffff;
+    padding: 6px 7px 6px 7px;
+    font-weight: 500;
+}
+
+.invalid-feedback{
+    margin-top: 0px;
+    text-align: left;
+}

@@ -58,10 +58,6 @@ export class AddEndpointsComponent implements OnInit {
     // this.setupService.previousUrl.next(null);
    }
 
-   public back(): void {
-    this.router.navigate(['system/endpoints']);
-  }
-
   ngOnInit() {
     this.setupService.nextUrl.next('rules');
     this.setupService.previousUrl.next(null);

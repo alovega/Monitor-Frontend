@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Route, ActivatedRoute } from '@angular/router';
 import { SystemService } from '../../shared/system.service';
 import { GraphsService } from './graphs.service';
+import { SystemStatusService } from './system-status.service';
 
 @Component({
   selector: 'hm-dashboard',
@@ -85,7 +86,8 @@ export class DashboardComponent implements OnInit {
 
   constructor(
     public graphsService: GraphsService,
-    public systemService: SystemService
+    public systemService: SystemService,
+    private systemStatusService: SystemStatusService
   ) { }
 
   ngOnInit() {
@@ -100,7 +102,7 @@ export class DashboardComponent implements OnInit {
 
     this.graphsService.getSystemStatus(this.systemId).subscribe(
       (response) => {
-        this.data = []
+        this.data = [];
         Object.keys(response.datasets).forEach(key => {
           this.responseTimeGraph.chartDatasets.push(response.datasets[key]);
           this.responseTimeGraph.chartLabels.push(response.datasets[key].data)

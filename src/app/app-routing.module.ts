@@ -5,12 +5,12 @@ import { LoginComponent } from './shared/auth/login/login.component';
 import { AuthGuardService } from './shared/helpers/auth-guard.service';
 
 const routes: Routes = [
-  { path: 'login', component: LoginComponent},
-  { path: 'profile', loadChildren: () => import('./profile/profile.module').then(m => m.ProfileModule), canActivate: [AuthGuardService] },
-  { path: 'tables', loadChildren: () => import('./tables/tables.module').then(m => m.TablesModule) },
-  { path: 'system', loadChildren: () => import('./systems/systems.module').then(m => m.SystemsModule)},
-  { path: '', pathMatch: 'full', redirectTo: 'system', canActivate: [AuthGuardService]},
-  { path: '**', component: PagenotfoundComponent, canActivate: [AuthGuardService]},
+  { path: '', pathMatch: 'full', redirectTo: 'dashboard' },
+  { path: 'dashboard', loadChildren: () => import('./layouts/dashboard-layout/dashboard-layout.module').then(m => m.DashboardLayoutModule)},
+  { path: 'system', loadChildren: () => import('./layouts/public-layout/public-layout.module').then(m => m.PublicLayoutModule)},
+  { path: 'auth', loadChildren: () => import('./layouts/auth-layout/auth-layout.module').then(m => m.AuthLayoutModule) },
+  // { path: '', pathMatch: 'full', redirectTo: 'system', canActivate: [AuthGuardService]},
+  { path: '**', component: PagenotfoundComponent},
 ];
 
 @NgModule({

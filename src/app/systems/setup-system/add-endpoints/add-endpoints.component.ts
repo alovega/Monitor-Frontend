@@ -89,7 +89,7 @@ export class AddEndpointsComponent implements OnInit {
   }
 
   public getEndpoints() {
-    this.endpointService.getEndpoints().subscribe(
+    this.endpointService.getEndpoints(this.currentSystemId).subscribe(
       (endpoints) => {
         this.endpoints = endpoints;
         console.log(endpoints);
