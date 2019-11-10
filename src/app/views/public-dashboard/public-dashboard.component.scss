@@ -24,7 +24,15 @@ li .list-group-horizontal-lg:nth-child(2){
     border-radius: 2px !important;
     margin: 0px !important;
 }
-
+#incident{
+    padding: 0;
+    padding-top: 15px;
+}
+.row{
+    padding-left: 15px;
+    padding-top: 15px;
+    display: inline-block;
+}
 .card {
     padding: 0px 0px 0px 0px;
     border: 1px solid rgba(0, 0, 0, 0.125);

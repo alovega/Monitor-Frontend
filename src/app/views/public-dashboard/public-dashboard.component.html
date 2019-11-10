@@ -46,8 +46,17 @@
     </div>
     <div class="incidents-history">
       <h5>Past Incidents</h5>
-      <div class="card">
-
+      <div class="card" style="border: none;">
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item" id="incident" *ngFor="let incident of systemStatus.incidents">
+            <h5>{{incident.date_created | date}}</h5>
+            <div class="row border border-0">
+              <h6>{{incident.name}}</h6>
+              <p>{{incident.description}}</p>
+              <p>{{incident.date_created | date:'MM/dd/yyyy   hh:mm:ss a'}} - {{incident.date_created | date:'MM/dd/yyyy   hh:mm:ss a z'}} </p>
+            </div>
+          </li>
+        </ul>
       </div>
     </div>
 </div>
