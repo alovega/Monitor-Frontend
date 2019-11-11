@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { Location } from '@angular/common';
+import { UsersService } from 'src/app/systems/users/users.service';
+import { ActivatedRoute } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'hm-update-user',
@@ -8,20 +11,53 @@ import { Location } from '@angular/common';
   styleUrls: ['./update-user.component.scss']
 })
 export class UpdateUserComponent implements OnInit {
-  public updateUserForm = new FormGroup({
-    userName: new FormControl(''),
-    firstName: new FormControl(''),
-    lastName: new FormControl(''),
-    email: new FormControl('')
-  });
+  public updateUserForm: FormGroup;
+  public user: any;
+  submitted = false;
+  userId: string;
   constructor(
-    public location: Location
+    public location: Location,
+    private formBuilder: FormBuilder,
+    private usersService: UsersService,
+    private activatedRoute: ActivatedRoute,
+    private toastr: ToastrService
   ) { }
 
   ngOnInit() {
+    this.userId = this.activatedRoute.snapshot.paramMap.get('user-id');
+    this.usersService.getUser(this.userId).subscribe(
+      (res: any) => {
+        this.user = res;
+        console.log(res);
+      })
+    this.updateUserForm = this.formBuilder.group({
+      username: ['', Validators.required],
+      firstname: [''],
+      lastname: [''],
+      email: ['', Validators.required]
+    });
   }
 
   public back(): void {
     this.location.back();
+  }
+
+  onSubmit() {
+    this.submitted = true;
+    if (this.updateUserForm.invalid) {
+      console.log('Invalid');
+      return;
+    }
+
+    this.user.user_id = this.user.id;
+    console.log(this.user);
+    // if (t)
+    this.usersService.updateUser(this.user).subscribe(
+    (response: any) => {
+        if (response.code === '800.200.001') {
+          console.log(this.user);
+          this.location.back();
+        }
+      });
   }
 }

@@ -13,7 +13,7 @@ export class PublicDashboardComponent implements OnInit {
   systemStatus: any;
   systemId: string;
   endpoints: any[];
-  incidents: any[];
+  pastIncidents: any[];
   constructor(
     private systemStatusService: SystemStatusService,
     private activatedRoute: ActivatedRoute,
@@ -34,7 +34,7 @@ export class PublicDashboardComponent implements OnInit {
         console.log(res);
       });
     this.incidentsService.getIncidents().subscribe(
-      (incidents) => this.incidents = incidents
+      (incidents) => this.pastIncidents = incidents
     );
   }
 
