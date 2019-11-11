@@ -2,7 +2,7 @@
     // margin: 2em 3em;
 }
 
-.status-container, .endpoints-status, .incidents-history{
+.status-container, .endpoints-status, .incidents-history, .current-incident{
     margin: 5em 15%;
 }
 
@@ -115,6 +115,42 @@ li .list-group-horizontal-lg:nth-child(2){
 .under-maintenance {
     color: blue;
 }
+
+
+.operational-incident {
+    border: 1px solid #FF8B00 !important;
+    background-color: #FF8B00;
+    color: #ffffff;
+}
+
+.degraded-incident {
+    border: 1px solid black !important;
+    background-color: black;
+    color: #ffffff;
+}
+.display-none{
+    display: none;
+}
+
+.minor-incident {
+    border: 1px solid #FFC400 !important;
+    background-color: #FFC400;
+    color: #ffffff;
+}
+
+.major-incident {
+    border: 1px solid #DE350B !important;
+    background-color: #DE350B;
+    color: #ffffff;
+}
+
+
+.under-maintenance-incident {
+    border: 1px solid blue !important;
+    background-color:blue;
+    color: #ffffff;
+}
+
 
 
 .description .tooltip-text {
