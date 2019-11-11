@@ -101,6 +101,23 @@ export class LookUpService {
       catchError(this.handleError)
     );
   }
+
+  public getRealtimeIncidentStates() {
+    return this.http.get<any>(this.Url).pipe(
+      map(response => response.data.realtime_incident_states),
+      retry(2),
+      catchError(this.handleError)
+    );
+  }
+
+  public getScheduledIncidentStates() {
+    return this.http.get<any>(this.Url).pipe(
+      map(response => response.data.scheduled_incident_states),
+      retry(2),
+      catchError(this.handleError)
+    );
+  }
+
   public getRecipients() {
 
     return this.http.get<any>(this.Url).pipe(

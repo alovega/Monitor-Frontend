@@ -3,7 +3,25 @@
     <hm-loader></hm-loader>
     </div>
     <div class="update-history">
-        <div *ngIf="incident.incident_updates.length >= 1">
+        <mdb-card class="mb-4" *ngIf="incident.status == 'Completed' || incident.status == 'Resolved'">
+            <div class="last-update-time"><strong>
+                    <small>{{ incident.date_modified  | date: 'MMMM d, y' }}</small>
+                </strong>
+            </div>
+            <div>
+                <div class="update-status">{{ incident.status }}</div>
+            </div>
+            <div class="update-description">
+                {{ incident.description }}
+            </div>
+            <div class="affected-systems">
+                <span class="affected-systems-title"><small>Affected System : </small></span>
+                <div class="system">
+                    {{ incident.affected_system }} <mdb-icon fas icon="check-circle" class="green-text pr-3"></mdb-icon>
+                </div>
+            </div>
+        </mdb-card>
+        <div *ngIf="incident.incident_updates.length">
             <mdb-card class="mb-4" *ngFor="let incident_update of incident.incident_updates">
                 <div class="last-update-time">
                     <strong>
@@ -19,28 +37,11 @@
                 <div class="affected-systems">
                     <span class="affected-systems-title"><small>Affected System : </small></span>
                     <div class="system">
-                        {{ incident.affected_system }}<mdb-icon fas icon="check-circle" class="green-text pr-3"></mdb-icon>
+                        {{ incident.affected_system }} <mdb-icon fas icon="check-circle" class="green-text pr-3"></mdb-icon>
                     </div>
                 </div>
             </mdb-card>
         </div>
-        <mdb-card class="mb-4">
-            <div class="last-update-time"><strong>
-                    <small>{{ incident.date_modified  | date: 'MMMM d, y' }}</small>
-                </strong></div>
-            <div>
-                <div class="update-status">{{ incident.status }}</div>
-            </div>
-            <div class="update-description">
-                {{ incident.description }}
-            </div>
-            <div class="affected-systems">
-                <span class="affected-systems-title"><small>Affected System : </small></span>
-                <div class="system">
-                    {{ incident.affected_system }} <mdb-icon fas icon="check-circle" class="green-text pr-3"></mdb-icon>
-                </div>
-            </div>
-        </mdb-card>
     </div>
     <div class="new-update" *ngIf="incident.status !== 'Resolved' && incident.status !== 'Completed'">
         <div class="update-history-header">
@@ -53,20 +54,19 @@
                         <div class="form-group mb-4" *ngIf="incident.type === 'Realtime'">
                             <label class="form-label">Incident status</label>
                             <select formControlName="incidentStatus" class="browser-default custom-select"
-                                [ngClass]="{'is-invalid': submitted && updateIncidentForm.controls.incidentStatus.errors}">
-                                <option selected value="Investigating">Investigating</option>
-                                <option value="Identified">Identified</option>
-                                <option value="Monitoring">Monitoring</option>
-                                <option value="Resolved">Resolved</option>
+                                [ngClass]="{'is-invalid': submitted && updateIncidentForm.controls.incidentStatus.errors}" [(ngModel)]="incident.state">
+                                <option selected *ngFor = "let realtimeState of realtimeStates" value="{{realtimeState.id}}">
+                                    {{realtimeState.name}}
+                                </option>
                             </select>
                         </div>
                         <div class="form-group mb-4" *ngIf="incident.type === 'Scheduled'">
                             <label class="form-label">Maintenance status</label>
                             <select formControlName="incidentStatus" class="browser-default custom-select"
                                 [ngClass]="{'is-invalid': submitted && updateIncidentForm.controls.incidentStatus.errors}">
-                                <option selected value="Scheduled">Scheduled</option>
-                                <option value="InProgress">In Progress</option>
-                                <option value="Completed">Completed</option>
+                                <option selected *ngFor = "let scheduledState of scheduledStates" value="{{scheduledState.id}}" [(ngModel)]="incident.state">
+                                    {{scheduledState.name}}
+                                </option>
                             </select>
                         </div>
                     </div>
