@@ -3,7 +3,7 @@
 }
 
 .status-container, .endpoints-status, .incidents-history{
-    margin: 5em 15%;
+    margin: 3em 15%;
 }
 
 .list-group-horizontal-lg {
@@ -12,8 +12,8 @@
     margin-bottom: 0px !important;
 }
 
-li .list-group-horizontal-lg:nth-child(2){
-    
+.list-group-horizontal-lg > .list-group-item:nth-of-type(1) {
+    border-top: none !important;
 }
 
 .list-group-item {
@@ -23,14 +23,16 @@ li .list-group-horizontal-lg:nth-child(2){
     // border: none !important;
     border-radius: 2px !important;
     margin: 0px !important;
-    // padding: 10px    
-    padding: 1.5rem 1.25rem;
+    padding: 1rem 1.25rem;
 }
 
-.card {
+.card-display {
+    font-size: 1rem;
     padding: 0px 0px 0px 0px;
     border: 1px solid rgba(0, 0, 0, 0.125);
     padding-bottom: 0px !important;
+    // padding-bottom: 0px !important;
+    border-radius: 4px;
 }
 
 
@@ -111,22 +113,54 @@ li .list-group-horizontal-lg:nth-child(2){
 }
 
 
-.description .tooltip-text {
+.description-text .tooltip-text {
     visibility: hidden;
-    width: 120px;
+    width: 200px;
     background-color: black;
     color: #fff;
     text-align: center;
     padding: 5px 0;
     border-radius: 6px;
-    font-weight: 300;
+    font-weight: lighter;
     opacity: .9;
     /* Position the tooltip text - see examples below! */
     position: absolute;
     z-index: 1;
   }
 
-.description:hover .tooltip-text {
+.description-text:hover .tooltip-text {
     visibility: visible;
     cursor: pointer;
+}
+
+.faded-text {
+    font-weight: 500;
+    opacity: 0.5;
+}
+
+.incident-name {
+    font-weight: 500;
+    font-size: 1.25rem;
+    line-height: 1.8125rem;
+}
+
+
+.priority-1 {
+    color: black;
+}
+
+.priority-2, .priority-3 {
+    color: #FFC400 !important;
+}
+
+.priority-4 {
+    color: #FF8B00 !important;
+}
+
+.priority-5 {
+    color: #DE350B !important;
+}
+
+.maintenance{
+    color: #3498DB !important;
 }

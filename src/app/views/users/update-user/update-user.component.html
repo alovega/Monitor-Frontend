@@ -1,51 +1,91 @@
 <!-- Grid Row -->
 <div class="row wow animate fadeIn" data-wow-delay="0.1s">
+  <!-- Grid column -->
+  <div class="col-md-1"></div>
     <!-- Grid column -->
-    <div class="col-md-1"></div>
-      <!-- Grid column -->
-    <div class="col-md-10">
-      <div class="page-header d-flex row">
-        <div class="col-md-6">
-        Update user
-        </div>
-
-        <div class="col-md-6">
-          <button class="float-right back-button"><i class="fas fa-angle-double-left"></i> back to users</button>
-        </div>
+  <div class="col-md-12">
+    <div class="page-header d-flex row">
+      <div class="col-sm-6">
+          Add user
       </div>
-      <hr>
-      <div class="page-body">
-        <div class="new-rule">
-          <mdb-card class="card">
-            <form [formGroup]="updateUserForm" class="text-center">
-            <!-- Name -->
-            <label class="form-label">User Name</label>
-            <input type="text" id="userName" formControlName="ruleName" class="grey lighten-5 form-control mb-4"
-            placeholder="Username">
-            
-            <label class="form-label">First Name</label>
-            <input type="text" id="firstName" formControlName="ruleName" class="grey lighten-5 form-control mb-4"
-            placeholder="first name">
-
-            <label class="form-label">Last Name</label>
-            <input type="text" id="lastName" formControlName="ruleName" class="grey lighten-5 form-control mb-4"
-            placeholder="last name">
-  
-            <!-- Email -->
-            <label class="form-label">Email</label>
-            <input type="email" id="email" formControlName="ruleName" class="grey lighten-5 form-control mb-4"
-            placeholder="email">
-              <!-- Create button -->
-              <div class="create-button">
-                  <button id="create-button" mdbWavesEffect class="float-right" color="primary" size="md">Update user</button>
-              </div>
-            </form>
-          </mdb-card>
-        </div>
+      <div class="col-sm-6">
+        <button class="float-right back-button" (click)="back()"><i class="fas fa-angle-double-left"></i> back to users</button>
       </div>
     </div>
-  
-    <!-- Grid column -->
-    <div class="col-md-1"></div>
+    <hr>
+    <div class="page-body">
+      <div class="new-rule">
+        <mdb-card class="card">
+          <form [formGroup]="updateUserForm" class="text-center row" (ngSubmit)="onSubmit()">
+          <div class="col-md-6 mb-4">
+            <div class="form-group">
+                <!-- Name -->
+                <label class="form-label">User Name</label>
+                <input type="text" id="userName" formControlName="username" class="grey lighten-5 form-control"
+                placeholder="Username" [ngClass]="{'is-invalid': submitted && updateUserForm.controls.username.errors}" 
+                [(ngModel)] = "user.username">
+              
+                <div *ngIf="submitted && updateUserForm.controls.username.errors" class="invalid-feedback">
+                  <div *ngIf="updateUserForm.controls.username.errors.required">Username is required</div>
+                </div>
+            </div>
+          </div>
+
+          <div class="col-md-6 mb-4">
+              <div class="form-group">
+                  <!-- Name -->
+                  <label class="form-label">Email</label>
+                  <input type="email" id="email" formControlName="email" class="grey lighten-5 form-control"
+                  placeholder="Email" [ngClass]="{'is-invalid': submitted && updateUserForm.controls.email.errors}" 
+                  [(ngModel)] = "user.email" required>
+                
+                  <div *ngIf="submitted && updateUserForm.controls.email.errors" class="invalid-feedback">
+                    <div *ngIf="updateUserForm.controls.email.errors.required">Email is required</div>
+                  </div>
+              </div>
+            </div>
+
+          <div class="col-md-6 mb-4">
+              <div class="form-group">
+                  <!-- Name -->
+                  <label class="form-label">First Name</label>
+                  <input type="text" id="firstname" formControlName="firstname" class="grey lighten-5 form-control"
+                  placeholder="First name" [ngClass]="{'is-invalid': submitted && updateUserForm.controls.firstname.errors}" 
+                  [(ngModel)] = "user.first_name">
+                
+                  <div *ngIf="submitted && updateUserForm.controls.firstname.errors" class="invalid-feedback">
+                    <div *ngIf="updateUserForm.controls.firstname.errors.required">Firstname is required</div>
+                  </div>
+              </div>
+            </div>
+          
+            <div class="col-md-6 mb-4">
+              <div class="form-group">
+                  <!-- Name -->
+                  <label class="form-label">Last Name</label>
+                  <input type="text" id="lastname" formControlName="lastname" class="grey lighten-5 form-control"
+                  placeholder="Last name" [ngClass]="{'is-invalid': submitted && updateUserForm.controls.lastname.errors}" 
+                  [(ngModel)] = "user.last_name">
+                
+                  <div *ngIf="submitted && updateUserForm.controls.firstname.errors" class="invalid-feedback">
+                    <div *ngIf="updateUserForm.controls.firstname.errors.required">Lastname is required</div>
+                  </div>
+              </div>
+            </div>
+        
+            <div class="col-md-12">
+            <!-- Create button -->
+            <div class="create-button">
+                <button id="create-button" mdbWavesEffect class="float-right pl-5 pr-5" color="primary" size="md">Update user</button>
+            </div>
+            </div>
+          </form>
+        </mdb-card>
+      </div>
+    </div>
   </div>
-  <!-- Grid Row -->
+
+  <!-- Grid column -->
+  <div class="col-md-1"></div>
+</div>
+<!-- Grid Row -->

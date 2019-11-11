@@ -13,4 +13,8 @@ export class SystemStatusService {
   getCurrentStatus() {
     return this.httpWrapperService.post('get_system_status/');
   }
+
+  getPastIncidents() {
+    return this.httpWrapperService.post('past_incidents/');
+  }
 }

@@ -10,15 +10,16 @@
         </div>
     </div>
     <div class="endpoints-status">
-      <h5>Service status</h5>
-      <div class="card">
+      <h3>Service status</h3>
+      <div class="card-display">
         <ul class="list-group-horizontal-lg">
           <li class="list-group-item" *ngFor="let endpoint of endpoints">
             <div class="endpoint-content">
               <div class="endpoint-column">
                 <div class="d-flex flex-wrap w-100">
                     {{endpoint.name}}
-                    <div class="description endpoint-column fa fa-question-circle mt-1 ml-1">
+                    <div class="description-text endpoint-column mt-1">
+                      <i class="fa fa-question-circle ml-1"></i>
                         <span class="tooltip-text">{{endpoint.description}}</span>
                     </div>
                 </div>
@@ -44,10 +45,36 @@
         </ul>
       </div>
     </div>
-    <div class="incidents-history">
-      <h5>Past Incidents</h5>
-      <div class="card">
+    <div class="incidents-history" >
+      <h3 class="mb-4">Past Incidents</h3>
+        <div *ngFor="let pastDate of pastDates" style="margin-bottom: 40px;">
+          <div style="margin-bottom: 10px; border-bottom: 1px solid rgba(0, 0, 0, 0.125);"> 
+              <h5>{{ pastDate.date | date:'MMM dd, yyyy' }}</h5>
+          </div>
+          <div class="incidents" *ngIf="pastDate.incidents.length; else noIncidents">
+            <div *ngFor="let incident of pastDate.incidents" class="mb-2">
+                <a class="incident-name priority-{{incident.priority_level}}" [ngClass]="{'maintenance': incident.type == 'Scheduled'}">{{incident.name}}</a>
+                <div class="update mb-3">
+                    <div *ngIf="incident.status == 'Completed' || incident.status == 'Resolved'">
+                        <span class="incident-status">
+                          <strong>{{incident.status}}</strong>
+                        </span> - {{incident.description}}
+                        <div class="faded-text">{{incident.date_modified | date:'MMM dd,  hh:mm a'}}</div>
+                    </div>
+                    <!-- {{incident.incident_updates}} -->
+                    <div class="incident-update mb-2" *ngFor="let update of incident.incident_updates">
+                        <div *ngIf="update.status != 'Completed' && update.status != 'Resolved'">
+                            <strong>{{update.status}}</strong> - {{update.description}}
+                            <div class="faded-text">{{update.date_created | date:'MMM dd,  hh:mm a'}}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+          </div>
 
-      </div>
+          <ng-template #noIncidents>
+            <div class="faded-text">No incidents reported</div>
+          </ng-template>
+        </div>
     </div>
 </div>

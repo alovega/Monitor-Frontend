@@ -9,7 +9,7 @@ import { AuthGuardService } from 'src/app/shared/helpers/auth-guard.service';
 const routes: Routes = [
   { path: '', component: UsersComponent, canActivate: [AuthGuardService] },
   { path: 'new', component: AddUserComponent},
-  { path: 'update', component: UpdateUserComponent}
+  { path: 'update/:user-id', component: UpdateUserComponent}
 ];
 
 @NgModule({

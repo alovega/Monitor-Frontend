@@ -7,7 +7,7 @@ import { PublicDashboardComponent } from 'src/app/views/public-dashboard/public-
 
 const routes: Routes = [
   { path: '', component: PublicLayoutComponent, children: [
-    { path: ':sytem-id', component: PublicDashboardComponent }
+    { path: ':system-id', component: PublicDashboardComponent }
   ]},
 ];
 

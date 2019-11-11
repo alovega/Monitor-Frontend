@@ -28,6 +28,10 @@ export class SystemService {
     return this.httpWrapperService.post('get_systems/');
   }
 
+  getSystem(systemId: string): Observable<any> {
+    return this.httpWrapperService.post('get_system/', {system_id: systemId});
+  }
+
   createSystem(system: any): Observable<any> {
     return this.httpWrapperService.post('create_system/', system);
   }
