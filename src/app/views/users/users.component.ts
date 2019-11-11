@@ -56,7 +56,7 @@ export class UsersComponent implements OnInit, AfterViewInit {
     this.mdbTablePagination.calculateFirstItemIndex();
     this.mdbTablePagination.calculateLastItemIndex();
     this.cdRef.detectChanges();
-    console.log(this.mdbTablePagination.firstItemIndex);
+    // console.log(this.mdbTablePagination.firstItemIndex);
   }
 
   searchItems(search: string) {

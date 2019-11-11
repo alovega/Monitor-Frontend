@@ -56,7 +56,10 @@ export class UpdateUserComponent implements OnInit {
     (response: any) => {
         if (response.code === '800.200.001') {
           console.log(this.user);
+          this.toastr.success('User update success!', 'User updated successfully');
           this.location.back();
+        } else {
+          this.toastr.error('User update error!', 'User could not be updated');
         }
       });
   }

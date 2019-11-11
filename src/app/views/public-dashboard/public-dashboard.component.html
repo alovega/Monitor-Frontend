@@ -9,7 +9,7 @@
         </div>
     </div>
     <div class="current-incident" [ngClass]="{'display-none': systemStatus.incidents.length === 0}">
-        <h5>Current Incident</h5>
+        <h3>Current Incidents</h3>
         <div class="card" *ngFor="let incident of systemStatus.incidents let i = index;" style="margin-bottom: 3em;">
           <div class="list-group" *ngIf="incident.state__name">
             <h6 class="list-group-item" [ngClass]="{
@@ -36,7 +36,7 @@
         </div>
     </div>
     <div class="endpoints-status">
-      <h5>Service status</h5>
+      <h3>Service status</h3>
       <div class="card">
         <ul class="list-group-horizontal-lg" *ngIf="endpoints">
           <li class="list-group-item" *ngFor="let endpoint of endpoints">
