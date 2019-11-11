@@ -11,6 +11,7 @@ import { UserNotificationsComponent } from './user-notifications/user-notificati
 import { SharedModule } from '../shared/shared.module';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { UpdatePasswordComponent } from './update-password/update-password.component';
+import { ShowHidePasswordModule } from 'ngx-show-hide-password';
 
 
 @NgModule({
@@ -18,6 +19,7 @@ import { UpdatePasswordComponent } from './update-password/update-password.compo
                 UserNotificationsComponent, UpdatePasswordComponent],
   imports: [
     CommonModule,
+    ShowHidePasswordModule,
     ProfileRoutingModule,
     TableModule,
     FormsModule,

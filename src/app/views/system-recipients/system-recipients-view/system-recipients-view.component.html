@@ -13,7 +13,7 @@
     <div class="col col-sm-4">
       <label>EscalationLevel:</label>
       <div id="select">
-          <select class="browser-default custom-select" (change)="filterSystemRecipients($event.target.value)">
+          <select id="select" class="browser-default custom-select" (change)="filterSystemRecipients($event.target.value)">
               <option value="all">All</option>
               <option *ngFor="let level of EscalationLevels" [value]="level.name" >
                   {{level.name}}

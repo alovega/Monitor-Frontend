@@ -75,9 +75,10 @@ export class UpdatePasswordComponent implements OnInit {
                   'success'
                 );
               } else {
+                console.log(response);
                 Swal.fire(
                   'Failed!',
-                  'The user could not be updated.',
+                  'The user password could not be updated.',
                   'error'
                 );
               }

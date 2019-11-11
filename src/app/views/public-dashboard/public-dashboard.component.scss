@@ -2,8 +2,8 @@
     // margin: 2em 3em;
 }
 
-.status-container, .endpoints-status, .incidents-history{
-    margin: 3em 15%;
+.status-container, .endpoints-status, .incidents-history, .current-incident{
+    margin: 5em 15%;
 }
 
 .list-group-horizontal-lg {
@@ -28,6 +28,17 @@
 
 .card-display {
     font-size: 1rem;
+}
+#incident{
+    padding: 0;
+    padding-top: 15px;
+}
+.row{
+    padding-left: 15px;
+    padding-top: 15px;
+    display: inline-block;
+}
+.card {
     padding: 0px 0px 0px 0px;
     border: 1px solid rgba(0, 0, 0, 0.125);
     padding-bottom: 0px !important;
@@ -113,6 +124,40 @@
 }
 
 
+.operational-incident {
+    border: 1px solid #FF8B00 !important;
+    background-color: #FF8B00;
+    color: #ffffff;
+}
+
+.degraded-incident {
+    border: 1px solid black !important;
+    background-color: black;
+    color: #ffffff;
+}
+.display-none{
+    display: none;
+}
+
+.minor-incident {
+    border: 1px solid #FFC400 !important;
+    background-color: #FFC400;
+    color: #ffffff;
+}
+
+.major-incident {
+    border: 1px solid #DE350B !important;
+    background-color: #DE350B;
+    color: #ffffff;
+}
+
+
+.under-maintenance-incident {
+    border: 1px solid blue !important;
+    background-color:blue;
+    color: #ffffff;
+}
+
 .description-text .tooltip-text {
     visibility: hidden;
     width: 200px;
@@ -126,7 +171,7 @@
     /* Position the tooltip text - see examples below! */
     position: absolute;
     z-index: 1;
-  }
+}
 
 .description-text:hover .tooltip-text {
     visibility: visible;
