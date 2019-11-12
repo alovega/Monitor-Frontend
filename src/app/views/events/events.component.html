@@ -32,108 +32,140 @@
           <tr *ngFor="let event of events; let i = index">
           <th *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex"
               scope="row">{{event.eventtype}}</th>
-          <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{event.description}}</td>
-          <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{event.stack_trace}}</td>
-          <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{event.method}}</td>
-          <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{event.interface}}</td>
-          <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{event.request}}</td>
-          <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{event.response}}</td>
+          <td class="text-clip" *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{event.description}}</td>
+          <td class="text-clip" *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{event.stack_trace}}</td>
+          <td class="text-clip" *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{event.method}}</td>
+          <td class="text-clip" *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{event.interface}}</td>
+          <td class="text-clip" *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{event.request}}</td>
+          <td class="text-clip" *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{event.response}}</td>
           <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{event.code}}</td>
           <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex" style = "white-space: nowrap;">{{event.date_created | date:'MM/dd/yyyy   hh:mm:ss a'}}</td>
+          <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i <= mdbTablePagination.lastItemIndex">
+            <a (click)="showEventInfo(event.id)"><i class="fas fa-info-circle text-info"></i></a>
+          </td>  
           </tr>
           </tbody>
           <tfoot class="w-100">
           <ng-template #noData>
-            <td colspan="9">
+            <td colspan="10">
               <hm-empty-data header="No Logged Events" description="New Events will be displayed here">
               </hm-empty-data>
             </td>
           </ng-template>            
           <tr>
-          <td colspan="9">
-              <mdb-table-pagination [tableEl]="tableEl" [searchDataSource]="events"></mdb-table-pagination>
-          </td>
           </tr>
           </tfoot>
+          <td colspan="10">
+              <mdb-table-pagination [tableEl]="tableEl" [searchDataSource]="events"></mdb-table-pagination>
+          </td>
       </table>
       </mdb-card>
   </div>
 </div>
 
 
-<!-- <mdb-card>
-<table mdbTable id="rules-list">
-  <tbody>
-    <tr mdbTableCol class="rule-item">
-      <td scope="row">
-          <div class="rule-description">
-            <div class="remove-button float-right">
-                <a id="update-p2jg8qhdzs4k" (click)="basicModal.show()" mdbWavesEffect>Remove</a>
-            </div>
-            <div class="update-button float-right">
-                <a id="update-p2jg8qhdzs4k" routerLink="/rules/update" routerLinkActive="active">Update</a>
-            </div>
-            <strong>
-                <a class="rule-view-link"routerLink="/rules/update" routerLinkActive="active">
-                Elevated Error Occurrence
-                </a></strong><br>
-            <div class="rule-body">
-                Escalate to <span class="escalationLevel">High</span> escalation level If <span class="nEvents">5 </span> <span class="eventType">Errors</span> occur within
-                <span class="duration">1 hour</span>
-            </div>
-          </div>
-      </td>      
-    </tr>
-
-    <tr mdbTableCol class="rule-item">
-      <td scope="row">
-          <div class="rule-description">
-            <div class="remove-button float-right">
-                <a id="update-p2jg8qhdzs4k" (click)="basicModal.show()" mdbWavesEffect>Remove</a>
-            </div>
-            <div class="update-button float-right">
-                <a id="update-p2jg8qhdzs4k" routerLink="/rules/update" routerLinkActive="active">Update</a>
-            </div>
-            <strong>
-                <a class="rule-view-link"routerLink="/rules/update" routerLinkActive="active">
-                Elevated Error Occurrence
-                </a></strong><br>
-            <div class="rule-body">
-                Escalate to <span class="escalationLevel">High</span> escalation level If <span class="nEvents">5 </span> <span class="eventType">Errors</span> occur within
-                <span class="duration">1 hour</span>
-            </div>
-          </div>
-      </td>      
-    </tr>
-    
-  </tbody>
-</table>
-<div class="pagination-container">
-
-</div>
-</mdb-card> -->
-
-<!-- Delete Confirmation Modal -->
-<div mdbModal #basicModal="mdbModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myBasicModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close pull-right" aria-label="Close" (click)="basicModal.hide()">
-          <span aria-hidden="true">×</span>
-        </button>
-        <h4 class="modal-title w-100" id="myModalLabel">Confirm Remove Escalation Rule</h4>
-      </div>
-      <div class="modal-body">
-        Are you sure you want to remove this escalation rule?
-      </div>
-      <div class="modal-footer">
-        <span class="update-button">
-            <a color="primary" aria-label="Close" (click)="basicModal.hide()">Close</a>
-        </span>
-        <span class="remove-button">
-        <a class="relative">Confirm</a>
-        </span>
+<div mdbModal #eventInfo="mdbModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myBasicModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header text-white bg-info">
+          <button type="button" class="close pull-right text-white" aria-label="Close" (click)="eventInfo.hide()">
+            <span aria-hidden="true">×</span>
+          </button>
+          <h4 class="modal-title w-100" id="myModalLabel">Event Details</h4>
+        </div>
+        <div class="modal-body">
+          <ngb-tabset *ngIf="event">
+            <ngb-tab>
+              <ng-template ngbTabTitle>Event Details</ng-template>
+              <ng-template ngbTabContent>
+                <div class="info-container row">
+                  <div class="col-md-4 info-group">
+                      <div class="info-label">Event Type</div>
+                      <div class="info-content">
+                        {{event.eventtype}}                 
+                      </div>
+                  </div>
+                  <div class="col-md-4 info-group">
+                      <div class="info-label">Code</div>
+                      <div class="info-content">
+                      <span *ngIf="event.code; else noCode">{{event.code}}</span></div>
+                      <ng-template #noCode>N/A</ng-template>
+                  </div>
+                  <div class="col-md-4 info-group">
+                      <div class="info-label">Created On</div>
+                      <div class="info-content">{{event.date_created | date: 'MM/dd/yyyy hh:mm:ss'}}</div>
+                  </div>
+                  <div class="col-md-6 info-group">
+                      <div class="info-label">Method</div>
+                      <div class="info-content">
+                        <span *ngIf="event.method; else noMethod">{{event.method}}</span>
+                        <ng-template #noMethod>N/A</ng-template>
+                        </div>
+                  </div>
+                  <div class="col-md-6 info-group">
+                      <div class="info-label">Interface</div>
+                      <div class="info-content">
+                        <span *ngIf="event.interface; else noInterface">{{event.interface}}</span>
+                        <ng-template #noInterface>N/A</ng-template>
+                        </div>
+                  </div>
+                  <div class="col-md-6 info-group">
+                      <div class="info-label">Description</div>
+                      <div class="info-content">
+                        <span *ngIf="event.description; else noDescription">{{event.description}}</span>
+                        <ng-template #noDescription>N/A</ng-template>
+                        </div>
+                  </div>
+                </div>
+              </ng-template>
+            </ngb-tab>
+            <ngb-tab>
+              <ng-template ngbTabTitle>Stack trace</ng-template>
+              <ng-template ngbTabContent>
+                  <div class="info-container row">
+                      <div class="col-md-12">
+                          <div class="info-label">Stack Trace</div>
+                          <div class="info-content">
+                            <pre *ngIf="event.stack_trace; else noStackTrace" class="code-info">{{event.stack_trace}}</pre>
+                            <ng-template #noStackTrace>N/A</ng-template>
+                          </div>
+                      </div>
+                    </div>
+              </ng-template>
+            </ngb-tab>
+            <ngb-tab>
+              <ng-template ngbTabTitle>Request</ng-template>
+              <ng-template ngbTabContent>
+                  <div class="info-container row">
+                      <div class="col-md-12">
+                          <div class="info-label">Request</div>
+                          <div class="info-content">
+                            <pre *ngIf="event.request; else noRequest" class="code-info">{{event.request}}</pre>
+                            <ng-template #noRequest>N/A</ng-template>
+                          </div>
+                      </div>
+                  </div>
+              </ng-template>
+            </ngb-tab>
+            <ngb-tab>
+              <ng-template ngbTabTitle>Response</ng-template>
+              <ng-template ngbTabContent>
+                  <div class="info-container row">
+                      <div class="col-md-12">
+                          <div class="info-label">Response</div>
+                          <div class="info-content">
+                            <pre *ngIf="event.response; else noResponse" class="code-info">{{event.response}}</pre>
+                            <ng-template #noResponse>N/A</ng-template>
+                          </div>
+                      </div>
+                    </div>
+              </ng-template>
+            </ngb-tab>
+          </ngb-tabset>
+        </div>
+        <div class="modal-footer">
+          <button mdbBtn color="danger" class="waves-light text-white" aria-label="Close" (click)="eventInfo.hide()" mdbWavesEffect>Close</button>
+        </div>
       </div>
     </div>
   </div>
-</div>

@@ -30,12 +30,12 @@ import { EditSystemComponent } from 'src/app/views/edit-system/edit-system.compo
   ],
   imports: [
     CommonModule,
+    NgbModule,
     MDBBootstrapModule.forRoot(),
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyBBCMBffWFPoWuR8mMDe56nDKI4A9mf55k'
     }),
     HttpClientModule,
-    NgbModule,
     FormsModule,
     ReactiveFormsModule,
     SweetAlert2Module.forRoot(),
