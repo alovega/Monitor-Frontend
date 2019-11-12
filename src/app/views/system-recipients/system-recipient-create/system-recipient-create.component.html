@@ -2,7 +2,7 @@
 
     <div class="col"><p class="h4 mb-4">Add System Recipient </p></div>
     <div class="col-md-6">
-        <button class="float-right back-button" (click)="back()"><i class="fas fa-angle-double-left"></i> Back to SystemRecipients</button>
+        <button class="float-right back-button" (click)="back()"><i class="fas fa-angle-double-left"></i> Back </button>
       </div>
         
   </div>
@@ -43,7 +43,10 @@
             <h4>Escalations {{escalationIndex + 1}}</h4>
           </div>
           <div class="col-4 control-buttons">
-            <img src="../../../../assets/icons/add.svg" alt="" (click)="addEscalations()">
+            <a href="">
+                <img src="../../../../assets/icons/add.svg" alt="" (click)="addEscalations()">
+            </a>
+            
             <img src="../../../../assets/icons/remove.svg" alt="" width="24" height="24" (click)="deleteEscalations(escalationsIndex)">
           </div>
         </div>
@@ -81,7 +84,7 @@
     </div>
   
   <!-- Send button -->
-  <button mdbBtn type="submit" size="sm" class="btn float-right btn-primary waves-light" color="primary" mdbWavesEffect
+  <button mdbBtn type="submit" size="sm" class="btn float-right btn-primary waves-light"  mdbWavesEffect
   [disabled]="!systemRecipientForm.valid" (click)="addRecipient()">Save</button>
 
 </form>
