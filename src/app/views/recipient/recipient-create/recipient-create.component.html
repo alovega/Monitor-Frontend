@@ -2,7 +2,7 @@
     
     <div class="col"><p class="h4 mb-4">Add  Recipient </p></div>
     <div class="col-md-6">
-        <button class="float-right back-button" (click)="back()"><i class="fas fa-angle-double-left"></i> Back to recipients</button>
+        <button class="float-right back-button" (click)="back()"><i class="fas fa-angle-double-left"></i> Back </button>
       </div>
         
   </div>
@@ -59,7 +59,7 @@
         </div>
       </div>
       <!-- Send button -->
-          <button mdbBtn type="button" class="btn float-right btn-primary waves-light" color="primary" mdbWavesEffect
+          <button mdbBtn type="button" class="btn float-right btn-primary waves-light"  mdbWavesEffect
       [disabled]="!recipientsForm.valid" (click)="addRecipient()" size="sm">Save</button>
     </form>
       <!-- Default form contact -->
