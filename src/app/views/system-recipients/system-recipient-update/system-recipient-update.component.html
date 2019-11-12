@@ -21,7 +21,6 @@
         <!-- Notification Type -->
         <label for="NotificationType">Notification Type</label>
         <select class="browser-default custom-select form-control mb-4" formControlName="NotificationType" [(ngModel)]="recipient.notificationTypeId">
-          <option value></option>
           <option *ngFor="let type of NotificationTypes" [value]="type.id">
             {{type.name}}
           </option>

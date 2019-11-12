@@ -6,7 +6,6 @@ import { ProfileRoutingModule } from './profile-routing.module';
 import { ProfileComponent } from './profile.component';
 import { RecentNotificationComponent } from './recent-notification/recent-notification.component';
 import { EditComponent } from './edit/edit.component';
-import { DetailsComponent } from './details/details.component';
 import { UserNotificationsComponent } from './user-notifications/user-notifications.component';
 import { SharedModule } from '../shared/shared.module';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
@@ -15,7 +14,7 @@ import { ShowHidePasswordModule } from 'ngx-show-hide-password';
 
 
 @NgModule({
-  declarations: [ProfileComponent, RecentNotificationComponent, EditComponent, DetailsComponent,
+  declarations: [ProfileComponent, RecentNotificationComponent, EditComponent,
                 UserNotificationsComponent, UpdatePasswordComponent],
   imports: [
     CommonModule,

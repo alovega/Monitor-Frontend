@@ -1,6 +1,18 @@
 <mdb-card>
         <!-- Default form contact -->
         <form [formGroup]="profileUpdateForm" class="text-center border  p-5" (ngSubmit) = "onSubmit()">
+            <div class="row" *ngIf=data>
+                <div class="col">
+                    <h6>Username</h6>
+                    <p>{{data.userName}}</p>
+                    <hr>
+                </div>
+                <div class="col">
+                    <h6>Role</h6>
+                    <P>{{data.role}}</P>
+                    <hr>
+                </div>
+            </div>
             <div class="row">
                 <div class="col">
                     <!-- Phone Number -->

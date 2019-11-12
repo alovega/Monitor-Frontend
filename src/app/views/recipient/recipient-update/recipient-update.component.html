@@ -28,7 +28,6 @@
             <!-- State -->
             <label style="position: relative; right: 215px;">State</label>
             <select class="browser-default custom-select form-control mb-4" formControlName="State" [(ngModel)]="data.stateId">
-              <option value></option>
               <option *ngFor="let type of states; let i = index" [value]="type.id">
                 {{type.name}}
               </option>

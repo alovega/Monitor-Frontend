@@ -29,7 +29,6 @@
                 <!-- User -->
                 <label style="position: relative; right: 215px;">User</label>
                 <select class="browser-default custom-select form-control mb-4" formControlName="userId" [(ngModel)]="data.userId">
-                  <option value></option>
                   <option *ngFor="let user of users; let i = index" [value]="user.id" >
                         {{user.username}}
                   </option>
@@ -46,7 +45,6 @@
           <!-- State -->
         <label style="position: relative; right: 215px;">State</label>
         <select class="browser-default custom-select form-control mb-4" formControlName="stateId" [(ngModel)]="data.stateId">
-          <option value></option>
           <option *ngFor="let type of states; let i = index" [value]="type.id">
             {{type.name}}
           </option>
