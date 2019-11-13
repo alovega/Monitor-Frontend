@@ -40,7 +40,7 @@
           <td class="text-clip" *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{event.response}}</td>
           <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{event.code}}</td>
           <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex" style = "white-space: nowrap;">{{event.date_created | date:'MM/dd/yyyy   hh:mm:ss a'}}</td>
-          <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i <= mdbTablePagination.lastItemIndex">
+          <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">
             <a (click)="showEventInfo(event.id)"><i class="fas fa-info-circle text-info"></i></a>
           </td>  
           </tr>
