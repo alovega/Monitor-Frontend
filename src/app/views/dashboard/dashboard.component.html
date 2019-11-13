@@ -1,11 +1,32 @@
 <div class="status-container">
-    <div class="current-status">
-        <div class="{{systemStatus.current_state.state}} page-status">
-            {{systemStatus.current_state.description}}
+    <div class="row">
+        <div class="current-status col">
+                <div class="{{systemStatus.current_state.state}} page-status">
+                    {{systemStatus.current_state.description}}
+                </div>
+        </div>
+        <div class="col">
+            <mdb-card>
+                <div class="tab-content py-4">
+                    <h6>Recent Notifications</h6>
+                    <table class="table table-hover table-striped">
+                        <tbody *ngIf="message.length > 0; else noElements">                                    
+                            <tr *ngFor="let data of message; let i = index ">
+                                <td>
+                                    <span class="float-right font-weight-bold">{{data.date_created | date:'M/d/yy, h:mm a'}}</span> {{data.message}}
+                                </td>
+                            </tr>
+                        </tbody> 
+                        <ng-template #noElements>
+                            <hm-empty-data header="No Recent Notifications" description="Most recent Notifications will be displayed here">
+                            </hm-empty-data>
+                        </ng-template>
+                    </table>
+                </div>
+            </mdb-card>
         </div>
     </div>
 </div>   
-
 <div class="mt-5" *ngIf="errorRateGraph.chartDatasets[0].data.length">
 <h4>Error Rates</h4> 
 <hr>

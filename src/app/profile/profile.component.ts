@@ -16,8 +16,7 @@ export class ProfileComponent implements OnInit {
     this.profileService.getLoggedInUserDetail().subscribe(
       (data) => {
         this.data = data;
-      }
-    );
+      });
 
   }
 
