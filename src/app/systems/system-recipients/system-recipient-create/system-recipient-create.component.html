@@ -28,16 +28,12 @@
     </div>
   </div>
   <!--separator-->
-  <div class="row">
-    <div class="col">
-      <hr>
-    </div>
-  </div>
+  <hr>
     <!--Escalations form options-->
     <div class="row"  formArrayName="escalations">
-        <div class="col-12"
+        <div class="col-12" id="col-12"
         *ngFor="let escalation of escalationsArray.controls; let escalationIndex = index;"
-        [formGroupName]="escalationIndex">
+        [formGroupName]="escalationIndex" style="margin-bottom: -21px !important;">
         <div class="row">
           <div class="col-8">
             <h4>Escalations {{escalationIndex + 1}}</h4>
