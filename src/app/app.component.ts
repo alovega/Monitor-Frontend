@@ -1,5 +1,8 @@
-import { Component, OnInit, AfterViewInit, HostListener } from '@angular/core';
+import { Component, OnInit, AfterViewInit, HostListener, ElementRef, ViewChild } from '@angular/core';
 import { SystemService } from './shared/system.service';
+import {VERSION} from '@angular/material';
+import {NavItem} from './nav-item';
+import {NavService} from './nav.service';
 import {
   Router, NavigationStart, NavigationCancel, NavigationEnd , ActivatedRoute, NavigationError
 } from '@angular/router';
@@ -14,7 +17,7 @@ import { AuthenticationService } from './shared/auth/authentication.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, AfterViewInit {
   title = 'helamonitor';
   systems: any;
   currentSystem: any;
@@ -25,16 +28,71 @@ export class AppComponent implements OnInit {
   // onMouseMove(e) {
   //   setTimeout(() => {console.log(e)}, 4000);
   // }
+  @ViewChild('appDrawer',  {static: true}) appDrawer: ElementRef;
+  version = VERSION;
+  navItems: NavItem[] = [
+    {
+      displayName: 'Dashboard',
+      iconName: 'pie_chart',
+      route: 'dashboard/metrics',
+    },
+    {
+      displayName: 'Incidents',
+      iconName: 'bug_report',
+      route: 'dashboard/incidents'
+    },
+    {
+      displayName: 'Endpoints',
+      iconName: 'data_usage',
+      route: 'dashboard/endpoints'
+    },
+    {
+      displayName: 'Users',
+      iconName: 'account_box',
+      route: 'dashboard/users'
+    },
+    {
+      displayName: 'Recipient Configurations',
+      iconName: 'group',
+      children: [
+        {
+          displayName: 'Recipients',
+          iconName: 'contacts',
+          route: 'dashboard/recipients'
+        },
+        {
+          displayName: 'System Recipients',
+          iconName: 'accessibility',
+          route: 'dashboard/system-recipients'
+        },
+        {
+          displayName: 'Notifications',
+          iconName: 'notifications',
+          route: 'dashboard/notifications'
+        }
+      ]
+    },
+    {
+      displayName: 'Rules',
+      iconName: 'bookmark',
+      route: 'dashboard/rules'
+    },
+    {
+      displayName: 'Events',
+      iconName: 'event',
+      route: 'dashboard/events'
+    },
+  ];
   constructor(
     private systemService: SystemService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private authService: AuthenticationService,
-    private toastr: ToastrService
+    private navService: NavService,
+    private toastr: ToastrService,
   ) {
     this.authService.currentUser.subscribe(user => this.currentUser = user);
   }
-
   ngOnInit() {
     this.authService.currentUser.subscribe(
       (user) => {
@@ -50,6 +108,10 @@ export class AppComponent implements OnInit {
       body.classList.add('body-logged-out');
     }
     // setTimeout(() => this.toastr.success('Hello world!', 'Toastr fun!'))
+  }
+
+  ngAfterViewInit() {
+    this.navService.appDrawer = this.appDrawer;
   }
 
   logout() {

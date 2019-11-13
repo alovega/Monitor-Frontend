@@ -1,0 +1,26 @@
+<mat-toolbar color="primary" class="mat-elevation-z1">
+    <button mat-icon-button id="menu" (click)="navService.openNav()">
+        <mat-icon>menu</mat-icon>
+    </button>
+    <button mat-icon-button [matMenuTriggerFor]="menu" id="system-button">
+        Hela Plan
+    </button>
+    <mat-menu #menu="matMenu" [overlapTrigger]="false">
+        <button mat-menu-item>
+            <mat-icon>home</mat-icon>
+            <span>Home</span>
+        </button>
+         <button mat-menu-item>
+            <mat-icon>people_outline</mat-icon>
+            <span>Connecting</span>
+            </button>
+            <button mat-menu-item>
+              <mat-icon>videocam</mat-icon>
+              <span>Let's talk</span>
+            </button>
+            <button mat-menu-item>
+              <mat-icon>exit_to_app</mat-icon>
+              <span>Logout</span>
+            </button>
+    </mat-menu>
+</mat-toolbar>
