@@ -9,7 +9,7 @@
             <mdb-card>
                 <div class="tab-content py-4">
                     <h6>Recent Notifications</h6>
-                    <table class="table table-hover table-striped">
+                    <table class="table table-hover">
                         <tbody *ngIf="message.length > 0; else noElements">                                    
                             <tr *ngFor="let data of message; let i = index ">
                                 <td>
