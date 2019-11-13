@@ -19,7 +19,7 @@
 }
 
 .page-directions {
-    position: fixed;
+    // position: fixed;
     bottom: 54px;
     left: 266px;
     right: 16px;
@@ -36,4 +36,8 @@
 
 .direction-link {
     cursor: pointer;
+}
+
+.tab-content {
+    padding-top: 20px;
 }

@@ -91,3 +91,36 @@ table {
   table.table td, table.table th {
     width:224px;
 }
+
+.text-clip {
+    max-width: 80px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.info-container {
+    margin-top: 20px;
+}
+
+.info-group {
+    margin-bottom: 25px;
+}
+
+.info-container .info-label {
+    font-weight: 500;
+}
+
+.info-container .info-content {
+    // min-height: 20px;
+    opacity: 0.7;
+    padding-top: 10px;
+    border-bottom: 1px dotted rgb(196, 194, 194);
+}
+
+.code-info {
+    background-color: whitesmoke;
+    color: rgb(61, 61, 61);
+    padding: 10px;
+    border-radius: 4px;
+}

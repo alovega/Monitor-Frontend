@@ -1,7 +1,7 @@
 <div class="row">
     <div class="col col-6"><p class="h5 mb-4">Add escalation rules </p></div>
     <div class="col-md-6" *ngIf="escalationRules.length">
-        <button class="float-right back-button" data-toggle="modal" data-target="#"
+        <button mdbBtn size="sm" color="primary" gradient="aqua" rounded="true" class="lowercase-btn float-right" data-toggle="modal" data-target="#"
         (click)="addRule()"><i class="fas fa-plus"></i> Add rule</button>
     </div>   
     <button data-toggle="modal" #openAddModal (click)="frame.show()" class="d-none"> </button>
@@ -20,10 +20,12 @@
     </div>
     <button data-toggle="modal" data-target="#editEndpoint" (click)="editModal.show();" class="d-none" #openBtn> </button>
     <div class="col-md-6">
+        <div [ngClass]="{'d-none': !loading}">
+            <hm-loader></hm-loader>
+        </div> 
         <ul class="endpoints-list" *ngIf="escalationRules.length; else noData" >
             <li class="endpoint-item" *ngFor="let rule of escalationRules" (click)="editRule(rule.rule_id)">
                <span>
-                <mdb-icon fas icon="check-circle" class="green-text pr-1 pl-1"></mdb-icon>
                </span> {{rule.name}}
             </li>
         </ul>

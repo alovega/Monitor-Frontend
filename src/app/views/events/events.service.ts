@@ -20,4 +20,11 @@ export class EventsService {
       map(events => events.data)
     );
   }
+
+  getEvent(eventId: string): Observable<any> {
+    return this.http.post<any>(environment.apiEndpoint + 'get_event/', {
+      event_id: eventId
+    }).pipe(
+      map(event => event.data));
+  }
 }
