@@ -1,27 +1,42 @@
-<div class="row">
-    <div class="col col-md-8">
-        <h2>System Recipient</h2>
+<div class="page-header d-flex flex-row justify-content-between">
+    <h3 class="page-header-title">System Recipients</h3>
+    <div class="add-rule-btn">
+      <a routerLink="/dashboard/system-recipients/system-recipient-create" routerLinkActive="active">
+        <button mdbBtn class="btn-sm blue-gradient lowercase-btn text-white">
+            <i class="fas fa-plus"></i> Add system recipient
+        </button>
+      </a>
     </div>
-    <div class="col-6 col-md-4 d-flex justify-content-end">
-        <div class="col-md-6 px-0 top-controls" style="top:4px;">
-            <input class="form-control" type="text"  [(ngModel)]="searchText" id="search" placeholder="search" mdbInput >
-        </div>
-        <button type="button" routerLink="/dashboard/system-recipients/system-recipient-create" mdbBtn  mdbWavesEffect>Add System Recipient</button>
-    </div>
+</div>
+<hr class="page-header-divider">
+
+<div class="d-flex flex-row mt-4 justify-content-start dt-controls">
+  <div class="">
+    <span>Filter by Escalation level </span>
+      <select style="border-radius: 2px; padding: 2px" (change)="filterSystemRecipients($event.target.value)">
+          <option value="all">All</option>
+          <option *ngFor="let level of EscalationLevels" [value]="level.name" >
+              {{level.name}}
+          </option>
+      </select>
   </div>
-  <div class="row">
-    <div class="col col-sm-4">
-      <label>EscalationLevel</label>
-      <div id="select">
-          <select id="select" class="browser-default custom-select" (change)="filterSystemRecipients($event.target.value)">
-              <option value="all">All</option>
-              <option *ngFor="let level of EscalationLevels" [value]="level.name" >
-                  {{level.name}}
-              </option>
-          </select>
-      </div>
-    </div>
+</div>
+
+<div class="d-flex flex-sm-row mt-1 justify-content-lg-between justify-content-sm-between dt-controls">
+  <div class="mb-1">
+      <span>Show </span>
+      <input #visibleItemsInput class="view-entries"
+      type="number" min="1" (input)="changeVisibleItems($event.target.value)" [(ngModel)]="visibleItems">
+      <span> entries</span>
   </div>
+ 
+  <div class="">
+    <span>Search: </span>
+    <input class="search-entries" type="text" [(ngModel)]="searchText" placeholder="Search">
+  </div> 
+</div>
+
+
   <table mdbTable id="tableSort" #tableEl="mdbTable" class="z-depth-1">
         <thead class="white-text">
             <tr>

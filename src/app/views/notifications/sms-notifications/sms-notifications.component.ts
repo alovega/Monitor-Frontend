@@ -14,6 +14,7 @@ export class SmsNotificationsComponent implements OnInit, AfterViewInit {
   @ViewChild(MdbTablePaginationComponent, { static: true }) mdbTablePagination: MdbTablePaginationComponent;
   @ViewChild(MdbTableDirective, { static: true }) mdbTable: MdbTableDirective;
   @ViewChild(MdbTableSortDirective, { static: true }) mdbTableSort: MdbTableSortDirective;
+  @ViewChild('visibleItemsInput', { static: true }) visibleItemsInput;
   firstItemIndex: any;
   lastItemIndex: any;
   elements: any;
@@ -21,6 +22,7 @@ export class SmsNotificationsComponent implements OnInit, AfterViewInit {
   currentSystem: any;
   currentSystemId: any;
   previous: any = [];
+  visibleItems: number = 5;
   headElements: string[] = [ 'message', 'recipient', 'status', 'dateCreated'];
   Elements = {
     message: 'Message', recipient: 'Recipient', status: 'Status', dateCreated: 'Date Created'
@@ -65,6 +67,24 @@ export class SmsNotificationsComponent implements OnInit, AfterViewInit {
     this.mdbTablePagination.setMaxVisibleItemsNumberTo(10);
     this.mdbTablePagination.calculateFirstItemIndex();
     this.mdbTablePagination.calculateLastItemIndex();
+    if (this.elements.length > this.visibleItems) {
+      this.mdbTablePagination.nextShouldBeDisabled = false;
+    }
+    this.cdRef.detectChanges();
+  }
+
+  changeVisibleItems(maxNumber: number) {
+    this.visibleItems = maxNumber;
+    if (!maxNumber) {
+      this.visibleItemsInput.nativeElement.value = 1;
+      this.visibleItems = 1;
+    }
+    this.mdbTablePagination.setMaxVisibleItemsNumberTo(this.visibleItems);
+    this.mdbTablePagination.calculateFirstItemIndex();
+    this.mdbTablePagination.calculateLastItemIndex();
+    if (this.elements.length > this.visibleItems) {
+      this.mdbTablePagination.nextShouldBeDisabled = false;
+    }
     this.cdRef.detectChanges();
   }
 }

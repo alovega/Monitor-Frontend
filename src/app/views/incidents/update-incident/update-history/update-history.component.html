@@ -108,19 +108,19 @@
                         [(ngModel)]="incident.description">
                     </textarea>
     
-                    <div *ngIf="submitted && updateIncidentForm.controls['message'].errors" class="invalid-feedback">
+                    <div *ngIf="updateIncidentForm.controls['message'].invalid && (updateIncidentForm.controls['message'].dirty || updateIncidentForm.controls['message'].touched)" class="invalid-feedback">
                         <div *ngIf="updateIncidentForm.controls['message'].errors.required">Message is required</div>
                     </div>
                 </div>
                 <div class="update-button">
-                    <button mdbBtn mdbWavesEffect class="float-right" color="primary" size="sm">update</button>
+                    <button mdbBtn [disabled]="updateIncidentForm.invalid"
+                    mdbWavesEffect class="float-right"class="btn-sm blue-gradient lowercase-btn text-white float-right"> Update</button>
                 </div>
             </form>
         </mdb-card>
     </div>
     <hr>
     <div class="delete-button">
-        <button mdbBtn mdbWavesEffect class="float-right" color="danger" size="sm"
-            (click)="removeIncident(incidentId)">Delete Incident</button>
+        <button mdbBtn class="btn-sm lowercase-btn text-white float-right" color="danger" (click)="removeIncident(incidentId)">Delete Incident</button>
     </div>
 </div>

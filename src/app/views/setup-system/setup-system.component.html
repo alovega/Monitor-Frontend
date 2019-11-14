@@ -2,27 +2,29 @@
     <div class="page-header d-flex row m-auto">
         <h4>System Configuration</h4>
     </div>
-    <hr>
-    <ngb-tabset justify="justified" #tabs (tabChange)="onTabChange($event)" [activeId]="activeTab">
-        <ngb-tab id="endpoints">
-        <ng-template ngbTabTitle>
-            <h6 class="tab-title">Endpoints</h6>
-        </ng-template>
-        <ng-template ngbTabContent>
-            <div class="tab-content">
-            </div>
-        </ng-template>
-        </ngb-tab>   
-        <ngb-tab id="rules" [disabled]="disabledStatus">
-        <ng-template ngbTabTitle>
-            <h6 class="tab-title">Escalation Rules</h6>
-        </ng-template>
-        <ng-template ngbTabContent>
-            <div class="tab-content">
-            </div>
-        </ng-template>
-        </ngb-tab>   
-    </ngb-tabset>
+    <hr class="page-header-divider">
+    <div class="custom-tabs mt-2">
+        <ngb-tabset justify="justified" #tabs (tabChange)="onTabChange($event)" [activeId]="activeTab">
+            <ngb-tab id="endpoints">
+            <ng-template ngbTabTitle>
+                <h6 class="tab-title">Endpoints</h6>
+            </ng-template>
+            <ng-template ngbTabContent>
+                <div class="tab-content">
+                </div>
+            </ng-template>
+            </ngb-tab>   
+            <ngb-tab id="rules" [disabled]="disabledStatus">
+            <ng-template ngbTabTitle>
+                <h6 class="tab-title">Escalation Rules</h6>
+            </ng-template>
+            <ng-template ngbTabContent>
+                <div class="tab-content">
+                </div>
+            </ng-template>
+            </ngb-tab>   
+        </ngb-tabset>
+    </div>
     <router-outlet></router-outlet>
 
     <div class="page-directions">

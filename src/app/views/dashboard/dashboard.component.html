@@ -1,14 +1,21 @@
 <div class="status-container">
     <div class="row">
-        <div class="current-status col">
-                <div class="{{systemStatus.current_state.state}} page-status">
-                    {{systemStatus.current_state.description}}
+        <div class="current-status col" style="height: 250px;">
+            <mdb-card style="min-height: 100%">
+                <div class="tab-content p-4">
+                    <h6>Current system status</h6>
+                    <hr style="margin-top: 2px">
+                    <div class="{{systemStatus.current_state.state}} page-status">
+                        {{systemStatus.current_state.description}}
+                    </div>
                 </div>
+            </mdb-card>      
         </div>
-        <div class="col">
-            <mdb-card>
-                <div class="tab-content py-4">
+        <div class="col" style="height: 250px;">
+            <mdb-card style="min-height: 100%">
+                <div class="tab-content p-4">
                     <h6>Recent Notifications</h6>
+                    <hr style="margin-top: 2px">
                     <table class="table table-hover">
                         <tbody *ngIf="message.length > 0; else noElements">                                    
                             <tr *ngFor="let data of message; let i = index ">
@@ -18,7 +25,7 @@
                             </tr>
                         </tbody> 
                         <ng-template #noElements>
-                            <hm-empty-data header="No Recent Notifications" description="Most recent Notifications will be displayed here">
+                            <hm-empty-data header="You don't have any notifications" description="Your most recent notifications will be displayed here">
                             </hm-empty-data>
                         </ng-template>
                     </table>

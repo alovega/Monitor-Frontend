@@ -9,7 +9,7 @@
             Add user
         </div>
         <div class="col-sm-6">
-          <button class="float-right back-button" (click)="back()"><i class="fas fa-angle-double-left"></i> back to users</button>
+          <button class="float-right back-button" (click)="back()"><i class="fas fa-angle-double-left"></i> Back</button>
         </div>
       </div>
       <hr>
@@ -25,8 +25,9 @@
                   placeholder="Username" [ngClass]="{'is-invalid': submitted && addUserForm.controls.username.errors}" 
                   [(ngModel)] = "user.username">
                 
-                  <div *ngIf="submitted && addUserForm.controls.username.errors" class="invalid-feedback">
+                  <div *ngIf="addUserForm.controls.username.invalid && (addUserForm.controls.username.dirty || addUserForm.controls.username.touched)" class="invalid-feedback">
                     <div *ngIf="addUserForm.controls.username.errors.required">Username is required</div>
+                    <div *ngIf="addUserForm.controls.username.errors.minlength">Username should be alteast 3 characters</div>
                   </div>
               </div>
             </div>
@@ -38,9 +39,10 @@
                     <input type="email" id="email" formControlName="email" class="grey lighten-5 form-control"
                     placeholder="Email" [ngClass]="{'is-invalid': submitted && addUserForm.controls.email.errors}" 
                     [(ngModel)] = "user.email" required>
-                  
-                    <div *ngIf="submitted && addUserForm.controls.email.errors" class="invalid-feedback">
+                    <!-- {{(addUserForm.controls.email.touched || addUserForm.controls.email.dirty) && addUserForm.controls.email.invalid }} -->
+                    <div *ngIf="addUserForm.controls.email.invalid && (addUserForm.controls.email.dirty || addUserForm.controls.email.touched)" class="invalid-feedback">
                       <div *ngIf="addUserForm.controls.email.errors.required">Email is required</div>
+                      <div *ngIf="addUserForm.controls.email.errors.email">Email must be a valid email address</div>
                     </div>
                 </div>
               </div>
@@ -77,12 +79,13 @@
                   <div class="form-group">
                       <!-- Name -->
                       <label class="form-label">Password</label>
-                      <input type="text" id="password" formControlName="password" class="grey lighten-5 form-control"
+                      <input type="password" id="password" formControlName="password" class="grey lighten-5 form-control"
                       placeholder="Password" [ngClass]="{'is-invalid': submitted && addUserForm.controls.password.errors}" 
                       [(ngModel)] = "user.password">
                     
-                      <div *ngIf="submitted && addUserForm.controls.password.errors" class="invalid-feedback">
+                      <div *ngIf="addUserForm.controls.password.invalid && (addUserForm.controls.password.dirty || addUserForm.controls.password.touched)" class="invalid-feedback">
                         <div *ngIf="addUserForm.controls.password.errors.required">Password is required</div>
+                        <div *ngIf="addUserForm.controls.password.errors.minlength">Password must be atleast 8 characters</div>
                       </div>
                   </div>
               </div>
@@ -91,13 +94,12 @@
                   <div class="form-group">
                       <!-- Name -->
                       <label class="form-label">Confirm Password</label>
-                      <input type="text" id="password" formControlName="confirmPassword" class="grey lighten-5 form-control"
+                      <input type="password" id="password" formControlName="confirmPassword" class="grey lighten-5 form-control"
                       placeholder="Password" [ngClass]="{'is-invalid': submitted && addUserForm.controls.confirmPassword.errors}" 
                       [(ngModel)] = "confirmPassword" pattern="{{ addUserForm.controls.password.value }}">
-                    
-                      <div *ngIf="submitted && addUserForm.controls.confirmPassword.errors" class="invalid-feedback">
+                      <div *ngIf="addUserForm.controls.confirmPassword.invalid && (addUserForm.controls.confirmPassword.dirty || addUserForm.controls.confirmPassword.touched)" class="invalid-feedback">
                         <div *ngIf="addUserForm.controls.confirmPassword.errors.required">Password confirmation is required</div>
-                        <div *ngIf="addUserForm.controls.confirmPassword.errors.pattern"> Password & Confirm Password do not match.</div>
+                        <div *ngIf="addUserForm.controls.confirmPassword.errors.mustMatch"> Password & Confirm Password do not match.</div>
                       </div>
                   </div>
               </div>    
@@ -105,7 +107,8 @@
               <div class="col-md-12">
               <!-- Create button -->
               <div class="create-button">
-                  <button id="create-button" mdbWavesEffect class="float-right pl-5 pr-5" color="primary" size="md">Add user</button>
+                  <button mdbBtn class="btn-sm blue-gradient lowercase-btn text-white float-right" mdbWavesEffect [disabled]="addUserForm.invalid">
+                   <i class="fas fa-plus"></i> Add user</button>
               </div>
               </div>
             </form>

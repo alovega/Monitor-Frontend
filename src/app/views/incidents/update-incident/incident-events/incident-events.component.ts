@@ -21,6 +21,7 @@ export class IncidentEventsComponent implements OnInit, AfterViewInit {
   @ViewChild(MdbTablePaginationComponent, { static: true }) mdbTablePagination: MdbTablePaginationComponent;
   @ViewChild(MdbTableDirective, { static: true }) mdbTable: MdbTableDirective;
   @ViewChild('eventInfo', {static: false}) eventInfo: ModalDirective;
+  @ViewChild('visibleItemsInput', {static: true}) visibleItemsInput;
 
   currentSystemId: string;
   currentSystem: any;
@@ -29,6 +30,7 @@ export class IncidentEventsComponent implements OnInit, AfterViewInit {
   previous: any = [];
   incidentId: any;
   loading = true;
+  visibleItems: number = 5;
   headElements = [
     'eventtype', 'description', 'stack_trace', 'method', 'interface', 'request', 'response', 'code', 'date_created', 'action'];
   elements = {
@@ -67,8 +69,27 @@ export class IncidentEventsComponent implements OnInit, AfterViewInit {
     this.mdbTablePagination.setMaxVisibleItemsNumberTo(5);
     this.mdbTablePagination.calculateFirstItemIndex();
     this.mdbTablePagination.calculateLastItemIndex();
+    if (this.events.length > this.visibleItems) {
+      this.mdbTablePagination.nextShouldBeDisabled = false;
+    }
     this.cdRef.detectChanges();
     console.log(this.mdbTablePagination.firstItemIndex);
+  }
+
+  changeVisibleItems(maxNumber: number) {
+    this.visibleItems = maxNumber;
+    if (!maxNumber) {
+      console.log(maxNumber);
+      this.visibleItemsInput.nativeElement.value = 1;
+      this.visibleItems = 1;
+    }
+    this.mdbTablePagination.setMaxVisibleItemsNumberTo(this.visibleItems);
+    this.mdbTablePagination.calculateFirstItemIndex();
+    this.mdbTablePagination.calculateLastItemIndex();
+    if (this.events.length > this.visibleItems) {
+      this.mdbTablePagination.nextShouldBeDisabled = false;
+    }
+    this.cdRef.detectChanges();
   }
 
   getEvents(): Observable<any> {

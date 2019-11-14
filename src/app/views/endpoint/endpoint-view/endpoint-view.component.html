@@ -1,47 +1,77 @@
-<div class="row">
-  <div class="col col-md-8">
-      <h2>Endpoints</h2>
+<div class="page-header d-flex flex-row justify-content-between">
+    <h3 class="page-header-title">Endpoints</h3>
+    <div class="add-endpoint-btn">
+      <button mdbBtn class="btn-sm blue-gradient lowercase-btn text-white" routerLink="/dashboard/endpoints/endpoint-form" mdbWavesEffect>
+        <i class="fas fa-plus"></i> Add Endpoint
+      </button>
+    </div>
+</div>
+<hr class="page-header-divider">
+
+
+<div class="d-flex flex-sm-row mt-4 justify-content-lg-between justify-content-sm-between dt-controls">
+  <div class="mb-1">
+      <span>Show </span>
+      <input #visibleItemsInput class="view-entries"
+      type="number" min="1" (input)="changeVisibleItems($event.target.value)" [value]="visibleItems">
+      <span> entries</span>
   </div>
-  <div class="col-6 col-md-4 d-flex justify-content-end">
-      <div class="col-md-6 px-0 top-controls" style="top:4px;">
-          <input class="form-control" type="text"  [(ngModel)]="searchText" id="search" placeholder="search" mdbInput >
-      </div>
-      <button type="button" routerLink="/dashboard/endpoints/endpoint-form" mdbBtn color="primary" mdbWavesEffect>Add Endpoint</button>
-  </div>
+ 
+  <div class="">
+    <span>Search: </span>
+    <input class="search-entries" type="text"  [(ngModel)]="searchText" placeholder="Search">
+  </div> 
 </div>
 
-<table mdbTable id="tableSort" #tableEl="mdbTable" class="z-depth-1">
-      <thead class="white-text">
-          <tr>
-          <th *ngFor="let head of headElements; let i = index" aria-controls="tableSort" scope="col" [mdbTableSort]="elements" [sortBy]="headElements[i]">{{Elements[headElements[i]] | titlecase}} <mdb-icon fas icon="sort"></mdb-icon></th>
-          </tr>
-      </thead>
-      <tbody *ngIf="elements.length > 0; else noElements">
-          <tr mdbTableCol *ngFor="let el of elements; let i = index ">
-          <th scope="row" *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex" scope="row">
-              {{el.name}}
-          </th>
-          <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{el.description}}</td>
-          <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex" style="word-break: break-word;">{{el.Url}}</td>
-          <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{el.type}}</td>
-          <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex"><hm-endpoint-status status="{{el.status}}"></hm-endpoint-status></td>
-          <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{el.dateCreated |  date:'MM/dd/yyyy   hh:mm:ss a'}}</td>
-          <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">
-              <a class="fas fa-edit text-success"  routerLinkActive="active" routerLink="/dashboard/endpoints/endpoint-update/{{el.id}}" ></a>
-              <a class="fas fa-trash-alt mr-2 text-danger"  (click)="delete(el.id)"></a>
-          </td>
-          </tr>
-      </tbody>
-      <tfoot class="grey lighten-5 w-100">
-              <tr mdbTableCol>
-                <td colspan="9">
-                  <mdb-table-pagination [tableEl]="tableEl" [searchDataSource]="elements"></mdb-table-pagination>
-                </td>
-              </tr>
-      </tfoot>
-</table>
+<div class="row wow animated fadeIn" data-wow-delay="0.1s">
+    <!-- Grid column -->
+    <div class="col-lg-12 col-md-12 text-left">
+      <mdb-card>
+        <table mdbTable #tableEl="mdbTable" class="table-responsive table-striped">
+          <thead class="white-text">
+            <tr>
+              <th *ngFor="let head of headElements; let i = index" aria-controls="tableSort" scope="col"
+                [mdbTableSort]="elements" [sortBy]="headElements[i]">{{Elements[headElements[i]] | titlecase}} 
+                <mdb-icon fas icon="sort"></mdb-icon>
+              </th>
+            </tr>
+          </thead>
+          <tbody *ngIf="elements.length > 0; else noElements">
+            <tr mdbTableCol *ngFor="let el of elements; let i = index ">
+              <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">
+                {{el.name}}
+              </td>
+              <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{el.description}}
+              </td>
+              <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex"
+                style="word-break: break-word;">{{el.Url}}</td>
+              <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{el.type}}</td>
+              <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">
+                <hm-endpoint-status status="{{el.status}}"></hm-endpoint-status>
+              </td>
+              <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">
+                {{el.dateCreated |  date:'MM/dd/yyyy   hh:mm:ss a'}}</td>
+              <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">
+                <a class="fas fa-edit text-success" routerLinkActive="active"
+                  routerLink="/dashboard/endpoints/endpoint-update/{{el.id}}"></a>
+                <a class="fas fa-trash-alt mr-2 text-danger" (click)="delete(el.id)"></a>
+              </td>
+            </tr>
+          </tbody>
+          <tfoot class="grey lighten-5 w-100">
+            <tr mdbTableCol>
+              <td colspan="9">
+                <mdb-table-pagination [tableEl]="tableEl" [searchDataSource]="elements"></mdb-table-pagination>
+              </td>
+            </tr>
+          </tfoot>
+        </table>
+      </mdb-card>
+    </div>
+</div>
+
 <ng-template #noElements>
-  <td colspan="7">
+  <td colspan="9">
     <hm-empty-data header="No Existing Endpoints" description="New Endpoints will be displayed here">
       <div action-button>
       <a href="" routerLink="/dashboard/endpoints/endpoint-form">

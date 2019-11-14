@@ -51,10 +51,10 @@
         <h4 class="popup-heading modal-header">Add an endpoint</h4>
             <form [formGroup]="endpointForm" class="text-center p-2" (ngSubmit) = "onSubmitAddForm()">
                 <div class="row">
-                <div class="col-md-12">
+                <div class="col-md-12 mb-3">
                     <!-- Name -->
                     <label class="form-label">Name</label>
-                    <input mdbInput MdbValidate type="text" id="defaultContactFormName" class="form-control mb-3 grey lighten-4"
+                    <input mdbInput MdbValidate type="text" id="defaultContactFormName" class="form-control grey lighten-4"
                     [ngClass]="{ 'is-invalid': submitted && endpointForm.controls.EndpointName.errors }"
                     placeholder="Name" formControlName="EndpointName" [(ngModel)]="data.name" >
                     <div *ngIf="endpointForm.controls.EndpointName.invalid && (endpointForm.controls.EndpointName.dirty || endpointForm.controls.EndpointName.touched)" class="invalid-feedback">
@@ -63,34 +63,37 @@
                     </div>
                     </div>
                 </div>
-                <div class="col-md-12">
+                <div class="col-md-12 mb-3">
                     <!-- Endpoint -->
                     <label class="form-label">URL</label>
-                    <input type="text" id="defaultContactFormEndpoint" class="form-control mb-3 grey lighten-4" placeholder="URL" formControlName="URL" [(ngModel)]="data.url" >
-                    <div *ngIf="endpointForm.controls.URL.invalid && (endpointForm.controls.URL.dirty || endpointForm.controls.URL.touched)" class="invalid-feedback">
-                    <div *ngIf="endpointForm.controls.URL.errors.required">
-                        A URL is required.
-                    </div>
+                    <input type="text" id="defaultContactFormEndpoint" class="form-control grey lighten-4" placeholder="URL" formControlName="URL" [(ngModel)]="data.url" >
+                      <div *ngIf="endpointForm.controls.URL.invalid && (endpointForm.controls.URL.dirty || endpointForm.controls.URL.touched)" class="invalid-feedback">
+                      <div *ngIf="endpointForm.controls.URL.errors.required">
+                          A URL is required.
+                      </div>
                     </div>
                 </div>
                 </div>
                 <div class="row">
-                <div class="col-md-12">
+                <div class="col-md-12 mb-3">
                     <!-- Optimal response time -->
                     <label class="form-label">Optimal response time</label>
-                    <input type="text" id="defaultContactFormEndpoint" class="form-control mb-3 grey lighten-4" placeholder="Optimal response time" formControlName="OptimalResponseTime" [(ngModel)]="data.optimal_response_time" >
+                    <input type="number" min="1" oninput="javascript: if (this.value < 1) this.value = '1'" id="defaultContactFormEndpoint" class="form-control grey lighten-4" placeholder="Optimal response time" formControlName="OptimalResponseTime" [(ngModel)]="data.optimal_response_time" >
                     <div *ngIf="endpointForm.controls.OptimalResponseTime.invalid && (endpointForm.controls.OptimalResponseTime.dirty || endpointForm.controls.OptimalResponseTime.touched)" class="invalid-feedback">
                     <div *ngIf="endpointForm.controls.OptimalResponseTime.errors.required">
                         Optimal response time is required.
                     </div>
+                    <div *ngIf="endpointForm.controls.OptimalResponseTime.errors.minlength">
+                      Optimal response time should be larger than zero
+                    </div>                    
                     </div>
                 </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-6 mb-3">
                         <!-- Endpoint type -->
                         <label class="form-label">Type</label>
-                        <select class=" form-control browser-default custom-select mb-3 grey lighten-4" placeholder="Endpoint type" formControlName="EndpointType" [(ngModel)]="data.endpoint_type">
+                        <select class=" form-control browser-default custom-select grey lighten-4" placeholder="Endpoint type" formControlName="EndpointType" [(ngModel)]="data.endpoint_type">
                             <option *ngFor="let endpointType of endpointTypes" [value]="endpointType.id">
                                 {{endpointType.name}}
                             </option>
@@ -101,10 +104,10 @@
                         </div>
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-6 mb-3">
                         <!-- State -->
                         <label class="form-label">State</label>
-                        <select class=" form-control browser-default custom-select mb-3 grey lighten-4" placeholder="State" formControlName="State" [(ngModel)]="data.state">
+                        <select class=" form-control browser-default custom-select grey lighten-4" placeholder="State" formControlName="State" [(ngModel)]="data.state">
                             <option *ngFor="let state of states" [value]="state.id">
                                 {{state.name}}
                             </option>
@@ -117,19 +120,19 @@
                     </div>
                 </div>
                 <div class="row">
-                <div class="col-md-12">
+                <div class="col-md-12 mb-3">
                     <!-- Message -->
                     <label class="form-label">Description</label>
                     <div class="form-group">
                     <textarea class="form-control rounded-2 grey lighten-4" id="exampleFormControlTextarea2" rows="3" placeholder="Description" formControlName="Description" [(ngModel)]="data.description" ></textarea>
-                    </div>
                     <div *ngIf="endpointForm.controls.Description.invalid && (endpointForm.controls.Description.dirty || endpointForm.controls.Description.touched)" class="invalid-feedback">
-                    <div *ngIf="endpointForm.controls.Description.errors.required">
-                        Description is required.
-                    </div>
-                    <div *ngIf="endpointForm.controls.Description.errors.minlength">
-                        Description is should be more than 10.
+                        <div *ngIf="endpointForm.controls.Description.errors.required">
+                            Description is required.
                         </div>
+                        <div *ngIf="endpointForm.controls.Description.errors.minlength">
+                          Description is should be more than 10 characters.
+                          </div>
+                      </div> 
                     </div>
                 </div>
                 </div>
@@ -156,10 +159,10 @@
         <h4 class="popup-heading modal-header">Edit endpoint</h4>
         <form [formGroup]="updateForm" class="text-center p-2" (ngSubmit)="onSubmitUpdateForm()">
                 <div class="row">
-                  <div class="col-md-12">
+                  <div class="col-md-12 mb-3">
                     <!-- Name -->
                     <label class="form-label">Endpoint Name</label>
-                    <input mdbInput MdbValidate type="text" id="defaultContactFormName" class="form-control mb-3 grey lighten-4"
+                    <input mdbInput MdbValidate type="text" id="defaultContactFormName" class="form-control grey lighten-4"
                       [ngClass]="{'is-invalid': submitted && updateForm.controls.EndpointName.errors }"
                       placeholder="Name" formControlName="EndpointName" [(ngModel)]="selectedEndpoint.name" >
                     <div *ngIf="updateForm.controls.EndpointName.invalid && (updateForm.controls.EndpointName.dirty || updateForm.controls.EndpointName.touched)" class="invalid-feedback">
@@ -168,10 +171,10 @@
                       </div>
                     </div>
                   </div>
-                  <div class="col-md-12">
+                  <div class="col-md-12 mb-3">
                     <!-- Endpoint -->
                     <label class="form-label">Url</label>
-                    <input type="text" id="defaultContactFormUrl" class="form-control mb-3 grey lighten-4" placeholder="Url" formControlName="Url" [(ngModel)]="selectedEndpoint.url" 
+                    <input type="text" id="defaultContactFormUrl" class="form-control grey lighten-4" placeholder="Url" formControlName="Url" [(ngModel)]="selectedEndpoint.url" 
                     [ngClass]="{'is-invalid': submitted && updateForm.controls.Url.errors }">
                     <div *ngIf="updateForm.controls['Url'].invalid && (updateForm.controls['Url'].dirty || updateForm.controls['Url'].touched)" class="invalid-feedback">
                       <div *ngIf="updateForm.controls['Url'].errors.required">
@@ -181,22 +184,25 @@
                   </div>
                 </div>
                 <div class="row">
-                  <div class="col-md-6">
+                  <div class="col-md-6 mb-3">
                     <!-- Optimal response time -->
-                    <label class="form-label">Response time</label>
-                    <input type="text" id="defaultContactFormEndpoint" class="form-control mb-3 grey lighten-4" placeholder="Optimal response time" formControlName="OptimalResponseTime" [(ngModel)]="selectedEndpoint.optimal_response_time" 
+                    <label class="form-label">Optimal Response Time</label>
+                    <input type="number" min="1" oninput="javascript: if (this.value < 1) this.value = '1'" id="defaultContactFormEndpoint" class="form-control grey lighten-4" placeholder="Optimal response time" formControlName="OptimalResponseTime" [(ngModel)]="selectedEndpoint.optimal_response_time" 
                     [ngClass]="{'is-invalid': submitted && updateForm.controls.OptimalResponseTime.errors }">
                     <div *ngIf="updateForm.controls.OptimalResponseTime.invalid && (updateForm.controls.OptimalResponseTime.dirty || updateForm.controls.OptimalResponseTime.touched)" class="invalid-feedback">
                       <div *ngIf="updateForm.controls.OptimalResponseTime.errors.required">
                         Optimal response time is required.
                       </div>
+                      <div *ngIf="endpointForm.controls.OptimalResponseTime.errors.minlength">
+                        Optimal response time should be larger than zero
+                      </div>
                     </div>
                   </div>
 
-                <div class="col-md-6">
+                <div class="col-md-6 mb-3">
                     <!-- State -->
                     <label class="form-label">State</label>
-                    <select class=" form-control browser-default custom-select mb-3 grey lighten-4" formControlName="State" [(ngModel)]="selectedEndpoint.state"
+                    <select class=" form-control browser-default custom-select grey lighten-4" formControlName="State" [(ngModel)]="selectedEndpoint.state"
                     [ngClass]="{'is-invalid': submitted && updateForm.controls.State.errors }">>
                       <option *ngFor="let state of states" [value]="state.id">
                         {{state.name}}
@@ -204,17 +210,17 @@
                     </select>
                     <div *ngIf="updateForm.controls['State'].invalid && (updateForm.controls['State'].dirty || updateForm.controls['State'].touched)" class="invalid-feedback">
                         <div *ngIf="updateForm.controls['State'].errors.required">
-                            State is required.
+                          State is required.
                         </div>
                     </div>
                   </div>
                 </div>
                 <div class="row">
-                  <div class="col-md-12">
+                  <div class="col-md-12 mb-3">
                     <!-- Message -->
                     <label>Description</label>
                     <div class="form-group">
-                      <textarea class="form-control rounded-2 mb-3 grey lighten-4" id="exampleFormControlTextarea2" rows="3" placeholder="Description" formControlName="Description" [(ngModel)]="selectedEndpoint.description" ></textarea>
+                      <textarea class="form-control rounded-2 grey lighten-4" id="exampleFormControlTextarea2" rows="3" placeholder="Description" formControlName="Description" [(ngModel)]="selectedEndpoint.description" ></textarea>
                     </div>
                     <div *ngIf="updateForm.controls['Description'].invalid && (updateForm.controls['Description'].dirty || updateForm.controls['Description'].touched)" class="invalid-feedback">
                       <div *ngIf="updateForm.controls['Description'].errors.required">
