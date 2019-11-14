@@ -3,5 +3,13 @@
 }
 
 .logo-wrapper img {
-  max-height: 30px;
+  height: 120px;
+    position: relative;
+    top: 1px;
+    padding: 14px;
+    left: 0px;
+}
+
+mat-sidenav{
+  width: 248px;
 }

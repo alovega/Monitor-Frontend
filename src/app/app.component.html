@@ -10,7 +10,9 @@
 
 <hm-top-nav-bar class="fixed-topnav" fxHide.gt-xs></hm-top-nav-bar>
 <mat-sidenav-container>
-  <mat-sidenav #appDrawer mode="over" opened="false">
+  <mat-sidenav #appDrawer opened="false"
+  [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+    [mode]="(isHandset$ | async) ? 'over' : 'side'">
     <a class="navbar-brand" mdbWavesEffect routerLink="/dashboard">
       <a class="logo-wrapper waves-effect">
         <!-- <span style="font-size: 40px">HM</span> -->
@@ -24,5 +26,4 @@
   <hm-top-nav-bar fxHide.xs></hm-top-nav-bar>
   <router-outlet></router-outlet>
   <div fxFlex></div>
-  <span class="version-info">Current build: {{version.full ? version.full : version}}</span>
 </mat-sidenav-container>

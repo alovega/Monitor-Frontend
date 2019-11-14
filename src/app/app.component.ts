@@ -3,6 +3,9 @@ import { SystemService } from './shared/system.service';
 import {VERSION} from '@angular/material';
 import {NavItem} from './nav-item';
 import {NavService} from './nav.service';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { Observable } from 'rxjs';
+import { map, shareReplay } from 'rxjs/operators';
 import {
   Router, NavigationStart, NavigationCancel, NavigationEnd , ActivatedRoute, NavigationError
 } from '@angular/router';
@@ -18,6 +21,11 @@ import { AuthenticationService } from './shared/auth/authentication.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit, AfterViewInit {
+  isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
+        .pipe(
+            map(result => result.matches),
+            shareReplay(1),
+        );
   title = 'helamonitor';
   systems: any;
   currentSystem: any;
@@ -52,7 +60,7 @@ export class AppComponent implements OnInit, AfterViewInit {
       route: 'dashboard/users'
     },
     {
-      displayName: 'Recipient Configurations',
+      displayName: 'Configurations',
       iconName: 'group',
       children: [
         {
@@ -90,6 +98,7 @@ export class AppComponent implements OnInit, AfterViewInit {
     private authService: AuthenticationService,
     private navService: NavService,
     private toastr: ToastrService,
+    private breakpointObserver: BreakpointObserver
   ) {
     this.authService.currentUser.subscribe(user => this.currentUser = user);
   }
@@ -109,7 +118,6 @@ export class AppComponent implements OnInit, AfterViewInit {
     }
     // setTimeout(() => this.toastr.success('Hello world!', 'Toastr fun!'))
   }
-
   ngAfterViewInit() {
     this.navService.appDrawer = this.appDrawer;
   }

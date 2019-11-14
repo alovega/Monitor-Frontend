@@ -6,3 +6,25 @@
     position: relative;
     left: 900px;
 }
+#notifications{
+    position: relative;
+    left: 962px;
+}
+#user-profile{
+    position: relative;
+    left: 1039px;
+}
+
+button:focus{
+    outline: none !important;
+}
+.mat-toolbar-row, .mat-toolbar-single-row {
+    height: 57px;
+}
+
+@media (max-width: 400px){
+    #system-button{
+        position: relative;
+        left: 200px;
+    } 
+}
