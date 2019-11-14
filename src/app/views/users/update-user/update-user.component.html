@@ -9,24 +9,26 @@
           Add user
       </div>
       <div class="col-sm-6">
-        <button class="float-right back-button" (click)="back()"><i class="fas fa-angle-double-left"></i> back to users</button>
+        <button class="float-right back-button" (click)="back()"><i class="fas fa-angle-double-left"></i> Back</button>
       </div>
     </div>
     <hr>
     <div class="page-body">
       <div class="new-rule">
         <mdb-card class="card">
-          <form [formGroup]="updateUserForm" class="text-center row" (ngSubmit)="onSubmit()">
+          <form [formGroup]="updateUserForm" class="text-center row" (ngSubmit)="onSubmit()" *ngIf="updateUserForm.controls">
+            <!-- {{updateUserForm}} -->
           <div class="col-md-6 mb-4">
             <div class="form-group">
                 <!-- Name -->
                 <label class="form-label">User Name</label>
                 <input type="text" id="userName" formControlName="username" class="grey lighten-5 form-control"
-                placeholder="Username" [ngClass]="{'is-invalid': submitted && updateUserForm.controls.username.errors}" 
+                placeholder="Username" [ngClass]="{'is-invalid': submitted && updateUserForm.controls['username'].errors}" 
                 [(ngModel)] = "user.username">
               
-                <div *ngIf="submitted && updateUserForm.controls.username.errors" class="invalid-feedback">
-                  <div *ngIf="updateUserForm.controls.username.errors.required">Username is required</div>
+                <div *ngIf="updateUserForm.controls['username'].invalid && (updateUserForm.controls['username'].dirty || updateUserForm['controls'].username.touched)" class="invalid-feedback">
+                  <div *ngIf="updateUserForm.controls['username'].errors.required">Username is required</div>
+                  <div *ngIf="updateUserForm.controls['username'].errors.minlength">Username must be atleast 3 characters</div>
                 </div>
             </div>
           </div>
@@ -36,11 +38,12 @@
                   <!-- Name -->
                   <label class="form-label">Email</label>
                   <input type="email" id="email" formControlName="email" class="grey lighten-5 form-control"
-                  placeholder="Email" [ngClass]="{'is-invalid': submitted && updateUserForm.controls.email.errors}" 
+                  placeholder="Email" [ngClass]="{'is-invalid': submitted && updateUserForm.controls['email'].errors}" 
                   [(ngModel)] = "user.email" required>
                 
-                  <div *ngIf="submitted && updateUserForm.controls.email.errors" class="invalid-feedback">
-                    <div *ngIf="updateUserForm.controls.email.errors.required">Email is required</div>
+                  <div *ngIf="updateUserForm.controls['email'].invalid && (updateUserForm.controls['email'].dirty || updateUserForm.controls['email'].touched)" class="invalid-feedback">
+                    <div *ngIf="updateUserForm.controls['email'].errors.required">Email is required</div>
+                    <div *ngIf="updateUserForm.controls['email'].errors.email">Email must be a valid email address</div>
                   </div>
               </div>
             </div>
@@ -50,11 +53,11 @@
                   <!-- Name -->
                   <label class="form-label">First Name</label>
                   <input type="text" id="firstname" formControlName="firstname" class="grey lighten-5 form-control"
-                  placeholder="First name" [ngClass]="{'is-invalid': submitted && updateUserForm.controls.firstname.errors}" 
+                  placeholder="First name" [ngClass]="{'is-invalid': submitted && updateUserForm.controls['firstname'].errors}" 
                   [(ngModel)] = "user.first_name">
                 
-                  <div *ngIf="submitted && updateUserForm.controls.firstname.errors" class="invalid-feedback">
-                    <div *ngIf="updateUserForm.controls.firstname.errors.required">Firstname is required</div>
+                  <div *ngIf="submitted && updateUserForm.controls['firstname'].errors" class="invalid-feedback">
+                    <div *ngIf="updateUserForm.controls['firstname'].errors.required">Firstname is required</div>
                   </div>
               </div>
             </div>
@@ -64,11 +67,11 @@
                   <!-- Name -->
                   <label class="form-label">Last Name</label>
                   <input type="text" id="lastname" formControlName="lastname" class="grey lighten-5 form-control"
-                  placeholder="Last name" [ngClass]="{'is-invalid': submitted && updateUserForm.controls.lastname.errors}" 
+                  placeholder="Last name" [ngClass]="{'is-invalid': submitted && updateUserForm.controls['lastname'].errors}" 
                   [(ngModel)] = "user.last_name">
                 
-                  <div *ngIf="submitted && updateUserForm.controls.firstname.errors" class="invalid-feedback">
-                    <div *ngIf="updateUserForm.controls.firstname.errors.required">Lastname is required</div>
+                  <div *ngIf="submitted && updateUserForm.controls['firstname'].errors" class="invalid-feedback">
+                    <div *ngIf="updateUserForm.controls['firstname'].errors.required">Lastname is required</div>
                   </div>
               </div>
             </div>
@@ -76,7 +79,7 @@
             <div class="col-md-12">
             <!-- Create button -->
             <div class="create-button">
-                <button id="create-button" mdbWavesEffect class="float-right pl-5 pr-5" color="primary" size="md">Update user</button>
+                <button mdbBtn class="btn-sm blue-gradient lowercase-btn text-white float-right" mdbWavesEffect [disabled]="updateUserForm.invalid">Update user</button>
             </div>
             </div>
           </form>

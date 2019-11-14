@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, AfterViewInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit, ChangeDetectorRef, ElementRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MdbTablePaginationComponent, MdbTableDirective } from 'angular-bootstrap-md';
 import Swal from 'sweetalert2';
@@ -14,13 +14,14 @@ import { UsersService } from './users.service';
 export class UsersComponent implements OnInit, AfterViewInit {
   @ViewChild(MdbTablePaginationComponent, { static: true }) mdbTablePagination: MdbTablePaginationComponent;
   @ViewChild(MdbTableDirective, { static: true }) mdbTable: MdbTableDirective;
+  @ViewChild('visibleItemsInput', { static: true }) visibleItemsInput;
 
   currentSystemId: any;
   currentSystem: any;
   users: any[];
   previous: any = [];
   isLoaded = false;
-
+  visibleItems = 5;
   headElements = ['username', 'email', 'first_name', 'last_name', 'active', 'date_joined', 'action'];
   elements = {
     username: 'Username', email: 'Email', first_name: 'First Name', last_name: 'Last Name', active: 'Active',
@@ -52,11 +53,29 @@ export class UsersComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.mdbTablePagination.setMaxVisibleItemsNumberTo(5);
+    this.mdbTablePagination.setMaxVisibleItemsNumberTo(this.visibleItems);
     this.mdbTablePagination.calculateFirstItemIndex();
     this.mdbTablePagination.calculateLastItemIndex();
+    if (this.users.length > this.visibleItems) {
+      this.mdbTablePagination.nextShouldBeDisabled = false;
+    }
+
     this.cdRef.detectChanges();
-    // console.log(this.mdbTablePagination.firstItemIndex);
+  }
+
+  changeVisibleItems(maxNumber: number) {
+    this.visibleItems = maxNumber;
+    if (!maxNumber) {
+      this.visibleItemsInput.nativeElement.value = 1;
+      this.visibleItems = 1;
+    }
+    this.mdbTablePagination.setMaxVisibleItemsNumberTo(this.visibleItems);
+    this.mdbTablePagination.calculateFirstItemIndex();
+    this.mdbTablePagination.calculateLastItemIndex();
+    if (this.users.length > this.visibleItems) {
+      this.mdbTablePagination.nextShouldBeDisabled = false;
+    }
+    this.cdRef.detectChanges();
   }
 
   searchItems(search: string) {

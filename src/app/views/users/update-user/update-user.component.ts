@@ -31,10 +31,10 @@ export class UpdateUserComponent implements OnInit {
         console.log(res);
       });
     this.updateUserForm = this.formBuilder.group({
-      username: ['', Validators.required],
+      username: ['', [Validators.required, Validators.minLength(3)]],
       firstname: [''],
       lastname: [''],
-      email: ['', Validators.required]
+      email: ['', [Validators.required, Validators.email]]
     });
   }
 
@@ -56,10 +56,10 @@ export class UpdateUserComponent implements OnInit {
     (response: any) => {
         if (response.code === '800.200.001') {
           console.log(this.user);
-          this.toastr.success('User update success!', 'User updated successfully');
+          this.toastr.success('User updated successfully', 'User update success!');
           this.location.back();
         } else {
-          this.toastr.error('User update error!', 'User could not be updated');
+          this.toastr.error('User could not be updated', 'User update error!');
         }
       });
   }

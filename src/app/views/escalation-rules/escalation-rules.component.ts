@@ -16,13 +16,14 @@ export class EscalationRulesComponent implements OnInit, AfterViewInit {
   @ViewChild(MdbTablePaginationComponent, { static: true }) mdbTablePagination: MdbTablePaginationComponent;
   @ViewChild(MdbTableDirective, { static: true }) mdbTable: MdbTableDirective;
   @ViewChild(MdbTableSortDirective, { static: true }) mdbTableSort: MdbTableSortDirective;
-
+  @ViewChild('visibleItemsInput', {static: false}) visibleItemsInput;
 
   currentSystemId: string;
   currentSystem: any;
   rules: any[];
   previous: any = [];
   isLoaded = false;
+  visibleItems: number = 5;
   headElements = ['name', 'eventtype', 'description', 'nth_event', 'duration', 'escalation', 'date_created', 'action'];
   elements = {
     name: 'Name', eventtype: 'Event Type', description: 'Description', nth_event: 'Nth occurrence', duration: 'Duration',
@@ -54,8 +55,26 @@ export class EscalationRulesComponent implements OnInit, AfterViewInit {
     this.mdbTablePagination.setMaxVisibleItemsNumberTo(10);
     this.mdbTablePagination.calculateFirstItemIndex();
     this.mdbTablePagination.calculateLastItemIndex();
+    if (this.rules.length > this.visibleItems) {
+      this.mdbTablePagination.nextShouldBeDisabled = false;
+    }
     this.cdRef.detectChanges();
     console.log(this.mdbTablePagination.firstItemIndex);
+  }
+
+  changeVisibleItems(maxNumber: number) {
+    this.visibleItems = maxNumber;
+    if (!maxNumber) {
+      this.visibleItemsInput.nativeElement.value = 1;
+      this.visibleItems = 1;
+    }
+    this.mdbTablePagination.setMaxVisibleItemsNumberTo(this.visibleItems);
+    this.mdbTablePagination.calculateFirstItemIndex();
+    this.mdbTablePagination.calculateLastItemIndex();
+    if (this.rules.length > this.visibleItems) {
+      this.mdbTablePagination.nextShouldBeDisabled = false;
+    }
+    this.cdRef.detectChanges();
   }
 
   searchItems(search: string) {

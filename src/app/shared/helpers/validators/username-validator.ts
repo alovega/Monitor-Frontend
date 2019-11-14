@@ -1,7 +1,15 @@
 import { FormGroup } from '@angular/forms';
+import { UsersService } from '../../../views/users/users.service';
 
-// custom validator to check that two fields match
-export function MustMatch(controlName: string, matchingControlName: string) {
+
+// custom validator to check if a username exists
+export function UsernameExists(controlName: string, matchingControlName: string) {
+    let usersService: UsersService;
+    usersService.getUsers().subscribe(
+        (res) => {
+            
+        }
+    );
     return (formGroup: FormGroup) => {
         const control = formGroup.controls[controlName];
         const matchingControl = formGroup.controls[matchingControlName];
@@ -20,4 +28,3 @@ export function MustMatch(controlName: string, matchingControlName: string) {
         }
     }
 }
-    

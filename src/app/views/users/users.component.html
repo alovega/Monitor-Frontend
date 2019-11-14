@@ -1,40 +1,49 @@
 <div class="m-auto" style="position:fixed; right: 0; left: 0; z-index: 2; " [ngClass] = "{'d-none': isLoaded}">
     <hm-component-loader></hm-component-loader>
 </div>
-<div class="page-header mb-4">
-    <h3 class="page-header-title float-left">Users</h3>
-    <div class="float-right"> 
-        <div class="row">
-            <div class="col-md-6 px-0">
-                <input class="form-control" type="text" placeholder="Search">
-            </div>
-            <div class="col-md-6 pl-3">
-            <a routerLink="/dashboard/users/new" routerLinkActive="active">
-                <button class="" id="create-button">Add user</button>
-            </a>
-            </div>
-        </div>
+<div class="page-header d-flex flex-row justify-content-between">
+    <h3 class="page-header-title">Users</h3>
+    <div class="add-rule-btn">
+      <a routerLink="/dashboard/users/new" routerLinkActive="active">
+        <button mdbBtn class="btn-sm blue-gradient lowercase-btn text-white">
+            <i class="fas fa-plus"></i>Add user
+        </button>
+      </a>
     </div>
-    <div class="clearfix"></div> 
+</div>
+<hr class="page-header-divider">
+
+
+<div class="d-flex flex-sm-row mt-4 justify-content-lg-between justify-content-sm-between dt-controls">
+  <div class="mb-1">
+      <span>Show </span>
+      <input #visibleItemsInput class="view-entries"
+      type="number" min="1" (input)="changeVisibleItems($event.target.value)" [(ngModel)]="visibleItems">
+      <span> entries</span>
+  </div>
+ 
+  <div class="">
+    <span>Search: </span>
+    <input class="search-entries" type="text" #searchText (input)="searchItems(searchText.value)" placeholder="Search">
+  </div> 
 </div>
 
 
 <!-- Grid Row -->
-<div class="row mt-5 wow animated fadeIn" data-wow-delay="0.1s">
+<div class="row wow animated fadeIn" data-wow-delay="0.1s">
     <!-- Grid column -->
     <div class="col-lg-12 col-md-12 text-left">
         <mdb-card>
-        <table mdbTable #tableEl="mdbTable" class="table-responsive">
+        <table mdbTable #tableEl="mdbTable" class="table-responsive table-striped">
             <thead class="text-white">
             <tr>
-            <th *ngFor="let head of headElements; let i = index" style="white-space: nowrap;" scope="col"[mdbTableSort]="users" [sortBy]="headElements[i]">{{elements[head] | titlecase}} 
+            <th *ngFor="let head of headElements; let i = index" style="white-space: nowrap;" scope="col" [mdbTableSort]="users" [sortBy]="headElements[i]">{{elements[head] | titlecase}} 
             <mdb-icon fas icon="sort"></mdb-icon></th>
             </tr>
             </thead>
             <tbody *ngIf="users.length; else noData">
             <tr *ngFor="let user of users; let i = index">
-            <th *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex"
-                scope="row">{{user.username}}</th>
+            <th *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{user.username}}</th>
             <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{user.email}}</td>
             <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{user.first_name}}</td>
             <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{user.last_name}}</td>
@@ -64,14 +73,14 @@
             </ng-template>            
             <tr>
             <td colspan="7">
-                <mdb-table-pagination [tableEl]="tableEl" [searchDataSource]="users"></mdb-table-pagination>
+                <mdb-table-pagination [tableEl]="tableEl" [searchDataSource]="users" (nextPageClick)="onNextPageClick($event)"></mdb-table-pagination>
             </td>
             </tr>
             </tfoot>
         </table>
         </mdb-card>
     </div>
-  </div>
+</div>
 
 <!-- <mdb-card>
     <mdb-card-body>
