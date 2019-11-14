@@ -15,8 +15,7 @@ export class RecentNotificationComponent implements OnInit {
     this.profileService.getLoggedInuserRecentNotifications().subscribe(
       (response) => {
         this.data = response;
-      }
-    );
+      });
   }
 
 }

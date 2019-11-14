@@ -16,7 +16,7 @@
               'under-maintenance-incident' : incident.state__name === 'Scheduled',
               'minor-incident' : incident.priority_level === 2 || incident.priority_level === 3 ,
               'degraded-incident' : incident.priority_level === 1,
-              'Operational-incident' : incident.prirority_level === 4,
+              'operating-incident' : incident.priority_level === 4,
               'major-incident' : incident.priority_level === 5
            }">
               {{incident.name}}

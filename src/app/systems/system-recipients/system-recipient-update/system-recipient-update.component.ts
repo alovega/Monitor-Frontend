@@ -5,7 +5,6 @@ import { Location } from '@angular/common';
 import { Router, ActivatedRoute } from '@angular/router';
 import {SystemRecipient} from '../system-recipient';
 import { of } from 'rxjs';
-import { EscalationLevel } from 'src/app/shared/models/escalation-level';
 import { NotificationType } from 'src/app/shared/models/notification-type';
 import { State } from 'src/app/shared/models/state';
 import { ToastrService } from 'ngx-toastr';

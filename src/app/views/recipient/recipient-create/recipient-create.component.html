@@ -2,7 +2,7 @@
     
     <div class="col"><p class="h4 mb-4">Add  Recipient </p></div>
     <div class="col-md-6">
-        <button class="float-right back-button" (click)="back()"><i class="fas fa-angle-double-left"></i> Back to recipients</button>
+        <button class="float-right back-button" (click)="back()"><i class="fas fa-angle-double-left"></i> Back </button>
       </div>
         
   </div>
@@ -29,7 +29,6 @@
                 <!-- User -->
                 <label style="position: relative; right: 215px;">User</label>
                 <select class="browser-default custom-select form-control mb-4" formControlName="userId" [(ngModel)]="data.userId">
-                  <option value></option>
                   <option *ngFor="let user of users; let i = index" [value]="user.id" >
                         {{user.username}}
                   </option>
@@ -46,7 +45,6 @@
           <!-- State -->
         <label style="position: relative; right: 215px;">State</label>
         <select class="browser-default custom-select form-control mb-4" formControlName="stateId" [(ngModel)]="data.stateId">
-          <option value></option>
           <option *ngFor="let type of states; let i = index" [value]="type.id">
             {{type.name}}
           </option>
@@ -59,7 +57,7 @@
         </div>
       </div>
       <!-- Send button -->
-          <button mdbBtn type="button" class="btn float-right btn-primary waves-light" color="primary" mdbWavesEffect
+          <button mdbBtn type="button" class="btn float-right btn-primary waves-light"  mdbWavesEffect
       [disabled]="!recipientsForm.valid" (click)="addRecipient()" size="sm">Save</button>
     </form>
       <!-- Default form contact -->

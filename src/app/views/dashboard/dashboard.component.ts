@@ -3,6 +3,7 @@ import { Route, ActivatedRoute } from '@angular/router';
 import { SystemService } from '../../shared/system.service';
 import { GraphsService } from '../../shared/graphs.service';
 import { SystemStatusService } from '../../shared/system-status.service';
+import { ProfileService } from 'src/app/profile/profile.service';
 
 @Component({
   selector: 'hm-dashboard',
@@ -12,6 +13,7 @@ import { SystemStatusService } from '../../shared/system-status.service';
 export class DashboardComponent implements OnInit {
   currentSystem: any;
   currentSystemId: any;
+  message: any;
   public systemStatus: any;
 
   public errorRateGraph = {
@@ -82,7 +84,8 @@ export class DashboardComponent implements OnInit {
   constructor(
     public graphsService: GraphsService,
     public systemService: SystemService,
-    private systemStatusService: SystemStatusService
+    private systemStatusService: SystemStatusService,
+    private profileService: ProfileService
   ) { }
 
   ngOnInit() {
@@ -91,8 +94,11 @@ export class DashboardComponent implements OnInit {
       (status) => {
         this.systemStatus = status;
         console.log(status);
-      }
-    );
+      });
+    this.profileService.getLoggedInuserRecentNotifications().subscribe(
+        (data) => {
+          this.message = data;
+        });
     this.graphsService.getErrorRates().subscribe(
       (response => {
         this.errorRateGraph.chartLabels = response.labels;

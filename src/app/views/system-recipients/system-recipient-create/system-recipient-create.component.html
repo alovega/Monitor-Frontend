@@ -2,7 +2,7 @@
 
     <div class="col"><p class="h4 mb-4">Add System Recipient </p></div>
     <div class="col-md-6">
-        <button class="float-right back-button" (click)="back()"><i class="fas fa-angle-double-left"></i> Back to SystemRecipients</button>
+        <button class="float-right back-button" (click)="back()"><i class="fas fa-angle-double-left"></i> Back </button>
       </div>
         
   </div>
@@ -15,7 +15,6 @@
       <!-- Recipient -->
       <label for="recipient">Recipient</label>
       <select id=recipient class="browser-default custom-select form-control mb-4" formControlName="Recipient">
-        <option [ngValue]="null"></option>
         <option *ngFor="let recipient of Recipients; let i = index" [value]="recipient.id">
               {{recipient.userName}}
         </option>
@@ -30,7 +29,6 @@
   <!--separator-->
   <div class="row">
     <div class="col">
-      <hr>
     </div>
   </div>
     <!--Escalations form options-->
@@ -39,20 +37,15 @@
         *ngFor="let escalation of escalationsArray.controls; let escalationIndex = index;"
         [formGroupName]="escalationIndex">
         <div class="row">
-          <div class="col-8">
+          <!-- <div class="col-8">
             <h4>Escalations {{escalationIndex + 1}}</h4>
-          </div>
-          <div class="col-4 control-buttons">
-            <img src="../../../../assets/icons/add.svg" alt="" (click)="addEscalations()">
-            <img src="../../../../assets/icons/remove.svg" alt="" width="24" height="24" (click)="deleteEscalations(escalationsIndex)">
-          </div>
+          </div> -->
         </div>
         <hr>
         <div class="row">
           <div class="col">
               <label>Escalation Level</label>
               <select class="browser-default custom-select form-control mb-4" formControlName="EscalationLevel">
-              <option [ngValue]="null"></option>
               <option *ngFor="let level of EscalationLevels; let i = index" [value]="level.id">
                     {{level.name}}
               </option>
@@ -75,14 +68,17 @@
                     Please Select a notification type.
                 </div>
             </div>
+            <a [ngClass]="{'display-none': escalationIndex === 0}" id="remove"><img src="../../../../assets/icons/remove.svg" alt="" width="24" height="24" (click)="deleteEscalations(escalationIndex)"></a>
           </div>
         </div>
         </div>
     </div>
-  
   <!-- Send button -->
-  <button mdbBtn type="submit" size="sm" class="btn float-right btn-primary waves-light" color="primary" mdbWavesEffect
+  <button mdbBtn type="submit" size="sm" class="btn float-right btn-primary waves-light"  mdbWavesEffect
   [disabled]="!systemRecipientForm.valid" (click)="addRecipient()">Save</button>
+  <!--Add escalations button-->
+  <button [ngClass]="{disabled : escalationsArray.length >= EscalationLevels.length}" mdbBtn type="submit" size="sm" class="btn float-right btn-primary waves-light"  mdbWavesEffect
+   (click)="addEscalations()">Add escalation</button>
 
 </form>
   <!-- Default form contact -->
