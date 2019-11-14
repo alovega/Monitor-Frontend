@@ -11,4 +11,9 @@
   
   mat-sidenav{
     width: 248px;
+    overflow: hidden;
+  }
+
+  .mat-drawer-inner-container{
+    overflow: hidden !important;
   }

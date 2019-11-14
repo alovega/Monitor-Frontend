@@ -15,6 +15,11 @@
     left: 1030px;
 }
 
+.mat-menu-panel{
+    position: relative !important;
+    left: 140px !important;
+}
+
 button:focus{
     outline: none !important;
 }
@@ -93,5 +98,20 @@ button:focus{
     #user-profile{
         position: relative;
         left: 456px;
+    }
+}
+
+@media (width: 1024px){
+    #system-button{
+        position: relative;
+        left: 527px;
+    } 
+    #notifications{
+        position: relative;
+        left: 626px;
+    }
+    #user-profile{
+        position: relative;
+        left: 711px;
     }
 }

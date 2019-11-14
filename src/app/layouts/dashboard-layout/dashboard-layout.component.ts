@@ -73,7 +73,7 @@ export class DashboardLayoutComponent implements OnInit, AfterViewInit {
     {
       displayName: 'Notifications',
       iconName: 'notifications',
-      route: 'notifications'
+      route: 'dashboard/notifications'
     },
     {
       displayName: 'Events',

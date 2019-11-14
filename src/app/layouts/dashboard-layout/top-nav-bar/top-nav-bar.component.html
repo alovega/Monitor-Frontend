@@ -39,19 +39,16 @@
         </mat-icon>
     </button>
     <mat-menu #user="matMenu" [overlapTrigger]="false">
-        <button mat-menu-item *ngFor="let system of systems" [ngClass]="{'d-none': system.id === currentSystem.id}"
-        (click)="changeSystem(system.id)">
-            <span> {{ system.name }}</span>
+        <button mat-menu-item routerLink="profile">
+            <mat-icon>account_circle</mat-icon>
+            <span> account</span>
         </button>
-         <button mat-menu-item>
-            <mat-icon>people_outline</mat-icon>
-            <span>Connecting</span>
-            </button>
-            <button mat-menu-item>
-              <mat-icon>videocam</mat-icon>
-              <span>Let's talk</span>
-            </button>
-            <button mat-menu-item>
+         <button mat-menu-item routerLink="profile/update-password">
+            <mat-icon>settings_application</mat-icon>
+             <span>change password</span>
+          </button>
+          <hr>
+            <button mat-menu-item  (click)="logout()">
               <mat-icon>exit_to_app</mat-icon>
               <span>Logout</span>
             </button>
