@@ -5,8 +5,8 @@ import { ToastrService } from 'ngx-toastr';
 import { NavService } from '../nav.service';
 
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { SystemService } from '../shared/system.service';
-import { System } from '../shared/models/system';
+import { SystemService } from '../../../shared/system.service';
+import { System } from '../../../shared/models/system';
 import { AuthenticationService } from 'src/app/shared/auth/authentication.service';
 import { SideNavToggleService } from 'src/app/shared/side-nav-toggle.service';
 import { LookUpService } from 'src/app/shared/look-up.service';

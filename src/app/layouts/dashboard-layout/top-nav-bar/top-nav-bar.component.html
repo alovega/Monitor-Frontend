@@ -17,19 +17,19 @@
             <mat-icon>open_in_new</mat-icon>
             <span>Add system</span>
             </button>
-            <button mat-menu-item>
-              <mat-icon>videocam</mat-icon>
-              <span>Let's talk</span>
+            <button mat-menu-item routerLink="system/edit">
+              <mat-icon>edit</mat-icon>
+              <span>Edit current system</span>
             </button>
-            <button mat-menu-item>
-              <mat-icon>exit_to_app</mat-icon>
-              <span>Lo</span>
+            <button mat-menu-item routerLink="/system/{{currentSystem.id}}/">
+              <mat-icon>public</mat-icon>
+              <span>public status page</span>
             </button>
     </mat-menu>
-    <button mat-icon-button id="notifications" routerLink="dashboard/profile/user-notifications">
+    <button mat-icon-button id="notifications" routerLink="profile/user-notifications">
         <mat-icon>notifications</mat-icon>
     </button>
-    <button mat-icon-button [matMenuTriggerFor]="menu" id="user-profile">
+    <button mat-icon-button [matMenuTriggerFor]="user" id="user-profile">
         <span>Welcome {{profile.userName}}</span>
         <mat-icon>
                 person
@@ -38,7 +38,7 @@
                 expand_more
         </mat-icon>
     </button>
-    <!-- <mat-menu #menu="matMenu" [overlapTrigger]="false">
+    <mat-menu #user="matMenu" [overlapTrigger]="false">
         <button mat-menu-item *ngFor="let system of systems" [ngClass]="{'d-none': system.id === currentSystem.id}"
         (click)="changeSystem(system.id)">
             <span> {{ system.name }}</span>
@@ -55,7 +55,7 @@
               <mat-icon>exit_to_app</mat-icon>
               <span>Logout</span>
             </button>
-    </mat-menu> -->
+    </mat-menu>
 </mat-toolbar>
 
 <div mdbModal #frame="mdbModal" class="modal fade left" id="frameModalTop" tabindex="-1" role="dialog"

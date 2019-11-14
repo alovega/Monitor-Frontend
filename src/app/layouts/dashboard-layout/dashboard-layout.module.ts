@@ -7,6 +7,26 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { ToastrModule } from 'ngx-toastr';
+import {
+  MatAutocompleteModule,
+  MatButtonModule,
+  MatButtonToggleModule,
+  MatExpansionModule,
+  MatGridListModule,
+  MatIconModule,
+  MatInputModule,
+  MatListModule,
+  MatMenuModule,
+  MatNativeDateModule,
+  MatSelectModule,
+  MatSidenavModule,
+  MatSliderModule,
+  MatSlideToggleModule,
+  MatSnackBarModule,
+  MatTabsModule,
+  MatToolbarModule,
+  MatTooltipModule
+} from '@angular/material';
 
 import { DashboardLayoutRoutingModule } from './dashboard-layout-routing.module';
 import { DashboardLayoutComponent } from './dashboard-layout.component';
@@ -17,8 +37,32 @@ import { IncidentsModule } from 'src/app/views/incidents/incidents.module';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { DashboardComponent } from 'src/app/views/dashboard/dashboard.component';
 import { EditSystemComponent } from 'src/app/views/edit-system/edit-system.component';
+import { TopNavBarComponent } from './top-nav-bar/top-nav-bar.component';
+import { MenuListItemComponent } from './menu-list-item/menu-list-item.component';
 
-
+@NgModule({
+  exports: [
+    MatAutocompleteModule,
+    MatButtonModule,
+    MatButtonToggleModule,
+    MatExpansionModule,
+    MatGridListModule,
+    MatInputModule,
+    MatListModule,
+    MatIconModule,
+    MatMenuModule,
+    MatSelectModule,
+    MatSidenavModule,
+    MatSlideToggleModule,
+    MatSliderModule,
+    MatSnackBarModule,
+    MatTabsModule,
+    MatToolbarModule,
+    MatTooltipModule,
+    MatNativeDateModule,
+  ],
+})
+export class MaterialModule {}
 @NgModule({
   declarations: [
     DashboardLayoutComponent,
@@ -26,7 +70,9 @@ import { EditSystemComponent } from 'src/app/views/edit-system/edit-system.compo
     SideNavComponent,
     FooterComponent,
     DashboardComponent,
-    EditSystemComponent
+    EditSystemComponent,
+    MenuListItemComponent,
+    TopNavBarComponent
   ],
   imports: [
     CommonModule,
@@ -37,6 +83,7 @@ import { EditSystemComponent } from 'src/app/views/edit-system/edit-system.compo
     HttpClientModule,
     NgbModule,
     FormsModule,
+    MaterialModule,
     ReactiveFormsModule,
     SweetAlert2Module.forRoot(),
     DashboardLayoutRoutingModule,
