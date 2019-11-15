@@ -242,9 +242,19 @@ th {
   margin-top: 2px !important;
 }
 
+.content-width {
+  width: 50%;
+}
+
 @media (max-width: 576px){
   .dt-controls {
     flex-direction: column !important;
+  }
+  .flex-grid {
+    display: block !important;
+  }
+  .content-width{
+    width: 100% !important;
   }
 }
 

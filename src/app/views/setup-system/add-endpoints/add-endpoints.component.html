@@ -1,12 +1,13 @@
-<div class="row">
-    <div class="col col-6"><p class="h5 mb-4">Add some endpoints </p></div>
-    <div class="col-md-6" *ngIf="endpoints.length">
-        <button mdbBtn size="sm" color="primary" gradient="aqua" rounded="true" class="lowercase-btn float-right" data-toggle="modal" data-target="#"
+<div class="d-flex justify-content-between align-items-end">
+    <h5>Add some endpoints </h5>
+    <div class="" *ngIf="endpoints.length">
+        <button mdbBtn class="btn-sm blue-gradient lowercase-btn text-white" data-toggle="modal" data-target="#"
         (click)="frame.show()"><i class="fas fa-plus"></i> Add endpoint</button>
     </div>     
 </div>
-<div class="row">
-    <div class="col-md-6">
+<hr class="page-header-divider">
+<div class="d-flex flex-grid justify-content-between">
+    <div class="content-width mr-2">
         <ul class="list-group">
         <p class="list-item">
         Think of endpoints as the functional pieces of this system that may experience downtimes or be affected by issues. 
@@ -15,20 +16,20 @@
         <p class="point-item">Endpoints marked as healthcheck are queried for health status periodically to generate uptime and response time data</p>
         </ul>
     </div>
-    <button data-toggle="modal" data-target="#editEndpoint" (click)="editModal.show();" class="d-none" #openBtn> </button>
-    <div class="col-md-6">
+    <div class="content-width">
+        <button data-toggle="modal" data-target="#editEndpoint" (click)="editModal.show();" class="d-none" #openBtn> </button>
         <div [ngClass]="{'d-none': !loading}">
             <hm-loader></hm-loader>
             {{loading}}
         </div> 
         <ul class="endpoints-list" *ngIf="endpoints.length; else noEndpoints">
             <li *ngFor="let endpoint of endpoints">
-              <div class="row">
-               <div class="col-md-5 endpoint-item" (click)="updateEndpoint(endpoint.id)">
+              <div class="d-flex justify-content-between">
+               <div class="endpoint-item" (click)="updateEndpoint(endpoint.id)">
                   {{endpoint.name}}
                </div>
                 <!-- <mdb-icon fas icon="check-circle" class="green-text pr-1 pl-1"></mdb-icon> -->
-                <div class="col-md-5">
+                <div class="">
                   <hm-endpoint-status status = "{{endpoint.status}}"></hm-endpoint-status>
                 </div>
               </div>
@@ -36,7 +37,7 @@
         </ul>
         <ng-template #noEndpoints class="text-center w-75 m-auto">
           <hm-empty-data header="No endpoints to display" description="Endpoints are the functional pieces of the system, add some to view them here.">
-              <button action-button mdbBtn size="sm" color="primary" gradient="aqua" rounded="true" class="lowercase-btn" data-toggle="modal" data-target="#"
+              <button action-button mdbBtn class="btn-sm blue-gradient lowercase-btn text-white" data-toggle="modal" data-target="#"
               (click)="frame.show()"><i class="fas fa-plus"></i> Add endpoint</button>
           </hm-empty-data>
         </ng-template>
