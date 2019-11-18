@@ -3,57 +3,64 @@
         <mat-icon>menu</mat-icon>
     </button>
     <div id="system-button">
-        <button mat-icon-button [matMenuTriggerFor]="menu" class="mr-4">
-            <span>{{ currentSystem.name }}</span>
-            <mat-icon>
-                expand_more
-            </mat-icon>
-        </button>
-        <mat-menu #menu="matMenu" [overlapTrigger]="false">
-            <button mat-menu-item *ngFor="let system of systems" [ngClass]="{'d-none': system.id === currentSystem.id}"
-            (click)="changeSystem(system.id)">
-                <span> {{ system.name }}</span>
-            </button>
-             <button mat-menu-item (click) = "frame.show()">
-                <mat-icon>open_in_new</mat-icon>
-                <span>Add system</span>
-                </button>
-                <button mat-menu-item routerLink="system/edit">
-                  <mat-icon>edit</mat-icon>
-                  <span>Edit current system</span>
-                </button>
-                <button mat-menu-item routerLink="/system/{{currentSystem.id}}/">
-                  <mat-icon>public</mat-icon>
-                  <span>public status page</span>
-                </button>
-        </mat-menu>
-        <button mat-icon-button id="notifications" routerLink="profile/user-notifications" class="mr-4">
-            <mat-icon>notifications</mat-icon>
-        </button>
-        <button mat-icon-button [matMenuTriggerFor]="user" id="user-profile" class="mr-4" id="mr-3">
-            <span>Welcome {{profile.userName}}</span>
-            <mat-icon>
-                    person
-            </mat-icon>
-            <mat-icon>
+        <div class="mr-4">
+            <button mat-icon-button [matMenuTriggerFor]="menu">
+                <span>{{ currentSystem.name }}</span>
+                <mat-icon>
                     expand_more
-            </mat-icon>
-        </button>
-        <mat-menu #user="matMenu" [overlapTrigger]="false">
-            <button mat-menu-item routerLink="profile">
-                <mat-icon>account_circle</mat-icon>
-                <span> account</span>
+                </mat-icon>
             </button>
-             <button mat-menu-item routerLink="profile/update-password">
-                <mat-icon>settings_application</mat-icon>
-                 <span>change password</span>
-              </button>
-              <hr>
-                <button mat-menu-item  (click)="logout()">
-                  <mat-icon>exit_to_app</mat-icon>
-                  <span>Logout</span>
+            <mat-menu #menu="matMenu" [overlapTrigger]="false">
+                <button mat-menu-item *ngFor="let system of systems" [ngClass]="{'d-none': system.id === currentSystem.id}"
+                (click)="changeSystem(system.id)">
+                    <span> {{ system.name }}</span>
                 </button>
-        </mat-menu>
+                 <button mat-menu-item (click) = "frame.show()">
+                    <mat-icon>open_in_new</mat-icon>
+                    <span>Add system</span>
+                    </button>
+                    <button mat-menu-item routerLink="system/edit">
+                      <mat-icon>edit</mat-icon>
+                      <span>Edit current system</span>
+                    </button>
+                    <button mat-menu-item routerLink="/system/{{currentSystem.id}}/">
+                      <mat-icon>public</mat-icon>
+                      <span>public status page</span>
+                    </button>
+            </mat-menu>
+        </div>
+        <div class="mr-4">
+            <button mat-icon-button  routerLink="profile/user-notifications">
+              <span></span>
+              <mat-icon>notifications</mat-icon>
+          </button>
+        </div>
+        <div class="mr-4">
+            <button mat-icon-button [matMenuTriggerFor]="user">
+                <span>Welcome {{profile.userName}}</span>
+                <mat-icon>
+                        person
+                </mat-icon>
+                <mat-icon>
+                        expand_more
+                </mat-icon>
+            </button>
+            <mat-menu #user="matMenu" [overlapTrigger]="false">
+                <button mat-menu-item routerLink="profile">
+                    <mat-icon>account_circle</mat-icon>
+                    <span> account</span>
+                </button>
+                 <button mat-menu-item routerLink="profile/update-password">
+                    <mat-icon>settings_application</mat-icon>
+                     <span>change password</span>
+                  </button>
+                  <hr>
+                    <button mat-menu-item  (click)="logout()">
+                      <mat-icon>exit_to_app</mat-icon>
+                      <span>Logout</span>
+                    </button>
+            </mat-menu>
+        </div>
     </div>
 
 </mat-toolbar>

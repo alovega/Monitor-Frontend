@@ -3,22 +3,13 @@
     background-color: #fff;
 }
 #system-button{
-    width: auto;
+    width: 390px;
+    display: flex;
     position: relative;
     right: 115px;
-    margin-right: 0px;
 }
-// #notifications{
-//     position: relative;
-//     left: 980px;
-// }
-// #user-profile{
-//     position: relative;
-//     left: 1030px;
-// }
 
 .mat-menu-panel{
-    // position: relative !important;
     left: 140px !important;
 }
 
@@ -27,27 +18,28 @@ button:focus{
 }
 .mat-toolbar-row, .mat-toolbar-single-row {
     height: 57px;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.12);
 }
 
 @media (max-width: 415px){
     #system-button{
         position: relative;
-        right: 103px;
+        right: 85px;
     }
 }
+
+
 
 .custom-navigation{
     display: flex;
     justify-content: space-between;
 }
 .mr-4{
-    margin: 49px;
+    margin: 49px !important;
 }
 
-#mr-3{
-    margin-left: 3px !important;
-}
+// #mr-3{
+//     margin-left: 3px !important;
+// }
 mat-toolbar{
-    min-width: 482px;
+    min-width: 545px;
   }

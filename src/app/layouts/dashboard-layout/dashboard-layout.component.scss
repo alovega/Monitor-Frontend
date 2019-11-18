@@ -18,6 +18,10 @@
     overflow: hidden !important;
   }
 mat-sidenav-container{
-  min-width: 482px;
+  min-width: 545px;
   background-color: #fff;
+}
+
+.mat-drawer-side {
+  border-right: none !important;
 }
