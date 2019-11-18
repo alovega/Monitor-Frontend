@@ -1,20 +1,25 @@
-<div class="mb-3">
-    <ngb-tabset type="pills" justify="end" class="mb-1">
-    <ngb-tab>
+<div class="mb-1 d-flex justify-content-between align-items-center">
+    <div class="text-left">
+        <h4>Dashboard</h4>
+    </div>
+    <div>
+    <ngb-tabset type="pills" justify="end" class="mb-1 date-tabs" #tabs (tabChange)="onTabChange($event)" [activeId]="activeTab">
+    <ngb-tab id="today">
         <ng-template ngbTabTitle>Today</ng-template>
     </ngb-tab>
-    <ngb-tab>
+    <ngb-tab id="week">
         <ng-template ngbTabTitle>Week</ng-template>
     </ngb-tab>
-    <ngb-tab>
+    <ngb-tab id="month">
         <ng-template ngbTabTitle>Month</ng-template>
     </ngb-tab>
-    <ngb-tab>
+    <ngb-tab id="year">
         <ng-template ngbTabTitle>Year</ng-template>
     </ngb-tab>           
     </ngb-tabset>
-    <hr class="page-header-divider">
+    </div>
 </div>
+<hr class="page-header-divider">
 
 
 <div class="dashboard-widgets row mb-3" *ngIf="widgetData">
@@ -23,7 +28,8 @@
         <div class="card-body reported-events-border">
             <h2 class="text-dark mb-1 font-weight-bold">{{widgetData.reported_events}}</h2>
             <h4 class="card-title mb-1">Reported Events</h4>
-            <small class="text-muted">Today</small>
+            <hr>
+            <div class="text-muted">{{activeTab | dateTransform }}</div>
         </div>
         </mdb-card>
     </div>
@@ -32,7 +38,8 @@
         <div class="card-body open-incidents-border">
             <h2 class="text-dark mb-1 font-weight-bold">{{widgetData.open_incidents}}</h2>
             <h4 class="card-title mb-1">Open Incidents</h4>
-            <small class="text-muted">Today</small>
+            <hr>
+            <div class="text-muted">{{activeTab | dateTransform }}</div>
         </div>
         </mdb-card>
     </div>
@@ -42,7 +49,8 @@
         <div class="card-body maintenances-border">
             <h2 class="text-dark mb-1 font-weight-bold">{{widgetData.scheduled_incidents}}</h2>
             <h4 class="card-title mb-1">Maintenances</h4>
-            <small class="text-muted">Today</small>
+            <hr>
+            <div class="text-muted">{{activeTab | dateTransform }}</div>
         </div>
         </mdb-card>
     </div>  
@@ -52,12 +60,12 @@
         <div class="card-body closed-incidents-border">
             <h2 class="text-dark mb-1 font-weight-bold">{{widgetData.closed_incidents}}</h2>
             <h4 class="card-title mb-1">Closed Incidents</h4>
-            <small class="text-muted">Today</small>
+            <hr>
+            <div class="text-muted">{{activeTab | dateTransform }}</div>
         </div>
         </mdb-card>
     </div>    
 </div>
-
 
 <div class="status-container">
     <div class="row">

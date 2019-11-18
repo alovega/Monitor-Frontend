@@ -27,7 +27,7 @@ export class SetupSystemComponent implements OnInit, AfterViewChecked {
   }
 
   ngOnInit() {
-    console.log(this.activatedRoute.snapshot.firstChild.url[0].path);
+    // console.log(this.activatedRoute.snapshot.firstChild.url[0].path);
 
     this.setupService.currentPreviousUrl.subscribe(
       (url) => this.previousUrl = url

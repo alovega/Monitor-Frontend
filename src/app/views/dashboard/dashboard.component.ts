@@ -1,5 +1,8 @@
-import { Component, OnInit, ComponentFactoryResolver } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewChecked } from '@angular/core';
 import { Route, ActivatedRoute } from '@angular/router';
+import { NgbTabChangeEvent, NgbTabset } from '@ng-bootstrap/ng-bootstrap';
+
+// import { DateTransformPipe } from '../../shared/pipes/date-transform.pipe';
 import { SystemService } from '../../shared/system.service';
 import { GraphsService } from '../../shared/graphs.service';
 import { SystemStatusService } from '../../shared/system-status.service';
@@ -10,12 +13,16 @@ import { ProfileService } from 'src/app/profile/profile.service';
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss']
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent implements OnInit, AfterViewChecked {
   currentSystem: any;
   currentSystemId: any;
   message: any;
   widgetData: any;
+  activeTab: string;
+  startDate: Date;
+  endDate: Date;
   public systemStatus: any;
+  @ViewChild('tabs', {static: false}) tabs: NgbTabset;
 
   public errorRateGraph = {
     chartType: 'line',
@@ -86,8 +93,11 @@ export class DashboardComponent implements OnInit {
     public graphsService: GraphsService,
     public systemService: SystemService,
     private systemStatusService: SystemStatusService,
-    private profileService: ProfileService
-  ) { }
+    private profileService: ProfileService,
+    private activatedRoute: ActivatedRoute,
+  ) {
+    this.activeTab = 'today';
+  }
 
   ngOnInit() {
     this.currentSystem = this.systemService.getCurrentSystem();
@@ -95,11 +105,7 @@ export class DashboardComponent implements OnInit {
       (status) => {
         this.systemStatus = status;
     });
-    this.systemStatusService.getDashboardWidgetsData().subscribe(
-      (response) => {
-        this.widgetData = response;
-        console.log(response);
-    });
+    this.getWidgetData(this.activeTab);
     this.profileService.getLoggedInuserRecentNotifications().subscribe(
         (data) => {
           this.message = data;
@@ -119,5 +125,43 @@ export class DashboardComponent implements OnInit {
         });
         this.responseTimeGraph.chartLabels = response.labels;
       });
+  }
+
+  public getWidgetData(duration: string) {
+    let today = new Date();
+    this.endDate = new Date(new Date().setHours(0, 0, 0, 0));
+    this.startDate = new Date(today.setDate(today.getDate() + 1));
+    this.startDate = new Date(this.startDate.setHours(0, 0, 0, 0));
+
+    if (duration === 'week') {
+      this.endDate = new Date(this.endDate.setDate(this.endDate.getDate() - 7));
+    } else if (duration === 'month') {
+      this.endDate = new Date(this.endDate.setDate(this.endDate.getDate() - today.getDate()));
+    } else if (duration === 'year') {
+      this.endDate = new Date(this.startDate.getFullYear(), 0, 1, 0);
+    } else {
+      this.endDate = this.endDate;
+    }
+    this.systemStatusService.getDashboardWidgetsData(this.startDate, this.endDate).subscribe(
+      (response) => {
+        this.widgetData = response;
+        // console.log(response);
+    });
+  }
+
+  ngAfterViewChecked(): void {
+    if (this.tabs) {
+      this.tabs.select(this.activeTab);
+    }
+  }
+
+  onTabChange($event: NgbTabChangeEvent) {
+    // console.log($event.nextId);
+    if (this.tabs) {
+      // if ()
+      this.activeTab = $event.nextId;
+      this.getWidgetData(this.activeTab);
+      // this.router.navigate([`dashboard/quick-setup/${$event.nextId}`]);
+    }
   }
 }
