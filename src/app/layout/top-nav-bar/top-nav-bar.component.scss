@@ -27,6 +27,7 @@ button:focus{
 }
 .mat-toolbar-row, .mat-toolbar-single-row {
     height: 57px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.12);
 }
 
 @media (max-width: 415px){
