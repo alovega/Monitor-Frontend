@@ -25,6 +25,7 @@ export class SystemService {
   }
 
   getSystems(): Observable<any> {
+    // console.log('Got systems');
     return this.httpWrapperService.post('get_systems/');
   }
 

@@ -14,6 +14,7 @@ export class DashboardComponent implements OnInit {
   currentSystem: any;
   currentSystemId: any;
   message: any;
+  widgetData: any;
   public systemStatus: any;
 
   public errorRateGraph = {
@@ -93,12 +94,16 @@ export class DashboardComponent implements OnInit {
     this.systemStatusService.getCurrentStatus().subscribe(
       (status) => {
         this.systemStatus = status;
-        console.log(status);
-      });
+    });
+    this.systemStatusService.getDashboardWidgetsData().subscribe(
+      (response) => {
+        this.widgetData = response;
+        console.log(response);
+    });
     this.profileService.getLoggedInuserRecentNotifications().subscribe(
         (data) => {
           this.message = data;
-        });
+    });
     this.graphsService.getErrorRates().subscribe(
       (response => {
         this.errorRateGraph.chartLabels = response.labels;
@@ -108,15 +113,11 @@ export class DashboardComponent implements OnInit {
 
     this.graphsService.getResponseTimes(this.currentSystem.id).subscribe(
       (response) => {
-        console.log(response);
         Object.keys(response.datasets).forEach(key => {
           this.responseTimeGraph.chartDatasets.push(response.datasets[key]);
           this.responseTimeGraph.chartLabels.push(response.datasets[key].data);
-          console.log(this.responseTimeGraph.chartLabels.concat(response.datasets[key].chartLabels));
-          console.log(response.datasets[key].data);
         });
         this.responseTimeGraph.chartLabels = response.labels;
-        console.log(this.responseTimeGraph.chartLabels);
       });
   }
 }

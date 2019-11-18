@@ -46,3 +46,47 @@ h6{
     color: #32325d;
     font-size: 1.0625rem;
 }
+
+.maintenances-border:after {
+    content: '';
+    height: 5px;
+    width: 100%;
+    border-radius: 0 0 6px 6px;
+    background-color: #464dee;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+}
+
+.reported-events-border:after {
+    content: '';
+    height: 5px;
+    width: 100%;
+    border-radius: 0 0 6px 6px;
+    background-color: orange;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+}
+
+.open-incidents-border:after {
+    content: '';
+    height: 5px;
+    width: 100%;
+    border-radius: 0 0 6px 6px;
+    background-color: red;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+}
+
+.closed-incidents-border:after {
+    content: '';
+    height: 5px;
+    width: 100%;
+    border-radius: 0 0 6px 6px;
+    background-color: green;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+}

@@ -40,18 +40,19 @@ export class HttpInterceptorService implements HttpInterceptor {
     this.loaderService.show();
     if ( request.body !== null && request.body.hasOwnProperty('system_id')) {
       request = request.clone({
-          body: {...request.body, client_id: this.clientId, token: this.accessToken, system: this.systemName}
+        body: {...request.body, client_id: this.clientId, token: this.accessToken, system: this.systemName}
       });
-      // console.log(request);
+      console.log(this.accessToken);
     } else {
       request = request.clone({
         body: {...request.body, client_id: this.clientId, token: this.accessToken , system_id: this.currentSystemId,
           system: this.systemName}
       });
+      // this.authService.verifyToken(this.accessToken);
     }
 
     return next.handle(request).pipe(
-      finalize(() => this.loaderService.hide())
+      finalize(() => {this.loaderService.hide()})
     );
   }
 }
