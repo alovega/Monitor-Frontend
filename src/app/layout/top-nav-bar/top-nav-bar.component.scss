@@ -3,10 +3,13 @@
     background-color: #fff;
 }
 #system-button{
-    width: 390px;
+    width: 490px;
     display: flex;
-    position: relative;
-    right: 115px;
+    // position: relative;
+    // right: 115px;
+}
+.mat-drawer-backdrop.mat-drawer-shown {
+    visibility: visible;
 }
 
 .mat-menu-panel{
@@ -20,12 +23,12 @@ button:focus{
     height: 57px;
 }
 
-@media (max-width: 415px){
-    #system-button{
-        position: relative;
-        right: 85px;
-    }
-}
+// @media (max-width: 415px){
+//     #system-button{
+//         // position: relative;
+//         // right: 85px;
+//     }
+// }
 
 
 
@@ -34,12 +37,16 @@ button:focus{
     justify-content: space-between;
 }
 .mr-4{
-    margin: 49px !important;
+    margin: 60px !important;
 }
 
-// #mr-3{
-//     margin-left: 3px !important;
-// }
+#mr-3{
+    margin-left: 0px !important;
+}
 mat-toolbar{
     min-width: 545px;
   }
+
+  .mat-drawer-inner-container {
+    overflow: hidden !important;
+}
