@@ -37,8 +37,8 @@ import { IncidentsModule } from 'src/app/views/incidents/incidents.module';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { DashboardComponent } from 'src/app/views/dashboard/dashboard.component';
 import { EditSystemComponent } from 'src/app/views/edit-system/edit-system.component';
-import { TopNavBarComponent } from './top-nav-bar/top-nav-bar.component';
-import { MenuListItemComponent } from './menu-list-item/menu-list-item.component';
+import { TopNavBarComponent } from '../../layout/top-nav-bar/top-nav-bar.component';
+import { MenuListItemComponent } from '../../layout/menu-list-item/menu-list-item.component';
 
 @NgModule({
   exports: [
