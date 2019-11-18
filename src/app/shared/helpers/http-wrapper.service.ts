@@ -24,7 +24,12 @@ export class HttpWrapperService {
   }
 
   private request(url: string, method: string, body?: any, headers?: any): Observable<any> {
-    console.log(body);
+    // console.log(body);
+    const user = localStorage.getItem('currentUser');
+    let accessToken: any;
+    if (user) {
+      accessToken = JSON.parse(user).token;
+    }
     const targetUrl = environment.apiEndpoint + url;
     const options = {
       body, headers
@@ -32,10 +37,10 @@ export class HttpWrapperService {
     return this.http.request(method, targetUrl, options).pipe(
         map((response: any) => {
           if (response.code === '800.200.001') {
-            console.log(response);
+            // console.log(response);
             return response.data;
-          } else {
-            console.log(response);
+          } else if (response.code === '800.403.001') {
+            this.authService.logout();
           }
         }),
         catchError(this.handleError.bind(this)),

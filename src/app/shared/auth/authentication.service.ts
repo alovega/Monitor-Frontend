@@ -25,18 +25,35 @@ export class AuthenticationService {
   }
 
   public isAuthenticated() {
-      const userData = localStorage.getItem('user');
+      const userData = localStorage.getItem('currentUser');
+      // return userData;
       if (userData) {
           const user = JSON.parse(userData);
-          return this.isTokenExpired(user.token, user.expiresAt);
+          if (user.token && (new Date(Number(user.expires_at) * 1000)) > new Date()) {
+            this.verifyToken(user.token);
+            return true;
+          } else {
+            return false;
+          }
+      } else {
+        return false;
       }
   }
 
-  public isTokenExpired(token, expiresIn) {
-    if ( token && expiresIn ) {
-        const now = new Date();
-        return new Date(now.getTime() + Number(expiresIn) * 1000) > now;
-    }
+  public verifyToken(token: any) {
+    return this.http.post<any>(`${environment.apiEndpoint}verify_token/`, {token: token}).pipe(
+      map(result => {
+        console.log('User token');
+        console.log(result);
+        if (result.code === '800.200.001') {
+          localStorage.setItem('currentUser', JSON.stringify(result.data));
+          this.currentUserSubject.next(result.data);
+          return result.data;
+        } else {
+          this.logout();
+        }
+      })
+    );
   }
 
   login(username, password) {

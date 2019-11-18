@@ -118,11 +118,16 @@ body {
 
 .lowercase-btn {
   font-size: 14px !important;
+  color: #ffffff !important;
   text-transform: unset !important;
   border-radius: 4px !important;
   // right: 0 ;
   padding: 5px 10px 5px 10px !important;
   font-weight: 500 !important;
+}
+
+.lowercase-btn:hover {
+  color: #ffffff !important;
 }
 
 /* default .loading styles, .loading should be invisible, opacity: 0, z-index: -1 */
@@ -271,4 +276,12 @@ table.table td, table.table th {
 
 thead{
   background-color: #007bff;
+}
+
+.date-tabs .nav-item a{
+  color: #212529 !important;
+}
+
+.date-tabs .nav-item .active{
+  color: #ffffff !important;
 }
