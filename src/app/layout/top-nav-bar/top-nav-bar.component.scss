@@ -1,0 +1,38 @@
+.mat-toolbar.mat-primary{
+    color: black;
+    background-color: #fff;
+}
+.mat-drawer-backdrop.mat-drawer-shown {
+    visibility: visible;
+}
+
+button:focus{
+    outline: none !important;
+}
+
+mat-toolbar{
+    min-width: 545px;
+    position: fixed;
+    z-index: 2;
+  }
+
+  .mat-drawer-inner-container {
+    overflow: hidden !important;
+}
+
+.d-flex{
+    display: flex;
+    justify-content: space-between;
+}
+
+.ml-1 {
+    margin-left: 0.25em !important;
+}
+
+.mr-1 {
+    margin-right: 0.25em !important;
+}
+
+.mat-elevation-z1{
+    box-shadow: none !important;
+}
