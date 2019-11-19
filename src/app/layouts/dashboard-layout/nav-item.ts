@@ -2,6 +2,6 @@ export interface NavItem {
     displayName: string;
     disabled?: boolean;
     iconName: string;
-    route?: string;
+    routerLink?: string;
     children?: NavItem[];
 }

@@ -32,22 +32,22 @@ export class DashboardLayoutComponent implements OnInit, AfterViewInit {
     {
       displayName: 'Dashboard',
       iconName: 'pie_chart',
-      route: 'dashboard/metrics',
+      routerLink: 'dashboard/metrics',
     },
     {
       displayName: 'Incidents',
       iconName: 'bug_report',
-      route: 'dashboard/incidents'
+      routerLink: 'dashboard/incidents'
     },
     {
       displayName: 'Endpoints',
       iconName: 'data_usage',
-      route: 'dashboard/endpoints'
+      routerLink: 'dashboard/endpoints'
     },
     {
       displayName: 'Users',
       iconName: 'account_box',
-      route: 'dashboard/users'
+      routerLink: 'dashboard/users'
     },
     {
       displayName: 'Configurations',
@@ -56,29 +56,29 @@ export class DashboardLayoutComponent implements OnInit, AfterViewInit {
         {
           displayName: 'Recipients',
           iconName: 'contacts',
-          route: 'dashboard/recipients'
+          routerLink: 'dashboard/recipients'
         },
         {
           displayName: 'System Recipients',
           iconName: 'accessibility',
-          route: 'dashboard/system-recipients'
+          routerLink: 'dashboard/system-recipients'
         },
         {
           displayName: 'Rules',
           iconName: 'bookmark',
-          route: 'dashboard/rules'
+          routerLink: 'dashboard/rules'
         },
       ]
     },
     {
       displayName: 'Notifications',
       iconName: 'notifications',
-      route: 'dashboard/notifications'
+      routerLink: 'dashboard/notifications'
     },
     {
       displayName: 'Events',
       iconName: 'event',
-      route: 'dashboard/events'
+      routerLink: 'dashboard/events'
     },
   ];
 
