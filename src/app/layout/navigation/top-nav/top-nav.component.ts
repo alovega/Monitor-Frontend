@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild, ElementRef, Input, OnChanges, SimpleChang
 import { Router, ActivatedRoute, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
 import { ToastrService } from 'ngx-toastr';
+import Swal from 'sweetalert2';
 
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { SystemService } from '../../../shared/system.service';
@@ -88,7 +89,6 @@ export class TopNavComponent implements OnInit, OnChanges {
 
   changeSystem(systemId: any) {
     // this.toastr.success('Success loaded top nav!');
-
     this.systemService.changesystem(systemId).subscribe(
       () => {
         this.currentSystem = this.systemService.getCurrentSystem();
@@ -98,6 +98,12 @@ export class TopNavComponent implements OnInit, OnChanges {
 
   toggleSideNav(): void {
     this.sideNavService.toggleSideNav();
+  }
+
+  logout() {
+    this.authService.logout();
+    // this.currentUser = null;
+    this.router.navigate(['/auth/login']);
   }
 
   onSubmit() {
@@ -111,21 +117,26 @@ export class TopNavComponent implements OnInit, OnChanges {
       (response => {
         this.submitted = false;
         if (response) {
-          this.changeSystem(response.id);
           this.closeBtn.nativeElement.click();
-          this.toastr.success('System creation success !', 'System created successfully');
-          this.router.navigate(['dashboard/quick-setup/endpoints']);
+          Swal.fire(
+            '',
+            'System created successfully!',
+            'success'
+          ).then(() => {
+            this.systemService.changesystem(response.id).subscribe(
+              () => {
+                this.currentSystem = this.systemService.getCurrentSystem();
+                this.router.navigate(['dashboard/quick-setup/endpoints']);
+                // window.location.reload();
+            });
+            // this.changeSystem(response.id);
+          })
+          // this.toastr.success('System creation success !', 'System created successfully');
         } else {
           this.toastr.success('System creation error !', 'System could not be created');
         }
       })
     );
     console.log(this.newSystem);
-  }
-
-  logout() {
-    this.authService.logout();
-    // this.currentUser = null;
-    this.router.navigate(['/auth/login']);
   }
 }

@@ -1,33 +1,39 @@
 <div class="m-auto" style="position:fixed; right: 0; left: 0; z-index: 2; " [ngClass] = "{'d-none': isLoaded}">
     <hm-component-loader></hm-component-loader>
 </div>
-<div class="page-header mb-4 d-flex">
+<div class="page-header d-flex flex-row justify-content-between">
     <h3 class="page-header-title">Escalation Rules</h3>
-    <div class="float-right ml-auto">
-        <div class="d-flex">
-            <div class="col-md-6 px-0 top-controls">
-                <input class="form-control" type="text" #searchText [(ngModel)]="data" (input)="searchItems(searchText.value)" placeholder="Search">
-            </div>
-            <div class="col-md-6 top-controls">
-            <a routerLink="/dashboard/rules/new" routerLinkActive="active">
-                <button class="" id="create-button">Add rule</button>
-            </a>
-            </div>
-        </div>
-    
+    <div class="add-rule-btn">
+      <a routerLink="/dashboard/rules/new" routerLinkActive="active">
+        <button mdbBtn class="btn-sm blue-gradient lowercase-btn text-white">
+            <i class="fas fa-plus"></i> Add rule
+        </button>
+      </a>
     </div>
-    <div class="float-right">
+</div>
+<hr class="page-header-divider">
 
-    </div>
-    <div class="clearfix"></div> 
+
+<div class="d-flex flex-sm-row mt-4 justify-content-lg-between justify-content-sm-between dt-controls">
+  <div class="mb-1">
+      <span>Show </span>
+      <input #visibleItemsInput class="view-entries"
+      type="number" min="1" (input)="changeVisibleItems($event.target.value)" [(ngModel)]="visibleItems">
+      <span> entries</span>
+  </div>
+ 
+  <div class="">
+    <span>Search: </span>
+    <input class="search-entries" type="text" #searchText (input)="searchItems(searchText.value)" placeholder="Search">
+  </div> 
 </div>
 
 <!-- Grid Row -->
-<div class="row mt-5 wow animated fadeIn" data-wow-delay="0.1s">
+<div class="row wow animated fadeIn" data-wow-delay="0.1s">
   <!-- Grid column -->
   <div class="col-lg-12 col-md-12 text-left">
       <mdb-card>
-      <table mdbTable #tableEl="mdbTable" class="table-responsive ">
+      <table mdbTable #tableEl="mdbTable" class="table-responsive table-striped">
           <thead class="text-white">
           <tr>
           <th *ngFor="let head of headElements; let i = index" style="white-space: nowrap;" scope="col"[mdbTableSort]="rules" [sortBy]="headElements[i]">{{elements[head] | titlecase}} 

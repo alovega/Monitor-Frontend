@@ -36,8 +36,8 @@ export class CreateRuleComponent implements OnInit {
     this.escalationRuleForm = this.formBuilder.group({
       ruleName: ['', Validators.required],
       ruleDescription: ['', Validators.required],
-      nEvents: ['', Validators.required],
-      duration: ['', Validators.required],
+      nEvents: ['', [Validators.required, Validators.minLength(1)]],
+      duration: ['', [Validators.required, Validators.minLength(1)]],
       escalationLevel: ['High', Validators.required],
       eventType: ['Error', Validators.required]
     });

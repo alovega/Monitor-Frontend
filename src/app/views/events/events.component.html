@@ -1,26 +1,30 @@
 <div class="m-auto" style="position:fixed; right: 0; left: 0; z-index: 2; " [ngClass] = "{'d-none': isLoaded}">
     <hm-component-loader></hm-component-loader>
 </div>
-<div class="page-header mb-4 d-flex">
-    <h3 class="page-header-title">Events</h3>
-    <div class="float-right ml-auto">
-        <div class="d-flex">
-            <div class="col-md-12 px-0 top-controls">
-                <input class="form-control" type="text" #searchText [(ngModel)]="data" (input)="searchItems(searchText.value)" placeholder="Search">
-            </div>
-        </div>
-    </div>
-    <div class="float-right">
+<div class="page-header">
+    <h3 class="page-header-title float-left">Events</h3>
+    <div class="clearfix"></div>
+    <hr class="page-header-divider">
+</div>
 
-    </div>
-    <div class="clearfix"></div> 
+<div class="d-flex flex-sm-row mt-4 justify-content-lg-between justify-content-sm-between dt-controls">
+  <div class="mb-1">
+      <span>Show </span>
+      <input #visibleItemsInput class="view-entries" type="number" min="1" (input)="changeVisibleItems($event.target.value)" [value]="visibleItems">
+      <span> entries</span>
+  </div>
+ 
+  <div class="">
+    <span>Search: </span>
+    <input class="search-entries" type="text" #searchText (input)="searchItems(searchText.value)" placeholder="Search">
+  </div> 
 </div>
 
 <!-- Grid Row -->
-<div class="row mt-5 wow animated fadeIn" data-wow-delay="0.1s">
+<div class="row wow animated fadeIn" data-wow-delay="0.1s">
   <!-- Grid column -->
   <div class="col-lg-12 col-md-12 text-left">
-      <mdb-card class="table-responsive">
+      <mdb-card class="table-responsive table-striped">
       <table mdbTable #tableEl="mdbTable">
           <thead class="text-white">
           <tr>

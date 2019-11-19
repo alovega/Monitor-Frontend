@@ -1,10 +1,7 @@
 import { Component, OnInit} from '@angular/core';
 import { SystemService } from './shared/system.service';
-import {
-  Router, NavigationStart, NavigationCancel, NavigationEnd , ActivatedRoute, NavigationError
-} from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-
 
 import { AuthenticationService } from './shared/auth/authentication.service';
 
@@ -42,12 +39,6 @@ export class AppComponent implements OnInit{
     );
     this.currentSystem = this.systemService.getCurrentSystem();
     this.currentSystem ? this.currentSystemId = this.currentSystem.id : this.currentSystemId = null;
-    let body = document.getElementsByTagName('body')[0];
-    if (this.currentUser) {
-      body.classList.remove('body-logged-out');
-    } else {
-      body.classList.add('body-logged-out');
-    }
     // setTimeout(() => this.toastr.success('Hello world!', 'Toastr fun!'))
   }
 

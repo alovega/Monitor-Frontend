@@ -38,11 +38,12 @@
               "node_modules/sweetalert2/dist/sweetalert2.css",
               "node_modules/angular-bootstrap-md/assets/scss/mdb.scss",
               "src/styles.scss",
-              "node_modules/ngx-toastr/toastr.css",
+              "node_modules/ngx-toastr/toastr.css"
             ],
             "scripts": [
               "node_modules/chart.js/dist/Chart.js",
-              "node_modules/hammerjs/hammer.min.js"
+              "node_modules/hammerjs/hammer.min.js",
+              "node_modules/jquery/dist/jquery.min.js"
             ]
           },
           "configurations": {

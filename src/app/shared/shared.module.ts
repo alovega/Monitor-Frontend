@@ -28,6 +28,7 @@ import { EndpointStatusComponent } from './endpoint-status/endpoint-status.compo
 import { GraphsService } from './graphs.service';
 import { SystemStatusService } from './system-status.service';
 import { LoginComponent } from './auth/login/login.component';
+import { DateTransformPipe } from './pipes/date-transform.pipe';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import { LoginComponent } from './auth/login/login.component';
     // DeleteSwalComponent,
     LoginComponent,
     ComponentLoaderComponent,
-    EndpointStatusComponent
+    EndpointStatusComponent,
+    DateTransformPipe
   ],
   imports: [
     CommonModule,
@@ -69,7 +71,8 @@ import { LoginComponent } from './auth/login/login.component';
     EmptyDataComponent,
     LoaderComponent,
     ComponentLoaderComponent,
-    EndpointStatusComponent
+    EndpointStatusComponent,
+    DateTransformPipe
   ],
   providers: [SystemService,
     {

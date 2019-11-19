@@ -48,8 +48,8 @@ export class AddRulesComponent implements OnInit {
     this.addRuleForm = this.formBuilder.group({
       ruleName: ['', Validators.required],
       ruleDescription: ['', Validators.required],
-      nEvents: ['', Validators.required],
-      duration: ['', Validators.required],
+      nEvents: ['', [Validators.required, Validators.minLength(1)]],
+      duration: ['', [Validators.required, Validators.minLength(1)]],
       escalationLevel: ['', Validators.required],
       eventType: ['', Validators.required]
     });
@@ -57,14 +57,12 @@ export class AddRulesComponent implements OnInit {
     this.editRuleForm = this.formBuilder.group({
       ruleName: ['', Validators.required],
       ruleDescription: ['', Validators.required],
-      nEvents: ['', Validators.required],
-      duration: ['', Validators.required],
+      nEvents: ['', [Validators.required, Validators.minLength(1)]],
+      duration: ['', [Validators.required, Validators.minLength(1)]],
       escalationLevel: ['', Validators.required],
       eventType: ['', Validators.required]
     });
-    setTimeout(()=> {
-      this.loading = false;      
-    }, 1000)
+    this.loading = false;
   }
 
   getRules() {

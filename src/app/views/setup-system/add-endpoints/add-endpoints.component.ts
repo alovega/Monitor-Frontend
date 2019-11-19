@@ -72,7 +72,7 @@ export class AddEndpointsComponent implements OnInit {
         EndpointName: ['', Validators.required],
         Description: ['', [Validators.required]],
         Url: ['', Validators.required],
-        OptimalResponseTime: ['', Validators.required],
+        OptimalResponseTime: ['', [Validators.required, Validators.minLength(1)]],
         State: ['', Validators.required]
     });
 
@@ -80,7 +80,7 @@ export class AddEndpointsComponent implements OnInit {
       EndpointName: ['', Validators.required],
       Description: ['', [Validators.required]],
       URL: ['', Validators.required],
-      OptimalResponseTime: ['', Validators.required],
+      OptimalResponseTime: ['', [Validators.required, Validators.minLength(1)]],
       EndpointType: ['', Validators.required],
       State: ['', Validators.required]
     });
