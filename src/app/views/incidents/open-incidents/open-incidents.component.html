@@ -2,7 +2,7 @@
   <div [ngClass]="{'d-none': !loading}">
     <hm-loader></hm-loader>
   </div> 
-<div *ngIf="incidents.length; else noIncidents">
+<div *ngIf="incidents?.length; else noIncidents">
     <a *ngFor="let incident of incidents" routerLink="/dashboard/incidents/update/{{incident.incident_id}}" routerLinkActive="active">
         <mdb-card class="open-incident mb-4">
             <mdb-card-body>

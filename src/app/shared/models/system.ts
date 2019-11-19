@@ -1,11 +1,22 @@
 export class System {
-    id:number;
-    name:string;
-    description: string;
-    status:string;
-    date_created?: Date;
-    date_modified?: Date;
-    admin: number;
-    state: string;
-    admin_id: number;
+    // public id: string;
+    // public name: string;
+    // public description: string;
+    // public admin: string;
+    // public code: string;
+    // public version: string;
+    // public created: Date;
+    // public modified: Date;
+    // public state: string;
+    constructor(
+        public id?: string,
+        public name?: string,
+        public description?: string,
+        public admin?: string,
+        public code?: string,
+        public version?: string,
+        public created?: Date,
+        public modified?: Date,
+        public state?: string,
+    )  {}
 }

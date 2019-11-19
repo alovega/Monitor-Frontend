@@ -47,6 +47,7 @@ export class IncidentEventsComponent implements OnInit, AfterViewInit {
       this.activatedRoute.parent.params.subscribe(params => {
         this.incidentId = params['incident-id'];
       });
+      this.events = [];
     }
 
   ngOnInit() {
@@ -66,7 +67,7 @@ export class IncidentEventsComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.mdbTablePagination.setMaxVisibleItemsNumberTo(5);
+    this.mdbTablePagination.setMaxVisibleItemsNumberTo(this.visibleItems);
     this.mdbTablePagination.calculateFirstItemIndex();
     this.mdbTablePagination.calculateLastItemIndex();
     if (this.events.length > this.visibleItems) {

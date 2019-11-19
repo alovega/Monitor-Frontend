@@ -2,7 +2,7 @@
   <div [ngClass]="{'d-none': !loading}">
     <hm-loader></hm-loader>
   </div>
-<table mdbTable id="incident-list" *ngIf="incidents.length > 0; else noIncidents">
+<table mdbTable id="incident-list" *ngIf="incidents?.length; else noIncidents">
   <tbody>
     <!-- Incident Item -->
     <tr mdbTableCol class="incident-item" *ngFor="let incident of incidents">

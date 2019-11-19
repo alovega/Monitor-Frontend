@@ -99,7 +99,7 @@ export class AddRulesComponent implements OnInit {
       return;
     }
 
-    this.escalationRule.state = 'Active';
+    // this.escalationRule.state = 'Active';
     // console.log(this.escalationRule);
     console.log(this.addRuleForm.controls.escalationLevel.value);
     this.ruleService.createRule(this.escalationRule).subscribe(
@@ -123,7 +123,7 @@ export class AddRulesComponent implements OnInit {
     }
     // console.log(this.escalationRule);
     this.escalationRule.event_type = this.escalationRule.eventtype;
-    this.escalationRule.state = 'Active';
+    // this.escalationRule.state = 'Active';
     this.ruleService.updateRule(this.escalationRule).subscribe(
       response => {
         this.submitted = false;

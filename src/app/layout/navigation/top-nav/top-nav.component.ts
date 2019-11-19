@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Input, OnChanges, SimpleChanges, SystemJsNgModuleLoaderConfig } from '@angular/core';
 import { Router, ActivatedRoute, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
 import { ToastrService } from 'ngx-toastr';
@@ -21,8 +21,8 @@ export class TopNavComponent implements OnInit, OnChanges {
   @Input() user;
   currentUser: any;
   profile: any;
-  systems: any;
-  currentSystem: any;
+  systems: System[];
+  currentSystem: System;
   validatingForm: FormGroup;
   addSystemForm: FormGroup;
   newSystem: System;
@@ -42,20 +42,19 @@ export class TopNavComponent implements OnInit, OnChanges {
     private lookupService: LookUpService,
     private toastr: ToastrService
   ) {
-    this.newSystem = new System();
+    // this.newSystem = new System('', '', '', '', '', '', '', '', '');
   }
 
   ngOnInit() {
     this.systemService.getSystems().subscribe(
-      (result => {
-        this.systems = result;
-        console.log(this.systems);
-    }));
+      (data: any[]) => {
+        this.systems = data.map(item => this.systemService.adapt(item));
+        // console.log(this.systems);
+    });
     this.profileService.getLoggedInUserDetail().subscribe(
       (data) => {
-          this.profile = data;
-          console.log(this.profile);
-        });
+        this.profile = data;
+    });
     this.currentSystem = this.systemService.getCurrentSystem();
     this.authService.currentUser.subscribe(
       (user) => {
@@ -88,7 +87,6 @@ export class TopNavComponent implements OnInit, OnChanges {
   }
 
   changeSystem(systemId: any) {
-    // this.toastr.success('Success loaded top nav!');
     this.systemService.changesystem(systemId).subscribe(
       () => {
         this.currentSystem = this.systemService.getCurrentSystem();
@@ -107,13 +105,14 @@ export class TopNavComponent implements OnInit, OnChanges {
   }
 
   onSubmit() {
+    console.log(this.addSystemForm.value);
     this.submitted = true;
     if (this.addSystemForm.invalid) {
       console.log('Invalid');
       return;
     }
 
-    this.systemService.createSystem(this.newSystem).subscribe(
+    this.systemService.createSystem(this.addSystemForm.value).subscribe(
       (response => {
         this.submitted = false;
         if (response) {
@@ -130,10 +129,10 @@ export class TopNavComponent implements OnInit, OnChanges {
                 // window.location.reload();
             });
             // this.changeSystem(response.id);
-          })
+          });
           // this.toastr.success('System creation success !', 'System created successfully');
         } else {
-          this.toastr.success('System creation error !', 'System could not be created');
+          this.toastr.error('System could not be created', 'System creation error !');
         }
       })
     );

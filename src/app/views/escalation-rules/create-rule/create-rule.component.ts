@@ -57,7 +57,7 @@ export class CreateRuleComponent implements OnInit {
     this.escalationRule.event_type = this.escalationRule.eventtype;
     this.escalationRule.escalation_level = this.escalationRule.escalation;
     this.escalationRule.status = 'Active';
-    this.escalationRule.state = this.escalationRule.status;
+    // this.escalationRule.state = this.escalationRule.status;
 
     this.ruleService.createRule(this.escalationRule).subscribe(
       response => {

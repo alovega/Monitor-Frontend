@@ -31,7 +31,9 @@ export class UsersComponent implements OnInit, AfterViewInit {
     private activatedRoute: ActivatedRoute,
     private systemService: SystemService,
     private usersService: UsersService,
-    private cdRef: ChangeDetectorRef) { }
+    private cdRef: ChangeDetectorRef) { 
+      this.users = [];
+    }
 
   ngOnInit() {
     this.currentSystem = this.systemService.getCurrentSystem();

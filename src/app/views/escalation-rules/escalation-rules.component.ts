@@ -34,7 +34,9 @@ export class EscalationRulesComponent implements OnInit, AfterViewInit {
     private systemService: SystemService,
     private rulesService: EscalationRuleService,
     private cdRef: ChangeDetectorRef,
-    private toastr: ToastrService) { }
+    private toastr: ToastrService) {
+      this.rules = [];
+    }
 
   ngOnInit() {
     this.currentSystem = this.systemService.getCurrentSystem();

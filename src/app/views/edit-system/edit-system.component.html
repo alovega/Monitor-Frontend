@@ -4,7 +4,7 @@
       Edit system
     </div>
     <div class="col-md-6">
-      <button class="float-right back-button" (click)="back()"><i class="fas fa-angle-double-left"></i> dashboard</button>
+      <button class="float-right back-button" (click)="back()"><i class="fas fa-angle-double-left"></i> Back</button>
     </div>
   </div>
   <div class="clearfix"></div>
@@ -15,65 +15,50 @@
         <div class="form-group mb-4 row">
           <div class="col-md-6">
               <label class="form-label">Name</label>
-              <input [ngClass]="{ 'is-invalid': submitted && editSystemForm.controls.name.errors }" type="text" 
-                id="name" formControlName="name" class="grey lighten-5 form-control" placeholder="System name"
-                [(ngModel)] = "system.name">
+              <input [ngClass]="{ 'is-invalid': submitted && editSystemForm.controls['name'].errors }" type="text" 
+                id="name" formControlName="name" class="grey lighten-5 form-control" placeholder="System name">
 
               <!-- Incident Name Validation errors -->
-              <div *ngIf="submitted && editSystemForm.controls.name.errors" class="invalid-feedback">
-                  <div *ngIf="editSystemForm.controls.name.errors.required">System name is required</div>
+              <div *ngIf="editSystemForm.controls['name'].invalid && (editSystemForm.controls['name'].touched || editSystemForm.controls['name'].dirty)" class="invalid-feedback">
+                  <div *ngIf="editSystemForm.controls['name'].errors.required">System name is required</div>
               </div>
           </div>
 
           <div class="col-md-6">
               <label class="form-label">Version</label>
-              <input [ngClass]="{ 'is-invalid': submitted && editSystemForm.controls.version.errors }" type="text" 
-                id="version" formControlName="version" class="grey lighten-5 form-control" placeholder="Version"
-                [(ngModel)] = "system.version">
+              <input formControlName="version" [ngClass]="{ 'is-invalid': submitted && editSystemForm.controls['version'].errors }" type="text" 
+                id="version"  class="grey lighten-5 form-control" placeholder="Version">
 
               <!-- Incident Name Validation errors -->
-              <div *ngIf="submitted && editSystemForm.controls.version.errors" class="invalid-feedback">
-                  <div *ngIf="editSystemForm.controls.version.errors.required">Version is required</div>
+              <div *ngIf="editSystemForm.controls['version'].invalid && (editSystemForm.controls['version'].errors.dirty || editSystemForm.controls['version'].errors.touched)" class="invalid-feedback">
+                  <div *ngIf="editSystemForm.controls['version'].errors.required">Version is required</div>
               </div>
           </div>          
         </div>
 
         <div class="form-group mb-4 row">
             <div class="col-md-6">
-                <label class="form-label">Status</label>
-                <select formControlName="status" [ngClass]="{ 'is-invalid': submitted && editSystemForm.controls.status.errors}"
-                class="grey lighten-5 browser-default custom-select form-control" [(ngModel)] = "system.status">
-                  <option *ngFor='let state of states' value="{{state.name}}">{{state.name}}</option>
-                </select>
-                <!-- Incident status validation errors -->
-                <div *ngIf="submitted && editSystemForm.controls.status.errors" class="invalid-feedback">
-                    <div *ngIf="editSystemForm.controls.status.errors.required">System status is required</div>
-                </div>
-            </div>
-  
-            <div class="col-md-6">
                 <label class="form-label">Admin</label>
-                <select formControlName="admin" [ngClass]="{ 'is-invalid': submitted && editSystemForm.controls.admin.errors}"
-                class="grey lighten-5 browser-default custom-select form-control" [(ngModel)] = "system.admin_id">
+                <select formControlName="admin" [ngClass]="{ 'is-invalid': submitted && editSystemForm.controls['admin'].errors}"
+                class="grey lighten-5 browser-default custom-select form-control">
                   <option *ngFor="let user of users" value="{{user.id}}">{{user.username}}</option>
                 </select>
                 <!-- Incident status validation errors -->
-                <div *ngIf="submitted && editSystemForm.controls.admin.errors" class="invalid-feedback">
-                    <div *ngIf="editSystemForm.controls.admin.errors.required">System admin is required</div>
+                <div *ngIf="editSystemForm.controls['admin'].invalid && (editSystemForm.controls['admin'].dirty || editSystemForm.controls['admin'].touched)" class="invalid-feedback">
+                    <div *ngIf="editSystemForm.controls['admin'].errors.required">System admin is required</div>
                 </div>
             </div>       
-          </div>
+        </div>
 
           <div class="form-group mb-4 row">
           <div class="col-md-12">
               <label class="form-label">Description</label>
-              <textarea [ngClass]="{ 'is-invalid': submitted && editSystemForm.controls.description.errors }" type="text" 
-                id="description" formControlName="description" class="grey lighten-5 form-control" placeholder="System description"
-                [(ngModel)] = "system.description">
+              <textarea [ngClass]="{ 'is-invalid': submitted && editSystemForm.controls['description'].errors }" type="text" 
+                id="description" formControlName="description" class="grey lighten-5 form-control" placeholder="System description">
               </textarea>
               <!-- Incident Name Validation errors -->
-              <div *ngIf="submitted && editSystemForm.controls.description.errors" class="invalid-feedback">
-                  <div *ngIf="editSystemForm.controls.description.errors.required">System description is required</div>
+              <div *ngIf="editSystemForm.controls['description'].invalid && (editSystemForm.controls['description'].dirty || editSystemForm.controls['description'].touched)" class="invalid-feedback">
+                  <div *ngIf="editSystemForm.controls['description'].errors.required">System description is required</div>
               </div>
           </div>          
         </div>
@@ -81,7 +66,9 @@
         <div>
             <!-- Create button -->
             <div class="create-button">
-                <button type="submit" mdbBtn mdbWavesEffect class="float-right" color="primary" size="md">Update</button>
+                <button [disabled]="editSystemForm.invalid" type="submit" mdbBtn class="btn-sm blue-gradient lowercase-btn text-white float-right">
+                  Update
+                </button>
             </div>
         </div>
       </form>

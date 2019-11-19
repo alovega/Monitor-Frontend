@@ -1,7 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-import { of } from 'rxjs';
 import { Location } from '@angular/common';
 import { System } from '../../shared/models/system';
 import Swal from 'sweetalert2';
@@ -33,20 +32,18 @@ export class EditSystemComponent implements OnInit {
     private router: Router
   ) {
     // this.system = new System();
+    this.system = this.currentSystem;
+    this.editSystemForm = this.formBuilder.group({
+      name: ['', Validators.required],
+      description: ['', Validators.required],
+      admin: ['', Validators.required],
+      version: ['', Validators.required]
+    });
    }
 
   ngOnInit() {
     this.currentSystem = this.systemService.getCurrentSystem();
-    this.system = this.currentSystem;
     this.currentSystemId = this.currentSystem.id;
-
-    this.editSystemForm = this.formBuilder.group({
-      name: ['', Validators.required],
-      description: ['', Validators.required],
-      status: ['', Validators.required],
-      admin: [''],
-      version: ['']
-    });
 
     this.lookupService.getStates().subscribe(
       (data) => {
@@ -56,18 +53,25 @@ export class EditSystemComponent implements OnInit {
     this.lookupService.getUsers().subscribe(
       (data) => {
         this.users = data;
-      });
+    });
+
+    this.editSystemForm.patchValue({
+      name: this.currentSystem.name,
+      description: this.currentSystem.name,
+      admin: this.currentSystem.admin,
+      version: this.currentSystem.version
+    });
   }
 
   onSubmit() {
-    // console.log(this.system);
+    console.log(this.editSystemForm.value);
     this.submitted = true;
     if (this.editSystemForm.invalid) {
       console.log('Invalid');
       return;
     }
 
-    return this.systemService.updateSystem(this.system).subscribe(
+    return this.systemService.updateSystem(this.currentSystem.id, this.editSystemForm.value).subscribe(
       ((result: any) => {
         console.log(result);
         if (result) {
