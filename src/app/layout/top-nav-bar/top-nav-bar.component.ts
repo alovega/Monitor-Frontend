@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Input, OnChanges, SimpleChanges, Output, EventEmitter } from '@angular/core';
 import { Router, ActivatedRoute, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
 import { ToastrService } from 'ngx-toastr';
@@ -18,6 +18,7 @@ import { ProfileService } from 'src/app/profile/profile.service';
   styleUrls: ['./top-nav-bar.component.scss']
 })
 export class TopNavBarComponent implements OnInit, OnChanges {
+  @Output() toggleSideBarForMe: EventEmitter<any> = new EventEmitter();
   @Input() user;
   currentUser: any;
   profile: any;
@@ -85,6 +86,9 @@ export class TopNavBarComponent implements OnInit, OnChanges {
     if (changes.user.currentValue) {
       this.currentUser = this.user;
     }
+  }
+  toggleSideBar() {
+    this.toggleSideBarForMe.emit();
   }
   changeSystem(systemId: any) {
     // this.toastr.success('Success loaded top nav!');

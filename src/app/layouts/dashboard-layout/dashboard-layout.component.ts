@@ -26,8 +26,8 @@ export class DashboardLayoutComponent implements OnInit, AfterViewInit {
   currentSystem: any;
   currentSystemId: any;
   currentUser: any;
+  sideBarOpen = true;
   @ViewChild('appDrawer',  {static: true}) appDrawer: ElementRef;
-  version = VERSION;
   navItems: NavItem[] = [
     {
       displayName: 'Dashboard',
@@ -110,6 +110,9 @@ export class DashboardLayoutComponent implements OnInit, AfterViewInit {
         }
       );
     }
+  }
+  sideBarToggler() {
+    this.sideBarOpen = !this.sideBarOpen;
   }
   ngAfterViewInit() {
     this.navService.appDrawer = this.appDrawer;

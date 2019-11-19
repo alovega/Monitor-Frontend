@@ -1,14 +1,20 @@
-<hm-top-nav-bar class="fixed-topnav" fxHide.gt-xs></hm-top-nav-bar>
+<hm-top-nav-bar class="fixed-topnav" fxHide.gt-xs (toggleSideBarForMe)="sideBarToggler($event)"></hm-top-nav-bar>
 <mat-sidenav-container>
-  <mat-sidenav #appDrawer opened="false"
+  <mat-sidenav #appDrawer [opened]="sideBarOpen"
   [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
     [mode]="(isHandset$ | async) ? 'over' : 'side'">
-    <a class="navbar-brand" mdbWavesEffect routerLink="/dashboard">
-      <a class="logo-wrapper waves-effect">
-        <img src="../assets/hm_logo.png" class="img-fluid" alt="">
-      </a>
-    </a>
     <mat-nav-list>
+      <div class="profile-card">
+          <div class="header">
+            <h2>Hela Monitor</h2>
+          </div>
+          <a class="navbar-brand" mdbWavesEffect routerLink="/dashboard">
+            <a class="logo-wrapper waves-effect">
+              <img src="../assets/hm_logo.png"  alt="Hela Monitor">
+            </a>
+          </a>
+      </div>
+      <mat-divider></mat-divider>
       <hm-menu-list-item *ngFor="let item of navItems" [item]="item"></hm-menu-list-item>
     </mat-nav-list>
   </mat-sidenav>

@@ -2,36 +2,13 @@
     color: black;
     background-color: #fff;
 }
-// #system-button{
-//     width: 490px;
-//     display: flex;
-//     // position: relative;
-//     // right: 115px;
-// }
 .mat-drawer-backdrop.mat-drawer-shown {
     visibility: visible;
 }
 
-// .mat-menu-panel{
-//     left: 140px !important;
-// }
-
 button:focus{
     outline: none !important;
 }
-// .mat-toolbar-row, .mat-toolbar-single-row {
-//     height: 57px;
-// }
-
-// @media (max-width: 415px){
-//     #system-button{
-//         // position: relative;
-//         // right: 85px;
-//     }
-// }
-
-
-
 
 mat-toolbar{
     min-width: 545px;

@@ -20,6 +20,7 @@ import {
   MatSliderModule,
   MatSlideToggleModule,
   MatToolbarModule,
+  MatDividerModule
 } from '@angular/material';
 
 import { DashboardLayoutRoutingModule } from './dashboard-layout-routing.module';
@@ -48,6 +49,7 @@ import { MenuListItemComponent } from '../../layout/menu-list-item/menu-list-ite
     MatSlideToggleModule,
     MatSliderModule,
     MatToolbarModule,
+    MatDividerModule
   ],
 })
 export class MaterialModule {}
