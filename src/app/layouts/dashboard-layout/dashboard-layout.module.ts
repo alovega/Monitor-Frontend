@@ -8,24 +8,18 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { ToastrModule } from 'ngx-toastr';
 import {
-  MatAutocompleteModule,
   MatButtonModule,
   MatButtonToggleModule,
   MatExpansionModule,
   MatGridListModule,
   MatIconModule,
-  MatInputModule,
   MatListModule,
   MatMenuModule,
-  MatNativeDateModule,
   MatSelectModule,
   MatSidenavModule,
   MatSliderModule,
   MatSlideToggleModule,
-  MatSnackBarModule,
-  MatTabsModule,
   MatToolbarModule,
-  MatTooltipModule
 } from '@angular/material';
 
 import { DashboardLayoutRoutingModule } from './dashboard-layout-routing.module';
@@ -42,12 +36,10 @@ import { MenuListItemComponent } from '../../layout/menu-list-item/menu-list-ite
 
 @NgModule({
   exports: [
-    MatAutocompleteModule,
     MatButtonModule,
     MatButtonToggleModule,
     MatExpansionModule,
     MatGridListModule,
-    MatInputModule,
     MatListModule,
     MatIconModule,
     MatMenuModule,
@@ -55,11 +47,7 @@ import { MenuListItemComponent } from '../../layout/menu-list-item/menu-list-ite
     MatSidenavModule,
     MatSlideToggleModule,
     MatSliderModule,
-    MatSnackBarModule,
-    MatTabsModule,
     MatToolbarModule,
-    MatTooltipModule,
-    MatNativeDateModule,
   ],
 })
 export class MaterialModule {}

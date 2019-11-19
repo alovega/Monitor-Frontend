@@ -10,8 +10,10 @@
   }
   
   mat-sidenav{
+    margin-top: 51px;
     width: 248px;
     overflow: hidden;
+    position: fixed;
   }
 
   .mat-drawer-inner-container{

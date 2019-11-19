@@ -113,5 +113,6 @@ export class DashboardLayoutComponent implements OnInit, AfterViewInit {
   }
   ngAfterViewInit() {
     this.navService.appDrawer = this.appDrawer;
+    this.navService.openNav();
   }
 }
