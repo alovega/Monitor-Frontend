@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 
 import { RecipientRoutingModule } from './recipient-routing.module';
 import { RecipientComponent } from './recipient.component';
-import { RecipientViewComponent } from './recipient-view/recipient-view.component';
 import { RecipientCreateComponent } from './recipient-create/recipient-create.component';
 import { RecipientUpdateComponent } from './recipient-update/recipient-update.component';
 import { SharedModule } from 'src/app/shared/shared.module';
@@ -12,7 +11,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 
 @NgModule({
-  declarations: [RecipientComponent, RecipientViewComponent, RecipientCreateComponent, RecipientUpdateComponent],
+  declarations: [RecipientComponent, RecipientCreateComponent, RecipientUpdateComponent],
   imports: [
     CommonModule,
     TableModule,
