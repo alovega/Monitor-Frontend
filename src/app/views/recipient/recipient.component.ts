@@ -39,7 +39,6 @@ export class RecipientComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     this.recipientService.getRecipients().subscribe(
       (data) => {
-        console.log(data);
         this.elements = data;
         this.mdbTable.setDataSource(this.elements);
         this.elements = this.mdbTable.getDataSource();
@@ -74,7 +73,6 @@ export class RecipientComponent implements OnInit, AfterViewInit {
 
   searchItems() {
     const prev = this.mdbTable.getDataSource();
-    console.log(prev);
 
     if (!this.searchText) {
       this.mdbTable.setDataSource(this.previous);
@@ -87,7 +85,6 @@ export class RecipientComponent implements OnInit, AfterViewInit {
     }
   }
   delete(recipientId) {
-    console.log(recipientId);
     Swal.fire({
       title: 'Are you sure?',
       text: 'You will not be able to recover this recipient!',
@@ -97,7 +94,6 @@ export class RecipientComponent implements OnInit, AfterViewInit {
       cancelButtonText: 'No, keep the recipient'
     }).then((result) => {
       if (result.value) {
-        console.log(recipientId);
         this.recipientService.deleteItem(recipientId).subscribe(
           response => {
             if (response.code === '800.200.001') {

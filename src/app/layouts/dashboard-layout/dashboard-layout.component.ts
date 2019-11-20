@@ -36,14 +36,14 @@ export class DashboardLayoutComponent implements OnInit, AfterViewInit {
       routerLink: 'dashboard/metrics',
     },
     {
+      displayName: 'Events',
+      iconName: 'event',
+      routerLink: 'dashboard/events'
+    },
+    {
       displayName: 'Incidents',
       iconName: 'bug_report',
       routerLink: 'dashboard/incidents'
-    },
-    {
-      displayName: 'Endpoints',
-      iconName: 'data_usage',
-      routerLink: 'dashboard/endpoints'
     },
     {
       displayName: 'Users',
@@ -65,6 +65,11 @@ export class DashboardLayoutComponent implements OnInit, AfterViewInit {
           routerLink: 'dashboard/system-recipients'
         },
         {
+          displayName: 'Endpoints',
+          iconName: 'data_usage',
+          routerLink: 'dashboard/endpoints'
+        },
+        {
           displayName: 'Rules',
           iconName: 'bookmark',
           routerLink: 'dashboard/rules'
@@ -74,12 +79,7 @@ export class DashboardLayoutComponent implements OnInit, AfterViewInit {
     {
       displayName: 'Notifications',
       iconName: 'notifications',
-      routerLink: 'dashboard/notifications'
-    },
-    {
-      displayName: 'Events',
-      iconName: 'event',
-      routerLink: 'dashboard/events'
+      routerLink: 'dashboard/notifications/email-notification'
     },
   ];
 

@@ -82,7 +82,6 @@ export class EndpointComponent implements OnInit, AfterViewInit {
 
   searchItems() {
     const prev = this.mdbTable.getDataSource();
-    console.log(prev);
 
     if (!this.searchText) {
       this.mdbTable.setDataSource(this.previous);
@@ -95,7 +94,6 @@ export class EndpointComponent implements OnInit, AfterViewInit {
     }
   }
   delete(endpointId) {
-    console.log(endpointId);
     Swal.fire({
       title: 'Are you sure?',
       text: 'You will not be able to recover this endpoint!',
@@ -105,7 +103,6 @@ export class EndpointComponent implements OnInit, AfterViewInit {
       cancelButtonText: 'No, keep the endpoint'
     }).then((result) => {
       if (result.value) {
-        console.log(endpointId);
         this.endpointService.deleteItem(endpointId).subscribe(
           response => {
             if (response.code === '800.200.001') {

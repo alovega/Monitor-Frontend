@@ -30,20 +30,21 @@ export class SystemRecipientUpdateComponent implements OnInit {
     this.createForm();
     this.recipient = new SystemRecipient();
     of(this.getStates()).subscribe((data: any) => {
-      console.log(data);
       this.States = data;
     });
     of(this.getNotificationTypes()).subscribe((data: any) => {
-      console.log(data);
       this.NotificationTypes = data;
     });
    }
 
   ngOnInit() {
     this.id = this.activatedRoute.snapshot.params.id;
-    console.log(this.id);
     this.systemRecipientService.getItem(this.id).subscribe(response => {
       this.recipient = response;
+      this.updateForm.patchValue({
+        NotificationType: this.recipient.notificationType,
+        State: this.recipient.state
+      });
   });
   }
   public back(): void {
@@ -79,6 +80,7 @@ export class SystemRecipientUpdateComponent implements OnInit {
     this.updateForm.reset();
   }
   update() {
+    this.recipient = this.updateForm.value;
     this.recipient.systemRecipientId = this.activatedRoute.snapshot.params.id;
     this.systemRecipientService.updateItem(this.recipient).subscribe(response => {
       if (response.code === '800.200.001') {

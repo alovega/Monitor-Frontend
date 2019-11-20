@@ -1,5 +1,5 @@
 <div class="d-flex justify-content-between">
-  <h4>Update Recipient </h4>
+  <h4>Update recipient </h4>
   <div>
     <button class="float-right back-button" (click)="back()">
       <i class="fas fa-angle-double-left"></i> Back 
@@ -16,8 +16,7 @@
             <!-- Phone Number -->
             <label style="position: relative; right: 185px;">Phone Number</label>
             <input type="text" id="defaultContactFormPhoneNumber" class="form-control mb-4" placeholder="Phone Number"
-            [ngClass]="{ 'is-invalid': submitted && f.EnpointName.errors }" formControlName="PhoneNumber" 
-              [(ngModel)]="data.phoneNumber" >
+            [ngClass]="{ 'is-invalid': submitted && f.EnpointName.errors }" formControlName="PhoneNumber">
               <div *ngIf="updateForm.controls['PhoneNumber'].invalid && (updateForm.controls['PhoneNumber'].dirty || updateForm.controls['PhoneNumber'].touched)" class="invalid-feedback">
                 <div *ngIf="updateForm.controls['PhoneNumber'].errors.required">
                     Phone Number is required.
@@ -28,7 +27,7 @@
         <div class="col">
             <!-- State -->
             <label style="position: relative; right: 215px;">State</label>
-            <select class="browser-default custom-select form-control mb-4" formControlName="State" [(ngModel)]="data.stateId">
+            <select class="browser-default custom-select form-control mb-4" formControlName="State">
               <option *ngFor="let type of states; let i = index" [value]="type.id">
                 {{type.name}}
               </option>
