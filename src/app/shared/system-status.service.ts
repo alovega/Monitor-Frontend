@@ -17,4 +17,8 @@ export class SystemStatusService {
   getPastIncidents() {
     return this.httpWrapperService.post('past_incidents/');
   }
+
+  getDashboardWidgetsData(startDate, endDate) {
+    return this.httpWrapperService.post('dashboard_widgets_data/', {date_from: startDate, date_to: endDate});
+  }
 }

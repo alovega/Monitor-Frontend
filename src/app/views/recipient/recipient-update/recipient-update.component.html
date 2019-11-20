@@ -1,12 +1,13 @@
-<div class="row">
-    
-    <div class="col"><p class="h4 mb-4">update Recipient </p></div>
-    <div class="col-md-6">
-        <button class="float-right back-button" (click)="back()"><i class="fas fa-angle-double-left"></i> back </button>
-      </div>
-        
+<div class="d-flex justify-content-between">
+  <h4>Update recipient </h4>
+  <div>
+    <button class="float-right back-button" (click)="back()">
+      <i class="fas fa-angle-double-left"></i> Back 
+    </button>
   </div>
-  <hr>
+</div>
+<hr class="page-header-divider">
+
 <mdb-card>
     <!-- Default form contact -->
     <form [formGroup]="updateForm" class="text-center border  p-5" (ngSubmit) = "onSubmit()">
@@ -15,8 +16,7 @@
             <!-- Phone Number -->
             <label style="position: relative; right: 185px;">Phone Number</label>
             <input type="text" id="defaultContactFormPhoneNumber" class="form-control mb-4" placeholder="Phone Number"
-            [ngClass]="{ 'is-invalid': submitted && f.EnpointName.errors }" formControlName="PhoneNumber" 
-              [(ngModel)]="data.phoneNumber" >
+            [ngClass]="{ 'is-invalid': submitted && f.EnpointName.errors }" formControlName="PhoneNumber">
               <div *ngIf="updateForm.controls['PhoneNumber'].invalid && (updateForm.controls['PhoneNumber'].dirty || updateForm.controls['PhoneNumber'].touched)" class="invalid-feedback">
                 <div *ngIf="updateForm.controls['PhoneNumber'].errors.required">
                     Phone Number is required.
@@ -27,7 +27,7 @@
         <div class="col">
             <!-- State -->
             <label style="position: relative; right: 215px;">State</label>
-            <select class="browser-default custom-select form-control mb-4" formControlName="State" [(ngModel)]="data.stateId">
+            <select class="browser-default custom-select form-control mb-4" formControlName="State">
               <option *ngFor="let type of states; let i = index" [value]="type.id">
                 {{type.name}}
               </option>
@@ -40,8 +40,8 @@
           </div>
     </div>
       <!-- Send button -->
-          <button mdbBtn type="button" class="btn float-right btn-primary waves-light"  mdbWavesEffect
-      [disabled]="!updateForm.valid" (click)="updateRecipient()" size="sm">Save</button>
+      <button mdbBtn type="button" class="btn-sm blue-gradient lowercase-btn text-white float-right"  mdbWavesEffect
+      [disabled]="!updateForm.valid" (click)="updateRecipient()">Save</button>
     </form>
       <!-- Default form contact -->
     </mdb-card>

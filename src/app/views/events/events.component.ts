@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild, AfterViewInit, ChangeDetectorRef } from '
 import { ActivatedRoute } from '@angular/router';
 import { MdbTablePaginationComponent, MdbTableDirective, MdbTableSortDirective } from 'angular-bootstrap-md';
 import Swal from 'sweetalert2';
+import { ModalDirective } from 'angular-bootstrap-md';
 
 import { SystemService } from '../../shared/system.service';
 import { EventsService } from './events.service';
@@ -14,8 +15,8 @@ import { EventsService } from './events.service';
 export class EventsComponent implements OnInit, AfterViewInit {
   @ViewChild(MdbTablePaginationComponent, { static: true }) mdbTablePagination: MdbTablePaginationComponent;
   @ViewChild(MdbTableDirective, { static: true }) mdbTable: MdbTableDirective;
-  // @ViewChild(MdbTableSortDirective, { static: true }) mdbTableSort: MdbTableSortDirective;
-
+  @ViewChild('eventInfo', {static: false}) eventInfo: ModalDirective;
+  @ViewChild('visibleItemsInput', { static: true }) visibleItemsInput;
 
   currentSystemId: string;
   currentSystem: any;
@@ -23,11 +24,13 @@ export class EventsComponent implements OnInit, AfterViewInit {
   previous: any = [];
   isLoaded = false;
   search = '';
-
-  headElements = ['eventtype', 'description', 'stack_trace', 'method', 'interface', 'request', 'response', 'code', 'date_created'];
+  event: any;
+  visibleItems: number = 5;
+  headElements = [
+    'eventtype', 'description', 'stack_trace', 'method', 'interface', 'request', 'response', 'code', 'date_created', 'action'];
   elements = {
     eventtype: 'Event type', description: 'Description', stack_trace: 'Stack Trace', interface: 'Interface', request: 'Request',
-    response: 'Response', code: 'Code', date_created: 'Date Created', method: 'Method'
+    response: 'Response', code: 'Code', date_created: 'Date Created', method: 'Method', action: 'Action'
   };
 
   constructor(
@@ -53,11 +56,29 @@ export class EventsComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.mdbTablePagination.setMaxVisibleItemsNumberTo(5);
+    this.mdbTablePagination.setMaxVisibleItemsNumberTo(this.visibleItems);
     this.mdbTablePagination.calculateFirstItemIndex();
     this.mdbTablePagination.calculateLastItemIndex();
+    if (this.events.length > this.visibleItems) {
+      this.mdbTablePagination.nextShouldBeDisabled = false;
+    }
     this.cdRef.detectChanges();
-    console.log(this.mdbTablePagination.firstItemIndex);
+  }
+
+  changeVisibleItems(maxNumber: number) {
+    this.visibleItems = maxNumber;
+    if (!maxNumber) {
+      console.log(maxNumber);
+      this.visibleItemsInput.nativeElement.value = 1;
+      this.visibleItems = 1;
+    }
+    this.mdbTablePagination.setMaxVisibleItemsNumberTo(this.visibleItems);
+    this.mdbTablePagination.calculateFirstItemIndex();
+    this.mdbTablePagination.calculateLastItemIndex();
+    if (this.events.length > this.visibleItems) {
+      this.mdbTablePagination.nextShouldBeDisabled = false;
+    }
+    this.cdRef.detectChanges();
   }
 
   searchItems(search: string) {
@@ -78,45 +99,12 @@ export class EventsComponent implements OnInit, AfterViewInit {
     console.log(event);
   }
 
-  // removeRule(ruleId) {
-  //   Swal.fire({
-  //     title: 'Are you sure?',
-  //     text: 'You will not be able to recover this rule!',
-  //     type: 'warning',
-  //     showCancelButton: true,
-  //     confirmButtonText: 'Yes, delete the rule!',
-  //     cancelButtonText: 'No, keep the rule'
-  //   }).then((result) => {
-  //     if (result.value) {
-  //       this.eventsService.deleteRule(ruleId).subscribe(
-  //         response => {
-  //           if (response.code === '800.200.001') {
-  //             Swal.fire(
-  //               'Deleted!',
-  //               'This rule has been deleted.',
-  //               'success'
-  //             )
-  //           } else {
-  //             Swal.fire(
-  //               'Failed!',
-  //               'This rule could not be deleted.',
-  //               'error'
-  //             )
-  //           }
-  //         }
-  //       )
-  //       this.rulesService.getRules().subscribe(
-  //         result => {
-  //           this.rules = result;
-  //         }
-  //       )
-  //     } else if (result.dismiss === Swal.DismissReason.cancel) {
-  //       Swal.fire(
-  //         'Cancelled',
-  //         '',
-  //         'error'
-  //       )
-  //     }
-  //   })
-  // }
+  public showEventInfo(eventId: string) {
+    this.eventsService.getEvent(eventId).subscribe(
+      res => {
+        this.event = res;
+        this.eventInfo.show();
+      }
+    );
+  }
 }

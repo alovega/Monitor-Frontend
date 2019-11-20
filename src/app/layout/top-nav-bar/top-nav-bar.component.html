@@ -1,0 +1,122 @@
+<mat-toolbar class="mat-elevation-z1 mat-toolbar-single-row d-flex justify-content-between">
+    <div>
+    <button mat-icon-button id="menu" (click)="toggleSideBar()">
+        <mat-icon>menu</mat-icon>
+    </button>
+    </div>
+    <div class="d-flex">
+        <div class="mr-1 ml-1" >
+            <button mat-icon-button [matMenuTriggerFor]="menu">
+                <span>{{ currentSystem.name }}</span>
+                <mat-icon>
+                    expand_more
+                </mat-icon>
+            </button>
+            <mat-menu #menu="matMenu" [overlapTrigger]="false">
+                <button mat-menu-item *ngFor="let system of systems" [ngClass]="{'d-none': system.id === currentSystem.id}"
+                (click)="changeSystem(system.id)">
+                    <span> {{ system.name }}</span>
+                </button>
+                 <button mat-menu-item (click) = "frame.show()">
+                    <mat-icon>open_in_new</mat-icon>
+                    <span>Add system</span>
+                    </button>
+                    <button mat-menu-item routerLink="system/edit">
+                      <mat-icon>edit</mat-icon>
+                      <span>Edit current system</span>
+                    </button>
+                    <button mat-menu-item routerLink="/system/{{currentSystem.id}}/">
+                      <mat-icon>public</mat-icon>
+                      <span>public status page</span>
+                    </button>
+            </mat-menu>
+        </div>
+        <div class="mr-1 ml-1">
+            <button mat-icon-button  routerLink="profile/user-notifications">
+              <span></span>
+              <mat-icon>notifications</mat-icon>
+          </button>
+        </div>
+        <div class="mr-1 ml-1">
+            <button mat-icon-button [matMenuTriggerFor]="user">
+                <span>Welcome {{profile.userName}}</span>
+                <mat-icon>
+                        person
+                </mat-icon>
+                <mat-icon>
+                        expand_more
+                </mat-icon>
+            </button>
+            <mat-menu #user="matMenu" [overlapTrigger]="false">
+                <button mat-menu-item routerLink="profile">
+                    <mat-icon>account_circle</mat-icon>
+                    <span> account</span>
+                </button>
+                 <button mat-menu-item routerLink="profile/update-password">
+                    <mat-icon>settings_application</mat-icon>
+                     <span>change password</span>
+                  </button>
+                  <hr>
+                    <button mat-menu-item  (click)="logout()">
+                      <mat-icon>exit_to_app</mat-icon>
+                      <span>Logout</span>
+                    </button>
+            </mat-menu>
+        </div>
+    </div>
+</mat-toolbar>
+
+<div mdbModal #frame="mdbModal" class="modal fade left" id="frameModalTop" tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-md" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-left">
+        <h4 class="modal-title w-100 font-weight-light">Add new system</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="frame.hide()" #closeBtn>
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <form [formGroup]="addSystemForm" (ngSubmit)="onSubmit()">
+            <div class="form-group mb-4">
+              <!-- Name -->
+              <label class="form-label">Name</label>
+              <input formControlName="name" type="text" id="systemName" class="grey lighten-5 form-control" placeholder="System name"
+              [ngClass]="{'is-invalid': submitted && addSystemForm.controls.name.errors}" [(ngModel)] = "newSystem.name">
+              
+              <div *ngIf="submitted && addSystemForm.controls['name'].errors" class="invalid-feedback">
+                <div *ngIf="addSystemForm.controls['name'].errors.required">System Name is required</div>
+              </div>               
+            </div>
+
+            <div class="form-group mb-4">
+              <!-- Description -->
+              <label class="form-label">Description</label>
+              <textarea formControlName="description" type="text" id="systemDescription" class="grey lighten-5 form-control" placeholder="System description"
+              [ngClass]="{'is-invalid': submitted && addSystemForm.controls.description.errors}" [(ngModel)] = "newSystem.description">
+              </textarea>
+              <div *ngIf="submitted && addSystemForm.controls['description'].errors" class="invalid-feedback">
+                <div *ngIf="addSystemForm.controls['description'].errors.required">System description is required</div>
+              </div>               
+            </div>
+
+            <div class="form-group mb-4">
+              <label class="form-label">Admin</label>
+              <select formControlName="admin" [ngClass]="{ 'is-invalid': submitted && addSystemForm.controls.admin.errors}"
+              class="grey lighten-5 browser-default custom-select form-control" [(ngModel)] = "newSystem.admin_id">
+                <option *ngFor="let user of users" value="{{user.id}}">{{user.username}}</option>
+              </select>
+              <!-- Incident status validation errors -->
+              <div *ngIf="submitted && addSystemForm.controls['admin'].errors" class="invalid-feedback">
+                    <div *ngIf="addSystemForm.controls['admin'].errors.required">System admin is required</div>
+              </div>
+          </div>
+            
+          <div class="modal-footer d-flex justify-content-right" style="padding-right: 0px !important">
+            <button mdbBtn color="primary" class="waves-light" size="sm" class="float-right w-25" mdbWavesEffect>Add</button>
+          </div>
+        </form>        
+      </div>
+    </div>
+  </div>
+</div>

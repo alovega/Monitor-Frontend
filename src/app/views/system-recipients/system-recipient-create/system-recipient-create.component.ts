@@ -36,7 +36,6 @@ export class SystemRecipientCreateComponent implements OnInit {
     of(this.getRecipients()).subscribe();
     of(this.getEscalationLevels()).subscribe();
     of(this.getNotificationTypes()).subscribe();
-    console.log(this.systemRecipient);
    }
 
   ngOnInit() {
@@ -69,7 +68,6 @@ export class SystemRecipientCreateComponent implements OnInit {
 
   getEscalationLevels() {
     return this.systemRecipientService.getLevels().subscribe((data) => {
-      console.log(data);
       this.EscalationLevels = data;
     });
   }
@@ -78,13 +76,11 @@ export class SystemRecipientCreateComponent implements OnInit {
   }
   getNotificationTypes() {
     return this.systemRecipientService.getNotificationType().subscribe((data) => {
-      console.log(data);
       this.NotificationTypes = data;
     });
   }
   getRecipients() {
     return this.systemRecipientService.getRecipients().subscribe((data) => {
-      console.log(data);
       this.Recipients = data;
     });
   }
@@ -105,7 +101,6 @@ export class SystemRecipientCreateComponent implements OnInit {
   addRecipient() {
     const data = this.systemRecipientForm.value;
     data.systemId = this.currentSystemId;
-    console.log(data);
     this.systemRecipientService.addSystemRecipient(data).subscribe(response => {
       if (response.code === '800.200.001') {
         this.systemRecipient = response.data;

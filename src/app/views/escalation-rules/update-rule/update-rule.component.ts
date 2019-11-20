@@ -17,7 +17,7 @@ export class UpdateRuleComponent implements OnInit {
   submitted = false;
   escalationRule: EscalationRule;
   ruleId: string;
-
+  min: number = 5;
   constructor(
     private formBuilder: FormBuilder,
     private ruleService: EscalationRuleService,
@@ -45,10 +45,10 @@ export class UpdateRuleComponent implements OnInit {
     this.escalationRuleForm = this.formBuilder.group({
       ruleName: ['', Validators.required],
       ruleDescription: ['', Validators.required],
-      nEvents: ['', Validators.required],
-      duration: ['', Validators.required],
+      nEvents: ['', [Validators.required, Validators.minLength(1)]],
+      duration: ['', [Validators.required, Validators.minLength(this.min)]],
       escalationLevel: ['High', Validators.required],
-      eventType: ['Error']
+      eventType: ['Error', Validators.required]
     });
   }
 
@@ -64,7 +64,7 @@ export class UpdateRuleComponent implements OnInit {
       response => {
         console.log(response);
         if (response.code === '800.200.001') {
-          this.toastr.success('Rule was successfully updated', 'Success');
+          this.toastr.success('Rule updated successfully', 'Success');
           this.location.back();
         } else {
           this.toastr.error('Rule could not be updated', 'Error');

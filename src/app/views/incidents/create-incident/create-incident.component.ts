@@ -62,7 +62,7 @@ export class CreateIncidentComponent implements OnInit {
       incidentStatus: ['Investigating', Validators.required],
       message: ['', Validators.required],
       escalationLevel: ['', Validators.required],
-      priorityLevel: ['1', Validators.required],
+      priorityLevel: ['', Validators.required],
       user: ['']
     });
   }

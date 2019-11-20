@@ -5,20 +5,18 @@
 
     <!-- Grid column -->
     <div class="col-md-12">
-        <div class="page-header row" *ngIf="incident.status !== 'Resolved' && incident.status !== 'Completed'; else Open">
-            <div class="col-md-6">{{ incident.name }}</div>
-            <div class="col-md-6">
-                <button class="float-right back-button" (click)="back()"><i class="fas fa-angle-double-left"></i> back to incidents</button>
+        <div class="page-header d-flex justify-content-between" *ngIf="incident.status !== 'Resolved' && incident.status !== 'Completed'; else Open">
+            <div class="">{{ incident.name }}</div>
+            <div class="">
+                <button class="back-button" (click)="back()"><i class="fas fa-angle-double-left"></i> Back</button>
             </div>
-            <div class="clearfix"></div>
         </div>
         <ng-template #Open>
-            <div class="page-header row">
-                <div class="col-md-6">{{ incident.name }}</div>
-                    <div class="col-md-6">
-                        <button class="float-right back-button" (click)="back()"><i class="fas fa-angle-double-left"></i> back to incidents</button>
-                    </div>
-                <div class="clearfix"></div>
+            <div class="page-header d-flex justify-content-between">
+                <div class="">{{ incident.name }}</div>
+                <div class="">
+                    <button class="back-button" (click)="back()"><i class="fas fa-angle-double-left"></i> Back</button>
+                </div>
             </div>
         </ng-template>
         <div class="clearfix"></div>

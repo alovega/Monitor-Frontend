@@ -1,19 +1,17 @@
-<div class="page-header">
-        <h3 class="page-header-title float-left">Notifications</h3>
-        <div class="clearfix"></div> 
+<div class="d-flex justify-content-between">
+    <h3 class="page-header-title">Notifications</h3>
+</div>
+
+<ul class="list-group switch-tabs">
+    <div>
+    <li class="tab-item">
+        <a routerLink="email-notification" routerLinkActive="active">Email</a>
+    </li>
+    <li class="tab-item">
+        <a routerLink="sms-notification" routerLinkActive="active">Sms</a>        
+    </li>
+
+    <div class="clearfix"></div>
     </div>
-    
-    <ul class="list-group switch-tabs">
-        <div>
-        <li class="tab-item">
-            <a routerLink="email-notification" routerLinkActive="active">Email</a>
-        </li>
-        <li class="tab-item">
-            <a routerLink="sms-notification" routerLinkActive="active">Sms</a>        
-        </li>
-    
-        <div class="clearfix"></div>
-        </div>
-    </ul>
-    <router-outlet></router-outlet>
-    
+</ul>
+<router-outlet></router-outlet>

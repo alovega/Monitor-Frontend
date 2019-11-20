@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { ToastrModule } from 'ngx-toastr';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { SetupSystemRoutingModule } from './setup-system-routing.module';
 import { SetupSystemComponent } from './setup-system.component';
@@ -16,6 +17,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
   imports: [
     CommonModule,
     SetupSystemRoutingModule,
+    NgbModule,
     MDBBootstrapModule.forRoot(),
     FormsModule,
     ReactiveFormsModule,

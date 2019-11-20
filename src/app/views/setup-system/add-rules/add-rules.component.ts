@@ -21,6 +21,7 @@ export class AddRulesComponent implements OnInit {
   escalationRules: EscalationRule[];
   ruleId: string;
   escalationLevels: any;
+  loading = true;
   @ViewChild('closeUpdateModal', { static: false }) closeUpdateModal: ElementRef;
   @ViewChild('closeAddModal', { static: false }) closeAddModal: ElementRef;
   @ViewChild('openBtn', { static: false }) openBtn: ElementRef;
@@ -47,8 +48,8 @@ export class AddRulesComponent implements OnInit {
     this.addRuleForm = this.formBuilder.group({
       ruleName: ['', Validators.required],
       ruleDescription: ['', Validators.required],
-      nEvents: ['', Validators.required],
-      duration: ['', Validators.required],
+      nEvents: ['', [Validators.required, Validators.minLength(1)]],
+      duration: ['', [Validators.required, Validators.minLength(1)]],
       escalationLevel: ['', Validators.required],
       eventType: ['', Validators.required]
     });
@@ -56,16 +57,22 @@ export class AddRulesComponent implements OnInit {
     this.editRuleForm = this.formBuilder.group({
       ruleName: ['', Validators.required],
       ruleDescription: ['', Validators.required],
-      nEvents: ['', Validators.required],
-      duration: ['', Validators.required],
+      nEvents: ['', [Validators.required, Validators.minLength(1)]],
+      duration: ['', [Validators.required, Validators.minLength(1)]],
       escalationLevel: ['', Validators.required],
       eventType: ['', Validators.required]
     });
+    this.loading = false;
   }
 
   getRules() {
     this.ruleService.getRules().subscribe(
-      (rules) => this.escalationRules = rules
+      (rules) => {
+        this.escalationRules = rules
+        if (!this.escalationRules.length) {
+          this.setupService.disabledNext.next(true);
+        }
+      }
     );
   }
 

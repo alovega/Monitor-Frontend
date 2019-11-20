@@ -32,6 +32,7 @@ export class AddEndpointsComponent implements OnInit {
   endpointTypes: EndpointType;
   endpoints: any;
   selectedEndpoint: Endpoint;
+  loading = true;
   @ViewChild('closeUpdateModal', { static: false }) closeUpdateModal: ElementRef;
   @ViewChild('closeAddModal', { static: false }) closeAddModal: ElementRef;
   @ViewChild('openBtn', { static: false }) openBtn: ElementRef;
@@ -69,27 +70,30 @@ export class AddEndpointsComponent implements OnInit {
 
     this.updateForm = this.fb.group({
         EndpointName: ['', Validators.required],
-        Description: ['', [Validators.required, Validators.minLength(10)]],
+        Description: ['', [Validators.required]],
         Url: ['', Validators.required],
-        OptimalResponseTime: ['', Validators.required],
+        OptimalResponseTime: ['', [Validators.required, Validators.minLength(1)]],
         State: ['', Validators.required]
     });
 
     this.endpointForm = this.fb.group({
       EndpointName: ['', Validators.required],
-      Description: ['', [Validators.required, Validators.minLength(10)]],
+      Description: ['', [Validators.required]],
       URL: ['', Validators.required],
-      OptimalResponseTime: ['', Validators.required],
+      OptimalResponseTime: ['', [Validators.required, Validators.minLength(1)]],
       EndpointType: ['', Validators.required],
       State: ['', Validators.required]
     });
+    this.loading = false;
   }
 
   public getEndpoints() {
     this.endpointService.getEndpoints(this.currentSystemId).subscribe(
       (endpoints) => {
         this.endpoints = endpoints;
-        console.log(endpoints);
+        if (this.endpoints.length) {
+          this.setupService.disabledNext.next(false);
+        }
     });
   }
   updateEndpoint(endpointId: string) {
