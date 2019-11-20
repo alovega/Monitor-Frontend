@@ -16,9 +16,7 @@ import { SharedModule } from './shared/shared.module';
 import { AuthGuardService } from './shared/helpers/auth-guard.service';
 import { AuthenticationService } from './shared/auth/authentication.service';
 import { ShowHidePasswordModule } from 'ngx-show-hide-password';
-import { from } from 'rxjs';
-// import { EndpointModule } from './endpoint/endpoint.module';
-// import { RecipientsModule } from './recipients/recipients.module';
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 @NgModule({
   declarations: [
     AppComponent,
@@ -32,6 +30,7 @@ import { from } from 'rxjs';
     }),
     HttpClientModule,
     NgbModule,
+    NgxDatatableModule,
     FormsModule,
     ReactiveFormsModule,
     SweetAlert2Module.forRoot(),
