@@ -33,11 +33,13 @@ export class RecipientUpdateComponent implements OnInit {
 
   ngOnInit() {
     this.recipientId = this.activatedRoute.snapshot.params.id;
-    console.log(this.recipientId);
     this.recipientService.getRecipient(this.recipientId).subscribe(response => {
       if (response.code === '800.200.001') {
         this.data = response.data;
-        console.log(this.data);
+        this.updateForm.patchValue({
+          PhoneNumber: this.data.phoneNumber,
+          State: this.data.stateId
+        });
       } else {
         this.toastr.error(response.message);
       }
@@ -72,6 +74,7 @@ export class RecipientUpdateComponent implements OnInit {
     });
   }
   updateRecipient() {
+    this.data = this.updateForm.value;
     this.data.recipientId = this.recipientId;
     this.recipientService.updateRecipient(this.data).subscribe(response => {
       if (response.code === '800.200.001') {

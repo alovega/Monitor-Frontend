@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { EndpointViewComponent } from './endpoint-view.component';
+import { TopNavBarComponent } from './top-nav-bar.component';
 
-describe('EndpointViewComponent', () => {
-  let component: EndpointViewComponent;
-  let fixture: ComponentFixture<EndpointViewComponent>;
+describe('TopNavBarComponent', () => {
+  let component: TopNavBarComponent;
+  let fixture: ComponentFixture<TopNavBarComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ EndpointViewComponent ]
+      declarations: [ TopNavBarComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(EndpointViewComponent);
+    fixture = TestBed.createComponent(TopNavBarComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -28,7 +28,6 @@ export class UpdatePasswordComponent implements OnInit {
     this.profileService.getLoggedInUserDetail().subscribe(
       (data) => {
           this.data = data;
-          console.log(this.data);
         });
   }
   createForm() {
@@ -66,8 +65,6 @@ export class UpdatePasswordComponent implements OnInit {
         if (result.value) {
           this.profileService.UpdateLoggedInUserPassword(this.profile).subscribe(
             response => {
-            console.log(this.profile);
-            console.log(response);
             if (response.code === '800.200.001') {
                 Swal.fire(
                   'updated',
@@ -75,7 +72,6 @@ export class UpdatePasswordComponent implements OnInit {
                   'success'
                 );
               } else {
-                console.log(response);
                 Swal.fire(
                   'Failed!',
                   'The user password could not be updated.',

@@ -29,7 +29,6 @@ export class UserNotificationsComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     this.profileService.getLoggedInuserNotifications().subscribe(
       response => {
-        console.log(response);
         this.elements = response;
         this.mdbTable.setDataSource(this.elements);
         this.elements = this.mdbTable.getDataSource();
@@ -44,8 +43,6 @@ export class UserNotificationsComponent implements OnInit, AfterViewInit {
   }
   searchItems() {
     const prev = this.mdbTable.getDataSource();
-    console.log(prev);
-
     if (!this.searchText) {
       this.mdbTable.setDataSource(this.previous);
       this.elements = this.mdbTable.getDataSource();
