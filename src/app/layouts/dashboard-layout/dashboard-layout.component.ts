@@ -4,8 +4,10 @@ import { map, tap } from 'rxjs/operators';
 import Swal from 'sweetalert2';
 
 import { SystemService } from '../../shared/system.service';
+import { System, SystemResponse, SystemsResponse } from '../../shared/models/system';
 import { AuthenticationService } from '../../shared/auth/authentication.service';
 import { NgbTypeaheadWindow } from '@ng-bootstrap/ng-bootstrap/typeahead/typeahead-window';
+import { ToastrService } from 'ngx-toastr';
 declare var $: any;
 @Component({
   selector: 'hm-dashboard-layout',
@@ -13,8 +15,8 @@ declare var $: any;
   styleUrls: ['./dashboard-layout.component.scss']
 })
 export class DashboardLayoutComponent implements OnInit {
-  systems: any;
-  currentSystem: any;
+  systems: System[];
+  currentSystem: System;
   currentSystemId: any;
   currentUser: any;
   time: any;
@@ -26,21 +28,25 @@ export class DashboardLayoutComponent implements OnInit {
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private authService: AuthenticationService,
-    private renderer: Renderer2
+    private renderer: Renderer2,
+    private toastr: ToastrService
   ) { }
 
   ngOnInit() {
     this.currentSystem = this.systemService.getCurrentSystem();
     if (this.currentSystem) {
       this.currentSystemId = this.currentSystem.id;
-      // this.router.navigate(['dashboard']);
     } else {
-      this.systemService.setSystem().subscribe(
-        (system) => {
-          this.currentSystem = system;
-          this.currentSystemId = this.currentSystem.id;
+      this.systemService.getSystems().subscribe(
+        (res: SystemsResponse) => {
+          if (res.code === '800.200.001') {
+            this.currentSystem = res.data[0];
+            this.currentSystemId = this.currentSystem.id;
+            localStorage.setItem('currentSystem', JSON.stringify(this.currentSystem));
+          } else {
+            this.toastr.error('An error occurred. Try again later', 'Error!');
+          }
           window.location.reload();
-          // this.router.navigate(['dashboard']);
         }
       );
     }

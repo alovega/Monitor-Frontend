@@ -2,11 +2,14 @@ import { Component, OnInit, ViewChild, AfterViewChecked } from '@angular/core';
 import { Route, ActivatedRoute } from '@angular/router';
 import { NgbTabChangeEvent, NgbTabset } from '@ng-bootstrap/ng-bootstrap';
 
-// import { DateTransformPipe } from '../../shared/pipes/date-transform.pipe';
 import { SystemService } from '../../shared/system.service';
 import { GraphsService } from '../../shared/graphs.service';
 import { SystemStatusService } from '../../shared/system-status.service';
 import { ProfileService } from 'src/app/profile/profile.service';
+import { System, SystemResponse, SystemsResponse } from 'src/app/shared/models/system';
+import { SystemStatusResponse, SystemStatus } from 'src/app/shared/models/system-status';
+import { ToastrService } from 'ngx-toastr';
+import { WidgetData, WidgetDataResponse } from './widget-data';
 
 @Component({
   selector: 'hm-dashboard',
@@ -14,14 +17,14 @@ import { ProfileService } from 'src/app/profile/profile.service';
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit, AfterViewChecked {
-  currentSystem: any;
+  currentSystem: System;
   currentSystemId: any;
   message: any;
-  widgetData: any;
+  widgetData: WidgetData;
   activeTab: string;
   startDate: Date;
   endDate: Date;
-  public systemStatus: any;
+  public systemStatus: SystemStatus;
   @ViewChild('tabs', {static: false}) tabs: NgbTabset;
 
   public errorRateGraph = {
@@ -95,6 +98,7 @@ export class DashboardComponent implements OnInit, AfterViewChecked {
     private systemStatusService: SystemStatusService,
     private profileService: ProfileService,
     private activatedRoute: ActivatedRoute,
+    private toastr: ToastrService
   ) {
     this.activeTab = 'today';
   }
@@ -102,8 +106,12 @@ export class DashboardComponent implements OnInit, AfterViewChecked {
   ngOnInit() {
     this.currentSystem = this.systemService.getCurrentSystem();
     this.systemStatusService.getCurrentStatus().subscribe(
-      (status) => {
-        this.systemStatus = status;
+      (res: SystemStatusResponse) => {
+        if (res.code === '800.200.001') {
+          this.systemStatus = res.data;
+        } else {
+          this.toastr.error('Error Fetching current status', 'Error!');
+        }
     });
     this.getWidgetData(this.activeTab);
     this.profileService.getLoggedInuserRecentNotifications().subscribe(
@@ -143,9 +151,12 @@ export class DashboardComponent implements OnInit, AfterViewChecked {
       this.endDate = this.endDate;
     }
     this.systemStatusService.getDashboardWidgetsData(this.startDate, this.endDate).subscribe(
-      (response) => {
-        this.widgetData = response;
-        // console.log(response);
+      (res: WidgetDataResponse) => {
+        if (res.code === '800.200.001') {
+          this.widgetData = res.data;
+        } else {
+          this.toastr.error('Error while fetching widgets data', 'Error!');
+        }
     });
   }
 

@@ -6,7 +6,7 @@ import Swal from 'sweetalert2';
 
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { SystemService } from '../../../shared/system.service';
-import { System } from '../../../shared/models/system';
+import { System, SystemResponse, SystemsResponse } from '../../../shared/models/system';
 import { AuthenticationService } from 'src/app/shared/auth/authentication.service';
 import { SideNavToggleService } from 'src/app/shared/side-nav-toggle.service';
 import { LookUpService } from 'src/app/shared/look-up.service';
@@ -47,9 +47,13 @@ export class TopNavComponent implements OnInit, OnChanges {
 
   ngOnInit() {
     this.systemService.getSystems().subscribe(
-      (data: any[]) => {
-        this.systems = data.map(item => this.systemService.adapt(item));
-        // console.log(this.systems);
+      (res: SystemsResponse) => {
+        if (res.code === '800.200.001') {
+          this.systems = res.data;
+        } else {
+          this.toastr.error('An error occurred. Try again later', 'Error!');
+        }
+        // window.location.reload();
     });
     this.profileService.getLoggedInUserDetail().subscribe(
       (data) => {
@@ -111,28 +115,31 @@ export class TopNavComponent implements OnInit, OnChanges {
     }
 
     this.systemService.createSystem(this.addSystemForm.value).subscribe(
-      (response => {
+      (res: SystemResponse) => {
         this.submitted = false;
-        if (response) {
+        if (res.code === '800.200.001') {
           this.closeBtn.nativeElement.click();
           Swal.fire(
             '',
             'System created successfully!',
             'success'
           ).then(() => {
-            this.systemService.changesystem(response.id).subscribe(
-              () => {
-                this.currentSystem = this.systemService.getCurrentSystem();
-                this.router.navigate(['dashboard/quick-setup/endpoints']);
-                // window.location.reload();
+            this.systemService.changesystem(res.data.id).subscribe(
+              (response: SystemResponse) => {
+                if (response.code === '800.200.001') {
+                  this.currentSystem = this.systemService.getCurrentSystem();
+                  this.router.navigate(['dashboard/quick-setup/endpoints']);
+                  window.location.reload();
+                } else {
+                  this.toastr.error('Unexpected Error. Please try again later', 'Error');
+                }
             });
-            // this.changeSystem(response.id);
+            this.changeSystem(res.data.id);
           });
           // this.toastr.success('System creation success !', 'System created successfully');
         } else {
           this.toastr.error('System could not be created', 'System creation error !');
         }
-      })
-    );
+      });
   }
 }

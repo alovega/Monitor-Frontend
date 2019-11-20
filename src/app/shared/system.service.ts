@@ -5,7 +5,7 @@ import { map, tap, filter} from 'rxjs/operators';
 // import { runInThisContext } from 'vm';
 import { environment } from '../../environments/environment';
 import { HttpWrapperService } from './helpers/http-wrapper.service';
-import { System } from './models/system';
+import { System, SystemResponse, SystemsResponse } from './models/system';
 
 @Injectable({
   providedIn: 'root'
@@ -19,49 +19,41 @@ export class SystemService {
   constructor(
     private http: HttpClient,
     private httpWrapperService: HttpWrapperService) {
-    this.currentSystemSubject = new BehaviorSubject<any>(JSON.parse(localStorage.getItem('currentSystem')));
+    this.currentSystemSubject = new BehaviorSubject<System>(JSON.parse(localStorage.getItem('currentSystem')));
     this.currentSystem = this.currentSystemSubject.asObservable();
-  }
-
-  public adapt(system: any): System {
-    return new System(
-        system.id, system.name, system.description, system.admin__id, system.code, system.version,
-        new Date(system.date_created), new Date(system.date_modified), system.state__name
-    );
   }
 
   public getCurrentSystem() {
     return this.currentSystemSubject.value;
   }
 
-  getSystems(): Observable<any> {
-    // console.log('Got systems');
-    return this.httpWrapperService.post('get_systems/');
+  getSystems(): Observable<SystemsResponse> {
+    return this.httpWrapperService.post('get_systems/').pipe();
   }
 
-  getSystem(systemId: string): Observable<any> {
+  getSystem(systemId: string): Observable<SystemResponse> {
     return this.httpWrapperService.post('get_system/', {id: systemId});
   }
 
-  createSystem(system: any): Observable<any> {
+  createSystem(system: any): Observable<SystemResponse> {
     return this.httpWrapperService.post('create_system/', system);
   }
 
-  changesystem(systemId: string) {
-    return this.httpWrapperService.post('get_system/', {id: systemId}).pipe(
-      tap(system => {
-        localStorage.setItem('currentSystem', JSON.stringify(this.adapt(system))),
-        this.currentSystemSubject.next(this.adapt(system));
-      })
-    );
+  changesystem(systemId: string): Observable<SystemResponse> {
+    return this.httpWrapperService.post('get_system/', {id: systemId}).pipe();
+    //   tap(system => {
+    //     localStorage.setItem('currentSystem', JSON.stringify(system)),
+    //     this.currentSystemSubject.next(system);
+    //   })
+    // );
   }
 
   updateSystem(systemId: string, system: any) {
     return this.httpWrapperService.post('update_system/', {id: systemId, system}).pipe(
       tap(updatedSystem => {
         console.log(updatedSystem);
-        localStorage.setItem('currentSystem', JSON.stringify(this.adapt(updatedSystem)));
-        this.currentSystemSubject.next(this.adapt(system));
+        localStorage.setItem('currentSystem', JSON.stringify(updatedSystem));
+        this.currentSystemSubject.next(system);
     }));
   }
 
@@ -74,12 +66,12 @@ export class SystemService {
     }
   }
 
-  setSystem() {
+  setSystem(): Observable<SystemResponse> {
     return this.httpWrapperService.post('get_systems/', {}).pipe(
       map(systems => systems[0]),
       tap((system) => {
-        localStorage.setItem('currentSystem', JSON.stringify(this.adapt(system)));
-        this.currentSystemSubject.next(this.adapt(system));
-    }));
+        localStorage.setItem('currentSystem', JSON.stringify(system));
+        this.currentSystemSubject.next(system);
+      }));
   }
 }

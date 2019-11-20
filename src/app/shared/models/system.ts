@@ -1,22 +1,21 @@
 export class System {
-    // public id: string;
-    // public name: string;
-    // public description: string;
-    // public admin: string;
-    // public code: string;
-    // public version: string;
-    // public created: Date;
-    // public modified: Date;
-    // public state: string;
-    constructor(
-        public id?: string,
-        public name?: string,
-        public description?: string,
-        public admin?: string,
-        public code?: string,
-        public version?: string,
-        public created?: Date,
-        public modified?: Date,
-        public state?: string,
-    )  {}
+    id: string;
+    name: string;
+    description: string;
+    admin_id: string;
+    code: string;
+    version: string;
+    date_created: Date;
+    date_modified: Date;
+    state_id: string;
+}
+
+export class SystemResponse {
+    code: string;
+    data: System;
+}
+
+export class SystemsResponse {
+    code: string;
+    data: System[];
 }
