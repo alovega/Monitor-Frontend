@@ -78,16 +78,13 @@ export class AddRulesComponent implements OnInit {
 
   addRule() {
     this.escalationRule = new EscalationRule();
-    console.log(this.escalationRule);
     this.openAddModal.nativeElement.click();
   }
 
   editRule(ruleId: string) {
-    console.log(this.escalationRules);
     this.ruleService.getRule(ruleId).subscribe(
       (rule) => {
         this.escalationRule = rule;
-        console.log(this.escalationRule);
         this.openBtn.nativeElement.click();
       });
   }
@@ -95,13 +92,9 @@ export class AddRulesComponent implements OnInit {
   onSubmitAddRule() {
     this.submitted = true;
     if (this.addRuleForm.invalid) {
-      console.log('Invalid');
       return;
     }
 
-    // this.escalationRule.state = 'Active';
-    // console.log(this.escalationRule);
-    console.log(this.addRuleForm.controls.escalationLevel.value);
     this.ruleService.createRule(this.escalationRule).subscribe(
       response => {
         this.submitted = false;
@@ -118,12 +111,9 @@ export class AddRulesComponent implements OnInit {
   onSubmitEditRule() {
     this.submitted = true;
     if (this.editRuleForm.invalid) {
-      console.log('Invalid');
       return;
     }
-    // console.log(this.escalationRule);
     this.escalationRule.event_type = this.escalationRule.eventtype;
-    // this.escalationRule.state = 'Active';
     this.ruleService.updateRule(this.escalationRule).subscribe(
       response => {
         this.submitted = false;

@@ -1,6 +1,6 @@
 <div class="d-flex justify-content-between align-items-end">
     <h5>Add escalation rules </h5>
-    <div class="" *ngIf="escalationRules.length">
+    <div class="" *ngIf="escalationRules?.length">
         <button mdbBtn class="btn-sm blue-gradient lowercase-btn text-white" data-toggle="modal" data-target="#"
         (click)="addRule()"><i class="fas fa-plus"></i> Add rule</button>
     </div>   
@@ -25,7 +25,7 @@
         <div [ngClass]="{'d-none': !loading}">
             <hm-loader></hm-loader>
         </div> 
-        <ul class="endpoints-list" *ngIf="escalationRules.length; else noData" >
+        <ul class="endpoints-list" *ngIf="escalationRules?.length; else noData" >
             <li class="endpoint-item" *ngFor="let rule of escalationRules" (click)="editRule(rule.rule_id)">
                <span>
                </span> {{rule.name}}

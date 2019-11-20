@@ -105,10 +105,8 @@ export class TopNavComponent implements OnInit, OnChanges {
   }
 
   onSubmit() {
-    console.log(this.addSystemForm.value);
     this.submitted = true;
     if (this.addSystemForm.invalid) {
-      console.log('Invalid');
       return;
     }
 
@@ -136,6 +134,5 @@ export class TopNavComponent implements OnInit, OnChanges {
         }
       })
     );
-    console.log(this.newSystem);
   }
 }
