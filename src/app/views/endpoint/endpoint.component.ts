@@ -21,6 +21,7 @@ export class EndpointComponent implements OnInit, AfterViewInit {
   elements: any;
   searchText = '';
   previous: any = [];
+  row: any = [];
   visibleItems: number = 5;
 
   headElements = ['name', 'description', 'url', 'endpointType', 'status', 'dateCreated', 'action'];
@@ -28,6 +29,10 @@ export class EndpointComponent implements OnInit, AfterViewInit {
     name: 'Endpoint', description: 'description', url: 'Url', dateCreated: 'Date Created', status: 'Status', action: 'Action',
     endpointType: 'Type'
   };
+  columns = [{
+    name: 'Endpoint', description: 'description', url: 'Url', dateCreated: 'Date Created', status: 'Status', action: 'Action',
+    endpointType: 'Type'
+  }];
   currentSystem: any;
   currentSystemId: any;
   endpointId: any;
@@ -49,6 +54,7 @@ export class EndpointComponent implements OnInit, AfterViewInit {
     this.endpointService.getEndpoints(this.currentSystemId).subscribe(
       (data) => {
         this.elements = data;
+        this.row = data;
         this.mdbTable.setDataSource(this.elements);
         this.elements = this.mdbTable.getDataSource();
         this.previous = this.mdbTable.getDataSource();

@@ -1,16 +1,17 @@
 <div>
   <ngx-datatable
-    class="bootstrap"
+    class="material"
     [rows]="rows"
     [columns]="columns"
     [columnMode]="ColumnMode.force"
-    [headerHeight]="40"
-    [summaryRow]="true"
-    [summaryPosition]="'bottom'"
-    [footerHeight]="40"
-    [limit]="10"
+    [headerHeight]="50"
+    [footerHeight]="50"
     rowHeight="auto"
-    [reorderable]="reorderable"
-    >
+    [externalPaging]="true"
+    [count]="page.totalElements"
+    [offset]="page.pageNumber"
+    [limit]="page.size"
+    (page)="setPage($event)"
+  >
   </ngx-datatable>
 </div>
