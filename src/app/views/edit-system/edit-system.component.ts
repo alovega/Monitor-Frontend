@@ -57,8 +57,8 @@ export class EditSystemComponent implements OnInit {
 
     this.editSystemForm.patchValue({
       name: this.currentSystem.name,
-      description: this.currentSystem.name,
-      admin: this.currentSystem.admin,
+      description: this.currentSystem.description,
+      admin_id: this.currentSystem.admin,
       version: this.currentSystem.version
     });
   }

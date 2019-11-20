@@ -46,14 +46,14 @@ export class EndpointUpdateComponent implements OnInit {
     this.currentSystemId = this.currentSystem.id;
     this.endpointId = this.activatedRoute.snapshot.params.id;
     console.log(this.endpointId);
-    this.endpointService.getItem(this.endpointId).subscribe(response => {
+    this.endpointService.getItem(this.endpointId).toPromise().then(response => {
       if (response.code === '800.200.001') {
         this.data = response.data;
         console.log(this.data);
       } else {
         this.toastr.error(response.message);
       }
-  });
+  }).catch(error => {});
 }
   createForm() {
     this.updateForm = this.fb.group({
