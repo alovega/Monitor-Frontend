@@ -17,6 +17,7 @@ import { AuthGuardService } from './shared/helpers/auth-guard.service';
 import { AuthenticationService } from './shared/auth/authentication.service';
 import { ShowHidePasswordModule } from 'ngx-show-hide-password';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { DashboardLayoutModule } from './layouts/dashboard-layout/dashboard-layout.module';
 @NgModule({
   declarations: [
     AppComponent,
@@ -43,7 +44,8 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
       timeOut: 10000,
       positionClass: 'toast-top-right',
       preventDuplicates: true,
-    })
+    }),
+    DashboardLayoutModule
   ],
   providers: [AuthenticationService, AuthGuardService],
   schemas: [NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA],

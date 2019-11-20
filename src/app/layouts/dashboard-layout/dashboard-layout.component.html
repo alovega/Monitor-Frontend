@@ -1,4 +1,13 @@
-<hm-top-nav-bar class="fixed-topnav" fxHide.gt-xs (toggleSideBarForMe)="sideBarToggler($event)"></hm-top-nav-bar>
+<hm-top-nav-bar *ngIf="loaded" class="fixed-topnav" fxHide.gt-xs (toggleSideBarForMe)="sideBarToggler($event)"></hm-top-nav-bar>
+<!-- <mat-toolbar class="mat-elevation-z1 mat-toolbar-single-row d-flex justify-content-between">
+    <div>
+    <button mat-icon-button id="menu">
+        <mat-icon>menu</mat-icon>
+    </button>
+    </div>
+</mat-toolbar> -->
+
+
 <mat-sidenav-container>
   <mat-sidenav #appDrawer [opened]="sideBarOpen"
   [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"

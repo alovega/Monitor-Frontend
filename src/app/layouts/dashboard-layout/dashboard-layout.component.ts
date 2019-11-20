@@ -18,11 +18,10 @@ declare var $: any;
   styleUrls: ['./dashboard-layout.component.scss']
 })
 export class DashboardLayoutComponent implements OnInit, AfterViewInit {
-  isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
-        .pipe(
-            map(result => result.matches),
-            shareReplay(1),
-        );
+  isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset).pipe(
+    map(result => result.matches),
+    shareReplay(1),
+  );
   systems: any;
   currentSystem: any;
   currentSystemId: any;
@@ -82,7 +81,7 @@ export class DashboardLayoutComponent implements OnInit, AfterViewInit {
       routerLink: 'dashboard/notifications/email-notification'
     },
   ];
-
+  loaded = false;
   time: any;
   token: string;
   expiresAt: any;
@@ -95,9 +94,12 @@ export class DashboardLayoutComponent implements OnInit, AfterViewInit {
     private breakpointObserver: BreakpointObserver,
     private navService: NavService,
     private renderer: Renderer2
-  ) { }
+  ) {
+    this.navService.appDrawer = this.appDrawer;
+   }
 
   ngOnInit() {
+    // this.navService.openNav();
     this.currentSystem = this.systemService.getCurrentSystem();
     if (this.currentSystem) {
       this.currentSystemId = this.currentSystem.id;
@@ -155,7 +157,7 @@ export class DashboardLayoutComponent implements OnInit, AfterViewInit {
     }
 
     function showLogoutCountDown() {
-      let countDown:any = 5;
+      let countDown: any = 5;
       let displayText: any = 'Logging out in #1 seconds.';
       Swal.fire({
         title: 'Logging out',
@@ -181,8 +183,12 @@ export class DashboardLayoutComponent implements OnInit, AfterViewInit {
   sideBarToggler() {
     this.sideBarOpen = !this.sideBarOpen;
   }
+  // ngAfterViewInit() {
+  //   this.navService.appDrawer = this.appDrawer;
+  //   this.navService.openNav();
+  // }
   ngAfterViewInit() {
-    this.navService.appDrawer = this.appDrawer;
-    this.navService.openNav();
+    this.loaded = true;
+    console.log('loaded');
   }
 }
