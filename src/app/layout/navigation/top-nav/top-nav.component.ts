@@ -129,18 +129,17 @@ export class TopNavComponent implements OnInit, OnChanges {
             this.systemService.changesystem(res.data.id).subscribe(
               (response: SystemResponse) => {
                 if (response.code === '800.200.001') {
-                  this.currentSystem = res.data;
-                  localStorage.setItem('currentSystem', JSON.stringify(this.currentSystem)),
-                  this.systemService.currentSystemSubject.next(this.currentSystem);
-                  if (this.currentSystem) {
-                    this.router.navigate(['dashboard', 'quick-setup']).then(
-                      () => window.location.reload()
-                    );
-                  }
+                  this.currentSystem = this.systemService.getCurrentSystem();
+                  this.router.navigate(['dashboard', 'quick-setup', 'endpoints']).then(
+                    () => {
+                      window.location.reload();
+                    }
+                  );
                 } else {
                   this.toastr.error('Unexpected Error. Please try again later', 'Error');
                 }
             });
+            this.changeSystem(res.data.id);
           });
           // this.toastr.success('System creation success !', 'System created successfully');
         } else {
