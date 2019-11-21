@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild, ChangeDetectorRef, AfterViewInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { of } from 'rxjs';
@@ -20,7 +20,7 @@ import { LookUpService } from '../../../shared/look-up.service';
   templateUrl: './add-endpoints.component.html',
   styleUrls: ['./add-endpoints.component.scss']
 })
-export class AddEndpointsComponent implements OnInit {
+export class AddEndpointsComponent implements OnInit, AfterViewInit {
   endpointForm: FormGroup;
   updateForm: FormGroup;
   submitted = false;
@@ -41,7 +41,7 @@ export class AddEndpointsComponent implements OnInit {
     private fb: FormBuilder,
     private endpointService: EndpointService,
     private systemService: SystemService,
-    private location: Location,
+    private changeDetector: ChangeDetectorRef,
     private router: Router,
     private toastr: ToastrService,
     private setupService: SetupService,
@@ -55,8 +55,6 @@ export class AddEndpointsComponent implements OnInit {
     });
     this.selectedEndpoint = new Endpoint();
     this.data = new Endpoint();
-    // this.setupService.nextUrl.next('rules');
-    // this.setupService.previousUrl.next(null);
    }
 
   ngOnInit() {
@@ -85,6 +83,10 @@ export class AddEndpointsComponent implements OnInit {
       State: ['', Validators.required]
     });
     this.loading = false;
+  }
+
+  ngAfterViewInit() {
+    this.changeDetector.detectChanges();
   }
 
   public getEndpoints() {

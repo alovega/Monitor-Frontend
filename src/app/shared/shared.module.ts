@@ -29,6 +29,7 @@ import { GraphsService } from './graphs.service';
 import { SystemStatusService } from './system-status.service';
 import { LoginComponent } from './auth/login/login.component';
 import { DateTransformPipe } from './pipes/date-transform.pipe';
+import { YesNoPipe } from './pipes/yes-no.pipe';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,8 @@ import { DateTransformPipe } from './pipes/date-transform.pipe';
     LoginComponent,
     ComponentLoaderComponent,
     EndpointStatusComponent,
-    DateTransformPipe
+    DateTransformPipe,
+    YesNoPipe
   ],
   imports: [
     CommonModule,
@@ -72,7 +74,8 @@ import { DateTransformPipe } from './pipes/date-transform.pipe';
     LoaderComponent,
     ComponentLoaderComponent,
     EndpointStatusComponent,
-    DateTransformPipe
+    DateTransformPipe,
+    YesNoPipe
   ],
   providers: [SystemService,
     {

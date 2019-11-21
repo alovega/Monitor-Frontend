@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { Location } from '@angular/common';
-import { UsersService } from 'src/app/systems/users/users.service';
+import { UsersService } from 'src/app/views/users/users.service';
 import { ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 
@@ -21,21 +21,29 @@ export class UpdateUserComponent implements OnInit {
     private usersService: UsersService,
     private activatedRoute: ActivatedRoute,
     private toastr: ToastrService
-  ) { }
+  ) {
+    this.updateUserForm = this.formBuilder.group({
+      username: ['', [Validators.required, Validators.minLength(3)]],
+      first_name: [''],
+      last_name: [''],
+      email: ['', [Validators.required, Validators.email]]
+    });
+   }
 
   ngOnInit() {
     this.userId = this.activatedRoute.snapshot.paramMap.get('user-id');
     this.usersService.getUser(this.userId).subscribe(
       (res: any) => {
-        this.user = res;
         console.log(res);
+        this.user = res.data;
+        this.updateUserForm.patchValue({
+          username: this.user.username,
+          firs_tname: this.user.first_name,
+          last_name: this.user.last_name,
+          email: this.user.email
+        });
       });
-    this.updateUserForm = this.formBuilder.group({
-      username: ['', [Validators.required, Validators.minLength(3)]],
-      firstname: [''],
-      lastname: [''],
-      email: ['', [Validators.required, Validators.email]]
-    });
+
   }
 
   public back(): void {
@@ -45,14 +53,10 @@ export class UpdateUserComponent implements OnInit {
   onSubmit() {
     this.submitted = true;
     if (this.updateUserForm.invalid) {
-      console.log('Invalid');
       return;
     }
 
-    this.user.user_id = this.user.id;
-    console.log(this.user);
-    // if (t)
-    this.usersService.updateUser(this.user).subscribe(
+    this.usersService.updateUser(this.userId, this.updateUserForm.value).subscribe(
     (response: any) => {
         if (response.code === '800.200.001') {
           console.log(this.user);

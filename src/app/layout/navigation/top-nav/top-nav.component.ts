@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Input, OnChanges, SimpleChanges, SystemJsNgModuleLoaderConfig } from '@angular/core';
 import { Router, ActivatedRoute, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
 import { ToastrService } from 'ngx-toastr';
@@ -6,7 +6,7 @@ import Swal from 'sweetalert2';
 
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { SystemService } from '../../../shared/system.service';
-import { System } from '../../../shared/models/system';
+import { System, SystemResponse, SystemsResponse } from '../../../shared/models/system';
 import { AuthenticationService } from 'src/app/shared/auth/authentication.service';
 import { SideNavToggleService } from 'src/app/shared/side-nav-toggle.service';
 import { LookUpService } from 'src/app/shared/look-up.service';
@@ -21,8 +21,8 @@ export class TopNavComponent implements OnInit, OnChanges {
   @Input() user;
   currentUser: any;
   profile: any;
-  systems: any;
-  currentSystem: any;
+  systems: System[];
+  currentSystem: System;
   validatingForm: FormGroup;
   addSystemForm: FormGroup;
   newSystem: System;
@@ -42,20 +42,31 @@ export class TopNavComponent implements OnInit, OnChanges {
     private lookupService: LookUpService,
     private toastr: ToastrService
   ) {
-    this.newSystem = new System();
+    this.addSystemForm = this.formBuilder.group({
+      name: ['', Validators.required],
+      description: ['', Validators.required],
+      admin: ['', Validators.required]
+    });
   }
 
   ngOnInit() {
     this.systemService.getSystems().subscribe(
-      (result => {
-        this.systems = result;
-        console.log(this.systems);
-    }));
+      (res: SystemsResponse) => {
+        if (res.code === '800.200.001') {
+          this.systems = res.data;
+        } else {
+          this.toastr.error('An error occurred. Try again later', 'Error!');
+        }
+        // window.location.reload();
+    });
+    this.lookupService.getUsers().subscribe(
+      (data) => {
+        this.users = data;
+    });
     this.profileService.getLoggedInUserDetail().subscribe(
       (data) => {
-          this.profile = data;
-          console.log(this.profile);
-        });
+        this.profile = data;
+    });
     this.currentSystem = this.systemService.getCurrentSystem();
     this.authService.currentUser.subscribe(
       (user) => {
@@ -68,17 +79,6 @@ export class TopNavComponent implements OnInit, OnChanges {
         this.showToggler = false;
         this.sideNavService.toggleSideNav(true);
     }});
-
-    this.addSystemForm = this.formBuilder.group({
-      name: ['', Validators.required],
-      description: ['', Validators.required],
-      admin: ['', Validators.required]
-    });
-
-    this.lookupService.getUsers().subscribe(
-      (data) => {
-        this.users = data;
-      });
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -88,11 +88,14 @@ export class TopNavComponent implements OnInit, OnChanges {
   }
 
   changeSystem(systemId: any) {
-    // this.toastr.success('Success loaded top nav!');
     this.systemService.changesystem(systemId).subscribe(
-      () => {
-        this.currentSystem = this.systemService.getCurrentSystem();
-        window.location.reload();
+      (res: SystemResponse) => {
+        if (res.code === '800.200.001') {
+          this.currentSystem = res.data;
+          localStorage.setItem('currentSystem', JSON.stringify(this.currentSystem)),
+          this.systemService.currentSystemSubject.next(this.currentSystem);
+          window.location.reload();
+        }
     });
   }
 
@@ -109,34 +112,40 @@ export class TopNavComponent implements OnInit, OnChanges {
   onSubmit() {
     this.submitted = true;
     if (this.addSystemForm.invalid) {
-      console.log('Invalid');
       return;
     }
 
-    this.systemService.createSystem(this.newSystem).subscribe(
-      (response => {
+    this.systemService.createSystem(this.addSystemForm.value).subscribe(
+      (res: SystemResponse) => {
+        console.log(res);
         this.submitted = false;
-        if (response) {
+        if (res.code === '800.200.001') {
           this.closeBtn.nativeElement.click();
           Swal.fire(
             '',
             'System created successfully!',
             'success'
           ).then(() => {
-            this.systemService.changesystem(response.id).subscribe(
-              () => {
-                this.currentSystem = this.systemService.getCurrentSystem();
-                this.router.navigate(['dashboard/quick-setup/endpoints']);
-                // window.location.reload();
+            this.systemService.changesystem(res.data.id).subscribe(
+              (response: SystemResponse) => {
+                if (response.code === '800.200.001') {
+                  this.currentSystem = res.data;
+                  localStorage.setItem('currentSystem', JSON.stringify(this.currentSystem)),
+                  this.systemService.currentSystemSubject.next(this.currentSystem);
+                  if (this.currentSystem) {
+                    this.router.navigate(['dashboard', 'quick-setup']).then(
+                      () => window.location.reload()
+                    );
+                  }
+                } else {
+                  this.toastr.error('Unexpected Error. Please try again later', 'Error');
+                }
             });
-            // this.changeSystem(response.id);
-          })
+          });
           // this.toastr.success('System creation success !', 'System created successfully');
         } else {
-          this.toastr.success('System creation error !', 'System could not be created');
+          this.toastr.error('System could not be created', 'System creation error !');
         }
-      })
-    );
-    console.log(this.newSystem);
+      });
   }
 }

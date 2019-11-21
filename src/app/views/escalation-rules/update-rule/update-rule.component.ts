@@ -3,9 +3,10 @@ import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms'
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 
-import { EscalationRule } from '../escalation-rule';
 import { EscalationRuleService } from '../escalation-rule.service';
 import { ToastrService } from 'ngx-toastr';
+import { LookUpService } from 'src/app/shared/look-up.service';
+import { EscalationRuleResponse, EscalationRule } from 'src/app/shared/models/escalation-rule';
 
 @Component({
   selector: 'hm-update-rule',
@@ -18,22 +19,50 @@ export class UpdateRuleComponent implements OnInit {
   escalationRule: EscalationRule;
   ruleId: string;
   min: number = 5;
+  escalationLevels: any[];
+  eventTypes: any[];
+  escalationLevelId: string;
+  eventTypeId: string;
+
   constructor(
     private formBuilder: FormBuilder,
     private ruleService: EscalationRuleService,
     private activatedRoute: ActivatedRoute,
     private location: Location,
     private router: Router,
-    private toastr: ToastrService) {
+    private toastr: ToastrService,
+    private lookupService: LookUpService) {
 
-    this.escalationRule = new EscalationRule();
     this.ruleId = this.activatedRoute.snapshot.params['rule-id'];
+    this.escalationRuleForm = this.formBuilder.group({
+      name: ['', Validators.required],
+      description: ['', Validators.required],
+      nth_event: ['', [Validators.required, Validators.minLength(1)]],
+      duration: ['', [Validators.required, Validators.minLength(this.min)]],
+      escalation_level: ['', Validators.required],
+      event_type: ['', Validators.required]
+    });
   }
 
   ngOnInit() {
-    this.createEscalationRulesForm();
     this.ruleService.getRule(this.ruleId).subscribe(
-      rule => this.escalationRule = rule
+      (res: EscalationRuleResponse) => {
+        if (res.code === '800.200.001') {
+          this.escalationRule = res.data;
+        }
+    });
+    this.lookupService.getEventType().subscribe(
+      res => {
+        this.eventTypes = res;
+        this.eventTypeId = this.eventTypes.filter(i => i.name === this.escalationRule.event_type_name)[0].id;
+      }
+    );
+    this.lookupService.getEscalationLevel().subscribe(
+      res => {
+        this.escalationLevels = res;
+        this.escalationLevelId = this.escalationLevels.filter(item => item.name === this.escalationRule.escalation_level_name)[0].id;
+        this.createEscalationRulesForm();
+      }
     );
   }
 
@@ -42,27 +71,24 @@ export class UpdateRuleComponent implements OnInit {
   }
 
   createEscalationRulesForm() {
-    this.escalationRuleForm = this.formBuilder.group({
-      ruleName: ['', Validators.required],
-      ruleDescription: ['', Validators.required],
-      nEvents: ['', [Validators.required, Validators.minLength(1)]],
-      duration: ['', [Validators.required, Validators.minLength(this.min)]],
-      escalationLevel: ['High', Validators.required],
-      eventType: ['Error', Validators.required]
+    console.log(this.escalationLevelId, this.eventTypeId);
+    this.escalationRuleForm.patchValue({
+      name: this.escalationRule.name,
+      description: this.escalationRule.description,
+      nth_event: this.escalationRule.nth_event,
+      duration: this.escalationRule.duration,
+      escalation_level: this.escalationLevelId,
+      event_type: this.eventTypeId,
     });
   }
 
   onSubmit() {
     this.submitted = true;
     if (this.escalationRuleForm.invalid) {
-      console.log('Invalid');
       return;
     }
-    this.escalationRule.rule_id = this.ruleId;
-    this.escalationRule.event_type = this.escalationRule.eventtype;
-    this.ruleService.updateRule(this.escalationRule).subscribe(
+    this.ruleService.updateRule(this.escalationRule.id, this.escalationRuleForm.value).subscribe(
       response => {
-        console.log(response);
         if (response.code === '800.200.001') {
           this.toastr.success('Rule updated successfully', 'Success');
           this.location.back();

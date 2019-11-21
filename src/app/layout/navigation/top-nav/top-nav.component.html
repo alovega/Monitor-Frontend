@@ -82,7 +82,7 @@
               <!-- Name -->
               <label class="form-label">Name</label>
               <input formControlName="name" type="text" id="systemName" class="grey lighten-5 form-control" placeholder="System name"
-              [ngClass]="{'is-invalid': submitted && addSystemForm.controls.name.errors}" [(ngModel)] = "newSystem.name">
+              [ngClass]="{'is-invalid': submitted && addSystemForm.controls.name.errors}">
               
               <div *ngIf="addSystemForm.controls['name'].invalid && (addSystemForm.controls['name'].touched || addSystemForm.controls['name'].dirty)" class="invalid-feedback">
                 <div *ngIf="addSystemForm.controls['name'].errors.required">System Name is required</div>
@@ -93,7 +93,7 @@
               <!-- Description -->
               <label class="form-label">Description</label>
               <textarea formControlName="description" type="text" id="systemDescription" class="grey lighten-5 form-control" placeholder="System description"
-              [ngClass]="{'is-invalid': submitted && addSystemForm.controls.description.errors}" [(ngModel)] = "newSystem.description">
+              [ngClass]="{'is-invalid': submitted && addSystemForm.controls.description.errors}">
               </textarea>
               <div *ngIf="addSystemForm.controls['description'].invalid && (addSystemForm.controls['description'].touched || addSystemForm.controls['description'].dirty)" class="invalid-feedback">
                 <div *ngIf="addSystemForm.controls['description'].errors.required">System description is required</div>
@@ -103,7 +103,7 @@
             <div class="form-group mb-4">
               <label class="form-label">Admin</label>
               <select formControlName="admin" [ngClass]="{ 'is-invalid': submitted && addSystemForm.controls.admin.errors}"
-              class="grey lighten-5 browser-default custom-select form-control" [(ngModel)] = "newSystem.admin_id">
+              class="grey lighten-5 browser-default custom-select form-control">
                 <option *ngFor="let user of users" value="{{user.id}}">{{user.username}}</option>
               </select>
               <!-- Incident status validation errors -->
