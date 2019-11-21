@@ -1,4 +1,4 @@
-<mat-toolbar class="mat-elevation-z1 mat-toolbar-single-row d-flex justify-content-between">
+<mat-toolbar class="mat-elevation-z1 mat-toolbar-single-row d-flex top-menu justify-content-between">
     <div>
     <button mat-icon-button id="menu" (click)="toggleSideBar()" disableRipple=true>
         <mat-icon>menu</mat-icon>
@@ -82,9 +82,9 @@
               <!-- Name -->
               <label class="form-label">Name</label>
               <input formControlName="name" type="text" id="systemName" class="grey lighten-5 form-control" placeholder="System name"
-              [ngClass]="{'is-invalid': submitted && addSystemForm.controls.name.errors}" [(ngModel)] = "newSystem.name">
+              [ngClass]="{'is-invalid': submitted && addSystemForm.controls.name.errors}">
               
-              <div *ngIf="submitted && addSystemForm.controls['name'].errors" class="invalid-feedback">
+              <div *ngIf="addSystemForm.controls['name'].invalid && (addSystemForm.controls['name'].touched || addSystemForm.controls['name'].dirty)" class="invalid-feedback">
                 <div *ngIf="addSystemForm.controls['name'].errors.required">System Name is required</div>
               </div>               
             </div>
@@ -93,9 +93,9 @@
               <!-- Description -->
               <label class="form-label">Description</label>
               <textarea formControlName="description" type="text" id="systemDescription" class="grey lighten-5 form-control" placeholder="System description"
-              [ngClass]="{'is-invalid': submitted && addSystemForm.controls.description.errors}" [(ngModel)] = "newSystem.description">
+              [ngClass]="{'is-invalid': submitted && addSystemForm.controls.description.errors}">
               </textarea>
-              <div *ngIf="submitted && addSystemForm.controls['description'].errors" class="invalid-feedback">
+              <div *ngIf="addSystemForm.controls['description'].invalid && (addSystemForm.controls['description'].touched || addSystemForm.controls['description'].dirty)" class="invalid-feedback">
                 <div *ngIf="addSystemForm.controls['description'].errors.required">System description is required</div>
               </div>               
             </div>
@@ -103,17 +103,18 @@
             <div class="form-group mb-4">
               <label class="form-label">Admin</label>
               <select formControlName="admin" [ngClass]="{ 'is-invalid': submitted && addSystemForm.controls.admin.errors}"
-              class="grey lighten-5 browser-default custom-select form-control" [(ngModel)] = "newSystem.admin_id">
+              class="grey lighten-5 browser-default custom-select form-control">
                 <option *ngFor="let user of users" value="{{user.id}}">{{user.username}}</option>
               </select>
               <!-- Incident status validation errors -->
-              <div *ngIf="submitted && addSystemForm.controls['admin'].errors" class="invalid-feedback">
+              <div *ngIf="addSystemForm.controls['admin'].invalid && (addSystemForm.controls['admin'].touched || addSystemForm.controls['admin'].dirty)" class="invalid-feedback">
                     <div *ngIf="addSystemForm.controls['admin'].errors.required">System admin is required</div>
               </div>
           </div>
             
           <div class="modal-footer d-flex justify-content-right" style="padding-right: 0px !important">
-            <button mdbBtn color="primary" class="waves-light" size="sm" class="float-right w-25" mdbWavesEffect>Add</button>
+            <button [disabled]="addSystemForm.invalid" mdbBtn class="btn-sm blue-gradient lowercase-btn text-white float-right" mdbWavesEffect>
+              <i class="fas fa-plus"></i> Add</button>
           </div>
         </form>        
       </div>

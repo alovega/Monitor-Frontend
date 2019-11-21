@@ -17,7 +17,7 @@
                   <!-- Name -->
                   <label class="form-label">Name</label>
                   <input formControlName="name" type="text" id="incidentName" class="grey lighten-5 form-control" placeholder="Rule name"
-                  [ngClass]="{'is-invalid': submitted && escalationRuleForm.controls.name.errors}">
+                  [ngClass]="{'is-invalid': submitted && escalationRuleForm.controls['name'].errors}">
                   
                   <div *ngIf="escalationRuleForm.controls['name'].invalid && (escalationRuleForm.controls['name'].touched || escalationRuleForm.controls['name'].dirty)" class="invalid-feedback">
                     <div *ngIf="escalationRuleForm.controls['name'].errors.required">Rule Name is required</div>
@@ -28,7 +28,7 @@
                     <label class="form-label">Escalation Level</label>
                     <!-- Escalation Levels -->
                     <select formControlName="escalation_level" class="grey lighten-5 browser-default custom-select form-control"
-                    [ngClass]="{ 'is-invalid': submitted && escalationRuleForm.controls.escalation_level.errors }">
+                    [ngClass]="{ 'is-invalid': submitted && escalationRuleForm.controls['escalation_level'].errors }">
                     <option *ngFor="let escalationLevel of escalationLevels" selected value="{{escalationLevel.id}}">{{escalationLevel.name}}</option>
                     </select>
 
@@ -43,7 +43,7 @@
                     <label class="form-label">Number of events</label>
                     <!-- Nth Event -->
                     <input formControlName="nth_event" type="number" min="1" oninput="javascript: if (this.value < 1) this.value = ''" id="nthEvent" class="grey lighten-5 form-control" placeholder="10"
-                    [ngClass]="{ 'is-invalid': submitted && escalationRuleForm.controls.nth_event.errors }">
+                    [ngClass]="{ 'is-invalid': submitted && escalationRuleForm.controls['nth_event'].errors }">
 
                     <div *ngIf="escalationRuleForm.controls['nth_event'].invalid && (escalationRuleForm.controls['nth_event'].touched || escalationRuleForm.controls['nth_event'].dirty)" class="invalid-feedback">
                         <div *ngIf="escalationRuleForm.controls['nth_event'].errors.required">Number of events is required</div>
@@ -55,7 +55,7 @@
                     <!-- Event Type -->
                     <label class="form-label">Event Type</label>
                     <select formControlName="event_type" class="grey lighten-5 browser-default custom-select form-control"
-                    [ngClass]="{'is-invalid': submitted && escalationRuleForm.controls.event_type.errors}">
+                    [ngClass]="{'is-invalid': submitted && escalationRuleForm.controls['event_type'].errors}">
                         <option *ngFor="let eventType of eventTypes" selected value="{{eventType.id}}">{{eventType.name}}</option>
                     </select>
 
@@ -70,7 +70,7 @@
                     <label class="form-label">Duration (seconds)</label>
                     <!-- Duration -->
                     <input type="number" min="1" oninput="javascript: if (this.value < 1) this.value = ''" formControlName="duration" class="grey lighten-5 form-control"
-                    placeholder="3600" [ngClass]="{'is-invalid': submitted && escalationRuleForm.controls.duration.errors}"> 
+                    placeholder="3600" [ngClass]="{'is-invalid': submitted && escalationRuleForm.controls['duration'].errors}"> 
 
                     <div *ngIf="escalationRuleForm.controls['duration'].invalid && (escalationRuleForm.controls['duration'].touched || escalationRuleForm.controls['duration'].dirty)" class="invalid-feedback">
                         <div *ngIf="escalationRuleForm.controls['duration'].errors.required">Duration is required</div>
@@ -83,7 +83,7 @@
                   <label class="form-label">Description</label>
                   <textarea class="grey lighten-5 form-control rounded-2" formControlName="description"
                       id="exampleFormControlTextarea2" rows="3" placeholder="Elevated error occurrence"
-                      [ngClass]="{'is-invalid': submitted && escalationRuleForm.controls.ruleDescription.errors}">
+                      [ngClass]="{'is-invalid': submitted && escalationRuleForm.controls['description'].errors}">
                   </textarea>
   
                   <div *ngIf="escalationRuleForm.controls['description'].invalid && (escalationRuleForm.controls['description'].touched || escalationRuleForm.controls['description'].dirty)" class="invalid-feedback">

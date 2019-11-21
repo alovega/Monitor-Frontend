@@ -1,7 +1,7 @@
 export class WidgetData {
     reported_events: number;
     open_incidents: number;
-    scheduled_events: number;
+    scheduled_incidents: number;
     closed_incidents: number;
 }
 
