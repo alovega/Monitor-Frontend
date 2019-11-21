@@ -29,13 +29,13 @@ export class EndpointComponent implements OnInit, AfterViewInit {
     name: 'Endpoint', description: 'description', url: 'Url', dateCreated: 'Date Created', status: 'Status', action: 'Action',
     endpointType: 'Type'
   };
-  columns = [{
-    name: 'Endpoint', description: 'description', url: 'Url', dateCreated: 'Date Created', status: 'Status', action: 'Action',
-    endpointType: 'Type'
-  }];
   currentSystem: any;
   currentSystemId: any;
   endpointId: any;
+  public dataSource = {
+    rows: [],
+    columns: []
+  };
 
   constructor(
     private endpointService: EndpointService,
@@ -47,6 +47,11 @@ export class EndpointComponent implements OnInit, AfterViewInit {
       this.searchItems();
     }
   ngOnInit() {
+    this.dataSource.columns = [
+      {name: 'Endpoint', sortable: true}, {name: 'Description', sortable: true},
+      {name: 'Url', sortable: true}, {name: 'Date Created', sortable: true},
+      {name: 'Status', sortable: true}, {action: 'Action'},
+      {endpointType: 'Type'}];
     this.endpointId = this.activatedRoute.snapshot.params.id;
     this.currentSystem = this.systemService.getCurrentSystem();
     this.currentSystemId = this.currentSystem.id;
@@ -54,11 +59,15 @@ export class EndpointComponent implements OnInit, AfterViewInit {
     this.endpointService.getEndpoints(this.currentSystemId).subscribe(
       (data) => {
         this.elements = data;
-        this.row = data;
+        console.log(data.length);
+        data.forEach(element => {
+          this.dataSource.rows.push(element);
+        });
         this.mdbTable.setDataSource(this.elements);
         this.elements = this.mdbTable.getDataSource();
         this.previous = this.mdbTable.getDataSource();
     });
+    console.log(this.dataSource);
   }
 
   ngAfterViewInit() {

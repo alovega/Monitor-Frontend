@@ -1,4 +1,5 @@
 <div>
+  <label>Search: </label>
   <input
     type="text"
     style="padding:8px;margin:15px auto;width:30%;"
@@ -6,7 +7,7 @@
     (keyup)="updateFilter($event)"
   />
   <ngx-datatable
-    class="material"
+    class="bootstrap thead-dark"
     #table
     [rows]="rows"
     [columns]="columns"

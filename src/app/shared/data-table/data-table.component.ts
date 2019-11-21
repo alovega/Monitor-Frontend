@@ -36,6 +36,7 @@ export class DataTableComponent implements OnInit {
     this.setPage({ offset: 0 });
     this.columns = this.dataSource.columns;
     this.rows = this.dataSource.rows;
+    console.log(this.rows);
   }
 
   setPage(pageInfo) {
