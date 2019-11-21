@@ -1,5 +1,5 @@
 <div class="d-flex justify-content-between">
-  <h4>Edit Endpoint </h4>
+  <h4>Edit endpoint </h4>
   <div>
       <button class="back-button" (click)="back()"><i class="fas fa-angle-double-left"></i> Back </button>    
   </div>
@@ -14,7 +14,7 @@
       <label>Endpoint Name</label>
       <input mdbInput MdbValidate type="text" id="defaultContactFormName" class="form-control mb-4 grey lighten-4"
         [ngClass]="{ 'is-invalid': submitted && f.EnpointName.errors }"
-        placeholder="Name" formControlName="EndpointName" [(ngModel)]="data.name" >
+        placeholder="Name" formControlName="EndpointName">
       <div *ngIf="updateForm.controls['EndpointName'].invalid && (updateForm.controls['EndpointName'].dirty || updateForm.controls['EndpointName'].touched)" class="invalid-feedback">
         <div *ngIf="updateForm.controls['EndpointName'].errors.required">
             Endpoint Name is required.
@@ -24,7 +24,7 @@
     <div class="col">
       <!-- Endpoint -->
       <label>Url</label>
-      <input type="text" id="defaultContactFormUrl" class="form-control mb-4 grey lighten-4" placeholder="Url" formControlName="Url" [(ngModel)]="data.url" >
+      <input type="text" id="defaultContactFormUrl" class="form-control mb-4 grey lighten-4" placeholder="Url" formControlName="Url">
       <div *ngIf="updateForm.controls['Url'].invalid && (updateForm.controls['Url'].dirty || updateForm.controls['Url'].touched)" class="invalid-feedback">
         <div *ngIf="updateForm.controls['Url'].errors.required">
           Url is required.
@@ -35,8 +35,8 @@
   <div class="row">
     <div class="col">
       <!-- Optimal response time -->
-      <label>response_time</label>
-      <input type="text" id="defaultContactFormEndpoint" class="form-control mb-4 grey lighten-4" placeholder="Optimal response time" formControlName="OptimalResponseTime" [(ngModel)]="data.optimal_response_time" >
+      <label>Optimal response time</label>
+      <input type="text" id="defaultContactFormEndpoint" class="form-control mb-4 grey lighten-4" placeholder="Optimal response time" formControlName="OptimalResponseTime">
       <div *ngIf="updateForm.controls['OptimalResponseTime'].invalid && (updateForm.controls['OptimalResponseTime'].dirty || updateForm.controls['OptimalResponseTime'].touched)" class="invalid-feedback">
         <div *ngIf="updateForm.controls['OptimalResponseTime'].errors.required">
           Optimal response time is required.
@@ -46,7 +46,7 @@
     <div class="col">
       <!-- State -->
       <label>State</label>
-      <select class=" form-control browser-default custom-select mb-4 grey lighten-4" formControlName="State" [(ngModel)]="data.state">
+      <select class=" form-control browser-default custom-select mb-4 grey lighten-4" formControlName="State">
         <option *ngFor="let type of States; let i = index" [value]="States[i].id">
           {{States[i].name}}
         </option>
@@ -63,7 +63,7 @@
       <!-- Message -->
       <label>Description</label>
       <div class="form-group">
-        <textarea class="form-control rounded-2 grey lighten-4" id="exampleFormControlTextarea2" rows="3" placeholder="Description" formControlName="Description" [(ngModel)]="data.description" ></textarea>
+        <textarea class="form-control rounded-2 grey lighten-4" id="exampleFormControlTextarea2" rows="3" placeholder="Description" formControlName="Description"></textarea>
       </div>
       <div *ngIf="updateForm.controls['Description'].invalid && (updateForm.controls['Description'].dirty || updateForm.controls['Description'].touched)" class="invalid-feedback">
         <div *ngIf="updateForm.controls['Description'].errors.required">

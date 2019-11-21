@@ -21,7 +21,7 @@
                 </div>
             </div>
         </mdb-card>
-        <div *ngIf="incident.incident_updates.length">
+        <div *ngIf="incident.incident_updates?.length">
             <mdb-card class="mb-4" *ngFor="let incident_update of incident.incident_updates">
                 <div class="last-update-time">
                     <strong>

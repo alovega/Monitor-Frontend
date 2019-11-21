@@ -1,0 +1,43 @@
+@import '../../theme';
+
+:host {
+  display: flex;
+  flex-direction: column;
+  outline: none;
+  width: 100%;
+
+  .mat-list-item.active {
+    background-color: mat-color($app-primary, 50);
+    color: #3F51B5 !important
+  }
+  // &:hover,
+  // &:focus {
+  //   >.mat-list-item:not(.expanded) {
+  //     background-color: mat-color($app-primary, 100) !important;
+  //   }
+  // }
+}
+
+.mat-list-item {
+  padding: 8px 0;
+  display: flex;
+  width: auto;
+
+  .routeIcon {
+    margin-right: 40px;
+  }
+}
+
+mat-sidenav .mat-drawer-inner-container {
+  width: 100%;
+  height: 100%;
+  overflow: hidden !important;
+  -webkit-overflow-scrolling: touch;
+}
+
+:host{
+  .mat-icon{
+    vertical-align: middle;
+    margin-right: 20px !important;
+  }
+}

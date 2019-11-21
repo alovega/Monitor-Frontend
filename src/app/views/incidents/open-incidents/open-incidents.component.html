@@ -2,7 +2,7 @@
   <div [ngClass]="{'d-none': !loading}">
     <hm-loader></hm-loader>
   </div> 
-<div *ngIf="incidents.length; else noIncidents">
+<div *ngIf="incidents?.length; else noIncidents">
     <a *ngFor="let incident of incidents" routerLink="/dashboard/incidents/update/{{incident.incident_id}}" routerLinkActive="active">
         <mdb-card class="open-incident mb-4">
             <mdb-card-body>
@@ -42,7 +42,7 @@
 </div>
 
 <ng-template #noIncidents>
-  <hm-empty-data header="No open incidents" description="New incidents and scheduled maintenances will be displayed here">
+  <hm-empty-data [ngClass]="{'d-none': loading}" header="No open incidents" description="New incidents and scheduled maintenances will be displayed here">
       <a action-button routerLink='/dashboard/incidents/new/realtime' routerlinkactive="active"> 
         <button id="create-button" size="sm" color="primary">
             Create new incident

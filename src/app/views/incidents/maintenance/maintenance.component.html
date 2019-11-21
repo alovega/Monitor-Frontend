@@ -2,7 +2,7 @@
   <div [ngClass]="{'d-none': !loading}">
     <hm-loader></hm-loader>
   </div>
-<table mdbTable id="incident-list" *ngIf="incidents.length > 0; else noIncidents">
+<table mdbTable id="incident-list" *ngIf="incidents?.length; else noIncidents">
   <tbody>
     <!-- Incident Item -->
     <tr mdbTableCol class="incident-item" *ngFor="let incident of incidents">
@@ -41,7 +41,7 @@
 
 <!-- Zero Scheduled Incidents For the dashboard -->
 <ng-template #noIncidents>
-    <hm-empty-data header="No Scheduled Maintenances" description="You will see all scheduled maintenances here">
+    <hm-empty-data [ngClass]="{'d-none': loading}" header="No Scheduled Maintenances" description="You will see all scheduled maintenances here">
       <a action-button routerLink='/dashboard/incidents/new/maintenance' routerlinkactive="active"> 
         <button id="create-button" size="sm" color="primary">
           New maintenance 

@@ -1,6 +1,6 @@
 export class EscalationRule {
     status: string;
-    state ?: string;
+    state__name?: string;
     system_name: string;
     name: string;
     date_modified: string;

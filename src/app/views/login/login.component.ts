@@ -6,6 +6,8 @@ import Swal from 'sweetalert2';
 
 import { AuthenticationService } from '../../shared/auth/authentication.service';
 import { ToastrService } from 'ngx-toastr';
+import { SystemService } from 'src/app/shared/system.service';
+import { System, SystemsResponse } from 'src/app/shared/models/system';
 
 @Component({
   selector: 'hm-login',
@@ -19,13 +21,15 @@ export class LoginComponent implements OnInit {
   returnUrl: string;
   error: string;
   currentUser: any;
+  currentSystem: System;
 
   constructor(
     private authService: AuthenticationService,
     private route: ActivatedRoute,
     private router: Router,
     private formBuilder: FormBuilder,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private systemService: SystemService
   ) {
     if (this.authService.currentUserValue) {
       this.router.navigate(['/']);
@@ -51,23 +55,35 @@ export class LoginComponent implements OnInit {
     }
 
     this.loading = true;
-    this.authService.login(this.f.username.value, this.f.password.value)
-        .pipe(first())
-        .subscribe(
-            data => {
-              console.log('Logged in ' + data);
-              if (data) {
-                this.router.navigate([this.returnUrl]);
-              } else {
-                this.toastr.warning('Invalid credentials supplied. Try again', 'Warning');
-                this.loading = false;
+    this.authService.login(this.f.username.value, this.f.password.value).subscribe(
+      data => {
+        if (data) {
+          if (!this.currentSystem) {
+            this.systemService.getSystems().subscribe(
+              (res: SystemsResponse) => {
+                if (res.code === '800.200.001') {
+                  this.currentSystem = res.data[0];
+                  localStorage.setItem('currentSystem', JSON.stringify(this.currentSystem));
+                  this.router.navigate([this.returnUrl]);
+                } else {
+                  this.toastr.error('An error occurred. Try again later', 'Error!');
+                }
+                // window.location.reload();
               }
-            },
-            error => {
-                this.error = error;
-                this.toastr.error('Could not login at this time. Try again later', 'Error');
-                this.loading = false;
-            });
+            );
+          } else {
+            this.router.navigate([this.returnUrl]);
+          }
+        } else {
+          this.toastr.warning('Invalid credentials supplied. Try again', 'Warning');
+          this.loading = false;
+        }
+      },
+      error => {
+          this.error = error;
+          this.toastr.error('Could not login at this time. Try again later', 'Error');
+          this.loading = false;
+      });
 }
 
 }

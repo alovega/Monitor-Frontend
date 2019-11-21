@@ -26,7 +26,6 @@ export class EditComponent implements OnInit {
     this.profileService.getLoggedInUserDetail().subscribe(
       (data) => {
           this.data = data;
-          console.log(this.data);
         });
   }
   createForm() {
@@ -59,7 +58,6 @@ export class EditComponent implements OnInit {
   }
    update() {
     const user = JSON.parse(localStorage.getItem('currentUser'));
-    console.log(user.token);
     this.data.token =  user.token;
     Swal.fire({
       title: 'Are you sure',
@@ -72,8 +70,6 @@ export class EditComponent implements OnInit {
       if (result.value) {
         this.profileService.updateLoggedInUser(this.data).subscribe(
           response => {
-          console.log(this.data);
-          console.log(response);
           if (response.code === '800.200.001') {
               Swal.fire(
                 'updated',

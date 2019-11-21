@@ -71,7 +71,6 @@ export class RecipientCreateComponent implements OnInit {
   }
   addRecipient() {
     this.recipientService.addRecipient(this.data).subscribe(response => {
-      console.log(this.data);
       if (response.code === '800.200.001') {
         this.toastr.success(response.message);
         this.location.back();

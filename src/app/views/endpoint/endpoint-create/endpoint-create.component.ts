@@ -81,11 +81,9 @@ export class EndpointFormComponent implements OnInit {
 
   addEndpoint() {
     this.data.system_id = this.currentSystemId;
-    console.log(this.data);
     this.endpointService.addEndpoints(this.data).subscribe(response => {
       if (response.code === '800.200.001') {
         this.data = response.data;
-        console.log(this.data);
         this.toastr.success( response.message);
         this.location.back();
       } else {

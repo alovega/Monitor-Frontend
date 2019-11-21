@@ -37,7 +37,6 @@ export class HttpInterceptorService implements HttpInterceptor {
       this.currentSystemId = this.currentSystem.id;
       this.systemName = this.currentSystem.name;
     }
-    this.loaderService.show();
     if ( request.body !== null && request.body.hasOwnProperty('system_id')) {
       request = request.clone({
         body: {...request.body, client_id: this.clientId, token: this.accessToken, system: this.systemName}
