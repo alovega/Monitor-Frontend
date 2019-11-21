@@ -3,9 +3,13 @@ import { ActivatedRoute } from '@angular/router';
 import { MdbTablePaginationComponent, MdbTableDirective, MdbTableSortDirective } from 'angular-bootstrap-md';
 import Swal from 'sweetalert2';
 import { ToastrService } from 'ngx-toastr';
+import { map } from 'rxjs/operators';
 
 import { SystemService } from '../../shared/system.service';
 import { EscalationRuleService } from './escalation-rule.service';
+import { EscalationRule, EscalationRulesResponse, EscalationRuleResponse } from 'src/app/shared/models/escalation-rule';
+import { System } from 'src/app/shared/models/system';
+import { LookUpService } from 'src/app/shared/look-up.service';
 
 @Component({
   selector: 'hm-escalation-rules',
@@ -19,8 +23,8 @@ export class EscalationRulesComponent implements OnInit, AfterViewInit {
   @ViewChild('visibleItemsInput', {static: false}) visibleItemsInput;
 
   currentSystemId: string;
-  currentSystem: any;
-  rules: any[];
+  currentSystem: System;
+  rules: EscalationRule[];
   previous: any = [];
   isLoaded = false;
   visibleItems: number = 5;
@@ -34,7 +38,8 @@ export class EscalationRulesComponent implements OnInit, AfterViewInit {
     private systemService: SystemService,
     private rulesService: EscalationRuleService,
     private cdRef: ChangeDetectorRef,
-    private toastr: ToastrService) {
+    private toastr: ToastrService,
+    private lookupService: LookUpService) {
       this.rules = [];
     }
 
@@ -42,13 +47,14 @@ export class EscalationRulesComponent implements OnInit, AfterViewInit {
     this.currentSystem = this.systemService.getCurrentSystem();
     this.currentSystemId = this.currentSystem.id;
     this.rulesService.getRules().subscribe(
-      (result => {
-        this.rules = result;
-        this.mdbTable.setDataSource(this.rules);
-        this.rules = this.mdbTable.getDataSource();
-        this.previous = this.mdbTable.getDataSource();
-        console.log(result);
-      })
+      (res: EscalationRulesResponse) => {
+        if (res.code === '800.200.001') {
+          this.rules = res.data;
+          this.mdbTable.setDataSource(this.rules);
+          this.rules = this.mdbTable.getDataSource();
+          this.previous = this.mdbTable.getDataSource();
+        }
+      }
     );
     this.isLoaded = true;
   }
@@ -62,6 +68,15 @@ export class EscalationRulesComponent implements OnInit, AfterViewInit {
     }
     this.cdRef.detectChanges();
     console.log(this.mdbTablePagination.firstItemIndex);
+  }
+
+  getEventTypeName(eventTypeId: string) {
+    this.lookupService.getEventType().subscribe(
+      (res: any[]) => {
+        console.log(res.filter(item => item.id === eventTypeId));
+        return;
+      }
+    );
   }
 
   changeVisibleItems(maxNumber: number) {
@@ -108,16 +123,18 @@ export class EscalationRulesComponent implements OnInit, AfterViewInit {
     }).then((result) => {
       if (result.value) {
         this.rulesService.deleteRule(ruleId).subscribe(
-          response => {
-            if (response.code === '800.200.001') {
+          (res: EscalationRuleResponse) => {
+            if (res.code === '800.200.001') {
               this.toastr.success('Rule deleted successfully', 'Delete Rule Success');
             } else {
               this.toastr.error('Rule could not be deleted', 'Delete Rule Error');
             }
           });
         this.rulesService.getRules().subscribe(
-          result => {
-            this.rules = result;
+          (res: EscalationRulesResponse) => {
+            if (res.code === '800.200.001') {
+              this.rules = res.data;
+            }
           });
       } else if (result.dismiss === Swal.DismissReason.cancel) {
         Swal.fire(

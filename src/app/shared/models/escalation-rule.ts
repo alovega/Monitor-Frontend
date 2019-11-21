@@ -1,15 +1,25 @@
 export class EscalationRule {
-    status: string;
-    system_name: string;
+    id: string;
     name: string;
-    date_modified: string;
-    event_type: string;
-    escalation_level: string;
-    system_id: string;
-    duration: string;
-    date_created: string;
-    nth_event: number;
-    rule_id: string;
     description: string;
-    state: string;
+    nth_event: number;
+    duration: string;
+    system_id: string;
+    event_type_name: string;
+    escalation_level_name: string;
+    state_name: string;
+    date_created: string;
+    date_modified: string;
+}
+
+export class EscalationRuleResponse {
+    code: string;
+    data?: EscalationRule;
+    message?: string;
+}
+
+export class EscalationRulesResponse {
+    code: string;
+    data?: EscalationRule[];
+    message?: string;
 }

@@ -2,38 +2,66 @@
   <div [ngClass]="{'d-none': !loading}">
     <hm-loader></hm-loader>
   </div>  
-<table mdbTable id="incident-list" *ngIf="incidents?.length; else noIncidents">
-  <tbody>
-    <!-- Incident Item -->
-    <tr mdbTableCol class="incident-item" *ngFor="let incident of incidents" [ngClass]="{'d-none': incident.type !== 'Realtime', 'realtime': incident.type === 'Realtime'}">        
-      <td scope="row" *ngIf="incident.type === 'Realtime'">
-          <div class="incident-description">
-            <div class="action-buttons float-right">
-                <a id="update-{{incident.incident_id}}" routerLink="/dashboard/incidents/update/{{incident.incident_id}}" 
-                routerLinkActive="active" *ngIf="incident.status !== 'Resolved'; else Open">Update</a>
-                <ng-template #Open>
-                    <a id="update-{{incident.incident_id}}" routerLink="/dashboard/incidents/update/{{incident.incident_id}}" routerLinkActive="active">View</a>
-                </ng-template>
+<div *ngIf="incidents?.length; else noIncidents">
+  <table mdbTable id="incident-list">
+    <tbody>
+      <!-- Incident Item -->
+      <tr mdbTableCol class="incident-item" *ngFor="let incident of incidents" [ngClass]="{'d-none': incident.type !== 'Realtime', 'realtime': incident.type === 'Realtime'}">        
+        <td scope="row" *ngIf="incident.type === 'Realtime'">
+            <div class="incident-description">
+              <div class="action-buttons float-right">
+                  <a id="update-{{incident.incident_id}}" routerLink="/dashboard/incidents/update/{{incident.incident_id}}" 
+                  routerLinkActive="active" *ngIf="incident.status !== 'Resolved'; else Open">Update</a>
+                  <ng-template #Open>
+                      <a id="update-{{incident.incident_id}}" routerLink="/dashboard/incidents/update/{{incident.incident_id}}" routerLinkActive="active">View</a>
+                  </ng-template>
+              </div>
+              <strong>
+                  <a class="incident-view-link" routerLink="/dashboard/incidents/update/{{incident.incident_id}}" routerLinkActive="active">
+                  {{ incident.name }}
+                  </a>
+              </strong><br>
+              <div class="last-updated">
+                  <small>Last updated <span class="ago">on <span>{{ incident.date_modified | date:'MM/dd/yyyy   hh:mm:ss a'}}</span>. 
+                  </span>
+                  </small>
+              </div>
             </div>
-            <strong>
-                <a class="incident-view-link" routerLink="/dashboard/incidents/update/{{incident.incident_id}}" routerLinkActive="active">
-                {{ incident.name }}
-                </a>
-            </strong><br>
-            <div class="last-updated">
-                <small>Last updated <span class="ago">on <span>{{ incident.date_modified | date:'MM/dd/yyyy   hh:mm:ss a'}}</span>. 
-                </span>
-                </small>
-            </div>
-          </div>
-      </td>      
-    </tr>
-  </tbody>
-</table>
+        </td>      
+      </tr>
+    </tbody>
+  </table>
+  <div class="pagination-container">
+    <nav aria-label="Page navigation example">
+      <ul class="pagination pagination-circle pg-blue justify-content-center">
+        <li class="page-item disabled"><a class="page-link" mdbWavesEffect>First</a></li>
+        <li class="page-item disabled">
+          <a class="page-link" aria-label="Previous" mdbWavesEffect>
+            <span aria-hidden="true">&laquo;</span>
+            <span class="sr-only">Previous</span>
+          </a>
+        </li>
+        <li class="page-item active"><a class="page-link" mdbWavesEffect>1</a></li>
+        <li class="page-item"><a class="page-link" mdbWavesEffect>2</a></li>
+        <li class="page-item"><a class="page-link" mdbWavesEffect>3</a></li>
+        <li class="page-item"><a class="page-link" mdbWavesEffect>4</a></li>
+        <li class="page-item"><a class="page-link" mdbWavesEffect>5</a></li>
+        <li class="page-item">
+          <a class="page-link" aria-label="Next" mdbWavesEffect>
+            <span aria-hidden="true">&raquo;</span>
+            <span class="sr-only">Next</span>
+          </a>
+        </li>
+        <li class="page-item"><a class="page-link" mdbWavesEffect>Last</a></li>
+      </ul>
+    </nav>
+  </div>
+
+</div>
 
 <!-- Zero Realtime Incidents For the system -->
 <ng-template #noIncidents>
-    <hm-empty-data header="All Clear" description="You will see all realtime incidents here">
+    <hm-empty-data header="All Clear" description="You will see all realtime incidents here" [ngClass]="{'d-none': loading}">
       <a action-button routerLink='/dashboard/incidents/new/realtime' routerlinkactive="active"> 
         <button id="create-button" size="sm" color="primary">
             Create incident
@@ -42,7 +70,4 @@
     </hm-empty-data>
 </ng-template>
 
-<div class="pagination-container">
-
-</div>
 </div>

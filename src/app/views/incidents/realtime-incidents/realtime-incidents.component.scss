@@ -50,3 +50,7 @@ table th, .table td {
 .incident-view-link:hover {
     text-decoration: underline;
 }
+
+.page-item.active {
+    z-index: -1 !important;
+}

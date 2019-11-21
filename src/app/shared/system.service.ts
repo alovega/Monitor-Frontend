@@ -12,7 +12,7 @@ import { System, SystemResponse, SystemsResponse } from './models/system';
 })
 export class SystemService {
   // currentSystem: any;
-  private currentSystemSubject: BehaviorSubject<any>;
+  public currentSystemSubject: BehaviorSubject<any>;
   public currentSystem: Observable<any>;
   @Output() changeSystem: EventEmitter<boolean> = new EventEmitter();
 
@@ -48,12 +48,12 @@ export class SystemService {
     // );
   }
 
-  updateSystem(systemId: string, system: any) {
-    return this.httpWrapperService.post('update_system/', {id: systemId, system}).pipe(
-      tap(updatedSystem => {
-        console.log(updatedSystem);
-        localStorage.setItem('currentSystem', JSON.stringify(updatedSystem));
-        this.currentSystemSubject.next(system);
+  updateSystem(systemId: string, body: any) {
+    return this.httpWrapperService.post('update_system/', {id: systemId, ...body}).pipe(
+      tap(result => {
+        console.log(result);
+        localStorage.setItem('currentSystem', JSON.stringify(result.data));
+        this.currentSystemSubject.next(result.data);
     }));
   }
 

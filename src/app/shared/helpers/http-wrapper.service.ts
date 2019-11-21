@@ -35,10 +35,8 @@ export class HttpWrapperService {
     const options = {
       body, headers
     };
-    // console.log('Get system responds');
 
     return this.http.request(method, targetUrl, options).pipe(
-      tap(res => console.log('Wrapper got response from ' + targetUrl)),
         map((response: any) => {
           return response;
         }),

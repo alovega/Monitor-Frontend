@@ -42,7 +42,7 @@
 </div>
 
 <ng-template #noIncidents>
-  <hm-empty-data header="No open incidents" description="New incidents and scheduled maintenances will be displayed here">
+  <hm-empty-data [ngClass]="{'d-none': loading}" header="No open incidents" description="New incidents and scheduled maintenances will be displayed here">
       <a action-button routerLink='/dashboard/incidents/new/realtime' routerlinkactive="active"> 
         <button id="create-button" size="sm" color="primary">
             Create new incident

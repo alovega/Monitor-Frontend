@@ -44,15 +44,15 @@
           <tr *ngFor="let rule of rules; let i = index">
           <th *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex"
               scope="row">{{rule.name}}</th>
-          <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{rule.eventtype}}</td>
+          <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{rule.event_type_name}}</td>
           <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{rule.description}}</td>
           <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{rule.nth_event}}</td>
           <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{rule.duration_str}}</td>
-          <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{rule.escalation}}</td>
+          <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{rule.escalation_level_name}}</td>
           <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex" style="white-space: nowrap">{{rule.date_created | date:'MM/dd/yyyy   hh:mm:ss a'}} </td>
           <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">
-              <span mdbIcon class="fas fa-trash-alt mr-2 text-danger" (click)="removeRule(rule.rule_id)"></span>
-              <span mdbIcon class="fas fa-edit text-success" routerLink="/dashboard/rules/edit/{{rule.rule_id}}" routerLinkActive="active"></span>
+              <span mdbIcon class="fas fa-trash-alt mr-2 text-danger" (click)="removeRule(rule.id)"></span>
+              <span mdbIcon class="fas fa-edit text-success" routerLink="/dashboard/rules/edit/{{rule.id}}" routerLinkActive="active"></span>
           </td>
           </tr>
           </tbody>

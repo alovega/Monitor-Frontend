@@ -42,7 +42,11 @@ export class TopNavComponent implements OnInit, OnChanges {
     private lookupService: LookUpService,
     private toastr: ToastrService
   ) {
-    // this.newSystem = new System('', '', '', '', '', '', '', '', '');
+    this.addSystemForm = this.formBuilder.group({
+      name: ['', Validators.required],
+      description: ['', Validators.required],
+      admin: ['', Validators.required]
+    });
   }
 
   ngOnInit() {
@@ -54,6 +58,10 @@ export class TopNavComponent implements OnInit, OnChanges {
           this.toastr.error('An error occurred. Try again later', 'Error!');
         }
         // window.location.reload();
+    });
+    this.lookupService.getUsers().subscribe(
+      (data) => {
+        this.users = data;
     });
     this.profileService.getLoggedInUserDetail().subscribe(
       (data) => {
@@ -71,17 +79,6 @@ export class TopNavComponent implements OnInit, OnChanges {
         this.showToggler = false;
         this.sideNavService.toggleSideNav(true);
     }});
-
-    this.addSystemForm = this.formBuilder.group({
-      name: ['', Validators.required],
-      description: ['', Validators.required],
-      admin: ['', Validators.required]
-    });
-
-    this.lookupService.getUsers().subscribe(
-      (data) => {
-        this.users = data;
-      });
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -92,9 +89,13 @@ export class TopNavComponent implements OnInit, OnChanges {
 
   changeSystem(systemId: any) {
     this.systemService.changesystem(systemId).subscribe(
-      () => {
-        this.currentSystem = this.systemService.getCurrentSystem();
-        window.location.reload();
+      (res: SystemResponse) => {
+        if (res.code === '800.200.001') {
+          this.currentSystem = res.data;
+          localStorage.setItem('currentSystem', JSON.stringify(this.currentSystem)),
+          this.systemService.currentSystemSubject.next(this.currentSystem);
+          window.location.reload();
+        }
     });
   }
 
@@ -116,6 +117,7 @@ export class TopNavComponent implements OnInit, OnChanges {
 
     this.systemService.createSystem(this.addSystemForm.value).subscribe(
       (res: SystemResponse) => {
+        console.log(res);
         this.submitted = false;
         if (res.code === '800.200.001') {
           this.closeBtn.nativeElement.click();
@@ -128,8 +130,11 @@ export class TopNavComponent implements OnInit, OnChanges {
               (response: SystemResponse) => {
                 if (response.code === '800.200.001') {
                   this.currentSystem = this.systemService.getCurrentSystem();
-                  this.router.navigate(['dashboard/quick-setup/endpoints']);
-                  window.location.reload();
+                  this.router.navigate(['dashboard', 'quick-setup', 'endpoints']).then(
+                    () => {
+                      window.location.reload();
+                    }
+                  );
                 } else {
                   this.toastr.error('Unexpected Error. Please try again later', 'Error');
                 }
