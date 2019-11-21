@@ -50,12 +50,12 @@
             <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{user.is_active | yesNo}}</td>
             <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex" style="white-space: nowrap">{{user.date_joined | date:'MM/dd/yyyy   hh:mm:ss a'}}</td>
             <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">
-                <a (click)="deleteUser(user.id)">
-                <span mdbIcon class="fas fa-trash-alt mr-2 text-danger" ></span>
-                </a>
-                <a routerLink="/dashboard/users/update/{{user.id}}" routerLinkActive="active">
+              <a routerLink="/dashboard/users/update/{{user.id}}" routerLinkActive="active">
                 <span mdbIcon class="fas fa-edit text-success"></span>
-                </a>
+              </a>
+              <a (click)="deleteUser(user.id)">
+                <span mdbIcon class="fas fa-trash-alt mr-2 text-danger" ></span>
+              </a>
             </td>
             </tr>
             </tbody>

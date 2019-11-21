@@ -140,6 +140,7 @@ export class DashboardLayoutComponent implements OnInit, AfterViewInit {
     this.navService.appDrawer = this.appDrawer;
     this.navService.openNav();
     this.cd.detectChanges();
+    this.  loaded = true;
   }
 
   sideBarToggler() {
