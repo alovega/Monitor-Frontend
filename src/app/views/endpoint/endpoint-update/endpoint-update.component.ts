@@ -21,6 +21,7 @@ export class EndpointUpdateComponent implements OnInit {
   currentSystemId: any;
   endpointId: any;
   data: any;
+  endpoint: any;
   updateForm: FormGroup;
   submitted = false;
   States: State;
@@ -45,15 +46,20 @@ export class EndpointUpdateComponent implements OnInit {
     this.currentSystem = this.systemService.getCurrentSystem();
     this.currentSystemId = this.currentSystem.id;
     this.endpointId = this.activatedRoute.snapshot.params.id;
-    console.log(this.endpointId);
-    this.endpointService.getItem(this.endpointId).toPromise().then(response => {
+    this.endpointService.getItem(this.endpointId).subscribe(response => {
       if (response.code === '800.200.001') {
         this.data = response.data;
-        console.log(this.data);
+        this.updateForm.patchValue({
+          EndpointName: this.data.name,
+          Description: this.data.description,
+          Url: this.data.url,
+          OptimalResponseTime: this.data.optimal_response_time,
+          State: this.data.state
+        });
       } else {
         this.toastr.error(response.message);
       }
-  }).catch(error => {});
+    });
 }
   createForm() {
     this.updateForm = this.fb.group({
@@ -81,6 +87,7 @@ onReset() {
     this.updateForm.reset();
 }
 update() {
+  this.data = this.updateForm.value;
   this.data.endpoint_id = this.endpointId;
   this.endpointService.updateItem(this.data).subscribe(response => {
     if (response.code === '800.200.001') {
@@ -97,3 +104,4 @@ getStates() {
   });
 }
 }
+

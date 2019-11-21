@@ -51,7 +51,6 @@ export class SmsNotificationsComponent implements OnInit, AfterViewInit {
   }
   searchItems() {
     const prev = this.mdbTable.getDataSource();
-    console.log(prev);
 
     if (!this.searchText) {
       this.mdbTable.setDataSource(this.previous);

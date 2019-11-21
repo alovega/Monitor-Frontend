@@ -8,12 +8,10 @@ import { SystemRecipientsComponent } from './system-recipients.component';
 import { SystemRecipientCreateComponent } from './system-recipient-create/system-recipient-create.component';
 import { SystemRecipientUpdateComponent } from './system-recipient-update/system-recipient-update.component';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { SystemRecipientsViewComponent } from './system-recipients-view/system-recipients-view.component';
 
 
 @NgModule({
-  declarations: [SystemRecipientsComponent, SystemRecipientCreateComponent, SystemRecipientUpdateComponent,
-     SystemRecipientsViewComponent],
+  declarations: [SystemRecipientsComponent, SystemRecipientCreateComponent, SystemRecipientUpdateComponent],
   imports: [
     CommonModule,
     FormsModule,

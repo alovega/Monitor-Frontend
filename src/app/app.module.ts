@@ -7,7 +7,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { ToastrModule } from 'ngx-toastr';
-
+import {FlexLayoutModule} from '@angular/flex-layout';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ErrorsModule } from './errors/errors.module';
@@ -16,9 +16,9 @@ import { SharedModule } from './shared/shared.module';
 import { AuthGuardService } from './shared/helpers/auth-guard.service';
 import { AuthenticationService } from './shared/auth/authentication.service';
 import { ShowHidePasswordModule } from 'ngx-show-hide-password';
+import { from } from 'rxjs';
 // import { EndpointModule } from './endpoint/endpoint.module';
 // import { RecipientsModule } from './recipients/recipients.module';
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -38,6 +38,7 @@ import { ShowHidePasswordModule } from 'ngx-show-hide-password';
     AppRoutingModule,
     ErrorsModule,
     BrowserAnimationsModule,
+    FlexLayoutModule,
     SharedModule,
     ToastrModule.forRoot({
       timeOut: 10000,
@@ -46,9 +47,7 @@ import { ShowHidePasswordModule } from 'ngx-show-hide-password';
     })
   ],
   providers: [AuthenticationService, AuthGuardService],
-  schemas: [
-    NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA
-  ],
+  schemas: [NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
