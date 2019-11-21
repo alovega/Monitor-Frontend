@@ -4,6 +4,7 @@ import { ChartsModule, WavesModule } from 'angular-bootstrap-md';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
 
@@ -30,6 +31,7 @@ import { SystemStatusService } from './system-status.service';
 import { LoginComponent } from './auth/login/login.component';
 import { DateTransformPipe } from './pipes/date-transform.pipe';
 import { YesNoPipe } from './pipes/yes-no.pipe';
+import { DataTableComponent } from './data-table/data-table.component';
 
 @NgModule({
   declarations: [
@@ -43,12 +45,12 @@ import { YesNoPipe } from './pipes/yes-no.pipe';
     TimePickerComponent,
     EmptyDataComponent,
     LoaderComponent,
-    // DeleteSwalComponent,
     LoginComponent,
     ComponentLoaderComponent,
     EndpointStatusComponent,
     DateTransformPipe,
-    YesNoPipe
+    YesNoPipe,
+    DataTableComponent
   ],
   imports: [
     CommonModule,
@@ -59,7 +61,8 @@ import { YesNoPipe } from './pipes/yes-no.pipe';
     ReactiveFormsModule,
     HttpClientModule,
     SweetAlert2Module.forRoot(),
-    MDBBootstrapModule
+    MDBBootstrapModule,
+    NgxDatatableModule
   ],
   exports: [
     LineGraphComponent,
@@ -75,7 +78,8 @@ import { YesNoPipe } from './pipes/yes-no.pipe';
     ComponentLoaderComponent,
     EndpointStatusComponent,
     DateTransformPipe,
-    YesNoPipe
+    YesNoPipe,
+    DataTableComponent
   ],
   providers: [SystemService,
     {

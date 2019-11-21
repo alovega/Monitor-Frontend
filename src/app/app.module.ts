@@ -16,9 +16,8 @@ import { SharedModule } from './shared/shared.module';
 import { AuthGuardService } from './shared/helpers/auth-guard.service';
 import { AuthenticationService } from './shared/auth/authentication.service';
 import { ShowHidePasswordModule } from 'ngx-show-hide-password';
-import { from } from 'rxjs';
-// import { EndpointModule } from './endpoint/endpoint.module';
-// import { RecipientsModule } from './recipients/recipients.module';
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { DashboardLayoutModule } from './layouts/dashboard-layout/dashboard-layout.module';
 @NgModule({
   declarations: [
     AppComponent,
@@ -32,6 +31,7 @@ import { from } from 'rxjs';
     }),
     HttpClientModule,
     NgbModule,
+    NgxDatatableModule,
     FormsModule,
     ReactiveFormsModule,
     SweetAlert2Module.forRoot(),
@@ -44,7 +44,8 @@ import { from } from 'rxjs';
       timeOut: 10000,
       positionClass: 'toast-top-right',
       preventDuplicates: true,
-    })
+    }),
+    DashboardLayoutModule
   ],
   providers: [AuthenticationService, AuthGuardService],
   schemas: [NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA],

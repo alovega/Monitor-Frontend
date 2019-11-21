@@ -19,7 +19,7 @@ declare var $: any;
   templateUrl: './dashboard-layout.component.html',
   styleUrls: ['./dashboard-layout.component.scss']
 })
-export class DashboardLayoutComponent implements OnInit {
+export class DashboardLayoutComponent implements OnInit, AfterViewInit {
   systems: System[];
   currentSystem: System;
   currentSystemId: any;
@@ -79,7 +79,7 @@ export class DashboardLayoutComponent implements OnInit {
       routerLink: 'dashboard/notifications/email-notification'
     },
   ];
-
+  loaded = false;
   time: any;
   token: string;
   expiresAt: any;
@@ -96,6 +96,7 @@ export class DashboardLayoutComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    // this.navService.openNav();
     this.currentSystem = this.systemService.getCurrentSystem();
     if (this.currentSystem) {
       this.currentSystemId = this.currentSystem.id;
@@ -156,7 +157,7 @@ export class DashboardLayoutComponent implements OnInit {
     }
 
     function showLogoutCountDown() {
-      let countDown:any = 5;
+      let countDown: any = 5;
       let displayText: any = 'Logging out in #1 seconds.';
       Swal.fire({
         title: 'Logging out',
@@ -182,8 +183,12 @@ export class DashboardLayoutComponent implements OnInit {
   sideBarToggler() {
     this.sideBarOpen = !this.sideBarOpen;
   }
+  // ngAfterViewInit() {
+  //   this.navService.appDrawer = this.appDrawer;
+  //   this.navService.openNav();
+  // }
   ngAfterViewInit() {
+    this.loaded = true;
     this.navService.appDrawer = this.appDrawer;
-    this.navService.openNav();
   }
 }
