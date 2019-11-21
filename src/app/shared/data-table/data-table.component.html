@@ -1,6 +1,13 @@
 <div>
+  <input
+    type="text"
+    style="padding:8px;margin:15px auto;width:30%;"
+    placeholder="Type to filter the name column..."
+    (keyup)="updateFilter($event)"
+  />
   <ngx-datatable
     class="material"
+    #table
     [rows]="rows"
     [columns]="columns"
     [columnMode]="ColumnMode.force"
@@ -12,6 +19,7 @@
     [offset]="page.pageNumber"
     [limit]="page.size"
     (page)="setPage($event)"
+    (sort)="onSort($event)"
   >
   </ngx-datatable>
 </div>

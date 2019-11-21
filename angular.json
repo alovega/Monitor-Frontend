@@ -37,9 +37,8 @@
               "node_modules/sweetalert2/dist/sweetalert2.css",
               "node_modules/angular-bootstrap-md/assets/scss/mdb.scss",
               "node_modules/ngx-toastr/toastr.css",
-              "node_modules/@swimlane/ngx-datatable/assets/app.css",
-              "node_modules/@swimlane/ngx-datatable/themes/material.scss",
-              "node_modules/@swimlane/ngx-datatable/themes/bootsrap.scss",
+              "node_modules/@swimlane/ngx-datatable/index.css",
+              "node_modules/@swimlane/ngx-datatable/themes/material.css",
               "node_modules/@swimlane/ngx-datatable/assets/icons.css",
               "src/styles.scss"
             ],

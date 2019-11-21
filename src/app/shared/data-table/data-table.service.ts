@@ -19,17 +19,18 @@ export class DataTableService {
    * @param page The selected page
    * @returns {any} An observable containing the employee data
    */
-  public getResults(page: Page): Observable<PagedData<CorporateEmployee>> {
+  public getResults(page: Page): Observable<PagedData<any>> {
     return of(companyData).pipe(map(d => this.getPagedData(page)));
   }
 
   /**
    * Package companyData into a PagedData object based on the selected Page
    * @param page The page data used to get the selected data from companyData
-   * @returns {PagedData<CorporateEmployee>} An array of the selected data and page
+   * tslint:disable-next-line: no-redundant-jsdoc
+   * @returns {PagedData<any>} An array of the selected data and page
    */
-  private getPagedData(page: Page): PagedData<CorporateEmployee> {
-    const pagedData = new PagedData<CorporateEmployee>();
+  private getPagedData(page: Page): PagedData<any> {
+    const pagedData = new PagedData<any>();
     page.totalElements = companyData.length;
     page.totalPages = page.totalElements / page.size;
     const start = page.pageNumber * page.size;
