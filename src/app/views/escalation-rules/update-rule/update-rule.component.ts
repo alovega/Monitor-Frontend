@@ -34,6 +34,9 @@ export class UpdateRuleComponent implements OnInit {
     private lookupService: LookUpService) {
 
     this.ruleId = this.activatedRoute.snapshot.params['rule-id'];
+  }
+
+  ngOnInit() {
     this.escalationRuleForm = this.formBuilder.group({
       name: ['', Validators.required],
       description: ['', Validators.required],
@@ -42,9 +45,7 @@ export class UpdateRuleComponent implements OnInit {
       escalation_level: ['', Validators.required],
       event_type: ['', Validators.required]
     });
-  }
 
-  ngOnInit() {
     this.ruleService.getRule(this.ruleId).subscribe(
       (res: EscalationRuleResponse) => {
         if (res.code === '800.200.001') {
@@ -71,7 +72,6 @@ export class UpdateRuleComponent implements OnInit {
   }
 
   createEscalationRulesForm() {
-    console.log(this.escalationLevelId, this.eventTypeId);
     this.escalationRuleForm.patchValue({
       name: this.escalationRule.name,
       description: this.escalationRule.description,
@@ -83,13 +83,16 @@ export class UpdateRuleComponent implements OnInit {
   }
 
   onSubmit() {
+    console.log(this.escalationRuleForm);
+    this.escalationRuleForm.markAsPristine();
     this.submitted = true;
     if (this.escalationRuleForm.invalid) {
       return;
     }
+
     this.ruleService.updateRule(this.escalationRule.id, this.escalationRuleForm.value).subscribe(
-      response => {
-        if (response.code === '800.200.001') {
+      (res: EscalationRuleResponse) => {
+        if (res.code === '800.200.001') {
           this.toastr.success('Rule updated successfully', 'Success');
           this.location.back();
         } else {

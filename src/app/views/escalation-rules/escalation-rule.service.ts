@@ -32,7 +32,7 @@ export class EscalationRuleService {
     return this.httpWrapperService.post('get_rule/', {rule_id: ruleId});
   }
 
-  updateRule(ruleId: string, body: any) {
+  updateRule(ruleId: string, body: any): Observable<EscalationRuleResponse> {
     return this.httpWrapperService.post('update_rule/', {rule_id: ruleId, ...body});
   }
 
