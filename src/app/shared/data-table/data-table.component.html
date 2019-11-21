@@ -1,11 +1,13 @@
 <div>
-  <label>Search: </label>
-  <input
-    type="text"
-    style="padding:8px;margin:15px auto;width:30%;"
-    placeholder="Type to filter the name column..."
-    (keyup)="updateFilter($event)"
-  />
+  <div class="d-flex">
+      <label>Search: </label>
+      <input
+        type="text"
+        style="padding:8px;margin:15px auto;width:30%;"
+        placeholder="Type to filter the name column..."
+        (keyup)="updateFilter($event)"
+      />
+  </div>
   <ngx-datatable
     class="bootstrap thead-dark"
     #table

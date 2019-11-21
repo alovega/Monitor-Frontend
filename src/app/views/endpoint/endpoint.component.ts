@@ -1,10 +1,11 @@
 
 import { MdbTablePaginationComponent, MdbTableDirective, MdbTableSortDirective } from 'angular-bootstrap-md';
-import { Component, OnInit, ViewChild, AfterViewInit, HostListener, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit, HostListener, ChangeDetectorRef, TemplateRef } from '@angular/core';
 import {EndpointService} from './endpoint.service';
 import { ActivatedRoute } from '@angular/router';
 import Swal from 'sweetalert2';
 import { SystemService } from 'src/app/shared/system.service';
+import { Observable } from 'rxjs';
 
 
 @Component({
@@ -17,13 +18,12 @@ export class EndpointComponent implements OnInit, AfterViewInit {
   @ViewChild(MdbTableDirective, { static: true }) mdbTable: MdbTableDirective;
   @ViewChild(MdbTableSortDirective, { static: true }) mdbTableSort: MdbTableSortDirective;
   @ViewChild('visibleItemsInput', { static: true }) visibleItemsInput;
+  @ViewChild('buttonsTemplate', {static: true}) buttonsTemplate: TemplateRef<any>;
 
   elements: any;
   searchText = '';
   previous: any = [];
-  row: any = [];
   visibleItems: number = 5;
-
   headElements = ['name', 'description', 'url', 'endpointType', 'status', 'dateCreated', 'action'];
   Elements = {
     name: 'Endpoint', description: 'description', url: 'Url', dateCreated: 'Date Created', status: 'Status', action: 'Action',
@@ -43,15 +43,11 @@ export class EndpointComponent implements OnInit, AfterViewInit {
     private cdRef: ChangeDetectorRef,
     private activatedRoute: ActivatedRoute,
     ) {}
-    @HostListener('input') oninput() {
-      this.searchItems();
-    }
   ngOnInit() {
     this.dataSource.columns = [
-      {name: 'Endpoint', sortable: true}, {name: 'Description', sortable: true},
-      {name: 'Url', sortable: true}, {name: 'Date Created', sortable: true},
-      {name: 'Status', sortable: true}, {action: 'Action'},
-      {endpointType: 'Type'}];
+      {name: 'Name', sortable: true}, {name: 'Description', sortable: true},
+      {prop: 'Url', name: 'Url', sortable: true}, {name: 'Date Created', sortable: true},
+      {name: 'Status', sortable: true}, {name: 'Type'}, {name: 'Action', cellTemplate: this.buttonsTemplate, sortable: false}];
     this.endpointId = this.activatedRoute.snapshot.params.id;
     this.currentSystem = this.systemService.getCurrentSystem();
     this.currentSystemId = this.currentSystem.id;
@@ -63,51 +59,57 @@ export class EndpointComponent implements OnInit, AfterViewInit {
         data.forEach(element => {
           this.dataSource.rows.push(element);
         });
-        this.mdbTable.setDataSource(this.elements);
-        this.elements = this.mdbTable.getDataSource();
-        this.previous = this.mdbTable.getDataSource();
+        // this.mdbTable.setDataSource(this.elements);
+        // this.elements = this.mdbTable.getDataSource();
+        // this.previous = this.mdbTable.getDataSource();
+        // this.logSomething();
     });
-    console.log(this.dataSource);
+
   }
+
+  // public logSomething() {
+  //   console.log(this.elements);
+  //   console.log(this.dataSource);
+  // }
 
   ngAfterViewInit() {
-    this.mdbTablePagination.setMaxVisibleItemsNumberTo(this.visibleItems);
-    this.mdbTablePagination.calculateFirstItemIndex();
-    this.mdbTablePagination.calculateLastItemIndex();
-    if (this.elements.length > this.visibleItems) {
-      this.mdbTablePagination.nextShouldBeDisabled = false;
-    }
-    this.cdRef.detectChanges();
+  //   this.mdbTablePagination.setMaxVisibleItemsNumberTo(this.visibleItems);
+  //   this.mdbTablePagination.calculateFirstItemIndex();
+  //   this.mdbTablePagination.calculateLastItemIndex();
+  //   if (this.elements.length > this.visibleItems) {
+  //     this.mdbTablePagination.nextShouldBeDisabled = false;
+  //   }
+  //   this.cdRef.detectChanges();
   }
 
-  changeVisibleItems(maxNumber: number) {
-    this.visibleItems = maxNumber;
-    if (!maxNumber) {
-      this.visibleItemsInput.nativeElement.value = 1;
-      this.visibleItems = 1;
-    }
-    this.mdbTablePagination.setMaxVisibleItemsNumberTo(this.visibleItems);
-    this.mdbTablePagination.calculateFirstItemIndex();
-    this.mdbTablePagination.calculateLastItemIndex();
-    if (this.elements.length > this.visibleItems) {
-      this.mdbTablePagination.nextShouldBeDisabled = false;
-    }
-    this.cdRef.detectChanges();
-  }
+  // changeVisibleItems(maxNumber: number) {
+  //   this.visibleItems = maxNumber;
+  //   if (!maxNumber) {
+  //     this.visibleItemsInput.nativeElement.value = 1;
+  //     this.visibleItems = 1;
+  //   }
+  //   this.mdbTablePagination.setMaxVisibleItemsNumberTo(this.visibleItems);
+  //   this.mdbTablePagination.calculateFirstItemIndex();
+  //   this.mdbTablePagination.calculateLastItemIndex();
+  //   if (this.elements.length > this.visibleItems) {
+  //     this.mdbTablePagination.nextShouldBeDisabled = false;
+  //   }
+  //   this.cdRef.detectChanges();
+  // }
 
-  searchItems() {
-    const prev = this.mdbTable.getDataSource();
+  // searchItems() {
+  //   const prev = this.mdbTable.getDataSource();
 
-    if (!this.searchText) {
-      this.mdbTable.setDataSource(this.previous);
-      this.elements = this.mdbTable.getDataSource();
-    }
+  //   if (!this.searchText) {
+  //     this.mdbTable.setDataSource(this.previous);
+  //     this.elements = this.mdbTable.getDataSource();
+  //   }
 
-    if (this.searchText) {
-      this.elements = this.mdbTable.searchLocalDataBy(this.searchText);
-      this.mdbTable.setDataSource(prev);
-    }
-  }
+  //   if (this.searchText) {
+  //     this.elements = this.mdbTable.searchLocalDataBy(this.searchText);
+  //     this.mdbTable.setDataSource(prev);
+  //   }
+  // }
   delete(endpointId) {
     Swal.fire({
       title: 'Are you sure?',
