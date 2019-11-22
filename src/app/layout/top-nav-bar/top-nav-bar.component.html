@@ -4,31 +4,32 @@
         <mat-icon>menu</mat-icon>
     </button>
     </div>
+
     <div class="d-flex">
+        <div class="mr-1 ml-1" *ngIf="currentSystem && systemsDropDown">
+            <ng-select2 class="custom-select-dropdown" (valueChanged)="changed($event, currentSystem.id)" [(ngModel)] = "currentSystemId" [data]="systemsDropDown" [width]="150">
+            </ng-select2>
+        </div>
         <div class="mr-1 ml-1" >
             <button mat-icon-button [matMenuTriggerFor]="menu" disableRipple=true>
-                <span>{{ currentSystem.name }}</span>
+                <span>System Actions</span>
                 <mat-icon>
                     expand_more
                 </mat-icon>
             </button>
             <mat-menu #menu="matMenu" [overlapTrigger]="false">
-                <button mat-menu-item *ngFor="let system of systems" [ngClass]="{'d-none': system.id === currentSystem.id}"
-                (click)="changeSystem(system.id)">
-                    <span> {{ system.name }}</span>
-                </button>
-                 <button mat-menu-item (click) = "frame.show()">
-                    <mat-icon>open_in_new</mat-icon>
-                    <span>Add system</span>
-                    </button>
-                    <button mat-menu-item routerLink="system/edit">
-                      <mat-icon>edit</mat-icon>
-                      <span>Edit current system</span>
-                    </button>
-                    <button mat-menu-item routerLink="/system/{{currentSystem.id}}/">
-                      <mat-icon>public</mat-icon>
-                      <span>public status page</span>
-                    </button>
+              <button mat-menu-item (click) = "frame.show()">
+                <mat-icon>open_in_new</mat-icon>
+                <span>Add system</span>
+              </button>
+              <button mat-menu-item routerLink="system/edit">
+                <mat-icon>edit</mat-icon>
+                  <span>Edit current system</span>
+              </button>
+              <button mat-menu-item routerLink="/system/{{currentSystem.id}}/">
+                <mat-icon>public</mat-icon>
+                  <span>Public status page</span>
+              </button>
             </mat-menu>
         </div>
         <div class="mr-1 ml-1">
@@ -50,11 +51,11 @@
             <mat-menu #user="matMenu" [overlapTrigger]="false">
                 <button mat-menu-item routerLink="profile">
                     <mat-icon>account_circle</mat-icon>
-                    <span> account</span>
+                    <span>Account</span>
                 </button>
                  <button mat-menu-item routerLink="profile/update-password">
                     <mat-icon>settings_application</mat-icon>
-                     <span>change password</span>
+                     <span>Change password</span>
                   </button>
                   <hr>
                     <button mat-menu-item  (click)="logout()">
@@ -102,10 +103,15 @@
 
             <div class="form-group mb-4">
               <label class="form-label">Admin</label>
-              <select formControlName="admin" [ngClass]="{ 'is-invalid': submitted && addSystemForm.controls.admin.errors}"
+              <div>
+                <ng-select2 style="width:100%;" formControlName="admin" [ngClass]="{ 'is-invalid': submitted && addSystemForm.controls.admin.errors}"
+                class="custom-select-dropdown" [data]="users">
+                </ng-select2>
+              </div>
+              <!-- <select formControlName="admin" [ngClass]="{ 'is-invalid': submitted && addSystemForm.controls.admin.errors}"
               class="grey lighten-5 browser-default custom-select form-control">
                 <option *ngFor="let user of users" value="{{user.id}}">{{user.username}}</option>
-              </select>
+              </select> -->
               <!-- Incident status validation errors -->
               <div *ngIf="addSystemForm.controls['admin'].invalid && (addSystemForm.controls['admin'].touched || addSystemForm.controls['admin'].dirty)" class="invalid-feedback">
                     <div *ngIf="addSystemForm.controls['admin'].errors.required">System admin is required</div>

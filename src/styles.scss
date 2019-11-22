@@ -346,3 +346,20 @@ thead{
 .date-tabs .nav-item .active{
   color: #ffffff !important;
 }
+
+.custom-select-dropdown{
+  font-size: 14px !important;
+}
+
+.custom-select-dropdown span.select2.select2-container{
+  width: 100% !important;
+  height: 30px !important;
+}
+
+// .custom-select-dropdown .selection--single .select2-selection__rendered {
+//   color: #0e0e0e !important;
+//   line-height: 28px !important;
+//   font-weight: 500 !important;
+//   opacity: .6 !important;
+//   padding-left: 10px !important;
+// }
