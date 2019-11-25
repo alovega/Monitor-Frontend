@@ -21,7 +21,6 @@ export class GraphsService {
 
   getResponseTimes(systemId): Observable<any> {
     return this.http.post<any>(environment.apiEndpoint + 'get_response_time_data/', {systemId}).pipe(
-      tap(res => console.log(res)),
       map(response => response.data)
     );
   }

@@ -20,11 +20,9 @@ export class LineGraphComponent implements OnInit, OnChanges {
     this.chartLabels = this.chartData.chartLabels;
     this.chartColors = this.chartData.chartColors;
     this.chartOptions = this.chartData.chartOptions;
-    console.log(this.chartDatasets, this.chartData.chartDatasets);
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    console.log(changes.chartData.currentValue);
     if (changes.chartData.currentValue) {
         this.chartData = changes.chartData.currentValue;
         this.chartDatasets = this.chartData.chartDataSets;

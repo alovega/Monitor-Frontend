@@ -26,15 +26,12 @@ export class IncidentService {
   ) {}
 
   createIncident(incident: any): Observable<Incident> {
-    return this.http.post<Incident>(environment.apiEndpoint + 'create_incident/', incident).pipe(
-      tap(result => console.log(result))
-    );
+    return this.http.post<Incident>(environment.apiEndpoint + 'create_incident/', incident);
   }
 
   getIncidents(): Observable<Incident[]> {
     return this.http.post<any>(environment.apiEndpoint + 'get_incidents/', {
     }).pipe(
-      tap(incidents => console.log(incidents)),
       map(incidents => incidents.data),
     );
   }
@@ -43,7 +40,6 @@ export class IncidentService {
     // console.log(currentSystem);
     return this.http.post<any>(environment.apiEndpoint + 'get_incidents/', {
     }).pipe(
-      tap(incidents => console.log(incidents)),
       map(incidents => incidents.data.filter(incident => incident.status !== 'Completed').filter(
         incident => incident.status !== 'Resolved'
       )),
@@ -62,7 +58,6 @@ export class IncidentService {
   getRealtimeIncidents(): Observable<any> {
     return this.http.post<any>(environment.apiEndpoint + 'get_incidents/', {
     }).pipe(
-      tap(incidents => console.log(incidents)),
       map(incidents => incidents.data.filter(incident => incident.type === 'Realtime')),
     );
   }
@@ -85,9 +80,7 @@ export class IncidentService {
   }
 
   updateIncident(incident: any): Observable<any> {
-    return this.http.post<any>(environment.apiEndpoint + 'update_incident/', incident).pipe(
-      tap(result => console.log(result) )
-    );
+    return this.http.post<any>(environment.apiEndpoint + 'update_incident/', incident);
   }
 
   deleteIncident(incidentId: string): Observable<any> {
