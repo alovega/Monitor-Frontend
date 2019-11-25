@@ -1,14 +1,20 @@
 export class Page {
     // The number of elements in the page
-    size = 0;
+    size = 10;
     // The total number of elements
     totalElements = 0;
     // The total number of pages
     totalPages = 0;
     // The current page number
     offset = 0;
-    // The current page number
+    // data for sorting
     orderBy = '';
-    // The current page number
+    // data for sorting
     orderDir = '';
+    // the current search parameter
+    searchQuery = '';
+    // the url for fetching data
+    url = '';
+    // the id of the system the data belongs to
+    systemId = '';
   }

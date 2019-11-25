@@ -1,4 +1,4 @@
-<div class="page-header d-flex flex-row justify-content-between">
+<!-- <div class="page-header d-flex flex-row justify-content-between">
         <h3 class="page-header-title">System Recipients</h3>
         <div class="add-rule-btn">
           <a routerLink="/dashboard/system-recipients/system-recipient-create" routerLinkActive="active">
@@ -76,4 +76,26 @@
             </div>
           </hm-empty-data>
         </td>
-      </ng-template> 
+      </ng-template>  -->
+<div class="page-header d-flex flex-row justify-content-between">
+  <h3 class="page-header-title">System Recipients</h3>
+  <div class="add-rule-btn">
+    <a routerLink="/dashboard/system-recipients/system-recipient-create" routerLinkActive="active">
+      <button mdbBtn class="btn-sm blue-gradient lowercase-btn text-white">
+          <i class="fas fa-plus"></i> Add system recipient
+      </button>
+    </a>
+  </div>
+</div>
+<hr class="page-header-divider">
+<div *ngIf="dataSource?.columns.length">
+  <hm-data-table [dataSource]="dataSource"></hm-data-table>
+</div>
+<ng-template #dateColumn let-row="row" let-value="value" let-i="index">
+  {{value | date:'MM/dd/yyyy   hh:mm:ss a'}}
+</ng-template>
+<ng-template #buttonsTemplate let-row="row" let-value="value">
+    <a class="fas fa-edit text-success" routerLinkActive="active"
+      routerLink="/dashboard/system-recipients/system-recipient-update/{{row.systemRecipientId}}"></a>
+    <a class="fas fa-trash-alt mr-2 text-danger" (click)="delete(row.systemRecipientId)"></a>
+</ng-template>
