@@ -90,3 +90,8 @@ h6{
     left: 0;
     bottom: 0;
 }
+
+
+table td:first-of-type{
+    border-top: none !important
+};

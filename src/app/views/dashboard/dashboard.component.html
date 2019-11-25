@@ -87,7 +87,7 @@
                     <hr style="margin-top: 2px">
                     <table class="table table-hover">
                         <tbody *ngIf="message?.length; else noElements">                                    
-                            <tr *ngFor="let data of message; let i = index ">
+                            <tr *ngFor="let data of message; let i = index " >
                                 <td>
                                     <span class="float-right font-weight-bold">{{data.date_created | date:'M/d/yy, h:mm a'}}</span> {{data.message}}
                                 </td>
