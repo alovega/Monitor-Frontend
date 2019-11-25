@@ -1,4 +1,4 @@
-<div class="page-header d-flex flex-row justify-content-between">
+<!-- <div class="page-header d-flex flex-row justify-content-between">
         <h3 class="page-header-title">Recipients</h3>
         <div class="add-rule-btn">
           <a routerLink="/dashboard/recipients/recipient-create" routerLinkActive="active">
@@ -25,7 +25,6 @@
     </div>
       
     <div class="row wow animated fadeIn" data-wow-delay="0.1s">
-        <!-- Grid column -->
         <div class="col-lg-12 col-md-12 text-left">
           <mdb-card>
             <table mdbTable id="tableSort" #tableEl="mdbTable" class="table-striped">
@@ -75,7 +74,6 @@
           </mdb-card>
         </div>
     </div>
-    
     <ng-template #noElements>
       <td colspan="7">
         <hm-empty-data header="No Existing Recipients" description="New Recipients will be displayed here">
@@ -87,4 +85,27 @@
         </hm-empty-data>
       </td>
     </ng-template>            
-    <router-outlet></router-outlet>
+    <router-outlet></router-outlet> -->
+
+<div class="page-header d-flex flex-row justify-content-between">
+  <h3 class="page-header-title">Recipients</h3>
+  <div class="add-rule-btn">
+    <a routerLink="/dashboard/recipients/recipient-create" routerLinkActive="active">
+      <button mdbBtn class="btn-sm blue-gradient lowercase-btn text-white">
+          <i class="fas fa-plus"></i> Add Recipient
+      </button>
+    </a>
+  </div>
+</div>
+<hr class="page-header-divider">
+<div *ngIf="dataSource?.columns.length">
+  <hm-data-table [dataSource]="dataSource"></hm-data-table>
+</div>
+<ng-template #dateColumn let-row="row" let-value="value" let-i="index">
+  {{value | date:'MM/dd/yyyy   hh:mm:ss a'}}
+</ng-template>
+<ng-template #buttonsTemplate let-row="row" let-value="value">
+    <a class="fas fa-edit text-success" routerLinkActive="active"
+      routerLink="/dashboard/system-recipients/system-recipient-update/{{row.systemRecipientId}}"></a>
+    <a class="fas fa-trash-alt mr-2 text-danger" (click)="delete(row.systemRecipientId)"></a>
+</ng-template>

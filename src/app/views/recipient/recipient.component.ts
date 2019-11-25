@@ -1,7 +1,7 @@
-import { Component, OnInit, ViewChild, HostListener, AfterViewInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ViewChild, HostListener, AfterViewInit, ChangeDetectorRef, TemplateRef } from '@angular/core';
 import { MdbTablePaginationComponent, MdbTableDirective, MdbTableSortDirective } from 'angular-bootstrap-md';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
+import {FormBuilder} from '@angular/forms';
 import Swal from 'sweetalert2';
 import { RecipientService } from './recipient.service';
 import { ActivatedRoute } from '@angular/router';
@@ -12,49 +12,42 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./recipient.component.scss']
 })
 export class RecipientComponent implements OnInit, AfterViewInit {
-  @ViewChild(MdbTablePaginationComponent, { static: true }) mdbTablePagination: MdbTablePaginationComponent;
-  @ViewChild(MdbTableDirective, { static: true }) mdbTable: MdbTableDirective;
-  @ViewChild(MdbTableSortDirective, { static: true }) mdbTableSort: MdbTableSortDirective;
   @ViewChild('visibleItemsInput', { static: true }) visibleItemsInput;
+  @ViewChild('buttonsTemplate', {static: true}) buttonsTemplate: TemplateRef<any>;
+  @ViewChild('dateColumn', {static: true}) dateColumn: TemplateRef<any>;
 
   elements: any;
   searchText = '';
   previous: any = [];
-  visibleItems: number = 5;
-
-  headElements = ['userName', 'phoneNumber', 'status', 'dateCreated', 'action'];
-  Elements = {
-    userName: 'User Name', phoneNumber: 'Phone Number', status: 'Status', dateCreated: 'Date Created',
-    action: 'Action'
+  visibleItems = 5;
+  public dataSource = {
+    columns: [],
+    url: '',
+    systemId: ''
   };
   currentSystem: any;
   currentSystemId: any;
   recipientId: any;
 
-  constructor(private recipientService: RecipientService, private cdRef: ChangeDetectorRef, private activatedRoute: ActivatedRoute,
-              private modalService: NgbModal, private formBuilder: FormBuilder) { }
+  constructor(private recipientService: RecipientService, private activatedRoute: ActivatedRoute) { }
   @HostListener('input') oninput() {
     this.searchItems();
   }
   ngOnInit() {
+    this.dataSource.columns = [
+      {prop: 'userName', name: 'User Name', sortable: true}, {prop: 'phoneNumber', name: 'Phone Number', sortable: true},
+      {prop: 'status', name: 'Status', sortable: 'true'},
+      {prop: 'dateCreated', name: 'Date Created', cellTemplate: this.dateColumn, sortable: true},
+      {prop: 'action', name: 'Action', cellTemplate: this.buttonsTemplate}
+    ];
+    this.dataSource.url = 'get_recipients_data/';
     this.recipientService.getRecipients().subscribe(
       (data) => {
         this.elements = data;
-        this.mdbTable.setDataSource(this.elements);
-        this.elements = this.mdbTable.getDataSource();
-        this.previous = this.mdbTable.getDataSource();
       });
   }
 
-  ngAfterViewInit() {
-    this.mdbTablePagination.setMaxVisibleItemsNumberTo(10);
-    this.mdbTablePagination.calculateFirstItemIndex();
-    this.mdbTablePagination.calculateLastItemIndex();
-    if (this.elements.length > this.visibleItems) {
-      this.mdbTablePagination.nextShouldBeDisabled = false;
-    }
-    this.cdRef.detectChanges();
-  }
+  ngAfterViewInit() {}
 
   changeVisibleItems(maxNumber: number) {
     this.visibleItems = maxNumber;
@@ -62,28 +55,9 @@ export class RecipientComponent implements OnInit, AfterViewInit {
       this.visibleItemsInput.nativeElement.value = 1;
       this.visibleItems = 1;
     }
-    this.mdbTablePagination.setMaxVisibleItemsNumberTo(this.visibleItems);
-    this.mdbTablePagination.calculateFirstItemIndex();
-    this.mdbTablePagination.calculateLastItemIndex();
-    if (this.elements.length > this.visibleItems) {
-      this.mdbTablePagination.nextShouldBeDisabled = false;
-    }
-    this.cdRef.detectChanges();
   }
 
-  searchItems() {
-    const prev = this.mdbTable.getDataSource();
-
-    if (!this.searchText) {
-      this.mdbTable.setDataSource(this.previous);
-      this.elements = this.mdbTable.getDataSource();
-    }
-
-    if (this.searchText) {
-      this.elements = this.mdbTable.searchLocalDataBy(this.searchText);
-      this.mdbTable.setDataSource(prev);
-    }
-  }
+  searchItems() {}
   delete(recipientId) {
     Swal.fire({
       title: 'Are you sure?',
@@ -114,7 +88,6 @@ export class RecipientComponent implements OnInit, AfterViewInit {
         this.recipientService.getRecipients().subscribe(
           (response) => {
             this.elements = response;
-            this.mdbTable.setDataSource(this.elements);
           }
         );
       } else if (result.dismiss === Swal.DismissReason.cancel) {
