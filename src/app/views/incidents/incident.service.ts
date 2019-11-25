@@ -73,17 +73,12 @@ export class IncidentService {
     );
   }
 
-  getIncident(incidentId: string, currentSystem: any): Observable<any> {
-    return this.http.post<any>('http://127.0.0.1:8000/api/get_incident/', {
-      system: currentSystem.name,
-      incident_id: incidentId,
-    }).pipe(
-      map(incident => incident.data),
-    );
+  getIncident(incidentId: string): Observable<IncidentResponse> {
+    return this.httpWrapper.post('get_incident/', {incident_id: incidentId});
   }
 
-  updateIncident(incident: any): Observable<any> {
-    return this.http.post<any>(environment.apiEndpoint + 'update_incident/', incident);
+  updateIncident(incidentId: string, body: any): Observable<IncidentResponse> {
+    return this.httpWrapper.post('update_incident/', {incident_id: incidentId, ...body});
   }
 
   deleteIncident(incidentId: string): Observable<any> {

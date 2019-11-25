@@ -5,10 +5,12 @@ import { Location } from '@angular/common';
 import Swal from 'sweetalert2';
 
 import { IncidentService } from '../../incident.service';
-import { Incident } from '../../incident';
+import { Incident, IncidentResponse } from '../../incident';
 import { SystemService } from 'src/app/shared/system.service';
 import { LookUpService } from 'src/app/shared/look-up.service';
 import { ToastrService } from 'ngx-toastr';
+import { DropdownItem } from 'src/app/layout/top-nav-bar/dropdown-item';
+import { System } from 'src/app/shared/models/system';
 
 @Component({
   selector: 'hm-update-history',
@@ -18,17 +20,14 @@ import { ToastrService } from 'ngx-toastr';
 export class UpdateHistoryComponent implements OnInit {
   updateIncidentForm: FormGroup;
   submitted = false;
-  incidents: Incident[];
   incident: Incident;
-  initialPriorityLevel: string;
   incidentId: string;
-  systemId: string;
-  currentSystem: any;
-  users: any;
-  escalationLevels: any;
+  currentSystem: System;
+  users: DropdownItem[];
+  escalationLevels: DropdownItem[];
   loading = true;
-  realtimeStates: any;
-  scheduledStates: any;
+  realtimeStates: DropdownItem[];
+  scheduledStates: DropdownItem[];
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,
@@ -42,62 +41,59 @@ export class UpdateHistoryComponent implements OnInit {
       this.incidentId = params['incident-id'];
     });
     this.incident = new Incident();
+    this.updateIncidentForm = this.formBuilder.group({
+      state: ['', Validators.required],
+      description: ['', Validators.required],
+      priority_level: ['', Validators.required],
+      user: [''],
+      escalation_level: ['', Validators.required]
+    });
   }
 
   ngOnInit() {
     this.currentSystem = this.systemService.getCurrentSystem();
-    this.systemId = this.currentSystem.id;
     if (this.currentSystem) {
       this.showIncident();
     }
     this.lookupService.getUsers().subscribe(
-      (users) => this.users = users
+      (res) => this.users = res.map(i => ({id: i.id, text: i.username}))
     );
     this.lookupService.getEscalationLevel().subscribe(
-      (levels) => this.escalationLevels = levels
+      (res) => this.escalationLevels = res.map(i => ({id: i.id, text: i.name}))
     );
     this.lookupService.getRealtimeIncidentStates().subscribe(
-      (realtimeStates) => this.realtimeStates = realtimeStates
+      (res) => this.realtimeStates = res.map(i => ({id: i.id, text: i.name}))
     );
-    this.lookupService.getRealtimeIncidentStates().subscribe(
-      (scheduledStates) => this.scheduledStates = scheduledStates
+    this.lookupService.getScheduledIncidentStates().subscribe(
+      (res) => this.scheduledStates = res.map(i => ({id: i.id, text: i.name}))
     );
     this.showIncident();
-    this.createUpdateIncidentForm();
-  }
-
-  createUpdateIncidentForm() {
-    this.updateIncidentForm = this.formBuilder.group({
-      incidentStatus: ['', Validators.required],
-      message: ['', Validators.required],
-      priorityLevel: ['', Validators.required],
-      user: [''],
-      escalationLevel: ['', Validators.required]
-    });
   }
 
   public showIncident(): void {
-    this.incidentService.getIncident(this.incidentId, this.currentSystem).subscribe(
-      (incident: any) => {
-        this.incident = incident;
-        // console.log(this.incident);
-        let escalation_level: string;
-        let user: string;
-        if (incident.incident_updates.length) {
-          escalation_level = incident.incident_updates[0].escalation_level;
-          if (incident.incident_updates[0].user) {
-            user = incident.incident_updates[0].user;
-          } else {
-            user = '';
+    this.incidentService.getIncident(this.incidentId).subscribe(
+      (response: IncidentResponse) => {
+        if (response.code === '800.200.001') {
+          this.incident = response.data;
+          let escalationLevel = '';
+          let userId = '';
+          let incidentState: string = '';
+          if (this.incident.incident_updates.length) {
+            escalationLevel = this.incident.incident_updates[0].escalation_level_id;
+            incidentState = this.incident.incident_updates[0].state_id;
+            if (this.incident.incident_updates[0].user_id) {
+              userId = this.incident.incident_updates[0].user_id;
+            } else {
+              userId = '';
+            }
           }
-          console.log(user);
+          this.updateIncidentForm.patchValue({
+            state: incidentState,
+            priority_level: this.incident.priority_level,
+            user: userId,
+            escalation_level: escalationLevel
+          });
         }
-        this.updateIncidentForm.patchValue({
-          priorityLevel: this.incident.priority_level.toString(),
-          incidentStatus: this.incident.state,
-          escalationLevel: escalation_level,
-          user: user
-        });
         this.loading = false;
       }
     );
@@ -107,23 +103,17 @@ export class UpdateHistoryComponent implements OnInit {
     this.submitted = true;
 
     if (this.updateIncidentForm.invalid) {
-      console.log('Invalid');
       return ;
     }
-    // console.log(this.incident);
-    return this.incidentService.updateIncident(this.incident).subscribe(
-      (incident => {
-        console.log(this.incident);
-        console.log(incident);
+    return this.incidentService.updateIncident(this.incidentId, this.updateIncidentForm.value).subscribe(
+      (incident: IncidentResponse) => {
         if (incident.code === '800.200.001') {
           this.toastr.success('Incident updated successfully', 'Incident update success');
           this.back();
         } else {
-          this.toastr.success('Incident updated successfully', 'Incident update success');
-
           this.toastr.error('Incident could not be updated', 'Incident update error');
         }
-      })
+      }
     );
   }
 
@@ -137,7 +127,6 @@ export class UpdateHistoryComponent implements OnInit {
       cancelButtonText: 'No, keep it'
     }).then((result) => {
       if (result.value) {
-        console.log(incidentId);
         this.incidentService.deleteIncident(incidentId).subscribe(
           response => {
             if (response.code === '800.200.001') {
