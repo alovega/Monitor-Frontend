@@ -33,7 +33,6 @@ export class EndpointComponent implements OnInit, AfterViewInit {
   currentSystemId: any;
   endpointId: any;
   public dataSource = {
-    rows: [],
     columns: []
   };
 
@@ -45,9 +44,10 @@ export class EndpointComponent implements OnInit, AfterViewInit {
     ) {}
   ngOnInit() {
     this.dataSource.columns = [
-      {name: 'Name', sortable: true}, {name: 'Description', sortable: true},
-      {prop: 'Url', name: 'Url', sortable: true}, {name: 'Date Created', sortable: true},
-      {name: 'Status', sortable: true}, {name: 'Type'}, {name: 'Action', cellTemplate: this.buttonsTemplate, sortable: false}];
+      {prop: 'name', name: 'Name', sortable: true}, {prop: 'description', name: 'Description', sortable: true},
+      {prop: 'Url', name: 'Url', sortable: true}, { prop: 'dateCreated', name: 'Date Created', sortable: true},
+      {prop: 'status', name: 'Status', sortable: true}, {prop: 'type', name: 'Type', sortable: false},
+      {name: 'Action', cellTemplate: this.buttonsTemplate, sortable: false}];
     this.endpointId = this.activatedRoute.snapshot.params.id;
     this.currentSystem = this.systemService.getCurrentSystem();
     this.currentSystemId = this.currentSystem.id;
@@ -56,9 +56,9 @@ export class EndpointComponent implements OnInit, AfterViewInit {
       (data) => {
         this.elements = data;
         console.log(data.length);
-        data.forEach(element => {
-          this.dataSource.rows.push(element);
-        });
+        // data.forEach(element => {
+        //   this.dataSource.rows.push(element);
+        // });
         // this.mdbTable.setDataSource(this.elements);
         // this.elements = this.mdbTable.getDataSource();
         // this.previous = this.mdbTable.getDataSource();

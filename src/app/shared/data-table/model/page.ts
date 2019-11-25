@@ -6,5 +6,9 @@ export class Page {
     // The total number of pages
     totalPages = 0;
     // The current page number
-    pageNumber = 0;
+    offset = 0;
+    // The current page number
+    orderBy = '';
+    // The current page number
+    orderDir = '';
   }

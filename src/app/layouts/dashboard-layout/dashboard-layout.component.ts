@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, HostListener, ElementRef, ViewChild, Renderer2 } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ChangeDetectorRef, ElementRef, ViewChild, Renderer2 } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import {map, shareReplay } from 'rxjs/operators';
 import {VERSION} from '@angular/material';
@@ -93,7 +93,8 @@ export class DashboardLayoutComponent implements OnInit, AfterViewInit {
     private authService: AuthenticationService,
     private breakpointObserver: BreakpointObserver,
     private navService: NavService,
-    private renderer: Renderer2
+    private renderer: Renderer2,
+    private cd: ChangeDetectorRef
   ) {
     this.navService.appDrawer = this.appDrawer;
    }
@@ -188,6 +189,7 @@ export class DashboardLayoutComponent implements OnInit, AfterViewInit {
   //   this.navService.openNav();
   // }
   ngAfterViewInit() {
+    this.cd.detectChanges();
     this.loaded = true;
     console.log('loaded');
   }

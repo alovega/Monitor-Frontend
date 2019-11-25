@@ -1,46 +1,56 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { PagedData } from './paged-data';
-import { CorporateEmployee } from './corporate-employee';
-import { Page } from './page';
+import { Observable, of, throwError, BehaviorSubject } from 'rxjs';
+import { map, retry, catchError } from 'rxjs/operators';
+import { PagedData } from './model/paged-data';
+import { Page } from './model/page';
 
 import data from '../../../assets/data.json';
-const companyData = data as any[];
-/**
- * A server used to mock a paged data result from a server
- */
+import { environment } from 'src/environments/environment';
+import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
+
+
 @Injectable({
   providedIn: 'root'
 })
 export class DataTableService {
-  /**
-   * A method that mocks a paged server response
-   * @param page The selected page
-   * @returns {any} An observable containing the employee data
-   */
-  public getResults(page: Page): Observable<PagedData<any>> {
-    return of(companyData).pipe(map(d => this.getPagedData(page)));
+  constructor(private http: HttpClient) {
   }
+ // Handle API errors
+ handleError(error: HttpErrorResponse) {
+  if (error.error instanceof ErrorEvent) {
+    // A client-side or network error occurred. Handle it accordingly.
+    console.error('An error occurred:', error.error.message);
+  } else {
+    // The backend returned an unsuccessful response code.
+    // The response body may contain clues as to what went wrong,
+    console.error(
+      `Backend returned code ${error.status}, ` +
+      `body was: ${error.error}`);
+  }
+  // return an observable with a user-facing error message
+  return throwError(
+    'Something bad happened; please try again later.');
+}
+  public reloadTable(page: Page): Observable<any> {
 
-  /**
-   * Package companyData into a PagedData object based on the selected Page
-   * @param page The page data used to get the selected data from companyData
-   * tslint:disable-next-line: no-redundant-jsdoc
-   * @returns {PagedData<any>} An array of the selected data and page
-   */
-  private getPagedData(page: Page): PagedData<any> {
-    const pagedData = new PagedData<any>();
-    page.totalElements = companyData.length;
-    page.totalPages = page.totalElements / page.size;
-    const start = page.pageNumber * page.size;
-    const end = Math.min(start + page.size, page.totalElements);
-    for (let i = start; i < end; i++) {
-      const jsonObj = companyData[i];
-      const employee = new CorporateEmployee(jsonObj.name, jsonObj.gender, jsonObj.company, jsonObj.age);
-      pagedData.data.push(employee);
-    }
-    pagedData.page = page;
-    return pagedData;
+    // NOTE: those params key values depends on your API!
+    const endpointUrl = environment.apiEndpoint + 'get_table_data/';
+    const params = new HttpParams()
+      .set('orderColumn', `${page.orderBy}`)
+      .set('orderDir', `${page.orderDir}`)
+      .set('pageNumber', `${page.offset + 1}`)
+      .set('pageSize', `${page.size}`);
+    const body = {
+      pageSize: params.get('pageSize'),
+      pageNumber: params.get('pageNumber'),
+      orderColumn: params.get('orderColumn'),
+      orderDir: params.get('orderDir')
+    };
+    console.log({body});
+    return this.http.post<any>(endpointUrl, {body}).pipe(
+      map(
+        response => response,
+        retry(2)),
+      catchError(this.handleError));
   }
 }

@@ -18,11 +18,12 @@
     [footerHeight]="50"
     rowHeight="auto"
     [externalPaging]="true"
+    [externalSorting]="true"
     [count]="page.totalElements"
-    [offset]="page.pageNumber"
+    [offset]="page.offset"
     [limit]="page.size"
-    (page)="setPage($event)"
-    (sort)="onSort($event)"
+    (page)="pageCallback($event)"
+    (sort)="sortCallback($event)"
   >
   </ngx-datatable>
 </div>
