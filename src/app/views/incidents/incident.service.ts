@@ -3,8 +3,9 @@ import { Observable } from 'rxjs';
 import { catchError, filter, tap, map } from 'rxjs/operators';
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 
-import { Incident } from './incident';
+import { Incident, IncidentResponse } from './incident';
 import { environment } from '../../../environments/environment';
+import { HttpWrapperService } from 'src/app/shared/helpers/http-wrapper.service';
 
 @Injectable({
   providedIn: 'root'
@@ -22,11 +23,13 @@ export class IncidentService {
   @Output() changeSystem: EventEmitter<boolean> = new EventEmitter();
 
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+    private httpWrapper: HttpWrapperService
   ) {}
 
-  createIncident(incident: any): Observable<Incident> {
-    return this.http.post<Incident>(environment.apiEndpoint + 'create_incident/', incident);
+  createIncident(incidentType: string, body: any): Observable<IncidentResponse> {
+    console.log(body);
+    return this.httpWrapper.post('create_incident/', {incident_type: incidentType, ...body});
   }
 
   getIncidents(): Observable<Incident[]> {

@@ -70,7 +70,7 @@ export class TopNavBarComponent implements OnInit, OnChanges {
     this.profileService.getLoggedInUserDetail().subscribe(
       (data) => {
           this.profile = data;
-        });
+      });
     this.currentSystem = this.systemService.getCurrentSystem();
     this.currentSystemId  = this.currentSystem ? this.currentSystem.id : null;
     this.authService.currentUser.subscribe(
@@ -113,17 +113,13 @@ export class TopNavBarComponent implements OnInit, OnChanges {
   }
 
   onSubmit() {
-    console.log(this.addSystemForm);
-    console.log(this.addSystemForm.value);
     this.submitted = true;
-    return;
     if (this.addSystemForm.invalid) {
       return;
     }
 
     this.systemService.createSystem(this.addSystemForm.value).subscribe(
       (res: SystemResponse) => {
-        console.log(res);
         this.submitted = false;
         if (res.code === '800.200.001') {
           this.closeBtn.nativeElement.click();
@@ -156,8 +152,6 @@ export class TopNavBarComponent implements OnInit, OnChanges {
   }
 
   public changed(nextSystem: any, previousSystem: string): void {
-    // console.log(previousSystem);
-    // this.currentSystemId = previousSystem;
     Swal.fire('', 'Click OK to confirm system switch', 'warning').then(
       (result) => {
         if (result.value) {
