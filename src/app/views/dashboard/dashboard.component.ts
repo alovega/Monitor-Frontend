@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, AfterViewChecked } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewChecked, AfterViewInit, ChangeDetectorRef } from '@angular/core';
 import { Route, ActivatedRoute } from '@angular/router';
 import { NgbTabChangeEvent, NgbTabset } from '@ng-bootstrap/ng-bootstrap';
 
@@ -16,7 +16,7 @@ import { WidgetData, WidgetDataResponse } from './widget-data';
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss']
 })
-export class DashboardComponent implements OnInit, AfterViewChecked {
+export class DashboardComponent implements OnInit, AfterViewChecked, AfterViewInit {
   currentSystem: System;
   currentSystemId: any;
   message: any;
@@ -24,6 +24,7 @@ export class DashboardComponent implements OnInit, AfterViewChecked {
   activeTab: string;
   startDate: Date;
   endDate: Date;
+  loading = true;
   public systemStatus: SystemStatus;
   @ViewChild('tabs', {static: false}) tabs: NgbTabset;
 
@@ -98,7 +99,8 @@ export class DashboardComponent implements OnInit, AfterViewChecked {
     private systemStatusService: SystemStatusService,
     private profileService: ProfileService,
     private activatedRoute: ActivatedRoute,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private cd: ChangeDetectorRef
   ) {
     this.activeTab = 'today';
   }
@@ -136,6 +138,7 @@ export class DashboardComponent implements OnInit, AfterViewChecked {
   }
 
   public getWidgetData(duration: string) {
+    this.widgetData = new WidgetData();
     let today = new Date();
     this.endDate = new Date(new Date().setHours(0, 0, 0, 0));
     this.startDate = new Date(today.setDate(today.getDate() + 1));
@@ -164,6 +167,10 @@ export class DashboardComponent implements OnInit, AfterViewChecked {
     if (this.tabs) {
       this.tabs.select(this.activeTab);
     }
+  }
+
+  ngAfterViewInit() {
+    this.loading = false;
   }
 
   onTabChange($event: NgbTabChangeEvent) {

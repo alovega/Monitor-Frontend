@@ -1,126 +1,133 @@
 <div *ngIf="incident && currentSystem">
-    <div [ngClass] = "{'d-none': !loading}">
+  <div [ngClass]="{'d-none': !loading}">
     <hm-loader></hm-loader>
-    </div>
-    
-    <div class="update-history">
-        <mdb-card class="mb-4" *ngIf="incident.state_name == 'Completed' || incident.state_name == 'Resolved'">
-            <div class="last-update-time"><strong>
-                    <small>{{ incident.date_modified  | date: 'MMMM d, y' }}</small>
-                </strong>
-            </div>
-            <div>
-                <div class="update-status">{{ incident.state_name }}</div>
-            </div>
-            <div class="update-description">
-                {{ incident.description }}
-            </div>
-            <div class="affected-systems">
-                <span class="affected-systems-title"><small>Affected System : </small></span>
-                <div class="system">
-                    {{ incident.system_id }} <mdb-icon fas icon="check-circle" class="green-text pr-3"></mdb-icon>
-                </div>
-            </div>
-        </mdb-card>
-        <div *ngIf="incident.incident_updates?.length">
-            <mdb-card class="mb-4" *ngFor="let incident_update of incident.incident_updates">
-                <div class="last-update-time">
-                    <strong>
-                        <small>{{ incident_update.date_created | date: 'MMMM d, y' }}</small>
-                    </strong>
-                </div>
-                <div>
-                    <div class="update-status">{{ incident_update.state_name }}</div>
-                </div>
-                <div class="update-description">
-                    {{ incident_update.description }}
-                </div>
-                <div class="affected-systems">
-                    <span class="affected-systems-title"><small>Affected System : </small></span>
-                    <div class="system">
-                        {{ incident.system_id }} <mdb-icon fas icon="check-circle" class="green-text pr-3"></mdb-icon>
-                    </div>
-                </div>
-            </mdb-card>
+  </div>
+
+  <div class="update-history">
+    <mdb-card class="mb-4" *ngIf="incident.state_name == 'Completed' || incident.state_name == 'Resolved'">
+      <div class="last-update-time"><strong>
+          <small>{{ incident.date_modified  | date: 'MMMM d, y' }}</small>
+        </strong>
+      </div>
+      <div>
+        <div class="update-status">{{ incident.state_name }}</div>
+      </div>
+      <div class="update-description">
+        {{ incident.description }}
+      </div>
+      <div class="affected-systems">
+        <span class="affected-systems-title"><small>Affected System : </small></span>
+        <div class="system">
+          {{ incident.system_id }} <mdb-icon fas icon="check-circle" class="green-text pr-3"></mdb-icon>
         </div>
-    </div>
-    <div class="new-update" *ngIf="incident.state_name !== 'Resolved' && incident.state_name !== 'Completed'">
-        <div class="update-history-header">
-            Add new update
+      </div>
+    </mdb-card>
+    <div *ngIf="incident.incident_updates?.length">
+      <mdb-card class="mb-4" *ngFor="let incident_update of incident.incident_updates">
+        <div class="last-update-time">
+          <strong>
+            <small>{{ incident_update.date_created | date: 'MMMM d, y' }}</small>
+          </strong>
         </div>
-        <mdb-card class="grey lighten-5 update-form">
-            <form [formGroup]="updateIncidentForm" (ngSubmit)="onSubmit()">
-                <div class="row">
-                    <div class="col">
-                        <div class="form-group mb-4" *ngIf="incident.incident_type_name === 'Realtime'">
-                            <label class="form-label">Incident status</label>
-                            <div *ngIf="realtimeStates?.length">
-                                <ng-select2 style="width:100%;" formControlName="state" [ngClass]="{ 'is-invalid': submitted && updateIncidentForm.controls.state.errors}"
-                                class="custom-select-dropdown" [data]="realtimeStates" > 
-                                </ng-select2>
-                            </div>
-                        </div>
-                        <div class="form-group mb-4" *ngIf="incident.incident_type_name === 'Scheduled'">
-                            <label class="form-label">Maintenance status</label>                           
-                            <div *ngIf="scheduledStates?.length">
-                                <ng-select2 style="width:100%;" formControlName="state" [ngClass]="{ 'is-invalid': submitted && updateIncidentForm.controls.state.errors}"
-                                class="custom-select-dropdown" [data]="scheduledStates" > 
-                                </ng-select2>
-                            </div>
-                        </div>
-                    </div>
-    
-                    <div class="col form-group mb-4">
-                        <label class="form-label" for="">Priority Level</label>
-                        <select formControlName="priority_level"
-                            [ngClass]="{ 'is-invalid': submitted && updateIncidentForm.controls.priority_level.errors }"
-                            class="browser-default custom-select grey lighten-5">
-                            <option selected value="1">Level 1</option>
-                            <option value="2">Level 2</option>
-                            <option value="3">Level 3</option>
-                            <option value="4">Level 4</option>
-                            <option value="5">Level 5</option>
-                        </select>
-                    </div>
-    
-                    <div class="col mb-4">
-                        <label class="form-label" for="">Assign user</label>
-                        <div *ngIf="users?.length">
-                            <ng-select2 style="width:100%;" formControlName="user" [ngClass]="{ 'is-invalid': submitted && updateIncidentForm.controls.user.errors}"
-                            class="custom-select-dropdown" [data]="users" > 
-                            </ng-select2>
-                        </div>
-                    </div>
-    
-                    <div class="col mb-4">
-                        <label class="form-label" for="">Escalation Level</label>
-                        <div *ngIf="escalationLevels?.length">
-                            <ng-select2 style="width:100%;" formControlName="escalation_level" [ngClass]="{ 'is-invalid': submitted && updateIncidentForm.controls.escalation_level.errors}"
-                            class="custom-select-dropdown" [data]="escalationLevels" > 
-                            </ng-select2>
-                        </div>
-                    </div>                
-                </div>
-                <div class="form-group mb-4">
-                    <label class="form-label">Message</label>
-                    <textarea class="form-control rounded-2 grey lighten-5" formControlName="description"
-                        id="exampleFormControlTextarea2" rows="3" placeholder="We are currently investigating this incident"
-                        [ngClass]="{'is-invalid': submitted && updateIncidentForm.controls.description.errors}">
+        <div>
+          <div class="update-status">{{ incident_update.state_name }}</div>
+        </div>
+        <div class="update-description">
+          {{ incident_update.description }}
+        </div>
+        <div class="affected-systems">
+          <span class="affected-systems-title"><small>Affected System : </small></span>
+          <div class="system">
+            {{ incident.system_id }} <mdb-icon fas icon="check-circle" class="green-text pr-3"></mdb-icon>
+          </div>
+        </div>
+      </mdb-card>
+    </div>
+  </div>
+  <div class="new-update" *ngIf="incident.state_name !== 'Resolved' && incident.state_name !== 'Completed'">
+    <div class="update-history-header">
+      Add new update
+    </div>
+    <mdb-card class="grey lighten-5 update-form">
+      <form [formGroup]="updateIncidentForm" (ngSubmit)="onSubmit()">
+        <div class="row">
+          <div class="col">
+            <div class="form-group mb-4" *ngIf="incident.incident_type_name === 'Realtime'">
+              <label class="form-label">Incident status</label>
+              <div *ngIf="realtimeStates?.length">
+                <ng-select2 style="width:100%;" formControlName="state"
+                  [ngClass]="{ 'is-invalid': submitted && updateIncidentForm.controls.state.errors}"
+                  class="custom-select-dropdown" [data]="realtimeStates">
+                </ng-select2>
+              </div>
+            </div>
+            <div class="form-group mb-4" *ngIf="incident.incident_type_name === 'Scheduled'">
+              <label class="form-label">Maintenance status</label>
+              <div *ngIf="scheduledStates?.length">
+                <ng-select2 style="width:100%;" formControlName="state"
+                  [ngClass]="{ 'is-invalid': submitted && updateIncidentForm.controls.state.errors}"
+                  class="custom-select-dropdown" [data]="scheduledStates">
+                </ng-select2>
+              </div>
+            </div>
+          </div>
+
+          <div class="col form-group mb-4">
+            <label class="form-label" for="">Priority Level</label>
+            <select formControlName="priority_level"
+              [ngClass]="{ 'is-invalid': submitted && updateIncidentForm.controls.priority_level.errors }"
+              class="browser-default custom-select grey lighten-5">
+              <option selected value="1">Level 1</option>
+              <option value="2">Level 2</option>
+              <option value="3">Level 3</option>
+              <option value="4">Level 4</option>
+              <option value="5">Level 5</option>
+            </select>
+          </div>
+
+          <div class="col mb-4">
+            <label class="form-label" for="">Assign user</label>
+            <div *ngIf="users?.length">
+              <ng-select2 style="width:100%;" formControlName="user"
+                [ngClass]="{ 'is-invalid': submitted && updateIncidentForm.controls.user.errors}"
+                class="custom-select-dropdown" [data]="users">
+              </ng-select2>
+            </div>
+          </div>
+
+          <div class="col mb-4">
+            <label class="form-label" for="">Escalation Level</label>
+            <div *ngIf="escalationLevels?.length">
+              <ng-select2 style="width:100%;" formControlName="escalation_level"
+                [ngClass]="{ 'is-invalid': submitted && updateIncidentForm.controls.escalation_level.errors}"
+                class="custom-select-dropdown" [data]="escalationLevels">
+              </ng-select2>
+            </div>
+          </div>
+        </div>
+        <div class="form-group mb-4">
+          <label class="form-label">Message</label>
+          <textarea class="form-control rounded-2 grey lighten-5" formControlName="description"
+            id="exampleFormControlTextarea2" rows="3" placeholder="We are currently investigating this incident"
+            [ngClass]="{'is-invalid': submitted && updateIncidentForm.controls.description.errors}">
                     </textarea>
-    
-                    <div *ngIf="updateIncidentForm.controls['description'].invalid && (updateIncidentForm.controls['description'].dirty || updateIncidentForm.controls['description'].touched)" class="invalid-feedback">
-                        <div *ngIf="updateIncidentForm.controls['description'].errors.required">Message is required</div>
-                    </div>
-                </div>
-                <div class="update-button">
-                    <button mdbBtn [disabled]="updateIncidentForm.invalid"
-                    mdbWavesEffect class="float-right"class="btn-sm blue-gradient lowercase-btn text-white float-right"> Update</button>
-                </div>
-            </form>
-        </mdb-card>
-    </div>
-    <hr>
-    <div class="delete-button">
-        <button mdbBtn class="btn-sm lowercase-btn text-white float-right" color="danger" (click)="removeIncident(incidentId)">Delete Incident</button>
-    </div>
+
+          <div
+            *ngIf="updateIncidentForm.controls['description'].invalid && (updateIncidentForm.controls['description'].dirty || updateIncidentForm.controls['description'].touched)"
+            class="invalid-feedback">
+            <div *ngIf="updateIncidentForm.controls['description'].errors.required">Message is required</div>
+          </div>
+        </div>
+        <div class="update-button">
+          <button mdbBtn [disabled]="updateIncidentForm.invalid" mdbWavesEffect class="float-right"
+            class="btn-sm blue-gradient lowercase-btn text-white float-right"> Update</button>
+        </div>
+      </form>
+    </mdb-card>
+  </div>
+  <hr>
+  <div class="delete-button">
+    <button mdbBtn class="btn-sm lowercase-btn text-white float-right" color="danger"
+      (click)="removeIncident(incidentId)">Delete Incident</button>
+  </div>
 </div>
