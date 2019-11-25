@@ -34,7 +34,6 @@ constructor(private http: HttpClient) { }
     const user = JSON.parse(localStorage.getItem('currentUser'));
     const getUsersUrl = environment.apiEndpoint + 'get_logged_in_user_details/';
     return this.http.post<any>(getUsersUrl, {token: JSON.stringify(user.token)}).pipe(
-      tap(res => console.log(res)),
       map(response => response.data)
     );
   }

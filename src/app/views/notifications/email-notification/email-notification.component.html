@@ -11,38 +11,38 @@
     <input class="search-entries" type="text" [(ngModel)]="searchText" placeholder="Search">
   </div> 
 </div>
-
-<table mdbTable #tableEl="mdbTable" class="z-depth-1" >
-      <thead class="white-text">
-        <tr>
-          <th *ngFor="let head of headElements; let i = index;" aria-controls="tableSort" scope="col" [mdbTableSort]="elements" [sortBy]="headElements[i]" scope="col">{{Elements[head] | titlecase}} <mdb-icon fas icon="sort"></mdb-icon></th>
-        </tr>
-      </thead>
-      <tbody *ngIf="elements.length > 0; else noElements">
-        <tr mdbTableCol *ngFor="let el of elements; let i = index ">
-        <th *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex" scope="row">
-            {{el.message}}
-        </th>
-        <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{el.recipient}}</td>
-        <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">
-          <h5><mdb-badge success="true">{{el.status}}</mdb-badge></h5>
-        </td>
-        <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{el.dateCreated | date}}</td>
-        </tr>
-      </tbody>
-      <tfoot class="grey lighten-5 w-100">
-        <tr>
-          <td colspan="4">
-            <mdb-table-pagination [tableEl]="tableEl" [searchDataSource]="elements"></mdb-table-pagination>
-          </td>
-        </tr>
-      </tfoot>
-    </table>
-
-    <ng-template #noElements>
-      <td colspan="7">
-        <hm-empty-data header="No Existing Notifications" description="New Notifications will be displayed here">
-        </hm-empty-data>
+<mdb-card class="table-responsive table-striped">
+  <table mdbTable #tableEl="mdbTable" class="z-depth-1" >
+    <thead class="white-text">
+      <tr>
+        <th *ngFor="let head of headElements; let i = index;" aria-controls="tableSort" scope="col" [mdbTableSort]="elements" [sortBy]="headElements[i]" scope="col">{{Elements[head] | titlecase}} <mdb-icon fas icon="sort"></mdb-icon></th>
+      </tr>
+    </thead>
+    <tbody *ngIf="elements?.length > 0; else noElements">
+      <tr mdbTableCol *ngFor="let el of elements; let i = index ">
+      <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">
+          {{el.message}}
       </td>
-  </ng-template>
-<router-outlet></router-outlet>
+      <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{el.recipient}}</td>
+      <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">
+        <h5><mdb-badge success="true">{{el.status}}</mdb-badge></h5>
+      </td>
+      <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{el.dateCreated | date}}</td>
+      </tr>
+    </tbody>
+    <tfoot class="grey lighten-5 w-100">
+      <tr>
+        <td colspan="4">
+          <mdb-table-pagination [tableEl]="tableEl" [searchDataSource]="elements"></mdb-table-pagination>
+        </td>
+      </tr>
+      <ng-template #noElements>
+        <td colspan="4">
+          <hm-empty-data header="No Existing Notifications" description="New Notifications will be displayed here">
+          </hm-empty-data>
+        </td>
+      </ng-template>
+    </tfoot>
+  </table>
+
+</mdb-card>
