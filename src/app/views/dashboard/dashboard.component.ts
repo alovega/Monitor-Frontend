@@ -32,7 +32,7 @@ export class DashboardComponent implements OnInit, AfterViewChecked, AfterViewIn
   public errorRateGraph = {
     chartType: 'line',
     chartDatasets: [
-      { data: [], label: 'Error rate per hour' },
+      { data: []},
     ],
     chartLabels: [],
     chartColors: [
@@ -50,10 +50,18 @@ export class DashboardComponent implements OnInit, AfterViewChecked, AfterViewIn
           },
           scaleLabel: {
             display: true,
-            labelString: 'Number of errors in an hour'
+            labelString: 'Number of errors'
           }
         }]
-      }
+      },
+      legend: {
+        display: false
+      },
+      // elements: {
+      //   line: {
+      //       tension: 0
+      //   }
+      // }
     }
   };
   public responseTimeGraph = {
@@ -161,6 +169,7 @@ export class DashboardComponent implements OnInit, AfterViewChecked, AfterViewIn
       (response => {
         this.errorRateGraph.chartLabels = response.labels;
         this.errorRateGraph.chartDatasets[0].data = response.datasets;
+        // this.errorRateGraph.chartDatasets[0].label = `Errors within the last ${duration}`;
         this.graphChanges = response;
         this.loading = false;
       })
@@ -171,6 +180,10 @@ export class DashboardComponent implements OnInit, AfterViewChecked, AfterViewIn
     if (this.tabs) {
       this.tabs.select(this.activeTab);
     }
+  }
+
+  ngAfterViewInit() {
+    this.cd.detectChanges();
   }
 
   onTabChange($event: NgbTabChangeEvent) {

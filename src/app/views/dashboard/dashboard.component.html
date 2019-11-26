@@ -125,8 +125,9 @@
         </div>
     </div>   
     <div class="mt-5" *ngIf="!loading">
-        <h4>Error Rates</h4> 
-        <hr>
+        <h4 class="mr-3">Error Rates </h4>
+        <span class="text-muted"> ({{activeTab | dateTransform }})</span>
+        <hr class="page-header-divider">
         <hm-line-graph [chartData]="errorRateGraph" [graphChanges]="graphChanges"></hm-line-graph>
     </div>
     
