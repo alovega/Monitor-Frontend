@@ -58,6 +58,7 @@ export class TopNavBarComponent implements OnInit, OnChanges {
     }
 
   ngOnInit() {
+    console.log(this.addSystemForm);
     this.systemService.getSystems().subscribe(
       (res: SystemsResponse) => {
         if (res.code === '800.200.001') {
@@ -146,7 +147,7 @@ export class TopNavBarComponent implements OnInit, OnChanges {
           });
           // this.toastr.success('System creation success !', 'System created successfully');
         } else {
-          this.toastr.error('System could not be created', 'System creation error !');
+          this.toastr.error(res.message, 'System creation error !');
         }
       });
   }

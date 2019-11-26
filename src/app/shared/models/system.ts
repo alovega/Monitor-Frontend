@@ -12,10 +12,12 @@ export class System {
 
 export class SystemResponse {
     code: string;
-    data: System;
+    data?: System;
+    message?: string;
 }
 
 export class SystemsResponse {
     code: string;
-    data: System[];
+    data?: System[];
+    message?: string;
 }
