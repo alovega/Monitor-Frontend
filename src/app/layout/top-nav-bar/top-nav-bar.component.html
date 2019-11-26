@@ -108,13 +108,8 @@
                 class="custom-select-dropdown" [data]="users" [placeholder]="'Select a system admin'"> 
                 </ng-select2>
               </div>
-              <!-- <select formControlName="admin" [ngClass]="{ 'is-invalid': submitted && addSystemForm.controls.admin.errors}"
-              class="grey lighten-5 browser-default custom-select form-control">
-                <option *ngFor="let user of users" value="{{user.id}}">{{user.username}}</option>
-              </select> -->
-              <!-- Incident status validation errors -->
-              <div *ngIf="addSystemForm.controls['admin'].invalid && (addSystemForm.controls['admin'].touched || addSystemForm.controls['admin'].dirty)" class="invalid-feedback">
-                    <div *ngIf="addSystemForm.controls['admin'].errors.required">System admin is required</div>
+              <div *ngIf="addSystemForm.controls['admin'].invalid && addSystemForm.controls['admin'].touched" class="invalid-feedback">
+                  <div *ngIf="addSystemForm.controls['admin'].errors.required">System admin is required</div>
               </div>
           </div>
             

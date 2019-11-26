@@ -7,6 +7,7 @@ import { EscalationRule, EscalationRuleResponse } from '../../../shared/models/e
 import { EscalationRuleService } from '../escalation-rule.service';
 import { ToastrService } from 'ngx-toastr';
 import { LookUpService } from 'src/app/shared/look-up.service';
+import { DropdownItem } from 'src/app/layout/top-nav-bar/dropdown-item';
 
 @Component({
   selector: 'hm-create-rule',
@@ -16,7 +17,7 @@ import { LookUpService } from 'src/app/shared/look-up.service';
 export class CreateRuleComponent implements OnInit {
   escalationRuleForm: FormGroup;
   submitted = false;
-  escalationLevels: any;
+  escalationLevels: DropdownItem[];
   eventTypes: any;
 
   constructor(
@@ -29,16 +30,12 @@ export class CreateRuleComponent implements OnInit {
   ngOnInit() {
     this.lookupService.getEscalationLevel().subscribe(
       res => {
-        this.escalationLevels = res;
-        // if (res.code === '800.200.001') {
-        // }
+        this.escalationLevels = res.map((rule) => ({id: rule.id, text: rule.name}));
       }
     );
     this.lookupService.getEventType().subscribe(
       res => {
-        this.eventTypes = res;
-        // if (res.code === '800.200.001') {
-        // }
+        this.eventTypes = res.map((type) => ({id: type.id, text: type.name}));
       }
     );
     this.createEscalationRuleForm();

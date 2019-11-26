@@ -1,4 +1,4 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit, AfterViewInit} from '@angular/core';
 import { SystemService } from './shared/system.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
@@ -12,10 +12,11 @@ import { System } from './shared/models/system';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit{
+export class AppComponent implements OnInit, AfterViewInit{
   title = 'helamonitor';
   currentSystem: System;
   currentUser: any;
+  loading = true;
 
   constructor(
     private systemService: SystemService,
@@ -33,6 +34,10 @@ export class AppComponent implements OnInit{
       }
     );
     this.currentSystem = this.systemService.getCurrentSystem();
+  }
+
+  ngAfterViewInit() {
+    this.loading = false;
   }
 
   logout() {

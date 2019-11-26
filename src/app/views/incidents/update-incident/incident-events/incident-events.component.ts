@@ -60,7 +60,6 @@ export class IncidentEventsComponent implements OnInit, AfterViewInit {
         this.mdbTable.setDataSource(this.events);
         this.events = this.mdbTable.getDataSource();
         this.previous = this.mdbTable.getDataSource();
-        console.log(result);
         this.loading = false;
       })
     );
@@ -74,13 +73,11 @@ export class IncidentEventsComponent implements OnInit, AfterViewInit {
       this.mdbTablePagination.nextShouldBeDisabled = false;
     }
     this.cdRef.detectChanges();
-    console.log(this.mdbTablePagination.firstItemIndex);
   }
 
   changeVisibleItems(maxNumber: number) {
     this.visibleItems = maxNumber;
     if (!maxNumber) {
-      console.log(maxNumber);
       this.visibleItemsInput.nativeElement.value = 1;
       this.visibleItems = 1;
     }
@@ -120,10 +117,6 @@ export class IncidentEventsComponent implements OnInit, AfterViewInit {
       this.events = this.mdbTable.searchLocalDataBy(search);
       this.mdbTable.setDataSource(prev);
     }
-  }
-
-  onOpen(event: any) {
-    console.log(event);
   }
 
   public showEventInfo(eventId: string) {

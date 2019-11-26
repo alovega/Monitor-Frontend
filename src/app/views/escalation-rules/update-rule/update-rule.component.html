@@ -27,10 +27,11 @@
                 <div class="col-md-6">
                     <label class="form-label">Escalation Level</label>
                     <!-- Escalation Levels -->
-                    <select formControlName="escalation_level" class="grey lighten-5 browser-default custom-select form-control"
-                    [ngClass]="{ 'is-invalid': submitted && escalationRuleForm.controls['escalation_level'].errors }">
-                    <option *ngFor="let escalationLevel of escalationLevels" selected value="{{escalationLevel.id}}">{{escalationLevel.name}}</option>
-                    </select>
+                    <div *ngIf="escalationLevels?.length">
+                      <ng-select2 style="width:100%;" formControlName="escalation_level" [ngClass]="{ 'is-invalid': submitted && escalationRuleForm.controls.escalation_level.errors}"
+                      class="custom-select-dropdown" [data]="escalationLevels" > 
+                      </ng-select2>
+                    </div>
 
                     <div *ngIf="escalationRuleForm.controls['escalation_level'].invalid && (escalationRuleForm.controls['escalation_level'].touched || escalationRuleForm.controls['escalation_level'].dirty)" class="invalid-feedback">
                         <div *ngIf="escalationRuleForm.controls['escalation_level'].errors.required">Escalation level is required</div>
@@ -54,10 +55,11 @@
                 <div class="col-md-6">
                     <!-- Event Type -->
                     <label class="form-label">Event Type</label>
-                    <select formControlName="event_type" class="grey lighten-5 browser-default custom-select form-control"
-                    [ngClass]="{'is-invalid': submitted && escalationRuleForm.controls['event_type'].errors}">
-                        <option *ngFor="let eventType of eventTypes" selected value="{{eventType.id}}">{{eventType.name}}</option>
-                    </select>
+                    <div *ngIf="eventTypes?.length">
+                      <ng-select2 style="width:100%;" formControlName="event_type" [ngClass]="{ 'is-invalid': submitted && escalationRuleForm.controls.event_type.errors}"
+                      class="custom-select-dropdown" [data]="eventTypes" > 
+                      </ng-select2>
+                    </div>
 
                     <div *ngIf="escalationRuleForm.controls['event_type'].invalid && (escalationRuleForm.controls['event_type'].touched || escalationRuleForm.controls['event_type'].dirty)" class="invalid-feedback">
                         <div *ngIf="escalationRuleForm.controls['event_type'].errors.required">Event Type is required</div>
