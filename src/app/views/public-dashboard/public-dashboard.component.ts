@@ -5,6 +5,7 @@ import { EndpointService } from '../endpoint/endpoint.service';
 import { IncidentService } from '../incidents/incident.service';
 import { SystemService } from 'src/app/shared/system.service';
 import { HttpWrapperService } from 'src/app/shared/helpers/http-wrapper.service';
+import { SystemResponse } from 'src/app/shared/models/system';
 
 @Component({
   selector: 'hm-public-dashboard',
@@ -27,8 +28,8 @@ export class PublicDashboardComponent implements OnInit {
   ngOnInit() {
     this.systemId = this.activatedRoute.snapshot.paramMap.get('system-id');
     this.systemService.getSystem(this.systemId).subscribe(
-      (res) => {
-        if (res) {
+      (res: SystemResponse) => {
+        if (res.code === '800.200.001') {
           this.httpWrapperService.post('get_system_status/', {system_id: this.systemId}).subscribe(
             (status) => this.systemStatus = status
           );
@@ -36,13 +37,12 @@ export class PublicDashboardComponent implements OnInit {
             (dates) => this.pastDates = dates
           );
         } else {
-          this.router.navigate(['/error']);
+          this.router.navigate(['error']);
         }
       });
     this.endpointsService.getEndpoints(this.systemId).subscribe(
       (res) => {
         this.endpoints = res;
-      });
+    });
   }
-
 }

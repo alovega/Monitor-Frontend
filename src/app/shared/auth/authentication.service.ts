@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -14,7 +15,8 @@ export class AuthenticationService {
   public currentUser: Observable<any>;
 
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+    private router: Router
   ) {
     this.currentUserSubject = new BehaviorSubject<any>(JSON.parse(localStorage.getItem('currentUser')));
     this.currentUser = this.currentUserSubject.asObservable();
@@ -40,11 +42,10 @@ export class AuthenticationService {
       }
   }
 
-  public verifyToken(token: any) {
-    return this.http.post<any>(`${environment.apiEndpoint}verify_token/`, {token: token}).pipe(
+  public verifyToken(tokenString: any) {
+    // return this.
+    return this.http.post<any>(`${environment.apiEndpoint}verify_token/`, {token: tokenString}).pipe(
       map(result => {
-        console.log('User token');
-        console.log(result);
         if (result.code === '800.200.001') {
           localStorage.setItem('currentUser', JSON.stringify(result.data));
           this.currentUserSubject.next(result.data);
@@ -73,5 +74,6 @@ export class AuthenticationService {
   logout() {
     localStorage.removeItem('currentUser');
     this.currentUserSubject.next(null);
+    this.router.navigate(['auth', 'login']);
   }
 }

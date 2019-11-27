@@ -10,6 +10,7 @@ import { System, SystemResponse, SystemsResponse } from 'src/app/shared/models/s
 import { SystemStatusResponse, SystemStatus } from 'src/app/shared/models/system-status';
 import { ToastrService } from 'ngx-toastr';
 import { WidgetData, WidgetDataResponse } from './widget-data';
+import { ErrorsGraphDataResponse } from './errors-graph-data';
 
 @Component({
   selector: 'hm-dashboard',
@@ -130,13 +131,17 @@ export class DashboardComponent implements OnInit, AfterViewChecked, AfterViewIn
         this.message = data;
     });
 
-    this.graphsService.getResponseTimes(this.currentSystem.id).subscribe(
+    this.graphsService.getResponseTimes().subscribe(
       (response) => {
-        Object.keys(response.datasets).forEach(key => {
-          this.responseTimeGraph.chartDatasets.push(response.datasets[key]);
-          this.responseTimeGraph.chartLabels.push(response.datasets[key].data);
-        });
-        this.responseTimeGraph.chartLabels = response.labels;
+        if (response.code === '800.200.001') {
+          Object.keys(response.data.datasets).forEach(key => {
+            this.responseTimeGraph.chartDatasets.push(response.data.datasets[key]);
+            this.responseTimeGraph.chartLabels.push(response.data.datasets[key].data);
+          });
+          this.responseTimeGraph.chartLabels = response.data.labels;
+        } else {
+          this.toastr.error('Error while fetching response times graph data', 'Error!');
+        }
       });
     }
 
@@ -166,13 +171,16 @@ export class DashboardComponent implements OnInit, AfterViewChecked, AfterViewIn
     });
 
     this.graphsService.getErrorRates(this.startDate, this.endDate).subscribe(
-      (response => {
-        this.errorRateGraph.chartLabels = response.labels;
-        this.errorRateGraph.chartDatasets[0].data = response.datasets;
-        // this.errorRateGraph.chartDatasets[0].label = `Errors within the last ${duration}`;
-        this.graphChanges = response;
-        this.loading = false;
-      })
+      (response: ErrorsGraphDataResponse) => {
+        if (response.code === '800.200.001') {
+          this.errorRateGraph.chartLabels = response.data.labels;
+          this.errorRateGraph.chartDatasets[0].data = response.data.datasets;
+          this.graphChanges = response.data;
+          this.loading = false;
+        } else {
+          this.toastr.error('Could not fetch error rates graph data. Try again later', 'Error');
+        }
+      }
     );
   }
 

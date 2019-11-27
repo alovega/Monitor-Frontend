@@ -24,8 +24,6 @@ export class SystemStatusService {
   }
 
   getDashboardWidgetsData(startDate, endDate): Observable<WidgetDataResponse> {
-    return this.httpWrapperService.post('dashboard_widgets_data/', {date_from: startDate, date_to: endDate}).pipe(
-      delay(1000)
-    );
+    return this.httpWrapperService.post('dashboard_widgets_data/', {date_from: startDate, date_to: endDate});
   }
 }

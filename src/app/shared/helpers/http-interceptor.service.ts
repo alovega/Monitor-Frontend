@@ -6,6 +6,7 @@ import { environment } from '../../../environments/environment';
 import { AuthenticationService } from '../auth/authentication.service';
 import { SystemService } from '../system.service';
 import { LoaderService } from '../loader.service';
+import { System } from '../models/system';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,7 @@ export class HttpInterceptorService implements HttpInterceptor {
   apiEndpoint = environment.apiEndpoint;
   clientId = environment.clientId;
   accessToken: string;
-  currentSystem: any;
+  currentSystem: System;
   currentSystemId: any;
   systemName: any;
   currentUser: any;
@@ -41,7 +42,6 @@ export class HttpInterceptorService implements HttpInterceptor {
       request = request.clone({
         body: {...request.body, client_id: this.clientId, token: this.accessToken, system: this.systemName}
       });
-      console.log(this.accessToken);
     } else {
       request = request.clone({
         body: {...request.body, client_id: this.clientId, token: this.accessToken , system_id: this.currentSystemId,

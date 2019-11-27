@@ -50,6 +50,7 @@ export class HttpWrapperService {
     } else if (error.status === 401) {
       this.authService.logout();
     }
-    return throwError('An error; please try again later.');
+    this.toastr.error('An error occurred. Try again later', 'Error!');
+    return throwError('An error occurred');
   }
 }
