@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild, AfterViewChecked, AfterViewInit, ChangeDetectorRef } from '@angular/core';
 import { Route, ActivatedRoute } from '@angular/router';
 import { NgbTabChangeEvent, NgbTabset } from '@ng-bootstrap/ng-bootstrap';
+import { tap } from 'rxjs/operators';
 
 import { SystemService } from '../../shared/system.service';
 import { GraphsService } from '../../shared/graphs.service';
@@ -10,6 +11,9 @@ import { System, SystemResponse, SystemsResponse } from 'src/app/shared/models/s
 import { SystemStatusResponse, SystemStatus } from 'src/app/shared/models/system-status';
 import { ToastrService } from 'ngx-toastr';
 import { WidgetData, WidgetDataResponse } from './widget-data';
+import { HttpResponse, HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
+import { environment } from '../../../environments/environment';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'hm-dashboard',
@@ -109,20 +113,27 @@ export class DashboardComponent implements OnInit, AfterViewChecked, AfterViewIn
     private profileService: ProfileService,
     private activatedRoute: ActivatedRoute,
     private toastr: ToastrService,
-    private cd: ChangeDetectorRef
+    private cd: ChangeDetectorRef,
+    private http: HttpClient
   ) {
     this.activeTab = 'today';
   }
 
   ngOnInit() {
     this.currentSystem = this.systemService.getCurrentSystem();
-    this.systemStatusService.getCurrentStatus().subscribe(
-      (res: SystemStatusResponse) => {
-        if (res.code === '800.200.001') {
-          this.systemStatus = res.data;
-        } else {
-          this.toastr.error('Error Fetching current status', 'Error!');
+    this.check().subscribe(
+      response => console.log(response)
+    );
+    this.systemStatusService.getCurrentStatus<SystemStatusResponse>().subscribe(
+      (response) => {
+        if (response.ok) {
+          if (response.body.code === '800.200.001') {
+            this.systemStatus = response.body.data;
+          } else {
+            this.toastr.error('Error Fetching current status', 'Error!');
+          }
         }
+        console.log(response);
     });
     this.getWidgetData(this.activeTab);
     this.profileService.getLoggedInuserRecentNotifications().subscribe(
@@ -139,6 +150,10 @@ export class DashboardComponent implements OnInit, AfterViewChecked, AfterViewIn
         this.responseTimeGraph.chartLabels = response.labels;
       });
     }
+
+  check(): Observable<HttpResponse<SystemResponse>> {
+    return this.http.post<SystemResponse>(environment.apiEndpoint + 'get_systems/', {}, {observe: 'response'});
+  }
 
   public getWidgetData(duration: string) {
     this.widgetData = new WidgetData();

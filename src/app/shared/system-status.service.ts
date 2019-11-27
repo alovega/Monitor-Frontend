@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { HttpResponse } from '@angular/common/http';
 import { HttpWrapperService } from 'src/app/shared/helpers/http-wrapper.service';
 import { Observable } from 'rxjs';
 import { delay } from 'rxjs/operators';
@@ -15,8 +16,8 @@ export class SystemStatusService {
     private httpWrapperService: HttpWrapperService
   ) { }
 
-  getCurrentStatus(): Observable<SystemStatusResponse> {
-    return this.httpWrapperService.post('get_system_status/');
+  getCurrentStatus<T>(): Observable<HttpResponse<T>> {
+    return this.httpWrapperService.post<T>('get_system_status/');
   }
 
   getPastIncidents() {
