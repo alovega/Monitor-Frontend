@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Observable, of, throwError, BehaviorSubject } from 'rxjs';
-import { map, retry, catchError, finalize } from 'rxjs/operators';
+import { Observable, throwError} from 'rxjs';
+import { map, retry, catchError} from 'rxjs/operators';
 import { Page } from './model/page';
 import { environment } from 'src/environments/environment';
 import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
@@ -28,7 +28,7 @@ export class DataTableService {
   return throwError(
     'Something bad happened; please try again later.');
 }
-  public reloadTable(page: Page): Observable<any> {
+  public reloadTable(page): Observable<any> {
 
     // NOTE: those params key values depends on your API!
     const endpointUrl = environment.apiEndpoint + page.url;
@@ -47,7 +47,7 @@ export class DataTableService {
       systemId: params.get('systemId'),
       orderDir: params.get('orderDir')
     };
-    console.log({body});
+    console.log(  {body});
     return this.http.post<any>(endpointUrl, {body}).pipe(
       map(
         response => response.payload,

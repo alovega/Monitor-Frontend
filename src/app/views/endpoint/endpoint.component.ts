@@ -42,7 +42,6 @@ export class EndpointComponent implements OnInit, AfterViewInit {
     this.dataSource.url = 'get_endpoints_data/';
     this.dataSource.systemId = this.currentSystem.id;
     this.endpointId = this.activatedRoute.snapshot.params.id;
-    this.currentSystemId = this.currentSystem.id;
   }
 
   ngAfterViewInit() { }

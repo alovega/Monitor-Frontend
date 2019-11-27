@@ -23,16 +23,13 @@ export class DataTableComponent implements OnInit, AfterViewInit {
   loaded = false;
 
   private loadingSubject = new BehaviorSubject<boolean>(false);
-  private rowsSubject: BehaviorSubject<any>;
-  public rows: Observable<any>;
-
+  public rows;
   public loading$ = this.loadingSubject.asObservable();
-  loading = true;
+  load: boolean;
   public columns;
   public temp;
   page = new Page();
   paginator: any;
-  changeDetectorRef: ChangeDetectorRef;
   constructor(private dataService: DataTableService, private cd: ChangeDetectorRef) {
     this.page.offset = 0;
     this.page.size = 2;
@@ -40,6 +37,12 @@ export class DataTableComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     console.log(this.dataSource);
+    this.loading$.subscribe((response) =>{
+      this.load = response.valueOf();
+      this.cd.detectChanges();
+      console.log(response.valueOf());
+    }
+    );
     this.page.url = this.dataSource.url;
     this.page.systemId = this.dataSource.systemId;
     this.columns = this.dataSource.columns;

@@ -2,7 +2,28 @@ input[type='text'] {
     font-size: 14px;
     display: block;
     background: transparent;
-    width: 100%;
+    width: 15%;
     border: none;
     border-bottom: 1px solid #5264ae;
+    order: 1;
+    margin-bottom: 15px;
+    margin-top: auto;
+    margin-left:0 !important;
+    margin-right: 0 !important;
+}
+input[type='text']:focus{
+    outline: none !important;
+}
+
+.search{
+    width:-webkit-fill-available;
+    display: flex;
+    justify-content: flex-end;
+}
+#searchlabel{
+    order: 0;
+    margin-top: 15px;
+    padding-right: 10px;
+    margin-bottom: 15px;
+    font-size: 1.2 em;
 }
