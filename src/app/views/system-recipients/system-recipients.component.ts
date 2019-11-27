@@ -37,6 +37,7 @@ export class SystemRecipientsComponent implements OnInit, AfterViewInit {
     }
   ngOnInit() {
     this.dataSource.columns = [
+        {prop: 'item_index', name: 'Index'},
         {prop: 'userName', name: 'User Name', sortable: true}, {prop: 'escalationLevel', name: 'Escalation Level', sortable: true},
         {prop: 'notificationType', name: 'Notification Type', sortable: true}, {prop: 'status', name: 'Status', sortable: true},
         {prop: 'dateCreated', name: 'Date Created', cellTemplate: this.dateColumn, sortable: true},

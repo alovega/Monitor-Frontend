@@ -13,7 +13,7 @@
   <hm-data-table [dataSource]="dataSource"></hm-data-table>
 </div>
 <ng-template #dateColumn let-row="row" let-value="value" let-i="index">
-  {{value | date:'MM/dd/yyyy   hh:mm:ss a'}}
+  {{value | date:'MM/dd/yyyy'}}
 </ng-template>
 <ng-template #buttonsTemplate let-row="row" let-value="value">
     <a class="fas fa-edit text-success" routerLinkActive="active"

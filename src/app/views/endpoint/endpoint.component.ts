@@ -33,10 +33,11 @@ export class EndpointComponent implements OnInit, AfterViewInit {
     ) {}
   ngOnInit() {
     this.dataSource.columns = [
+      {prop: 'item_index', name: 'Index'},
       {prop: 'endpointName', name: 'Name', sortable: true}, {prop: 'endpointDescription', name: 'Description', sortable: true},
-      {prop: 'Url', name: 'Url', sortable: true},
+      {prop: 'Url', name: 'Url', sortable: true}, {prop: 'status', name: 'Status', sortable: true},
       { prop: 'dateCreated', cellTemplate: this.dateColumn, name: 'Date Created', sortable: true},
-      {prop: 'status', name: 'Status', sortable: true}, {prop: 'type', name: 'Type', sortable: false},
+      {prop: 'type', name: 'Type', sortable: false},
       {name: 'Action', cellTemplate: this.buttonsTemplate, sortable: false}];
     this.currentSystem = this.systemService.getCurrentSystem();
     this.dataSource.url = 'get_endpoints_data/';

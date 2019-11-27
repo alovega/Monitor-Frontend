@@ -2,7 +2,7 @@ input[type='text'] {
     font-size: 14px;
     display: block;
     background: transparent;
-    width: 15%;
+    width: 70%;
     border: none;
     border-bottom: 1px solid #5264ae;
     order: 1;
@@ -16,8 +16,9 @@ input[type='text']:focus{
 }
 
 .search{
-    width:-webkit-fill-available;
+    width:230px;
     display: flex;
+    order: 1;
     justify-content: flex-end;
 }
 #searchlabel{
@@ -26,4 +27,28 @@ input[type='text']:focus{
     padding-right: 10px;
     margin-bottom: 15px;
     font-size: 1.2 em;
+}
+
+.pagination{
+    width:auto;
+    display: flex;
+    order: 0;
+}
+#table-header{
+    display: flex;
+    justify-content: space-between;
+}
+p{
+    padding: 10px;
+}
+.content{
+    margin-bottom: 15px;
+    margin-top: auto;
+}
+::ng-deep.datatable-header-cell {
+        font-size: 0.8em !important;
+    }
+::ng-deep.datatable-body-cell {
+    word-wrap:break-word !important;
+    width: 400px !important;
 }

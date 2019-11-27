@@ -33,6 +33,7 @@ export class RecipientComponent implements OnInit, AfterViewInit {
   }
   ngOnInit() {
     this.dataSource.columns = [
+      {prop: 'item_index', name: 'Index'},
       {prop: 'userName', name: 'User Name', sortable: true}, {prop: 'phoneNumber', name: 'Phone Number', sortable: true},
       {prop: 'status', name: 'Status', sortable: 'true'},
       {prop: 'dateCreated', name: 'Date Created', cellTemplate: this.dateColumn, sortable: true},

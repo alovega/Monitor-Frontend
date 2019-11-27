@@ -28,11 +28,12 @@ export class DataTableComponent implements OnInit, AfterViewInit {
   load: boolean;
   public columns;
   public temp;
+  pagination = [5, 10, 25, 50, 100]
   page = new Page();
   paginator: any;
   constructor(private dataService: DataTableService, private cd: ChangeDetectorRef) {
     this.page.offset = 0;
-    this.page.size = 2;
+    this.page.size = 5;
   }
 
   ngOnInit() {
@@ -86,5 +87,9 @@ export class DataTableComponent implements OnInit, AfterViewInit {
       this.rows = response.row;
       this.cd.detectChanges();
     });
+  }
+  changePagination(event) {
+    this.page.size = event.target.value;
+    this.getTableData(this.page);
   }
 }

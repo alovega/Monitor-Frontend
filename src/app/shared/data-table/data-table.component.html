@@ -1,5 +1,12 @@
 <div>
-  <div class="d-flex">
+  <div id="table-header">
+      <div class="pagination">
+        <p class="content">show</p>
+        <select class="browser-default custom-select content" (change)= "changePagination($event)">
+            <option *ngFor="let value of pagination" [ngValue]="value">{{value}}</option>
+        </select>
+        <p class="content">items</p>
+      </div>
       <div class="search">
           <label id="searchlabel">search :</label>
           <input
