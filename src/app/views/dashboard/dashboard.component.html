@@ -95,7 +95,7 @@
                     <div class="tab-content p-4">
                         <h6>Current system status</h6>
                         <hr style="margin-top: 2px">
-                        <div class="{{systemStatus.current_state.state}} page-status">
+                        <div class="{{systemStatus?.current_state.state}} page-status">
                             {{systemStatus?.current_state.description}}
                         </div>
                     </div>
@@ -124,10 +124,11 @@
             </div>
         </div>
     </div>   
-    <div class="mt-5" *ngIf="errorRateGraph.chartDatasets[0]?.data?.length">
-    <h4>Error Rates</h4> 
-    <hr>
-    <hm-line-graph [chartData]="errorRateGraph"></hm-line-graph>
+    <div class="mt-5" *ngIf="!loading">
+        <h4 class="mr-3">Error Rates </h4>
+        <span class="text-muted"> ({{activeTab | dateTransform }})</span>
+        <hr class="page-header-divider">
+        <hm-line-graph [chartData]="errorRateGraph" [graphChanges]="graphChanges"></hm-line-graph>
     </div>
     
     <div class="mt-5" *ngIf="responseTimeGraph.chartDatasets[0]?.data?.length">
