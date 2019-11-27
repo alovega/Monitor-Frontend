@@ -16,9 +16,6 @@ export class EndpointComponent implements OnInit, AfterViewInit {
   @ViewChild('dateColumn', {static: true}) dateColumn: TemplateRef<any>;
 
   elements: any;
-  searchText = '';
-  previous: any = [];
-  visibleItems = 5;
   currentSystem: any;
   currentSystemId: any;
   endpointId: any;
@@ -46,13 +43,6 @@ export class EndpointComponent implements OnInit, AfterViewInit {
     this.dataSource.systemId = this.currentSystem.id;
     this.endpointId = this.activatedRoute.snapshot.params.id;
     this.currentSystemId = this.currentSystem.id;
-
-    this.endpointService.getEndpoints(this.currentSystemId).subscribe(
-      (data) => {
-        this.elements = data;
-        console.log(data.length);
-    });
-
   }
 
   ngAfterViewInit() { }

@@ -51,12 +51,10 @@ export class TopNavBarComponent implements OnInit, OnChanges {
     this.systemService.getSystems().subscribe(
       (result => {
         this.systems = result;
-        console.log(this.systems);
     }));
     this.profileService.getLoggedInUserDetail().subscribe(
       (data) => {
           this.profile = data;
-          console.log(this.profile);
         });
     this.currentSystem = this.systemService.getCurrentSystem();
     this.authService.currentUser.subscribe(

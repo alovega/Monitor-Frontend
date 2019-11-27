@@ -17,8 +17,6 @@ export class RecipientComponent implements OnInit, AfterViewInit {
   @ViewChild('dateColumn', {static: true}) dateColumn: TemplateRef<any>;
 
   elements: any;
-  searchText = '';
-  previous: any = [];
   visibleItems = 5;
   public dataSource = {
     columns: [],
@@ -41,10 +39,6 @@ export class RecipientComponent implements OnInit, AfterViewInit {
       {prop: 'action', name: 'Action', cellTemplate: this.buttonsTemplate}
     ];
     this.dataSource.url = 'get_recipients_data/';
-    this.recipientService.getRecipients().subscribe(
-      (data) => {
-        this.elements = data;
-      });
   }
 
   ngAfterViewInit() {}

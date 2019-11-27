@@ -1,16 +1,15 @@
 <div>
   <div class="d-flex">
-      <label>Search: </label>
       <input
         type="text"
         style="padding:8px;margin:15px auto;width:30%;"
-        placeholder="Type to filter the name column..."
-        (search)= "updateFilter($event)"
+        placeholder="search..."
+        #input
       />
   </div>
   <ngx-datatable
     class="bootstrap thead-dark"
-    #table
+    #myTable
     [rows]="rows"
     [columns]="columns"
     [columnMode]="ColumnMode.force"
@@ -24,6 +23,7 @@
     [limit]="page.size"
     (page)="pageCallback($event)"
     (sort)="sortCallback($event)"
+    [loadingIndicator]="true"
   >
   </ngx-datatable>
 </div>

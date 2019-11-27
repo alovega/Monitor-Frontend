@@ -1,10 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, of, throwError, BehaviorSubject } from 'rxjs';
-import { map, retry, catchError } from 'rxjs/operators';
-import { asObservable } from './model/asObservable';
+import { map, retry, catchError, finalize } from 'rxjs/operators';
 import { Page } from './model/page';
-
-import data from '../../../assets/data.json';
 import { environment } from 'src/environments/environment';
 import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 
@@ -13,7 +10,6 @@ import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http'
   providedIn: 'root'
 })
 export class DataTableService {
-  private tableData: BehaviorSubject<any> = new BehaviorSubject({});
   constructor(private http: HttpClient) {
   }
  // Handle API errors
@@ -32,9 +28,6 @@ export class DataTableService {
   return throwError(
     'Something bad happened; please try again later.');
 }
-  public getTableData(){
-
-  }
   public reloadTable(page: Page): Observable<any> {
 
     // NOTE: those params key values depends on your API!
@@ -44,17 +37,20 @@ export class DataTableService {
       .set('orderDir', `${page.orderDir}`)
       .set('pageNumber', `${page.offset + 1}`)
       .set('searchQuery', `${page.searchQuery}`)
+      .set('systemId', `${page.systemId}`)
       .set('pageSize', `${page.size}`);
     const body = {
       pageSize: params.get('pageSize'),
       pageNumber: params.get('pageNumber'),
       orderColumn: params.get('orderColumn'),
+      searchQuery: params.get('searchQuery'),
+      systemId: params.get('systemId'),
       orderDir: params.get('orderDir')
     };
     console.log({body});
     return this.http.post<any>(endpointUrl, {body}).pipe(
       map(
-        response => response,
+        response => response.payload,
         retry(2)),
       catchError(this.handleError));
   }

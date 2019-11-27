@@ -1,9 +1,10 @@
-import { Component, OnInit, ChangeDetectionStrategy, Input, TemplateRef, ViewChild, AfterViewInit } from '@angular/core';
-import { ColumnMode, DatatableComponent } from '@swimlane/ngx-datatable';
-import { BehaviorSubject } from 'rxjs';
+import { Component, OnInit, ChangeDetectionStrategy, Input, TemplateRef,
+   ViewChild, AfterViewInit, ElementRef, ChangeDetectorRef } from '@angular/core';
+import { ColumnMode} from '@swimlane/ngx-datatable';
+import { BehaviorSubject, fromEvent, Observable, of } from 'rxjs';
 import { DataTableService} from './data-table.service';
-import { HttpClient} from '@angular/common/http';
 import { Page } from './model/page';
+import { debounceTime, distinctUntilChanged, tap, catchError, finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'hm-data-table',
@@ -15,19 +16,24 @@ import { Page } from './model/page';
 export class DataTableComponent implements OnInit, AfterViewInit {
   @ViewChild('editTmpl', { static: true }) editTmpl: TemplateRef<any>;
   @ViewChild('hdrTpl', { static: true }) hdrTpl: TemplateRef<any>;
-  @ViewChild(DatatableComponent, { static: true }) table: DatatableComponent;
+  @ViewChild('myTable', { static: true }) table: any;
+  @ViewChild('input', { static: true }) input: ElementRef;
   @Input() dataSource;
   ColumnMode = ColumnMode;
   loaded = false;
+
+  private loadingSubject = new BehaviorSubject<boolean>(false);
+  private rowsSubject: BehaviorSubject<any>;
+  public rows: Observable<any>;
+
+  public loading$ = this.loadingSubject.asObservable();
   loading = true;
   public columns;
-  public rows;
   public temp;
-  // columns = [{ name: 'Name', sortable: true }, { name: 'Gender',  sortable: true }, { name: 'Company',  sortable: true }];
   page = new Page();
-  // rows = new Array();
-  // temp = [];
-  constructor(private dataService: DataTableService) {
+  paginator: any;
+  changeDetectorRef: ChangeDetectorRef;
+  constructor(private dataService: DataTableService, private cd: ChangeDetectorRef) {
     this.page.offset = 0;
     this.page.size = 2;
   }
@@ -35,44 +41,47 @@ export class DataTableComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     console.log(this.dataSource);
     this.page.url = this.dataSource.url;
-    console.log(this.page);
+    this.page.systemId = this.dataSource.systemId;
     this.columns = this.dataSource.columns;
+    this.pageCallback({ offset: 0 });
   }
   ngAfterViewInit() {
-    this.pageCallback({ offset: 0 });
+    fromEvent(this.input.nativeElement, 'keyup')
+            .pipe(
+                debounceTime(150),
+                distinctUntilChanged(),
+                tap(() => {
+                  this.updateFilter();
+                })
+            )
+            .subscribe();
   }
   pageCallback(pageInfo: { count?: number, pageSize?: number, size?: number, offset?: number }) {
     this.page.offset = pageInfo.offset;
-    this.dataService.reloadTable(this.page).subscribe((response) => {
-      this.page.totalElements = response.data.totalElements;
-      this.page.totalPages = response.data.size;
-      this.rows = response.data.data;
-      console.log(response);
-    });
+    this.getTableData(this.page);
   }
 
   sortCallback(sortInfo: { sorts: { dir: string, prop: string }[], column: {}, prevValue: string, newValue: string }) {
     // there will always be one "sort" object if "sortType" is set to "single"
     this.page.orderDir = sortInfo.sorts[0].dir;
     this.page.orderBy = sortInfo.sorts[0].prop;
-    this.dataService.reloadTable(this.page).subscribe((response) => {
-      this.page.totalElements = response.data.totalElements;
-      this.page.totalPages = response.data.size;
-      this.rows = response.data.data;
+    console.log(this.table.offset);
+    this.getTableData(this.page);
+  }
+  updateFilter() {
+    this.page.searchQuery = this.input.nativeElement.value;
+    this.getTableData(this.page);
+  }
+  getTableData(page: Page) {
+    this.loadingSubject.next(true);
+    this.dataService.reloadTable(page).pipe(
+      catchError(() => of([])),
+      finalize(() => this.loadingSubject.next(false))
+    ).subscribe((response) => {
+      this.page.totalPages = response.totalPages;
+      this.page.totalElements = response.totalElements;
+      this.rows = response.row;
+      this.cd.detectChanges();
     });
   }
-  updateFilter(event) {
-    const val = event.target.value.toLowerCase();
-
-    // filter our data
-    const temp = this.temp.filter((d) => {
-      return d.name.toLowerCase().indexOf(val) !== -1 || !val;
-    });
-
-    // update the rows
-    this.rows = temp;
-    // Whenever the filter changes, always go back to the first page
-    this.table.offset = 0;
-  }
-
 }
