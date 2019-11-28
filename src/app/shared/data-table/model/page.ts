@@ -15,6 +15,4 @@ export class Page {
     searchQuery = '';
     // the url for fetching data
     url = '';
-    // the id of the system the data belongs to
-    systemId = '';
   }

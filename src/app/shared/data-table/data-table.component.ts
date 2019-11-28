@@ -1,7 +1,7 @@
 import { Component, OnInit, ChangeDetectionStrategy, Input, TemplateRef,
    ViewChild, AfterViewInit, ElementRef, ChangeDetectorRef } from '@angular/core';
 import { ColumnMode} from '@swimlane/ngx-datatable';
-import { BehaviorSubject, fromEvent, Observable, of } from 'rxjs';
+import { BehaviorSubject, fromEvent, of } from 'rxjs';
 import { DataTableService} from './data-table.service';
 import { Page } from './model/page';
 import { debounceTime, distinctUntilChanged, tap, catchError, finalize } from 'rxjs/operators';
@@ -28,7 +28,7 @@ export class DataTableComponent implements OnInit, AfterViewInit {
   public loading$ = this.loadingSubject.asObservable();
   load: boolean;
   public columns: any[];
-  pagination = [5, 10, 25, 50, 100]
+  pagination = [5, 10, 25, 50, 100];
   page = new Page();
   paginator: any;
   constructor(private dataService: DataTableService, private cd: ChangeDetectorRef) {
@@ -38,27 +38,24 @@ export class DataTableComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     console.log(this.dataSource);
-    this.loading$.subscribe((response) =>{
+    this.loading$.subscribe((response) => {
       this.load = response.valueOf();
       this.cd.detectChanges();
       console.log(response.valueOf());
     }
     );
     this.page.url = this.dataSource.url;
-    this.page.systemId = this.dataSource.systemId;
     this.columns = this.dataSource.columns;
     this.pageCallback({ offset: 0 });
   }
   ngAfterViewInit() {
-    fromEvent(this.input.nativeElement, 'keyup')
-            .pipe(
-                debounceTime(150),
-                distinctUntilChanged(),
-                tap(() => {
-                  this.updateFilter();
-                })
-            )
-            .subscribe();
+    fromEvent(this.input.nativeElement, 'keyup').pipe(
+      debounceTime(150),
+      distinctUntilChanged(),
+      tap(() => {
+        this.updateFilter();
+      })
+      ).subscribe();
   }
   pageCallback(pageInfo: { count?: number, pageSize?: number, size?: number, offset?: number }) {
     this.page.offset = pageInfo.offset;
