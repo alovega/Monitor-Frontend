@@ -23,11 +23,11 @@ export class DataTableComponent implements OnInit, AfterViewInit {
   loaded = false;
 
   private loadingSubject = new BehaviorSubject<boolean>(false);
-  public rows;
+  public rows: any[];
+  public message: string;
   public loading$ = this.loadingSubject.asObservable();
   load: boolean;
-  public columns;
-  public temp;
+  public columns: any[];
   pagination = [5, 10, 25, 50, 100]
   page = new Page();
   paginator: any;
@@ -85,6 +85,7 @@ export class DataTableComponent implements OnInit, AfterViewInit {
       this.page.totalPages = response.totalPages;
       this.page.totalElements = response.totalElements;
       this.rows = response.row;
+      this.message = response.range;
       this.cd.detectChanges();
     });
   }
