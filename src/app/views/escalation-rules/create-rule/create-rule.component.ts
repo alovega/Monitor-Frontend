@@ -2,12 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
+import { forkJoin } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
 
 import { EscalationRule, EscalationRuleResponse } from '../../../shared/models/escalation-rule';
 import { EscalationRuleService } from '../escalation-rule.service';
-import { ToastrService } from 'ngx-toastr';
 import { LookUpService } from 'src/app/shared/look-up.service';
 import { DropdownItem } from 'src/app/layout/top-nav-bar/dropdown-item';
+import { EscalationLevel } from 'src/app/shared/models/escalation-level';
+import { EventType } from 'src/app/shared/models/event-type';
 
 @Component({
   selector: 'hm-create-rule',
@@ -18,7 +21,8 @@ export class CreateRuleComponent implements OnInit {
   escalationRuleForm: FormGroup;
   submitted = false;
   escalationLevels: DropdownItem[];
-  eventTypes: any;
+  eventTypes: DropdownItem[];
+  isdataReady = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -28,17 +32,19 @@ export class CreateRuleComponent implements OnInit {
     private toastr: ToastrService,
     private lookupService: LookUpService) { }
   ngOnInit() {
-    this.lookupService.getEscalationLevel().subscribe(
-      res => {
-        this.escalationLevels = res.map((rule) => ({id: rule.id, text: rule.name}));
+    const eventTypes = this.lookupService.getEventType();
+    const escalationLevels = this.lookupService.getEscalationLevel();
+    forkJoin([eventTypes, escalationLevels])
+    .subscribe(results => {
+      if (results[0]) {
+        this.eventTypes = results[0].map((type: EventType) => ({id: type.id, text: type.name}));
       }
-    );
-    this.lookupService.getEventType().subscribe(
-      res => {
-        this.eventTypes = res.map((type) => ({id: type.id, text: type.name}));
+      if (results[1]) {
+        this.escalationLevels = results[1].map((level: EscalationLevel) => ({id: level.id, text: level.name}));
       }
-    );
-    this.createEscalationRuleForm();
+      this.createEscalationRuleForm();
+      this.isdataReady = true;
+    });
   }
 
   createEscalationRuleForm() {
