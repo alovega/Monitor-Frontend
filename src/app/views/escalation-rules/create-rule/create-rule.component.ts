@@ -68,10 +68,10 @@ export class CreateRuleComponent implements OnInit {
     .subscribe(response => {
       if (response.ok) {
         if (response.body.code === '800.200.001') {
-          this.toastr.success('Escalation rule was created successfully', 'Rule creationsuccess');
+          this.toastr.success('Escalation rule was created successfully', 'Create Rule success');
           this.location.back();
         } else {
-          this.toastr.error('Escalation rule could not be created', 'Rule creation error');
+          this.toastr.error('Escalation rule could not be created', 'Create Rule error');
         }
       } else {
         // TODO: Add error checks

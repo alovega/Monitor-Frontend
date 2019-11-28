@@ -72,7 +72,6 @@ export class EscalationRulesComponent implements OnInit, AfterViewInit {
       this.mdbTablePagination.nextShouldBeDisabled = false;
     }
     this.cdRef.detectChanges();
-    console.log(this.mdbTablePagination.firstItemIndex);
   }
 
   getEventTypeName(eventTypeId: string) {
@@ -145,12 +144,12 @@ export class EscalationRulesComponent implements OnInit, AfterViewInit {
             if (response.body.code === '800.200.001') {
               this.rules = response.body.data;
             } else {
-              // Appropriate warning for failed rule updates on deletion
+              this.toastr.error('Could not retrieve escalation rules', 'Get escalation rules error!');
             }
           } else {
             // TODO: Add error checks
           }
-          });
+        });
       } else if (result.dismiss === Swal.DismissReason.cancel) {
         Swal.fire(
           'Cancelled',

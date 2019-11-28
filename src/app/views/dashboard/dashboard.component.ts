@@ -129,7 +129,6 @@ export class DashboardComponent implements OnInit, AfterViewChecked, AfterViewIn
             this.toastr.error('Error Fetching current status', 'Error!');
           }
         }
-        console.log(response);
     });
     this.getWidgetData(this.activeTab);
     this.profileService.getLoggedInuserRecentNotifications().subscribe(

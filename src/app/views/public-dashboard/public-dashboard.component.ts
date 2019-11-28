@@ -33,10 +33,10 @@ export class PublicDashboardComponent implements OnInit {
     this.systemId = this.activatedRoute.snapshot.paramMap.get('system-id');
     const systemStatus = this.httpWrapperService.post<SystemResponse>('get_system_status/', {system_id: this.systemId});
     const pastIncidents = this.httpWrapperService.post<IncidentResponse>('past_incidents/', {system_id: this.systemId});
-    this.systemService.getSystem<SystemResponse>(this.systemId).subscribe(
-      (res) => {
-        if (res.ok) {
-          if (res.body.code === '800.200.001') {
+    this.systemService.getSystem<SystemResponse>(this.systemId)
+    .subscribe(response => {
+        if (response.ok) {
+          if (response.body.code === '800.200.001') {
             forkJoin([systemStatus, pastIncidents])
             .subscribe(results => {
               if (results[0].ok) {
