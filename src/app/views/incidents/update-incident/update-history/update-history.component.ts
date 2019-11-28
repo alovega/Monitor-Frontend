@@ -71,10 +71,12 @@ export class UpdateHistoryComponent implements OnInit {
   }
 
   public showIncident(): void {
-    this.incidentService.getIncident(this.incidentId).subscribe(
-      (response: IncidentResponse) => {
-        if (response.code === '800.200.001') {
-          this.incident = response.data;
+    this.incidentService.getIncident<IncidentResponse>(this.incidentId)
+    .subscribe(response => {
+      if (response.ok) {
+        if (response.body.code === '800.200.001') {
+          this.incident = response.body.data;
+          console.log(this.incident);
           let escalationLevel = '';
           let userId = '';
           let incidentState: string = '';
@@ -93,10 +95,14 @@ export class UpdateHistoryComponent implements OnInit {
             user: userId,
             escalation_level: escalationLevel
           });
+        } else {
+          this.toastr.error('Could not retrieve incident', 'Incident update error');
         }
         this.loading = false;
+      } else {
+        // TODO: Add error checks
       }
-    );
+    });
   }
 
   onSubmit() {
@@ -105,16 +111,20 @@ export class UpdateHistoryComponent implements OnInit {
     if (this.updateIncidentForm.invalid) {
       return ;
     }
-    return this.incidentService.updateIncident(this.incidentId, this.updateIncidentForm.value).subscribe(
-      (incident: IncidentResponse) => {
-        if (incident.code === '800.200.001') {
-          this.toastr.success('Incident updated successfully', 'Incident update success');
+    return this.incidentService.updateIncident<IncidentResponse>(this.incidentId, this.updateIncidentForm.value)
+    .subscribe(response => {
+      if (response.ok) {
+        if (response.body.code === '800.200.001') {
+          this.toastr.success('Incident updated successfully', 'Success');
           this.back();
         } else {
-          this.toastr.error('Incident could not be updated', 'Incident update error');
+          this.toastr.error('Incident edit failed', 'Edit incident error');
         }
+      } else {
+        // TODO: Add error checks
       }
-    );
+
+    });
   }
 
   removeIncident(incidentId) {
@@ -142,12 +152,12 @@ export class UpdateHistoryComponent implements OnInit {
           'Cancelled',
           '',
           'error'
-        )
+        );
       }
-    })
+    });
   }
 
   back() {
-    this.router.navigate(['dashboard/incidents']);
+    this.router.navigate(['dashboard', 'incidents']);
   }
 }

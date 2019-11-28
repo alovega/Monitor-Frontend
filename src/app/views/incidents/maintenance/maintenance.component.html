@@ -9,22 +9,22 @@
       <td scope="row">
           <div class="incident-description">
             <div class="action-buttons float-right">
-                <a id="update-{{incident.incident_id}}" routerLink="/incidents/update/{{incident.incident_id}}" 
-                routerLinkActive="active" *ngIf="incident.status !== 'Completed'; else Open">Update</a>
+                <a id="update-{{incident.id}}" routerLink="/incidents/update/{{incident.id}}" 
+                routerLinkActive="active" *ngIf="incident.state_name !== 'Completed'; else Open">Update</a>
                 <ng-template #Open>
-                    <a id="update-{{incident.incident_id}}" routerLink="/dashboard/incidents/update/{{incident.incident_id}}" routerLinkActive="active">View</a>
+                    <a id="update-{{incident.id}}" routerLink="/dashboard/incidents/update/{{incident.id}}" routerLinkActive="active">View</a>
                 </ng-template>
             </div>
             <strong>
-                <a class="incident-view-link" routerLink="/dashboard/incidents/update/{{incident.incident_id}}" routerLinkActive="active">
-                  <span *ngIf="incident.incident_updates.length; else noUpdates">
+                <a class="incident-view-link" routerLink="/dashboard/incidents/update/{{incident.id}}" routerLinkActive="active">
+                  <span *ngIf="incident?.incident_updates.length; else noUpdates">
                       <span *ngFor="let update of incident.incident_updates; let i=index">
-                        <span *ngIf="update.status && i<1" class="incident-status" color="info">[{{ update.status }}] {{ incident.name }}</span>
+                        <span *ngIf="update.state_name && i<1" class="incident-status" color="info">[{{ update.state_name }}] {{ incident.name }}</span>
                       </span> 
                   </span>               
                   <ng-template #noUpdates>
                     <span class="incident-status" color="info">
-                        [{{ incident.status }}] {{ incident.name }}
+                        [{{ incident.state_name }}] {{ incident.name }}
                     </span>
                   </ng-template>
                 </a>
@@ -50,7 +50,4 @@
     </hm-empty-data>
 </ng-template>
 
-<div class="pagination-container">
-
-</div>
 </div>

@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild, AfterViewChecked, AfterViewInit, ChangeDetectorRef } from '@angular/core';
 import { Route, ActivatedRoute } from '@angular/router';
 import { NgbTabChangeEvent, NgbTabset } from '@ng-bootstrap/ng-bootstrap';
+import { tap } from 'rxjs/operators';
 
 import { SystemService } from '../../shared/system.service';
 import { GraphsService } from '../../shared/graphs.service';
@@ -10,7 +11,10 @@ import { System, SystemResponse, SystemsResponse } from 'src/app/shared/models/s
 import { SystemStatusResponse, SystemStatus } from 'src/app/shared/models/system-status';
 import { ToastrService } from 'ngx-toastr';
 import { WidgetData, WidgetDataResponse } from './widget-data';
-import { ErrorsGraphDataResponse } from './errors-graph-data';
+import { HttpResponse, HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
+import { environment } from '../../../environments/environment';
+import { Observable } from 'rxjs';
+import { GraphDataResponse } from 'src/app/shared/models/graph-data';
 
 @Component({
   selector: 'hm-dashboard',
@@ -19,7 +23,6 @@ import { ErrorsGraphDataResponse } from './errors-graph-data';
 })
 export class DashboardComponent implements OnInit, AfterViewChecked, AfterViewInit {
   currentSystem: System;
-  currentSystemId: any;
   message: any;
   widgetData: WidgetData;
   activeTab: string;
@@ -27,7 +30,7 @@ export class DashboardComponent implements OnInit, AfterViewChecked, AfterViewIn
   endDate: Date;
   loading = true;
   graphChanges: any;
-  public systemStatus: SystemStatus;
+  systemStatus: SystemStatus;
   @ViewChild('tabs', {static: false}) tabs: NgbTabset;
 
   public errorRateGraph = {
@@ -110,20 +113,23 @@ export class DashboardComponent implements OnInit, AfterViewChecked, AfterViewIn
     private profileService: ProfileService,
     private activatedRoute: ActivatedRoute,
     private toastr: ToastrService,
-    private cd: ChangeDetectorRef
+    private cd: ChangeDetectorRef,
   ) {
     this.activeTab = 'today';
   }
 
   ngOnInit() {
     this.currentSystem = this.systemService.getCurrentSystem();
-    this.systemStatusService.getCurrentStatus().subscribe(
-      (res: SystemStatusResponse) => {
-        if (res.code === '800.200.001') {
-          this.systemStatus = res.data;
-        } else {
-          this.toastr.error('Error Fetching current status', 'Error!');
+    this.systemStatusService.getCurrentStatus<SystemStatusResponse>().subscribe(
+      (response) => {
+        if (response.ok) {
+          if (response.body.code === '800.200.001') {
+            this.systemStatus = response.body.data;
+          } else {
+            this.toastr.error('Error Fetching current status', 'Error!');
+          }
         }
+        console.log(response);
     });
     this.getWidgetData(this.activeTab);
     this.profileService.getLoggedInuserRecentNotifications().subscribe(
@@ -131,19 +137,25 @@ export class DashboardComponent implements OnInit, AfterViewChecked, AfterViewIn
         this.message = data;
     });
 
-    this.graphsService.getResponseTimes().subscribe(
-      (response) => {
-        if (response.code === '800.200.001') {
-          Object.keys(response.data.datasets).forEach(key => {
-            this.responseTimeGraph.chartDatasets.push(response.data.datasets[key]);
-            this.responseTimeGraph.chartLabels.push(response.data.datasets[key].data);
+    this.graphsService.getResponseTimes<GraphDataResponse>()
+    .subscribe(response => {
+      if (response.ok) {
+        console.log(response.body);
+        if (response.body.code === '800.200.001') {
+          Object.keys(response.body.data.datasets).forEach(key => {
+            this.responseTimeGraph.chartDatasets.push(response.body.data.datasets[key]);
+            this.responseTimeGraph.chartLabels.push(response.body.data.datasets[key].data);
           });
-          this.responseTimeGraph.chartLabels = response.data.labels;
+          this.responseTimeGraph.chartLabels = response.body.data.labels;
         } else {
-          this.toastr.error('Error while fetching response times graph data', 'Error!');
+          this.toastr.error('Failed to retrieve Response times graph data', 'Get graph data error');
         }
-      });
-    }
+      } else {
+        // TODO: Add error checks
+      }
+    });
+  }
+
 
   public getWidgetData(duration: string) {
     this.widgetData = new WidgetData();
@@ -161,27 +173,34 @@ export class DashboardComponent implements OnInit, AfterViewChecked, AfterViewIn
     } else {
       this.endDate = this.endDate;
     }
-    this.systemStatusService.getDashboardWidgetsData(this.startDate, this.endDate).subscribe(
-      (res: WidgetDataResponse) => {
-        if (res.code === '800.200.001') {
-          this.widgetData = res.data;
+    this.systemStatusService.getDashboardWidgetsData<WidgetDataResponse>(this.startDate, this.endDate)
+    .subscribe(response => {
+      if (response.ok) {
+        if (response.body.code === '800.200.001') {
+          this.widgetData = response.body.data;
         } else {
           this.toastr.error('Error while fetching widgets data', 'Error!');
         }
+      } else {
+        // TODO: Add error checks
+      }
     });
 
-    this.graphsService.getErrorRates(this.startDate, this.endDate).subscribe(
-      (response: ErrorsGraphDataResponse) => {
-        if (response.code === '800.200.001') {
-          this.errorRateGraph.chartLabels = response.data.labels;
-          this.errorRateGraph.chartDatasets[0].data = response.data.datasets;
-          this.graphChanges = response.data;
+    this.graphsService.getErrorRates<GraphDataResponse>(this.startDate, this.endDate)
+    .subscribe(response => {
+      if (response.ok) {
+        if (response.body.code === '800.200.001') {
+          this.errorRateGraph.chartLabels = response.body.data.labels;
+          this.errorRateGraph.chartDatasets[0].data = response.body.data.datasets;
+          this.graphChanges = response.body.data;
           this.loading = false;
         } else {
-          this.toastr.error('Could not fetch error rates graph data. Try again later', 'Error');
+          this.toastr.error('Failed to retrieve Error rates graph data', 'Get graph data error');
         }
+      } else {
+        // TODO: Add error checks
       }
-    );
+    });
   }
 
   ngAfterViewChecked(): void {
@@ -195,12 +214,9 @@ export class DashboardComponent implements OnInit, AfterViewChecked, AfterViewIn
   }
 
   onTabChange($event: NgbTabChangeEvent) {
-    // console.log($event.nextId);
     if (this.tabs) {
-      // if ()
       this.activeTab = $event.nextId;
       this.getWidgetData(this.activeTab);
-      // this.router.navigate([`dashboard/quick-setup/${$event.nextId}`]);
     }
   }
 }

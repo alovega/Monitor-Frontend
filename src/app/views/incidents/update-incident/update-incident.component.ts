@@ -61,13 +61,17 @@ export class UpdateIncidentComponent implements OnInit {
 
   public showIncident(): void {
     // console.log('Showing...' + this.currentSystem);
-    this.incidentService.getIncident(this.incidentId).subscribe(
-      (response: IncidentResponse) => {
-        if (response.code === '800.200.001') {
-          this.incident = response.data;
+    this.incidentService.getIncident<IncidentResponse>(this.incidentId)
+    .subscribe(response => {
+      if (response.ok) {
+        if (response.body.code === '800.200.001') {
+          this.incident = response.body.data;
         } else {
           this.toastr.error('Could not fetch the incident history. Try again later', 'Error!');
         }
+      } else {
+        // TODO: Add error checks
+      }
     });
   }
 

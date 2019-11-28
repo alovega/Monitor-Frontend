@@ -70,14 +70,18 @@ export class AddRulesComponent implements OnInit {
   }
 
   getRules() {
-    this.ruleService.getRules().subscribe(
-      (res: EscalationRulesResponse) => {
-        if (res.code === '800.200.001') {
-          this.escalationRules = res.data;
+    this.ruleService.getRules<EscalationRulesResponse>()
+    .subscribe(response => {
+      if (response.ok) {
+        if (response.body.code === '800.200.001') {
+          this.escalationRules = response.body.data;
           if (!this.escalationRules.length) {
             this.setupService.disabledNext.next(true);
           }
         }
+      } else {
+        // TODO: Add error checks
+      }
     });
   }
 
@@ -87,10 +91,11 @@ export class AddRulesComponent implements OnInit {
   }
 
   editRule(ruleId: string) {
-    this.ruleService.getRule(ruleId).subscribe(
-      (res: EscalationRuleResponse) => {
-        if (res.code === '800.200.001') {
-          this.escalationRule = res.data;
+    this.ruleService.getRule<EscalationRuleResponse>(ruleId).
+    subscribe(response => {
+      if (response.ok) {
+        if (response.body.code === '800.200.001') {
+          this.escalationRule = response.body.data;
           this.editRuleForm.patchValue({
             name: this.escalationRule.name,
             description: this.escalationRule.description,
@@ -100,7 +105,13 @@ export class AddRulesComponent implements OnInit {
             event_type: this.eventTypes.filter(item => item.name === this.escalationRule.event_type_name)[0].id,
           });
           this.openBtn.nativeElement.click();
+        } else {
+          this.toastr.error('Escalation rule could not be retrieved', 'Edit escalation rule error');
         }
+      } else {
+        // TODO: Add error checks
+      }
+
     });
   }
 
@@ -110,17 +121,21 @@ export class AddRulesComponent implements OnInit {
       return;
     }
 
-    this.ruleService.createRule(this.addRuleForm.value).subscribe(
-      (res: EscalationRuleResponse) => {
+    this.ruleService.createRule<EscalationRuleResponse>(this.addRuleForm.value)
+    .subscribe(response => {
+      if (response.ok) {
         this.submitted = false;
-        if (res.code === '800.200.001') {
+        if (response.body.code === '800.200.001') {
           this.getRules();
           this.toastr.success('Escalation rule created successfully!');
           this.closeAddModal.nativeElement.click();
         } else {
-          this.toastr.error('Escalation rule could not be created! Try again later', 'Error');
+          this.toastr.error('Escalation rule creation failed! Try again later', 'Escalation rule creation error');
         }
-      });
+      } else {
+        // TODO: Add error checks
+      }
+    });
   }
 
   onSubmitEditRule() {
@@ -128,16 +143,20 @@ export class AddRulesComponent implements OnInit {
     if (this.editRuleForm.invalid) {
       return;
     }
-    this.ruleService.updateRule(this.escalationRule.id, this.editRuleForm.value).subscribe(
-      (res: EscalationRuleResponse) => {
+    this.ruleService.updateRule<EscalationRuleResponse>(this.escalationRule.id, this.editRuleForm.value)
+    .subscribe(response => {
+      if (response.ok) {
         this.submitted = false;
-        if (res.code === '800.200.001') {
+        if (response.body.code === '800.200.001') {
           this.getRules();
           this.toastr.success('Escalation rule updated successfully!');
           this.closeUpdateModal.nativeElement.click();
         } else {
-          this.toastr.error('Escalation rule could not be updated! Try again later', 'Error');
+          this.toastr.error('Escalation rule edit failed! Try again later', 'Edit Escalation rule error');
         }
-      });
+      } else {
+        // TODO: Add error checks
+      }
+    });
   }
 }

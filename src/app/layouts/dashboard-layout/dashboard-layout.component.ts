@@ -20,13 +20,12 @@ declare var $: any;
 })
 export class DashboardLayoutComponent implements OnInit, AfterViewInit {
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
-        .pipe(
-            map(result => result.matches),
-            shareReplay(1),
-        );
+  .pipe(
+    map(result => result.matches),
+    shareReplay(1),
+  );
   systems: System[];
   currentSystem: System;
-  currentSystemId: any;
   currentUser: any;
   sideBarOpen = true;
   @ViewChild('appDrawer',  {static: true}) appDrawer: ElementRef;
@@ -104,18 +103,22 @@ export class DashboardLayoutComponent implements OnInit, AfterViewInit {
     // this.navService.openNav();
     this.currentSystem = this.systemService.getCurrentSystem();
     if (this.currentSystem) {
-      this.currentSystemId = this.currentSystem.id;
     } else {
-      this.systemService.getSystems().subscribe(
-        (res: SystemsResponse) => {
-          if (res.code === '800.200.001') {
-            this.currentSystem = res.data[0];
-            this.currentSystemId = this.currentSystem.id;
+      this.systemService.getSystems<SystemsResponse>()
+      .subscribe(response => {
+        if (response.ok) {
+          if (response.body.code === '800.200.001') {
+            this.currentSystem = response.body.data[0];
             localStorage.setItem('currentSystem', JSON.stringify(this.currentSystem));
+            this.systemService.currentSystemSubject.next(this.currentSystem);
           } else {
             this.toastr.error('An error occurred. Try again later', 'Error!');
           }
           window.location.reload();
+        } else {
+          // TODO: Add error checks
+        }
+
       });
     }
     this.authService.currentUser.subscribe(

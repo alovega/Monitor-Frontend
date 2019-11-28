@@ -1,42 +1,33 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
-import { map, tap} from 'rxjs/operators';
-
-import { environment } from '../../../environments/environment';
-import { EscalationRuleResponse, EscalationRulesResponse, EscalationRule } from '../../shared/models/escalation-rule';
+import { HttpResponse } from '@angular/common/http';
+import { Observable} from 'rxjs';
 import { HttpWrapperService } from 'src/app/shared/helpers/http-wrapper.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class EscalationRuleService {
-  httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-  };
-
   constructor(
-    private http: HttpClient,
     private httpWrapperService: HttpWrapperService
   ) { }
 
-  createRule(escalationRule: EscalationRule): Observable<EscalationRuleResponse> {
-    return this.httpWrapperService.post('create_rule/', escalationRule);
+  createRule<T>(escalationRule: any): Observable<HttpResponse<T>> {
+    return this.httpWrapperService.post<T>('create_rule/', escalationRule);
   }
 
-  getRules(): Observable<EscalationRulesResponse> {
-    return this.httpWrapperService.post('get_rules/');
+  getRules<T>(): Observable<HttpResponse<T>> {
+    return this.httpWrapperService.post<T>('get_rules/');
   }
 
-  getRule(ruleId: string): Observable<EscalationRuleResponse> {
-    return this.httpWrapperService.post('get_rule/', {rule_id: ruleId});
+  getRule<T>(ruleId: string): Observable<HttpResponse<T>> {
+    return this.httpWrapperService.post<T>('get_rule/', {rule_id: ruleId});
   }
 
-  updateRule(ruleId: string, body: any): Observable<EscalationRuleResponse> {
-    return this.httpWrapperService.post('update_rule/', {rule_id: ruleId, ...body});
+  updateRule<T>(ruleId: string, body: any): Observable<HttpResponse<T>> {
+    return this.httpWrapperService.post<T>('update_rule/', {rule_id: ruleId, ...body});
   }
 
-  deleteRule(ruleId: any): Observable<EscalationRuleResponse> {
-    return this.httpWrapperService.post('delete_rule/', {rule_id: ruleId});
+  deleteRule<T>(ruleId: any): Observable<HttpResponse<T>> {
+    return this.httpWrapperService.post<T>('delete_rule/', {rule_id: ruleId});
   }
 }

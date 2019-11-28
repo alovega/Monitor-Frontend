@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { IncidentService } from '../incident.service';
-import { Incident } from '../incident';
+import { Incident, IncidentsResponse } from '../incident';
 import { Observable } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { SystemService } from '../../../shared/system.service';
+import { ToastrService } from 'ngx-toastr';
 
 
 @Component({
@@ -15,27 +16,35 @@ import { SystemService } from '../../../shared/system.service';
 export class OpenIncidentsComponent implements OnInit {
   incidents: Incident[];
   currentSystem: any;
-  currentSystemId: any;
   loading = true;
 
   constructor(
     private systemService: SystemService,
     private incidentService: IncidentService,
-    private activatedRoute: ActivatedRoute,
+    private toastr: ToastrService
   ) { }
 
   ngOnInit() {
     this.currentSystem = this.systemService.getCurrentSystem();
-    this.currentSystemId = this.currentSystem.id;
     this.showIncidents();
   }
   showIncidents() {
-    this.incidentService.getOpenIncidents(this.currentSystem).subscribe(
-      (results) => {
-        this.incidents = results;
+    const options = {
+      states: ['Investigating', 'Identified', 'Monitoring', 'Scheduled', 'InProgress'],
+    };
+    this.incidentService.getIncidents<IncidentsResponse>(options)
+    .subscribe(response => {
+      if (response.ok) {
+        if (response.body.code === '800.200.001') {
+          this.incidents = response.body.data;
+        } else {
+          this.toastr.error('Could not retrieve open incidents', 'Error');
+        }
         this.loading = false;
+      } else {
+        // TODO: Add error checks
       }
-    );
+    });
   }
 
 }
