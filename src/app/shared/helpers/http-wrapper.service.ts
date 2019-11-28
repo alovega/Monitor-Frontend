@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { HttpClient, HttpHeaders, HttpResponse, HttpRequest, HttpErrorResponse} from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpResponse, HttpRequest, HttpErrorResponse, HttpParams} from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { map, tap, retry, catchError} from 'rxjs/operators';
 import { AuthenticationService } from '../auth/authentication.service';
@@ -13,35 +13,43 @@ import { ToastrService } from 'ngx-toastr';
 export class HttpWrapperService {
   constructor(
     private http: HttpClient,
-    private router: Router,
     private authService: AuthenticationService,
     private toastr: ToastrService) { }
 
-  post(url: string, body: any = {}, headers?: any) {
-    return this.request(url, 'POST', body, headers);
+  post<T>(url: string, body: any = {}, params?: HttpParams | {[param: string]: string | string[]}, headers?: HttpHeaders | {
+    [header: string]: string | string[]}) {
+    return this.request<T>(url, 'POST', params, body, headers);
   }
 
-  get(url: string) {
-    return this.request(url, 'GET');
+  get<T>(url: string, params?: HttpParams | {[param: string]: string | string[]}, headers?: HttpHeaders | {
+    [header: string]: string | string[]}) {
+      return this.request<T>(url, 'GET', params, headers);
   }
 
-  private request(url: string, method: string, body?: any, headers?: any): Observable<any> {
+  private request<T>(url: string, method: string, params?: HttpParams | {[param: string]: string | string[]},
+                     body?: any, headers?: HttpHeaders | {[header: string]: string | string[]}): Observable<HttpResponse<T> > {
     const user = localStorage.getItem('currentUser');
     let accessToken: any;
     if (user) {
       accessToken = JSON.parse(user).token;
     }
     const targetUrl = environment.apiEndpoint + url;
+    if (!headers) {
+      headers = new HttpHeaders();
+    }
+    if (!params) {
+      params = new HttpParams();
+    }
     const options = {
-      body, headers
+      headers,
+      params: new HttpParams()
     };
-
-    return this.http.request(method, targetUrl, options).pipe(
-        map((response: any) => {
-          return response;
-        }),
-        catchError(this.handleError.bind(this)),
-    );
+    // console.log(options);
+    if (method === 'GET') {
+      return this.http.get<T>(targetUrl, {...headers, observe: 'response', ...params});
+    } else if (method === 'POST') {
+      return this.http.post<T>(targetUrl, body, {...headers, observe: 'response', ...params});
+    }
   }
 
   public handleError(error: HttpErrorResponse) {
@@ -50,6 +58,7 @@ export class HttpWrapperService {
     } else if (error.status === 401) {
       this.authService.logout();
     }
+    // this.toastr.error('An unexpected error occurred. Try again later.', 'Error');
     return throwError('An error; please try again later.');
   }
 }

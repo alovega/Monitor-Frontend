@@ -59,15 +59,20 @@ export class LoginComponent implements OnInit {
       data => {
         if (data) {
           if (!this.currentSystem) {
-            this.systemService.getSystems().subscribe(
-              (res: SystemsResponse) => {
-                if (res.code === '800.200.001') {
-                  this.currentSystem = res.data[0];
+            this.systemService.getSystems<SystemsResponse>()
+            .subscribe(response => {
+              if (response.ok) {
+                if (response.body.code === '800.200.001') {
+                  this.currentSystem = response.body.data[0];
                   localStorage.setItem('currentSystem', JSON.stringify(this.currentSystem));
+                  this.systemService.currentSystemSubject.next(this.currentSystem);
                   this.router.navigate([this.returnUrl]);
                 } else {
                   this.toastr.error('An error occurred. Try again later', 'Error!');
                 }
+              } else {
+                // TODO: Add error checks
+              }
                 // window.location.reload();
               }
             );

@@ -46,10 +46,11 @@ export class UpdateRuleComponent implements OnInit {
       event_type: ['', Validators.required]
     });
 
-    this.ruleService.getRule(this.ruleId).subscribe(
-      (res: EscalationRuleResponse) => {
-        if (res.code === '800.200.001') {
-          this.escalationRule = res.data;
+    this.ruleService.getRule<EscalationRuleResponse>(this.ruleId)
+    .subscribe(response => {
+      if (response.ok) {
+        if (response.body.code === '800.200.001') {
+          this.escalationRule = response.body.data;
           this.lookupService.getEventType().subscribe(
             res => {
               this.eventTypes = res.map(type => ({id: type.id, text: type.name}));
@@ -64,6 +65,9 @@ export class UpdateRuleComponent implements OnInit {
             }
           );
         }
+      } else {
+        // TODO: Add error checks
+      }
     });
   }
 
@@ -90,15 +94,19 @@ export class UpdateRuleComponent implements OnInit {
       return;
     }
 
-    this.ruleService.updateRule(this.escalationRule.id, this.escalationRuleForm.value).subscribe(
-      (res: EscalationRuleResponse) => {
-        if (res.code === '800.200.001') {
+    this.ruleService.updateRule<EscalationRuleResponse>(this.escalationRule.id, this.escalationRuleForm.value)
+    .subscribe(response => {
+      if (response.ok) {
+        if (response.body.code === '800.200.001') {
           this.toastr.success('Rule updated successfully', 'Success');
           this.location.back();
         } else {
           this.toastr.error('Rule could not be updated', 'Error');
         }
-      });
+      } else {
+        // TODO: Add error checks
+      }
+    });
     // console.log(formData.getAll());
   }
 
