@@ -25,9 +25,6 @@ export class SystemRecipientsComponent implements OnInit, AfterViewInit {
   constructor(
     private systemRecipientService: SystemRecipientService,
     private systemService: SystemService) {
-      of(this.getEscalationLevels()).subscribe( data => {
-        this.EscalationLevels = data;
-      });
     }
   ngOnInit() {
     this.dataSource.columns = [
@@ -41,15 +38,8 @@ export class SystemRecipientsComponent implements OnInit, AfterViewInit {
     this.dataSource.systemId = this.currentSystem.id;
     this.dataSource.url = 'get_system_recipient_data/';
     this.currentSystemId = this.currentSystem.id;
-    this.getEscalationLevels();
   }
   ngAfterViewInit() {}
-
-  getEscalationLevels() {
-    this.systemRecipientService.getLevels().subscribe(data => {
-      this.EscalationLevels = data;
-    });
-  }
    delete(systemRecipientId) {
     Swal.fire({
       title: 'Are you sure?',
