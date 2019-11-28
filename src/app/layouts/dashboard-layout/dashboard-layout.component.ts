@@ -130,7 +130,6 @@ export class DashboardLayoutComponent implements OnInit, AfterViewInit {
       if (this.expiresAt > this.now && (Math.abs(this.expiresAt - this.now)) < 60000) {
         this.authService.verifyToken(this.token).subscribe();
       } else {
-        // console.log (this.expiresAt);
         // console.log('Token still has time.. keep alive');
       }
     }, 30000);
@@ -139,15 +138,16 @@ export class DashboardLayoutComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     this.navService.appDrawer = this.appDrawer;
     this.navService.openNav();
+    this.loaded = true;
     this.cd.detectChanges();
-    this.  loaded = true;
   }
 
   sideBarToggler() {
     this.sideBarOpen = !this.sideBarOpen;
   }
 
-  public inactiveTime() {
+  /***
+    public inactiveTime() {
     let time;
     let authService = this.authService;
     let router = this.router;
@@ -188,9 +188,9 @@ export class DashboardLayoutComponent implements OnInit, AfterViewInit {
         if (countDown < 0) {
           clearInterval(timer);
         }
-        console.log(countDown);
         $('#swal2-content').text(displayText.replace(/#1/, countDown));
       }, 1000);
     }
   }
+  **/
 }

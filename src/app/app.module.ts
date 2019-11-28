@@ -7,7 +7,9 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { ToastrModule } from 'ngx-toastr';
-import {FlexLayoutModule} from '@angular/flex-layout';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { NgSelect2Module } from 'ng-select2';
+
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ErrorsModule } from './errors/errors.module';
@@ -45,7 +47,8 @@ import { DashboardLayoutModule } from './layouts/dashboard-layout/dashboard-layo
       positionClass: 'toast-top-right',
       preventDuplicates: true,
     }),
-    DashboardLayoutModule
+    DashboardLayoutModule,
+    NgSelect2Module
   ],
   providers: [AuthenticationService, AuthGuardService],
   schemas: [NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA],

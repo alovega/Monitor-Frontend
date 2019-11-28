@@ -2,11 +2,12 @@ import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
-import { System } from '../../shared/models/system';
+import { System, SystemResponse } from '../../shared/models/system';
 import Swal from 'sweetalert2';
 
 import { SystemService } from '../../shared/system.service';
 import { LookUpService } from 'src/app/shared/look-up.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'hm-edit-system',
@@ -29,7 +30,8 @@ export class EditSystemComponent implements OnInit {
     private lookupService: LookUpService,
     private location: Location,
     private activatedRoute: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private toastr: ToastrService
   ) {
     // this.system = new System();
     this.system = this.currentSystem;
@@ -72,9 +74,11 @@ export class EditSystemComponent implements OnInit {
     }
 
     return this.systemService.updateSystem(this.currentSystem.id, this.editSystemForm.value).subscribe(
-      ((result: any) => {
-        console.log(result);
-        if (result) {
+      ((response: SystemResponse) => {
+        if (response.code === '800.200.001') {
+          this.currentSystem = response.data;
+          localStorage.setItem('currentSystem', JSON.stringify(this.currentSystem));
+          this.systemService.currentSystemSubject.next(this.currentSystem);
           Swal.fire({
             title: 'Success',
             text: 'System updated successfully!',
@@ -83,13 +87,7 @@ export class EditSystemComponent implements OnInit {
             window.location.reload();
           });
         } else {
-          Swal.fire({
-            title: 'Error',
-            text: 'System could not be updated!',
-            type: 'error',
-          }).then(() => {
-            window.location.reload();
-          });
+          this.toastr.error(response.message, 'System could not be updated!');
         }
       })
     );

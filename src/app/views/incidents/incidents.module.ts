@@ -4,6 +4,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HttpClientModule } from '@angular/common/http';
+import { NgSelect2Module } from 'ng-select2';
+
 
 import { IncidentsRoutingModule } from './incidents-routing.module';
 import { IncidentsComponent } from './incidents.component';
@@ -32,7 +34,8 @@ import { SearchIncidentsComponent } from './search-incidents/search-incidents.co
     MDBBootstrapModule,
     NgbModule,
     HttpClientModule,
-    SharedModule
+    SharedModule,
+    NgSelect2Module
   ],
   schemas: [
     NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA

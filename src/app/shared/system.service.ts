@@ -40,21 +40,11 @@ export class SystemService {
   }
 
   changesystem(systemId: string): Observable<SystemResponse> {
-    return this.httpWrapperService.post('get_system/', {id: systemId}).pipe();
-    //   tap(system => {
-    //     localStorage.setItem('currentSystem', JSON.stringify(system)),
-    //     this.currentSystemSubject.next(system);
-    //   })
-    // );
+    return this.httpWrapperService.post('get_system/', {id: systemId});
   }
 
   updateSystem(systemId: string, body: any) {
-    return this.httpWrapperService.post('update_system/', {id: systemId, ...body}).pipe(
-      tap(result => {
-        console.log(result);
-        localStorage.setItem('currentSystem', JSON.stringify(result.data));
-        this.currentSystemSubject.next(result.data);
-    }));
+    return this.httpWrapperService.post('update_system/', {id: systemId, ...body});
   }
 
   checkCurrentSystem() {

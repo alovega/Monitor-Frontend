@@ -66,7 +66,7 @@ export class SmsNotificationsComponent implements OnInit, AfterViewInit {
     this.mdbTablePagination.setMaxVisibleItemsNumberTo(10);
     this.mdbTablePagination.calculateFirstItemIndex();
     this.mdbTablePagination.calculateLastItemIndex();
-    if (this.elements.length > this.visibleItems) {
+    if (this.elements > this.visibleItems) {
       this.mdbTablePagination.nextShouldBeDisabled = false;
     }
     this.cdRef.detectChanges();
@@ -81,7 +81,7 @@ export class SmsNotificationsComponent implements OnInit, AfterViewInit {
     this.mdbTablePagination.setMaxVisibleItemsNumberTo(this.visibleItems);
     this.mdbTablePagination.calculateFirstItemIndex();
     this.mdbTablePagination.calculateLastItemIndex();
-    if (this.elements.length > this.visibleItems) {
+    if (this.elements > this.visibleItems) {
       this.mdbTablePagination.nextShouldBeDisabled = false;
     }
     this.cdRef.detectChanges();

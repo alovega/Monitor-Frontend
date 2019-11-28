@@ -6,7 +6,6 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class YesNoPipe implements PipeTransform {
 
   transform(value: boolean, ...args: any[]): any {
-    console.log(value);
     if (value === true) {
       return 'Yes';
     } else if (value === false) {

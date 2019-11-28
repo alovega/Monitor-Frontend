@@ -50,21 +50,21 @@ export class UpdateRuleComponent implements OnInit {
       (res: EscalationRuleResponse) => {
         if (res.code === '800.200.001') {
           this.escalationRule = res.data;
+          this.lookupService.getEventType().subscribe(
+            res => {
+              this.eventTypes = res.map(type => ({id: type.id, text: type.name}));
+              this.eventTypeId = this.eventTypes.filter(i => i.text === this.escalationRule.event_type_name)[0].id;
+            }
+          );
+          this.lookupService.getEscalationLevel().subscribe(
+            res => {
+              this.escalationLevels = res.map(level => ({id: level.id, text: level.name}));
+              this.escalationLevelId = this.escalationLevels.filter(i => i.text === this.escalationRule.escalation_level_name)[0].id;
+              this.createEscalationRulesForm();
+            }
+          );
         }
     });
-    this.lookupService.getEventType().subscribe(
-      res => {
-        this.eventTypes = res;
-        this.eventTypeId = this.eventTypes.filter(i => i.name === this.escalationRule.event_type_name)[0].id;
-      }
-    );
-    this.lookupService.getEscalationLevel().subscribe(
-      res => {
-        this.escalationLevels = res;
-        this.escalationLevelId = this.escalationLevels.filter(item => item.name === this.escalationRule.escalation_level_name)[0].id;
-        this.createEscalationRulesForm();
-      }
-    );
   }
 
   get form() {
