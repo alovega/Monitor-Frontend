@@ -1,7 +1,5 @@
-import { Component, OnInit, ViewChild, HostListener, AfterViewInit, ChangeDetectorRef, TemplateRef } from '@angular/core';
-import { MdbTablePaginationComponent, MdbTableDirective, MdbTableSortDirective } from 'angular-bootstrap-md';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import {FormBuilder} from '@angular/forms';
+import { Component, OnInit, ViewChild, AfterViewInit, TemplateRef } from '@angular/core';
+import {DataSource} from '../../shared/data-table/model/dataSource';
 import Swal from 'sweetalert2';
 import { RecipientService } from './recipient.service';
 import { ActivatedRoute } from '@angular/router';
@@ -17,20 +15,12 @@ export class RecipientComponent implements OnInit, AfterViewInit {
   @ViewChild('dateColumn', {static: true}) dateColumn: TemplateRef<any>;
 
   elements: any;
-  visibleItems = 5;
-  public dataSource = {
-    columns: [],
-    url: '',
-    systemId: ''
-  };
+  public dataSource = new DataSource();
   currentSystem: any;
   currentSystemId: any;
   recipientId: any;
 
   constructor(private recipientService: RecipientService, private activatedRoute: ActivatedRoute) { }
-  @HostListener('input') oninput() {
-    this.searchItems();
-  }
   ngOnInit() {
     this.dataSource.columns = [
       {prop: 'item_index', name: 'Index'},
@@ -44,15 +34,6 @@ export class RecipientComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {}
 
-  changeVisibleItems(maxNumber: number) {
-    this.visibleItems = maxNumber;
-    if (!maxNumber) {
-      this.visibleItemsInput.nativeElement.value = 1;
-      this.visibleItems = 1;
-    }
-  }
-
-  searchItems() {}
   delete(recipientId) {
     Swal.fire({
       title: 'Are you sure?',

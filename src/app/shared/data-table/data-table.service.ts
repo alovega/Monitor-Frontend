@@ -1,57 +1,26 @@
 import { Injectable } from '@angular/core';
 import { Observable, throwError} from 'rxjs';
-import { map, retry, catchError} from 'rxjs/operators';
 import { Page } from './model/page';
 import { environment } from 'src/environments/environment';
-import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
+import { HttpWrapperService } from '../helpers/http-wrapper.service';
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class DataTableService {
-  constructor(private http: HttpClient) {
+  constructor(private httpWrapperService: HttpWrapperService) {
   }
- // Handle API errors
- handleError(error: HttpErrorResponse) {
-  if (error.error instanceof ErrorEvent) {
-    // A client-side or network error occurred. Handle it accordingly.
-    console.error('An error occurred:', error.error.message);
-  } else {
-    // The backend returned an unsuccessful response code.
-    // The response body may contain clues as to what went wrong,
-    console.error(
-      `Backend returned code ${error.status}, ` +
-      `body was: ${error.error}`);
-  }
-  // return an observable with a user-facing error message
-  return throwError(
-    'Something bad happened; please try again later.');
-}
-  public reloadTable(page): Observable<any> {
-
-    // NOTE: those params key values depends on your API!
-    const endpointUrl = environment.apiEndpoint + page.url;
-    const params = new HttpParams()
-      .set('orderColumn', `${page.orderBy}`)
-      .set('orderDir', `${page.orderDir}`)
-      .set('pageNumber', `${page.offset + 1}`)
-      .set('searchQuery', `${page.searchQuery}`)
-      .set('systemId', `${page.systemId}`)
-      .set('pageSize', `${page.size}`);
+  public reloadTable(page: Page): Observable<any> {
     const body = {
-      pageSize: params.get('pageSize'),
-      pageNumber: params.get('pageNumber'),
-      orderColumn: params.get('orderColumn'),
-      searchQuery: params.get('searchQuery'),
-      systemId: params.get('systemId'),
-      orderDir: params.get('orderDir')
+      pageSize: `${page.size}`,
+      pageNumber: `${page.offset + 1}`,
+      orderColumn: `${page.orderBy}`,
+      searchQuery: `${page.searchQuery}`,
+      systemId: `${page.systemId}`,
+      orderDir: `${page.orderDir}`
     };
-    console.log(  {body});
-    return this.http.post<any>(endpointUrl, {body}).pipe(
-      map(
-        response => response.payload,
-        retry(2)),
-      catchError(this.handleError));
+    return this.httpWrapperService.post(page.url, {body});
+
   }
 }

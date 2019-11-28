@@ -1,5 +1,6 @@
-import { Component, OnInit, ViewChild, AfterViewInit, HostListener, ChangeDetectorRef, TemplateRef } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit, ChangeDetectorRef, TemplateRef } from '@angular/core';
 import {EndpointService} from './endpoint.service';
+import {DataSource} from '../../shared/data-table/model/dataSource';
 import { ActivatedRoute } from '@angular/router';
 import Swal from 'sweetalert2';
 import { SystemService } from 'src/app/shared/system.service';
@@ -19,11 +20,7 @@ export class EndpointComponent implements OnInit, AfterViewInit {
   currentSystem: any;
   currentSystemId: any;
   endpointId: any;
-  public dataSource = {
-    columns: [],
-    url: '',
-    systemId: ''
-  };
+  public dataSource = new DataSource();
 
   constructor(
     private endpointService: EndpointService,

@@ -1,9 +1,9 @@
-import { Component, OnInit, ViewChild, HostListener, ChangeDetectorRef, AfterViewInit, TemplateRef} from '@angular/core';
+import { Component, OnInit, ViewChild, ChangeDetectorRef, AfterViewInit, TemplateRef} from '@angular/core';
 import Swal from 'sweetalert2';
 import { SystemRecipientService } from './system-recipient.service';
 import { SystemService } from 'src/app/shared/system.service';
 import { of } from 'rxjs';
-import { DataTableComponent } from 'src/app/shared/data-table/data-table.component';
+import {DataSource} from '../../shared/data-table/model/dataSource';
 
 @Component({
   selector: 'hm-system-recipients-view',
@@ -21,15 +21,9 @@ export class SystemRecipientsComponent implements OnInit, AfterViewInit {
   elements: any;
   escalations: any;
   level: any;
-  dataTable: DataTableComponent;
-  public dataSource = {
-    columns: [],
-    url: '',
-    systemId: ''
-  };
+  public dataSource = new DataSource();
   constructor(
     private systemRecipientService: SystemRecipientService,
-    private cdRef: ChangeDetectorRef,
     private systemService: SystemService) {
       of(this.getEscalationLevels()).subscribe( data => {
         this.EscalationLevels = data;
@@ -51,20 +45,6 @@ export class SystemRecipientsComponent implements OnInit, AfterViewInit {
   }
   ngAfterViewInit() {}
 
-  changeVisibleItems(maxNumber: number) {}
-
-  filterSystemRecipients(level: any) {
-    if (level === 'all') {
-      this.systemRecipientService.getSystemRecipients(this.currentSystemId).subscribe(response => {
-      this.elements = response;
-      });
-    } else {
-      this.systemRecipientService.getSystemRecipients(this.currentSystemId).subscribe(response => {
-        response = response.filter((item) => item.escalationLevel === level);
-        this.elements = response;
-      });
-    }
-  }
   getEscalationLevels() {
     this.systemRecipientService.getLevels().subscribe(data => {
       this.EscalationLevels = data;
