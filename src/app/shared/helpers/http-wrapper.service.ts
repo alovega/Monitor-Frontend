@@ -16,7 +16,7 @@ export class HttpWrapperService {
     private authService: AuthenticationService,
     private toastr: ToastrService) { }
 
-  post<T>(url: string, params?: HttpParams | {[param: string]: string | string[]}, body: any = {}, headers?: HttpHeaders | {
+  post<T>(url: string, body: any = {}, params?: HttpParams | {[param: string]: string | string[]}, headers?: HttpHeaders | {
     [header: string]: string | string[]}) {
     return this.request<T>(url, 'POST', params, body, headers);
   }
@@ -44,7 +44,7 @@ export class HttpWrapperService {
       headers,
       params: new HttpParams()
     };
-    console.log(options);
+    // console.log(options);
     if (method === 'GET') {
       return this.http.get<T>(targetUrl, {...headers, observe: 'response', ...params});
     } else if (method === 'POST') {

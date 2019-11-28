@@ -73,10 +73,11 @@ export class EditSystemComponent implements OnInit {
       return;
     }
 
-    return this.systemService.updateSystem(this.currentSystem.id, this.editSystemForm.value).subscribe(
-      ((response: SystemResponse) => {
-        if (response.code === '800.200.001') {
-          this.currentSystem = response.data;
+    return this.systemService.updateSystem<SystemResponse>(this.currentSystem.id, this.editSystemForm.value)
+    .subscribe(response => {
+      if (response.ok) {
+        if (response.body.code === '800.200.001') {
+          this.currentSystem = response.body.data;
           localStorage.setItem('currentSystem', JSON.stringify(this.currentSystem));
           this.systemService.currentSystemSubject.next(this.currentSystem);
           Swal.fire({
@@ -87,10 +88,12 @@ export class EditSystemComponent implements OnInit {
             window.location.reload();
           });
         } else {
-          this.toastr.error(response.message, 'System could not be updated!');
+          this.toastr.error(response.body.message, 'System update error!');
         }
-      })
-    );
+      } else {
+        // TODO: Add error checks
+      }
+    });
   }
 
   public back(): void {

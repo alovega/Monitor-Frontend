@@ -42,13 +42,11 @@ export class AuthenticationService {
 
   public verifyToken(token: any) {
     return this.http.post<any>(`${environment.apiEndpoint}verify_token/`, {token: token}).pipe(
-      map(result => {
-        console.log('User token');
-        console.log(result);
-        if (result.code === '800.200.001') {
-          localStorage.setItem('currentUser', JSON.stringify(result.data));
-          this.currentUserSubject.next(result.data);
-          return result.data;
+      map(response => {
+        if (response.code === '800.200.001') {
+          localStorage.setItem('currentUser', JSON.stringify(response.data));
+          this.currentUserSubject.next(response.data);
+          return response.data;
         } else {
           this.logout();
         }

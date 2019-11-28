@@ -64,15 +64,18 @@ export class CreateRuleComponent implements OnInit {
     }
     // this.escalationRule.state = this.escalationRule.status;
     console.log(this.escalationRuleForm.value);
-    this.ruleService.createRule(this.escalationRuleForm.value).subscribe(
-      response => {
-        console.log(response);
-        if (response.code === '800.200.001') {
-          this.toastr.success('Escalation rule was created successfully', 'Create rule success');
+    this.ruleService.createRule<EscalationRuleResponse>(this.escalationRuleForm.value)
+    .subscribe(response => {
+      if (response.ok) {
+        if (response.body.code === '800.200.001') {
+          this.toastr.success('Escalation rule was created successfully', 'Rule creationsuccess');
           this.location.back();
         } else {
-          this.toastr.error('Escalation rule could not be created', 'Create rule error');
+          this.toastr.error('Escalation rule could not be created', 'Rule creation error');
         }
-      });
+      } else {
+        // TODO: Add error checks
+      }
+    });
   }
 }

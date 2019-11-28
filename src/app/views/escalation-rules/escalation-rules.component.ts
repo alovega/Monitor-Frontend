@@ -46,16 +46,21 @@ export class EscalationRulesComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     this.currentSystem = this.systemService.getCurrentSystem();
     this.currentSystemId = this.currentSystem.id;
-    this.rulesService.getRules().subscribe(
-      (res: EscalationRulesResponse) => {
-        if (res.code === '800.200.001') {
-          this.rules = res.data;
+    this.rulesService.getRules<EscalationRulesResponse>()
+    .subscribe(response => {
+      if (response.ok) {
+        if (response.body.code === '800.200.001') {
+          this.rules = response.body.data;
           this.mdbTable.setDataSource(this.rules);
           this.rules = this.mdbTable.getDataSource();
           this.previous = this.mdbTable.getDataSource();
+        } else {
+          this.toastr.error('Could not retrieve escalation rules', 'Get escalation rules error!');
         }
+      } else {
+        // TODO: Add error checks
       }
-    );
+    });
     this.isLoaded = true;
   }
 
@@ -122,19 +127,29 @@ export class EscalationRulesComponent implements OnInit, AfterViewInit {
       cancelButtonText: 'No, keep the rule'
     }).then((result) => {
       if (result.value) {
-        this.rulesService.deleteRule(ruleId).subscribe(
-          (res: EscalationRuleResponse) => {
-            if (res.code === '800.200.001') {
+        this.rulesService.deleteRule<EscalationRuleResponse>(ruleId)
+        .subscribe(response => {
+          if (response.ok) {
+            if (response.body.code === '800.200.001') {
               this.toastr.success('Rule deleted successfully', 'Delete Rule Success');
             } else {
               this.toastr.error('Rule could not be deleted', 'Delete Rule Error');
             }
-          });
-        this.rulesService.getRules().subscribe(
-          (res: EscalationRulesResponse) => {
-            if (res.code === '800.200.001') {
-              this.rules = res.data;
+          } else {
+            // TODO: Add error checks
+          }
+        });
+        this.rulesService.getRules<EscalationRulesResponse>()
+        .subscribe(response => {
+          if (response.ok) {
+            if (response.body.code === '800.200.001') {
+              this.rules = response.body.data;
+            } else {
+              // Appropriate warning for failed rule updates on deletion
             }
+          } else {
+            // TODO: Add error checks
+          }
           });
       } else if (result.dismiss === Swal.DismissReason.cancel) {
         Swal.fire(

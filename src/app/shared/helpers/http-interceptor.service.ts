@@ -35,12 +35,11 @@ export class HttpInterceptorService implements HttpInterceptor {
     }
     if ( request.body !== null && request.body.hasOwnProperty('system_id')) {
       request = request.clone({
-        body: {...request.body, client_id: this.clientId, token: this.accessToken, system: this.currentSystem.name}
+        body: {...request.body, client_id: this.clientId, token: this.accessToken}
       });
     } else {
       request = request.clone({
-        body: {...request.body, client_id: this.clientId, token: this.accessToken , system_id: this.currentSystem.id,
-          system: this.systemName}
+        body: {...request.body, client_id: this.clientId, token: this.accessToken , system_id: this.currentSystem.id}
       });
       // this.authService.verifyToken(this.accessToken);
     }
@@ -56,6 +55,7 @@ export class HttpInterceptorService implements HttpInterceptor {
       });
       // console.log(request);
     }
+    // console.log(request);
 
     return next.handle(request).pipe(
       finalize(() => {this.loaderService.hide()})

@@ -59,14 +59,18 @@ export class TopNavBarComponent implements OnInit, OnChanges {
 
   ngOnInit() {
     console.log(this.addSystemForm);
-    this.systemService.getSystems().subscribe(
-      (res: SystemsResponse) => {
-        if (res.code === '800.200.001') {
-          this.systems = res.data;
+    this.systemService.getSystems<SystemsResponse>()
+    .subscribe(response => {
+      if (response.ok) {
+        if (response.body.code === '800.200.001') {
+          this.systems = response.body.data;
           this.systemsDropDown = this.systems.map((sys) => ({id: sys.id, text: sys.name}));
         } else {
           this.toastr.error('An error occurred. Try again later', 'Error!');
         }
+      } else {
+        // TODO: Add error checks
+      }
     });
     this.profileService.getLoggedInUserDetail().subscribe(
       (data) => {
@@ -100,16 +104,20 @@ export class TopNavBarComponent implements OnInit, OnChanges {
     this.toggleSideBarForMe.emit();
   }
   changeSystem(systemId: any) {
-    this.systemService.changesystem(systemId).subscribe(
-      (res: SystemResponse) => {
-        if (res.code === '800.200.001') {
-          this.currentSystem = res.data;
+    this.systemService.getSystem<SystemResponse>(systemId)
+    .subscribe(response => {
+      if (response.ok) {
+        if (response.body.code === '800.200.001') {
+          this.currentSystem = response.body.data;
           localStorage.setItem('currentSystem', JSON.stringify(this.currentSystem)),
           this.systemService.currentSystemSubject.next(this.currentSystem);
           window.location.reload();
         } else {
-          this.toastr.error('Cannot change system at the moment. Try again later', 'System Switch Error');
+          this.toastr.error('Cannot switch systems at the moment. Try again later', 'System Switch Error');
         }
+      } else {
+        // TODO: Add error checks
+      }
     });
   }
 
@@ -119,47 +127,43 @@ export class TopNavBarComponent implements OnInit, OnChanges {
       return;
     }
 
-    this.systemService.createSystem(this.addSystemForm.value).subscribe(
-      (res: SystemResponse) => {
+    this.systemService.createSystem<SystemResponse>(this.addSystemForm.value)
+    .subscribe(response => {
+      if (response.ok) {
         this.submitted = false;
-        if (res.code === '800.200.001') {
+        if (response.body.code === '800.200.001') {
           this.closeBtn.nativeElement.click();
+          this.currentSystem = response.body.data;
+          localStorage.setItem('currentSystem', JSON.stringify(this.currentSystem)),
+          this.systemService.currentSystemSubject.next(this.currentSystem);
           Swal.fire(
             '',
             'System created successfully!',
             'success'
           ).then(() => {
-            this.systemService.changesystem(res.data.id).subscribe(
-              (response: SystemResponse) => {
-                if (response.code === '800.200.001') {
-                  this.currentSystem = res.data;
-                  localStorage.setItem('currentSystem', JSON.stringify(this.currentSystem)),
-                  this.systemService.currentSystemSubject.next(this.currentSystem);
-                  if (this.currentSystem) {
-                    this.router.navigate(['dashboard', 'quick-setup']).then(
-                      () => window.location.reload()
-                    );
-                  }
-                } else {
-                  this.toastr.error('Unexpected Error. Please try again later', 'Error');
-                }
-            });
+            this.router.navigate(['dashboard', 'quick-setup']).then(
+              () => window.location.reload()
+            );
           });
           // this.toastr.success('System creation success !', 'System created successfully');
         } else {
-          this.toastr.error(res.message, 'System creation error !');
+          this.toastr.error(response.body.message, 'System creation error !');
         }
-      });
+      } else {
+        // TODO: Add error check
+      }
+    });
   }
 
   public changed(nextSystem: any, previousSystem: string): void {
     Swal.fire('', 'Click OK to confirm system switch', 'warning').then(
-      (result) => {
-        if (result.value) {
-          this.systemService.changesystem(nextSystem).subscribe(
-            (res: SystemResponse) => {
-              if (res.code === '800.200.001') {
-                this.currentSystem = res.data;
+      (confirm) => {
+        if (confirm.value) {
+          this.systemService.getSystem<SystemResponse>(nextSystem)
+          .subscribe(response => {
+            if (response.ok) {
+              if (response.body.code === '800.200.001') {
+                this.currentSystem = response.body.data;
                 localStorage.setItem('currentSystem', JSON.stringify(this.currentSystem)),
                 this.systemService.currentSystemSubject.next(this.currentSystem);
                 window.location.reload();
@@ -167,13 +171,15 @@ export class TopNavBarComponent implements OnInit, OnChanges {
                 this.currentSystemId = previousSystem;
                 this.toastr.error('Cannot change system at the moment. Try again later', 'System Switch Error');
               }
+            } else {
+              // TODO: Add error checks
+            }
           });
         } else {
           this.currentSystemId = previousSystem;
           this.toastr.info('System switch cancelled', '');
         }
-      }
-    );
+    });
   }
 
   logout() {
