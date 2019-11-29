@@ -74,8 +74,7 @@ export class LoginComponent implements OnInit {
                 // TODO: Add error checks
               }
                 // window.location.reload();
-              }
-            );
+            });
           } else {
             this.router.navigate([this.returnUrl]);
           }
@@ -85,9 +84,10 @@ export class LoginComponent implements OnInit {
         }
       },
       error => {
-          this.error = error;
-          this.toastr.error('Could not login at this time. Try again later', 'Error');
-          this.loading = false;
+        console.log(error);
+        this.error = error;
+        this.toastr.error('Could not login at this time. Try again later', 'Error');
+        this.loading = false;
       });
 }
 
