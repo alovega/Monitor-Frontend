@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, HostListener, ElementRef, ViewChild, Renderer2, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ChangeDetectorRef, ElementRef, ViewChild, Renderer2 } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import {map, shareReplay } from 'rxjs/operators';
 import {VERSION} from '@angular/material';
@@ -97,7 +97,9 @@ export class DashboardLayoutComponent implements OnInit, AfterViewInit {
     private breakpointObserver: BreakpointObserver,
     private navService: NavService,
     private cd: ChangeDetectorRef
-  ) { }
+  ) {
+    this.navService.appDrawer = this.appDrawer;
+   }
 
   ngOnInit() {
     // this.navService.openNav();
