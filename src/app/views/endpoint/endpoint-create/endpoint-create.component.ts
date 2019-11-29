@@ -93,6 +93,7 @@ export class EndpointFormComponent implements OnInit {
   }
   getStates() {
     this.lookupService.getEndpointStates().subscribe((data) => {
+      console.log(data)
       this.states = data;
     });
   }

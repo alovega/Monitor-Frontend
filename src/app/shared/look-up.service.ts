@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
 import {  throwError } from 'rxjs';
-import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { catchError, map, retry, tap} from 'rxjs/operators';
 
-import { environment } from '../../environments/environment';
-import { System } from './models/system';
+import { HttpWrapperService } from '../shared/helpers/http-wrapper.service';
 
 
 @Injectable({
@@ -17,7 +16,7 @@ export class LookUpService {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private httpWrapperService: HttpWrapperService) { }
 
   // Handle API errors
   handleError(error: HttpErrorResponse) {
@@ -128,11 +127,7 @@ export class LookUpService {
     );
   }
 
-  public getEndpointStates() {
-    return this.http.get<any>(this.Url).pipe(
-      map(response => response.data.endpoint_states),
-      retry(2),
-      catchError(this.handleError)
-    );
+  public getEndpointStates<T>(): Observable<HttpResponse<T>> {
+    return this.httpWrapperService.get<T>(this.Url);
   }
 }

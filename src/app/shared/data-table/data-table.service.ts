@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, throwError} from 'rxjs';
 import { Page } from './model/page';
-import { environment } from 'src/environments/environment';
 import { HttpWrapperService } from '../helpers/http-wrapper.service';
 
 
