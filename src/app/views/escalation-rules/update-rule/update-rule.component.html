@@ -1,5 +1,5 @@
 <!-- Grid Row -->
-<div class="row wow animate fadeIn" data-wow-delay="0.1s">
+<div>
       <!-- Grid column -->
     <div class="col-md-12">
       <div class="page-header d-flex row">
@@ -9,8 +9,8 @@
       <hr>
       <div class="page-body">
         <div class="new-rule">
-          <mdb-card class="card">
-            <form [formGroup]="escalationRuleForm" (ngSubmit)="onSubmit()" class="text-center">
+          <mdb-card class="card" class="row wow animate fadeIn" data-wow-delay="0.1s">
+            <form [formGroup]="escalationRuleForm" (ngSubmit)="onSubmit()" class="text-center" *ngIf="isdataReady">
               <div class="form-group mb-4 row">
 
                 <div class="col-md-6">

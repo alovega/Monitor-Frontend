@@ -1,57 +1,34 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
-import { map, tap} from 'rxjs/operators';
-
-import { environment } from '../../../environments/environment';
-import { ToastrService } from 'ngx-toastr';
+import { HttpResponse } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { HttpWrapperService } from 'src/app/shared/helpers/http-wrapper.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UsersService {
 
-  httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-  };
-  deleteRuleUrl = 'http://127.0.0.1:8000/api/get_rules/';
-
-  public users: any[] = [];
-
   constructor(
-    private http: HttpClient,
-    private toastr: ToastrService
+    private httpWrapper: HttpWrapperService,
   ) { }
 
-  createUser(user: any): Observable<any> {
-    return this.http.post<any>(environment.apiEndpoint + 'create_user/', user).pipe(
-      tap(response => console.log(response))
-    );
+  createUser<T>(user: any): Observable<HttpResponse<T>> {
+    return this.httpWrapper.post<T>('create_user/', user);
   }
 
-  getUsers(): Observable<any> {
-    const getUsersUrl = environment.apiEndpoint + 'get_users/';
-    return this.http.post<any>(getUsersUrl, {}).pipe();
+  getUsers<T>(): Observable<HttpResponse<T>> {
+    return this.httpWrapper.post<T>('get_users/');
   }
 
-  getUser(userId: string) {
-    const getUserUrl = 'http://127.0.0.1:8000/api/get_user/';
-    return this.http.post<any[]>(getUserUrl, {user_id: userId}, this.httpOptions).pipe();
+  getUser<T>(userId: string): Observable<HttpResponse<T>> {
+    return this.httpWrapper.post<T>('get_user/', {user_id: userId});
   }
 
-  updateUser(userId: string, body: any) {
-    const updateUserUrl = 'http://127.0.0.1:8000/api/edit_user/';
-    return this.http.post<any[]>(updateUserUrl, {user_id: userId, ...body}, this.httpOptions).pipe(
-
-    );
+  updateUser<T>(userId: string, body: any): Observable<HttpResponse<T>> {
+    return this.httpWrapper.post<T>('edit_user/', {user_id: userId, ...body});
   }
 
-  deleteUser(userId: any) {
-    return this.http.post<any>(environment.apiEndpoint + 'delete_user/',
-    {
-      user_id: userId
-    }).pipe(
-      tap(response => console.log(response))
-    );
+  deleteUser<T>(userId: any): Observable<HttpResponse<T>> {
+    return this.httpWrapper.post<T>('delete_user/', {user_id: userId});
   }
 }

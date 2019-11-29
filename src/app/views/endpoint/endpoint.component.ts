@@ -1,7 +1,6 @@
-
-import { MdbTablePaginationComponent, MdbTableDirective, MdbTableSortDirective } from 'angular-bootstrap-md';
-import { Component, OnInit, ViewChild, AfterViewInit, HostListener, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit, ChangeDetectorRef, TemplateRef } from '@angular/core';
 import {EndpointService} from './endpoint.service';
+import {DataSource} from '../../shared/data-table/model/dataSource';
 import { ActivatedRoute } from '@angular/router';
 import Swal from 'sweetalert2';
 import { SystemService } from 'src/app/shared/system.service';
@@ -13,24 +12,15 @@ import { SystemService } from 'src/app/shared/system.service';
   styleUrls: ['./endpoint.component.scss']
 })
 export class EndpointComponent implements OnInit, AfterViewInit {
-  @ViewChild(MdbTablePaginationComponent, { static: true }) mdbTablePagination: MdbTablePaginationComponent;
-  @ViewChild(MdbTableDirective, { static: true }) mdbTable: MdbTableDirective;
-  @ViewChild(MdbTableSortDirective, { static: true }) mdbTableSort: MdbTableSortDirective;
   @ViewChild('visibleItemsInput', { static: true }) visibleItemsInput;
+  @ViewChild('buttonsTemplate', {static: true}) buttonsTemplate: TemplateRef<any>;
+  @ViewChild('dateColumn', {static: true}) dateColumn: TemplateRef<any>;
 
   elements: any;
-  searchText = '';
-  previous: any = [];
-  visibleItems: number = 5;
-
-  headElements = ['name', 'description', 'url', 'endpointType', 'status', 'dateCreated', 'action'];
-  Elements = {
-    name: 'Endpoint', description: 'description', url: 'Url', dateCreated: 'Date Created', status: 'Status', action: 'Action',
-    endpointType: 'Type'
-  };
   currentSystem: any;
   currentSystemId: any;
   endpointId: any;
+  public dataSource = new DataSource();
 
   constructor(
     private endpointService: EndpointService,
@@ -38,61 +28,21 @@ export class EndpointComponent implements OnInit, AfterViewInit {
     private cdRef: ChangeDetectorRef,
     private activatedRoute: ActivatedRoute,
     ) {}
-    @HostListener('input') oninput() {
-      this.searchItems();
-    }
   ngOnInit() {
-    this.endpointId = this.activatedRoute.snapshot.params.id;
+    this.dataSource.columns = [
+      {prop: 'item_index', name: 'Index'},
+      {prop: 'endpointName', name: 'Name', sortable: true}, {prop: 'endpointDescription', name: 'Description', sortable: true},
+      {prop: 'Url', name: 'Url', sortable: true}, {prop: 'status', name: 'Status', sortable: true},
+      { prop: 'dateCreated', cellTemplate: this.dateColumn, name: 'Date Created', sortable: true},
+      {prop: 'type', name: 'Type', sortable: false},
+      {name: 'Action', cellTemplate: this.buttonsTemplate, sortable: false}];
     this.currentSystem = this.systemService.getCurrentSystem();
-    this.currentSystemId = this.currentSystem.id;
-
-    this.endpointService.getEndpoints(this.currentSystemId).subscribe(
-      (data) => {
-        this.elements = data;
-        this.mdbTable.setDataSource(this.elements);
-        this.elements = this.mdbTable.getDataSource();
-        this.previous = this.mdbTable.getDataSource();
-    });
+    this.dataSource.url = 'get_endpoints_data/';
+    this.dataSource.systemId = this.currentSystem.id;
+    this.endpointId = this.activatedRoute.snapshot.params.id;
   }
 
-  ngAfterViewInit() {
-    this.mdbTablePagination.setMaxVisibleItemsNumberTo(this.visibleItems);
-    this.mdbTablePagination.calculateFirstItemIndex();
-    this.mdbTablePagination.calculateLastItemIndex();
-    if (this.elements.length > this.visibleItems) {
-      this.mdbTablePagination.nextShouldBeDisabled = false;
-    }
-    this.cdRef.detectChanges();
-  }
-
-  changeVisibleItems(maxNumber: number) {
-    this.visibleItems = maxNumber;
-    if (!maxNumber) {
-      this.visibleItemsInput.nativeElement.value = 1;
-      this.visibleItems = 1;
-    }
-    this.mdbTablePagination.setMaxVisibleItemsNumberTo(this.visibleItems);
-    this.mdbTablePagination.calculateFirstItemIndex();
-    this.mdbTablePagination.calculateLastItemIndex();
-    if (this.elements.length > this.visibleItems) {
-      this.mdbTablePagination.nextShouldBeDisabled = false;
-    }
-    this.cdRef.detectChanges();
-  }
-
-  searchItems() {
-    const prev = this.mdbTable.getDataSource();
-
-    if (!this.searchText) {
-      this.mdbTable.setDataSource(this.previous);
-      this.elements = this.mdbTable.getDataSource();
-    }
-
-    if (this.searchText) {
-      this.elements = this.mdbTable.searchLocalDataBy(this.searchText);
-      this.mdbTable.setDataSource(prev);
-    }
-  }
+  ngAfterViewInit() { }
   delete(endpointId) {
     Swal.fire({
       title: 'Are you sure?',
@@ -123,7 +73,6 @@ export class EndpointComponent implements OnInit, AfterViewInit {
         this.endpointService.getEndpoints(this.currentSystemId).subscribe(
           response => {
             this.elements = response;
-            this.mdbTable.setDataSource(this.elements);
           }
         );
       } else if (result.dismiss === Swal.DismissReason.cancel) {

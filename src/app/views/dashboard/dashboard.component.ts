@@ -1,19 +1,15 @@
 import { Component, OnInit, ViewChild, AfterViewChecked, AfterViewInit, ChangeDetectorRef } from '@angular/core';
-import { Route, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { NgbTabChangeEvent, NgbTabset } from '@ng-bootstrap/ng-bootstrap';
-import { tap } from 'rxjs/operators';
 
 import { SystemService } from '../../shared/system.service';
 import { GraphsService } from '../../shared/graphs.service';
 import { SystemStatusService } from '../../shared/system-status.service';
 import { ProfileService } from 'src/app/profile/profile.service';
-import { System, SystemResponse, SystemsResponse } from 'src/app/shared/models/system';
+import { System } from 'src/app/shared/models/system';
 import { SystemStatusResponse, SystemStatus } from 'src/app/shared/models/system-status';
 import { ToastrService } from 'ngx-toastr';
 import { WidgetData, WidgetDataResponse } from './widget-data';
-import { HttpResponse, HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
-import { environment } from '../../../environments/environment';
-import { Observable } from 'rxjs';
 import { GraphDataResponse } from 'src/app/shared/models/graph-data';
 
 @Component({
@@ -129,7 +125,6 @@ export class DashboardComponent implements OnInit, AfterViewChecked, AfterViewIn
             this.toastr.error('Error Fetching current status', 'Error!');
           }
         }
-        console.log(response);
     });
     this.getWidgetData(this.activeTab);
     this.profileService.getLoggedInuserRecentNotifications().subscribe(
@@ -140,7 +135,6 @@ export class DashboardComponent implements OnInit, AfterViewChecked, AfterViewIn
     this.graphsService.getResponseTimes<GraphDataResponse>()
     .subscribe(response => {
       if (response.ok) {
-        console.log(response.body);
         if (response.body.code === '800.200.001') {
           Object.keys(response.body.data.datasets).forEach(key => {
             this.responseTimeGraph.chartDatasets.push(response.body.data.datasets[key]);

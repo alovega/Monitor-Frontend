@@ -10,7 +10,7 @@
       <div class="page-body">
         <div class="new-rule">
           <mdb-card class="card">
-            <form [formGroup]="escalationRuleForm" (ngSubmit)="onSubmit()" class="text-center">
+            <form [formGroup]="escalationRuleForm" (ngSubmit)="onSubmit()" class="text-center" *ngIf="isdataReady">
 
               <div class="form-group mb-4 row">
 
@@ -32,12 +32,7 @@
                       <ng-select2 style="width:100%;" formControlName="escalation_level" [ngClass]="{ 'is-invalid': submitted && escalationRuleForm.controls.escalation_level.errors}"
                       class="custom-select-dropdown" [data]="escalationLevels" > 
                       </ng-select2>
-                    </div>                    
-                    <!-- <select formControlName="escalation_level" class="grey lighten-5 browser-default custom-select form-control"
-                    [ngClass]="{ 'is-invalid': submitted && escalationRuleForm.controls.escalation_level.errors }">
-                        <option *ngFor="let escalationLevel of escalationLevels" selected value="{{escalationLevel.id}}">{{escalationLevel.name}}</option>
-                    </select> -->
-
+                    </div>
                     <div *ngIf="escalationRuleForm.controls['escalation_level'].invalid && (escalationRuleForm.controls['escalation_level'].touched || escalationRuleForm.controls['escalation_level'].dirty)" class="invalid-feedback">
                         <div *ngIf="escalationRuleForm.controls['escalation_level'].errors.required">Escalation level is required</div>
                     </div>   

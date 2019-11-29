@@ -1,21 +1,16 @@
-import { Injectable, Output, EventEmitter } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { HttpClient, HttpResponse } from '@angular/common/http';
-import { map, tap, filter} from 'rxjs/operators';
-// import { runInThisContext } from 'vm';
-import { environment } from '../../environments/environment';
+import { map, tap } from 'rxjs/operators';
 import { HttpWrapperService } from './helpers/http-wrapper.service';
-import { System, SystemResponse, SystemsResponse } from './models/system';
+import { System } from './models/system';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SystemService {
-  // currentSystem: any;
-  public currentSystemSubject: BehaviorSubject<any>;
-  public currentSystem: Observable<any>;
-  @Output() changeSystem: EventEmitter<boolean> = new EventEmitter();
-
+  public currentSystemSubject: BehaviorSubject<System>;
+  public currentSystem: Observable<System>;
   constructor(
     private http: HttpClient,
     private httpWrapperService: HttpWrapperService) {
@@ -39,10 +34,6 @@ export class SystemService {
     return this.httpWrapperService.post<T>('create_system/', system);
   }
 
-  changesystem<T>(systemId: string): Observable<HttpResponse<T>> {
-    return this.httpWrapperService.post<T>('get_system/', {id: systemId});
-  }
-
   updateSystem<T>(systemId: string, body: any): Observable<HttpResponse<T>> {
     return this.httpWrapperService.post<T>('update_system/', {id: systemId, ...body});
   }
@@ -56,12 +47,4 @@ export class SystemService {
     }
   }
 
-  setSystem<T>(): Observable<HttpResponse<T>> {
-    return this.httpWrapperService.post<T>('get_systems/', {}).pipe(
-      map(systems => systems[0]),
-      tap((system) => {
-        localStorage.setItem('currentSystem', JSON.stringify(system));
-        this.currentSystemSubject.next(system);
-      }));
-  }
 }

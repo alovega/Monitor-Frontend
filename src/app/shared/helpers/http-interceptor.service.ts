@@ -6,7 +6,7 @@ import { environment } from '../../../environments/environment';
 import { AuthenticationService } from '../auth/authentication.service';
 import { SystemService } from '../system.service';
 import { LoaderService } from '../loader.service';
-import { SystemsResponse } from '../models/system';
+import { SystemsResponse, System } from '../models/system';
 
 @Injectable({
   providedIn: 'root'
@@ -15,8 +15,7 @@ export class HttpInterceptorService implements HttpInterceptor {
   apiEndpoint = environment.apiEndpoint;
   clientId = environment.clientId;
   accessToken: string;
-  currentSystem: any;
-  currentSystemId: any;
+  currentSystem: System;
   systemName: any;
   currentUser: any;
 

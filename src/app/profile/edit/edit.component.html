@@ -1,7 +1,7 @@
 <mdb-card>
         <!-- Default form contact -->
         <form [formGroup]="profileUpdateForm" class="text-center border  p-5" (ngSubmit) = "onSubmit()">
-            <div class="row" *ngIf=data>
+            <div class="row" *ngIf="data">
                 <div class="col">
                     <h6>Username</h6>
                     <p>{{data.userName}}</p>
@@ -13,7 +13,7 @@
                     <hr>
                 </div>
             </div>
-            <div class="row">
+            <div class="row" *ngIf="data">
                 <div class="col">
                     <!-- Phone Number -->
                     <label>First Name</label>
@@ -43,10 +43,10 @@
                     
             </div>
             <div class="row">
-                <div class="col">
+                <div class="col" *ngIf="data.userName">
                     <!-- Username -->
                     <label>Username</label>
-                    <input type="text" id="defaultContactFormUserName" class="form-control mb-4" placeholder="username"
+                    <input  type="text" id="defaultContactFormUserName" class="form-control mb-4" placeholder="username"
                         [ngClass]="{ 'is-invalid': submitted && f.UserName.errors }" formControlName="Username" 
                         [(ngModel)]="data.userName" >
                     <div *ngIf="profileUpdateForm.controls['Username'].invalid && (profileUpdateForm.controls['userName'].dirty || profileUpdateForm.controls['Username'].touched)" class="invalid-feedback">

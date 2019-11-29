@@ -2,13 +2,13 @@
     <div class="page-header">
     </div>
     <div class="status-container">
-        <div class="current-status" [ngClass]="{'display-none': systemStatus.incidents.length}">
+        <div class="current-status" [ngClass]="{'display-none': systemStatus?.incidents?.length}">
             <div class="{{systemStatus.current_state.state}} page-status">
                 {{systemStatus.current_state.description}}
             </div>
         </div>
     </div>
-    <div class="current-incident" [ngClass]="{'display-none': systemStatus.incidents.length === 0}">
+    <div class="current-incident" [ngClass]="{'display-none': systemStatus?.incidents?.length === 0}">
         <h3>Current Incidents</h3>
         <div class="card" *ngFor="let incident of systemStatus.incidents let i = index;" style="margin-bottom: 3em;">
           <div class="list-group" *ngIf="incident.state__name">
@@ -21,7 +21,7 @@
            }">
               {{incident.name}}
             </h6>
-            <div class="row border border-0 list-group-item" *ngIf="incident.incident_updates.length; else noUpdates">
+            <div class="row border border-0 list-group-item" *ngIf="incident?.incident_updates?.length; else noUpdates">
                 <p><b>{{incident.incident_updates[0].status}}-</b>{{incident.incident_updates[0].description}}</p>
                 <p>{{incident.incident_updates[0].date_created | date:'MMM d, h:mm:ss z'}}</p>
               </div>
@@ -77,7 +77,7 @@
           <div style="margin-bottom: 10px; border-bottom: 1px solid rgba(0, 0, 0, 0.125);"> 
               <h5>{{ pastDate.date | date:'MMM dd, yyyy' }}</h5>
           </div>
-          <div class="incidents" *ngIf="pastDate.incidents.length; else noIncidents">
+          <div class="incidents" *ngIf="pastDate?.incidents?.length; else noIncidents">
             <div *ngFor="let incident of pastDate.incidents" class="mb-2">
                 <a class="incident-name priority-{{incident.priority_level}}" [ngClass]="{'maintenance': incident.type == 'Scheduled'}">{{incident.name}}</a>
                 <div class="update mb-3">

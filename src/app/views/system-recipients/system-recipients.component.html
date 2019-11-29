@@ -1,80 +1,22 @@
 <div class="page-header d-flex flex-row justify-content-between">
-        <h3 class="page-header-title">System Recipients</h3>
-        <div class="add-rule-btn">
-          <a routerLink="/dashboard/system-recipients/system-recipient-create" routerLinkActive="active">
-            <button mdbBtn class="btn-sm blue-gradient lowercase-btn text-white">
-                <i class="fas fa-plus"></i> Add system recipient
-            </button>
-          </a>
-        </div>
-    </div>
-    <hr class="page-header-divider">
-    
-    <div class="d-flex flex-row mt-4 justify-content-start dt-controls">
-      <div class="">
-        <span>Filter by Escalation level </span>
-          <select style="border-radius: 2px; padding: 2px" (change)="filterSystemRecipients($event.target.value)">
-              <option value="all">All</option>
-              <option *ngFor="let level of EscalationLevels" [value]="level.name" >
-                  {{level.name}}
-              </option>
-          </select>
-      </div>
-    </div>
-    
-    <div class="d-flex flex-sm-row mt-1 justify-content-lg-between justify-content-sm-between dt-controls">
-      <div class="mb-1">
-          <span>Show </span>
-          <input #visibleItemsInput class="view-entries"
-          type="number" min="1" (input)="changeVisibleItems($event.target.value)" [(ngModel)]="visibleItems">
-          <span> entries</span>
-      </div>
-     
-      <div class="">
-        <span>Search: </span>
-        <input class="search-entries" type="text" [(ngModel)]="searchText" placeholder="Search">
-      </div> 
-    </div>
-    
-<mdb-card class="table-responsive table-striped">
-  <table mdbTable #tableEl="mdbTable">
-    <thead class="white-text">
-        <tr>
-        <th *ngFor="let head of headElements let i = index" aria-controls="tableSort" scope="col" [mdbTableSort]="elements" [sortBy]="headElements[i]">{{Elements[head] | titlecase}} <mdb-icon fas icon="sort"></mdb-icon></th>
-        </tr>
-    </thead>
-    <tbody *ngIf="elements?.length; else noElements">
-        <tr mdbTableCol *ngFor="let el of elements; let i = index ">
-        <th scope="row" *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex" scope="row">
-            {{el.userName}}
-        </th>
-        <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{el.escalationLevel}}</td>
-        <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{el.notificationType}}</td>
-        <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{el.status}}</td>
-        <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{el.dateCreated |  date:'MM/dd/yyyy   hh:mm:ss a'}}</td>
-        <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">
-            <a class="fas fa-edit text-success"  routerLinkActive="active" routerLink="/dashboard/system-recipients/system-recipient-update/{{el.systemRecipientId}}" ></a>
-            <a class="fas fa-trash-alt mr-2 text-danger" [disabled]="elements" (click)="delete(el.systemRecipientId)"></a>
-        </td>
-        </tr>
-    </tbody>
-    <tfoot class="grey lighten-5 w-100">
-            <tr mdbTableCol>
-              <td colspan="8">
-                <mdb-table-pagination [tableEl]="tableEl" [searchDataSource]="elements"></mdb-table-pagination>
-              </td>
-            </tr>
-        </tfoot>
-  </table>
-  <ng-template #noElements>
-  <td colspan="7">
-    <hm-empty-data header="No Existing System Recipients" description="New system recipients will be displayed here">
-      <div action-button>
-      <a href="" routerLink="/dashboard/system-recipients/system-recipient-create">
-        <button action-button type="button" mdbBtn size="sm" color="primary" class="text-white">Add new system recipient</button>
-      </a>
-      </div>
-    </hm-empty-data>
-  </td>
-  </ng-template> 
-</mdb-card>
+  <h3 class="page-header-title">System Recipients</h3>
+  <div class="add-rule-btn">
+    <a routerLink="/dashboard/system-recipients/system-recipient-create" routerLinkActive="active">
+      <button mdbBtn class="btn-sm blue-gradient lowercase-btn text-white">
+          <i class="fas fa-plus"></i> Add system recipient
+      </button>
+    </a>
+  </div>
+</div>
+<hr class="page-header-divider">
+<div *ngIf="dataSource?.columns.length">
+  <hm-data-table [dataSource]="dataSource"></hm-data-table>
+</div>
+<ng-template #dateColumn let-row="row" let-value="value" let-i="index">
+  {{value | date:'MM/dd/yyyy'}}
+</ng-template>
+<ng-template #buttonsTemplate let-row="row" let-value="value">
+    <a class="fas fa-edit text-success" routerLinkActive="active"
+      routerLink="/dashboard/system-recipients/system-recipient-update/{{row.systemRecipientId}}"></a>
+    <a class="fas fa-trash-alt mr-2 text-danger" (click)="delete(row.systemRecipientId)"></a>
+</ng-template>

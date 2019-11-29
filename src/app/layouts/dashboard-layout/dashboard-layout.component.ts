@@ -45,7 +45,9 @@ export class DashboardLayoutComponent implements OnInit, AfterViewInit {
     private breakpointObserver: BreakpointObserver,
     private navService: NavService,
     private cd: ChangeDetectorRef
-  ) { }
+  ) {
+    this.navService.appDrawer = this.appDrawer;
+   }
 
   ngOnInit() {
     // this.navService.openNav();
