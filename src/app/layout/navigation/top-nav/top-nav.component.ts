@@ -50,14 +50,17 @@ export class TopNavComponent implements OnInit, OnChanges {
   }
 
   ngOnInit() {
-    this.systemService.getSystems().subscribe(
-      (res: SystemsResponse) => {
-        if (res.code === '800.200.001') {
-          this.systems = res.data;
+    this.systemService.getSystems<SystemsResponse>().subscribe(
+      response => {
+        if (response.ok) {
+          if (response.body.code === '800.200.001') {
+            this.systems = response.body.data;
+          } else {
+            this.toastr.error('An error occurred. Try again later', 'Error!');
+          }
         } else {
-          this.toastr.error('An error occurred. Try again later', 'Error!');
+          // TODO Add error checking;
         }
-        // window.location.reload();
     });
     this.lookupService.getUsers().subscribe(
       (data) => {
@@ -88,13 +91,19 @@ export class TopNavComponent implements OnInit, OnChanges {
   }
 
   changeSystem(systemId: any) {
-    this.systemService.changesystem(systemId).subscribe(
-      (res: SystemResponse) => {
-        if (res.code === '800.200.001') {
-          this.currentSystem = res.data;
-          localStorage.setItem('currentSystem', JSON.stringify(this.currentSystem)),
-          this.systemService.currentSystemSubject.next(this.currentSystem);
-          window.location.reload();
+    this.systemService.getSystem<SystemResponse>(systemId).subscribe(
+      response => {
+        if (response.ok) {
+          if (response.body.code === '800.200.001') {
+            this.currentSystem = response.body.data;
+            localStorage.setItem('currentSystem', JSON.stringify(this.currentSystem)),
+            this.systemService.currentSystemSubject.next(this.currentSystem);
+            window.location.reload();
+          } else {
+            this.toastr.error('System switch unsuccessful. Try again later', 'Error!');
+          }
+        } else {
+          // TODO: Add Error checking
         }
     });
   }
@@ -106,7 +115,7 @@ export class TopNavComponent implements OnInit, OnChanges {
   logout() {
     this.authService.logout();
     // this.currentUser = null;
-    this.router.navigate(['/auth/login']);
+    this.router.navigate(['auth', 'login']);
   }
 
   onSubmit() {
@@ -115,36 +124,32 @@ export class TopNavComponent implements OnInit, OnChanges {
       return;
     }
 
-    this.systemService.createSystem(this.addSystemForm.value).subscribe(
-      (res: SystemResponse) => {
-        console.log(res);
-        this.submitted = false;
-        if (res.code === '800.200.001') {
-          this.closeBtn.nativeElement.click();
-          Swal.fire(
-            '',
-            'System created successfully!',
-            'success'
-          ).then(() => {
-            this.systemService.changesystem(res.data.id).subscribe(
-              (response: SystemResponse) => {
-                if (response.code === '800.200.001') {
-                  this.currentSystem = this.systemService.getCurrentSystem();
-                  this.router.navigate(['dashboard', 'quick-setup', 'endpoints']).then(
-                    () => {
-                      window.location.reload();
-                    }
-                  );
-                } else {
-                  this.toastr.error('Unexpected Error. Please try again later', 'Error');
-                }
+    this.systemService.createSystem<SystemResponse>(this.addSystemForm.value)
+    .subscribe(response => {
+        if (response.ok) {
+          this.submitted = false;
+          if (response.body.code === '800.200.001') {
+            this.closeBtn.nativeElement.click();
+            this.currentSystem = response.body.data;
+            localStorage.setItem('currentSystem', JSON.stringify(this.currentSystem)),
+            this.systemService.currentSystemSubject.next(this.currentSystem);
+            Swal.fire(
+              '',
+              'System created successfully!',
+              'success'
+            ).then(() => {
+                this.router.navigate(['dashboard', 'quick-setup', 'endpoints']).then(
+                  () => {
+                    window.location.reload();
+                });
             });
-            this.changeSystem(res.data.id);
-          });
-          // this.toastr.success('System creation success !', 'System created successfully');
+            // this.toastr.success('System creation success !', 'System created successfully');
+          } else {
+            this.toastr.error('System could not be created', 'System creation error !');
+          }
         } else {
-          this.toastr.error('System could not be created', 'System creation error !');
+          // TODO: Add error check
         }
-      });
+    });
   }
 }

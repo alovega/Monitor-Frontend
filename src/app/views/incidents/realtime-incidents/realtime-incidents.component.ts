@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { IncidentService } from '../incident.service';
-import { Incident } from '../incident';
+import { Incident, IncidentsResponse } from '../incident';
 import { Observable } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { SystemService } from '../../../shared/system.service';
+import { ToastrService } from 'ngx-toastr';
+import { System } from 'src/app/shared/models/system';
 
 @Component({
   selector: 'hm-realtime-incidents',
@@ -12,28 +14,36 @@ import { SystemService } from '../../../shared/system.service';
 })
 export class RealtimeIncidentsComponent implements OnInit {
   incidents: Incident[];
-  systemId: string;
-  currentSystem: any;
+  currentSystem: System;
   loading = true;
 
   constructor(
     private incidentService: IncidentService,
-    private activatedRoute: ActivatedRoute,
+    private toastr: ToastrService,
     private systemService: SystemService
   ) { }
 
   ngOnInit() {
     this.currentSystem = this.systemService.getCurrentSystem();
-    this.systemId = this.currentSystem.id;
     this.showRealtimeIncidents();
   }
 
   public showRealtimeIncidents() {
-    return this.incidentService.getRealtimeIncidents().subscribe(
-      (response) => {
-        this.incidents = response;
+    const options = {
+      incident_type: 'Realtime',
+    };
+    return this.incidentService.getIncidents<IncidentsResponse>(options)
+    .subscribe(response => {
+      if (response.ok) {
+        if (response.body.code === '800.200.001') {
+          this.incidents = response.body.data;
+        } else {
+          this.toastr.error('Could not fetch realtime incidents', 'Get incidents error');
+        }
         this.loading = false;
+      } else {
+        // TODO: Add error checks
       }
-    );
+    });
   }
 }

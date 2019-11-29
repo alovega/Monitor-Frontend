@@ -1,6 +1,6 @@
 import { Injectable, Output, EventEmitter } from '@angular/core';
 import { Observable, BehaviorSubject } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { map, tap, filter} from 'rxjs/operators';
 // import { runInThisContext } from 'vm';
 import { environment } from '../../environments/environment';
@@ -27,24 +27,24 @@ export class SystemService {
     return this.currentSystemSubject.value;
   }
 
-  getSystems(): Observable<SystemsResponse> {
-    return this.httpWrapperService.post('get_systems/').pipe();
+  getSystems<T>(): Observable<HttpResponse<T>> {
+    return this.httpWrapperService.post<T>('get_systems/');
   }
 
-  getSystem(systemId: string): Observable<SystemResponse> {
-    return this.httpWrapperService.post('get_system/', {id: systemId});
+  getSystem<T>(systemId: string): Observable<HttpResponse<T>> {
+    return this.httpWrapperService.post<T>('get_system/', {id: systemId});
   }
 
-  createSystem(system: any): Observable<SystemResponse> {
-    return this.httpWrapperService.post('create_system/', system);
+  createSystem<T>(system: any): Observable<HttpResponse<T>> {
+    return this.httpWrapperService.post<T>('create_system/', system);
   }
 
-  changesystem(systemId: string): Observable<SystemResponse> {
-    return this.httpWrapperService.post('get_system/', {id: systemId});
+  changesystem<T>(systemId: string): Observable<HttpResponse<T>> {
+    return this.httpWrapperService.post<T>('get_system/', {id: systemId});
   }
 
-  updateSystem(systemId: string, body: any) {
-    return this.httpWrapperService.post('update_system/', {id: systemId, ...body});
+  updateSystem<T>(systemId: string, body: any): Observable<HttpResponse<T>> {
+    return this.httpWrapperService.post<T>('update_system/', {id: systemId, ...body});
   }
 
   checkCurrentSystem() {
@@ -56,8 +56,8 @@ export class SystemService {
     }
   }
 
-  setSystem(): Observable<SystemResponse> {
-    return this.httpWrapperService.post('get_systems/', {}).pipe(
+  setSystem<T>(): Observable<HttpResponse<T>> {
+    return this.httpWrapperService.post<T>('get_systems/', {}).pipe(
       map(systems => systems[0]),
       tap((system) => {
         localStorage.setItem('currentSystem', JSON.stringify(system));

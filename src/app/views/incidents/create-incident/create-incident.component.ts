@@ -107,16 +107,19 @@ export class CreateIncidentComponent implements OnInit {
     if (this.realtimeIncidentForm.invalid) {
       return;
     }
-    return this.incidentService.createIncident('Realtime', this.realtimeIncidentForm.value).subscribe(
-      ((result: IncidentResponse) => {
-        if (result.code === '800.200.001') {
+    return this.incidentService.createIncident<IncidentResponse>('Realtime', this.realtimeIncidentForm.value)
+    .subscribe(response => {
+      if (response.ok) {
+        if (response.body.code === '800.200.001') {
           this.toastr.success('Incident created successfully', 'Incident creation success');
           this.location.back();
         } else {
-          this.toastr.error('Incident could not be created', 'Incident creation error');
+          this.toastr.error('Incident creation failed', 'Incident creation error');
         }
-      })
-    );
+      } else {
+        // TODO: Add error checks
+      }
+    });
   }
 
   public back(): void {
@@ -145,15 +148,18 @@ export class CreateIncidentComponent implements OnInit {
       ).toISOString()
     });
 
-    return this.incidentService.createIncident('Scheduled', this.scheduledMaintenanceForm.value).subscribe(
-      ((result: IncidentResponse) => {
-        if (result.code === '800.200.001') {
+    return this.incidentService.createIncident<IncidentResponse>('Scheduled', this.scheduledMaintenanceForm.value)
+    .subscribe(response => {
+      if (response.ok) {
+        if (response.body.code === '800.200.001') {
           this.toastr.success('Maintenance created successfully', 'Maintenance creation success');
           this.location.back();
         } else {
-          this.toastr.error('Maintenance cou;d not be created', 'Maintenance creation error');
+          this.toastr.error('Maintenance creation failed', 'Maintenance creation error');
         }
-      })
-    );
+      } else {
+        // TODO: Add error checks
+      }
+      });
   }
 }
