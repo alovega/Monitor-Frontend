@@ -5,15 +5,18 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class DateTransformPipe implements PipeTransform {
   transform(value: string): string {
-    let currentDate = new Date();
+    const currentDate = new Date();
     if (value === 'today') {
-      return `${currentDate.getDate()} ${currentDate.toLocaleString('en-us', { month: 'long'})}, ${currentDate.getFullYear()}`;
+      return 'Today';
+      // return `${currentDate.getDate()} ${currentDate.toLocaleString('en-us', { month: 'long'})}, ${currentDate.getFullYear()}`;
     } else if (value === 'week') {
       return 'This week';
     } else if (value === 'month') {
-      return `${currentDate.toLocaleString('en-us', { month: 'long'})}, ${currentDate.getFullYear()}`;
+      return 'This month';
+      // return `${currentDate.toLocaleString('en-us', { month: 'long'})}, ${currentDate.getFullYear()}`;
     } else if (value === 'year') {
-      return `${currentDate.getFullYear()}`;
+      return 'This Year';
+      // return `${currentDate.getFullYear()}`;
     } else {
       return 'Today';
     }

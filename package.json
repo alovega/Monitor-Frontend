@@ -41,10 +41,13 @@
     "jquery": "^3.4.1",
     "json": "^9.0.6",
     "ng-pick-datetime": "^7.0.0",
+    "ng-select2": "^1.2.2",
+    "ngx-select2": "^0.2.4",
     "ngx-show-hide-password": "^2.1.0",
     "ngx-toastr": "^11.2.0",
     "popper.js": "^1.14.4",
     "rxjs": "~6.4.0",
+    "select2": "^4.0.12",
     "sweetalert2": "^8.18.5",
     "tslib": "^1.10.0",
     "zone.js": "~0.9.1"

@@ -5,10 +5,11 @@ import { Location } from '@angular/common';
 import Swal from 'sweetalert2';
 
 import { IncidentService } from '../incident.service';
-import { Incident } from '../incident';
+import { Incident, IncidentResponse } from '../incident';
 import { SystemService } from 'src/app/shared/system.service';
 import { LookUpService } from 'src/app/shared/look-up.service';
 import { ToastrService } from 'ngx-toastr';
+import { DropdownItem } from 'src/app/layout/top-nav-bar/dropdown-item';
 
 @Component({
   selector: 'hm-update-incident',
@@ -21,6 +22,9 @@ export class UpdateIncidentComponent implements OnInit {
   submitted = false;
   incidents: Incident[];
   incident: Incident;
+  incidentState: string;
+  realtimeStates: DropdownItem[];
+  scheduledStates: DropdownItem[];
   initialPriorityLevel: string;
   incidentId: string;
   systemId: string;
@@ -38,7 +42,6 @@ export class UpdateIncidentComponent implements OnInit {
     private toastr: ToastrService
   ) {
     this.incidentId = this.activatedRoute.snapshot.paramMap.get('incident-id');
-    this.incident = new Incident();
   }
 
   ngOnInit() {
@@ -47,85 +50,29 @@ export class UpdateIncidentComponent implements OnInit {
     if (this.currentSystem) {
       this.showIncident();
     }
-    this.lookupService.getUsers().subscribe(
-      (users) => this.users = users
+    this.lookupService.getRealtimeIncidentStates().subscribe(
+      (realtimeStates) => this.realtimeStates = realtimeStates
     );
-    this.createUpdateIncidentForm();
-  }
-
-  createUpdateIncidentForm() {
-    this.updateIncidentForm = this.formBuilder.group({
-      incidentStatus: ['Investigating', Validators.required],
-      message: ['', Validators.required],
-      priorityLevel: ['', Validators.required],
-      user: ['']
-    });
+    this.lookupService.getRealtimeIncidentStates().subscribe(
+      (scheduledStates) => this.scheduledStates = scheduledStates
+    );
+    this.showIncident();
   }
 
   public showIncident(): void {
     // console.log('Showing...' + this.currentSystem);
-    this.incidentService.getIncident(this.incidentId, this.currentSystem).subscribe(
-      (data: any) => {
-        this.incident = data;
-        this.updateIncidentForm.patchValue({
-          priorityLevel: this.incident.priority_level.toString(),
-          incidentStatus: this.incident.status.toString(),
-        });
-      }
-    );
-  }
-
-  onSubmit() {
-    this.submitted = true;
-
-    if (this.updateIncidentForm.invalid) {
-      console.log('Invalid');
-      return ;
-    }
-    this.incident.state = this.incident.status;
-    this.incident.escalation_level = 'Medium';
-
-    return this.incidentService.updateIncident(this.incident).subscribe(
-      (incident => {
-        if (incident.code === '800.200.001') {
-          this.toastr.success('Incident updated successfully', 'Incident update success');
-          this.back();
+    this.incidentService.getIncident<IncidentResponse>(this.incidentId)
+    .subscribe(response => {
+      if (response.ok) {
+        if (response.body.code === '800.200.001') {
+          this.incident = response.body.data;
         } else {
-          this.toastr.error('Incident could not be updated', 'Incident update error');
+          this.toastr.error('Could not fetch the incident history. Try again later', 'Error!');
         }
-      })
-    );
-  }
-
-  removeIncident(incidentId) {
-    Swal.fire({
-      title: 'Are you sure?',
-      text: 'You will not be able to recover this incident!',
-      type: 'warning',
-      showCancelButton: true,
-      confirmButtonText: 'Yes, delete it!',
-      cancelButtonText: 'No, keep it'
-    }).then((result) => {
-      if (result.value) {
-        console.log(incidentId);
-        this.incidentService.deleteIncident(incidentId).subscribe(
-          response => {
-            if (response.code === '800.200.001') {
-              this.toastr.success('Incident deleted successfully', 'Incident delete success');
-              this.back();
-            } else {
-              this.toastr.error('Incident could not be deleted', 'Incident delete error');
-            }
-          }
-        )
-      } else if (result.dismiss === Swal.DismissReason.cancel) {
-        Swal.fire(
-          'Cancelled',
-          '',
-          'error'
-        )
+      } else {
+        // TODO: Add error checks
       }
-    })
+    });
   }
 
   back() {

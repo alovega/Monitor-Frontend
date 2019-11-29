@@ -34,14 +34,14 @@ export class UsersService {
     return this.http.post<any>(getUsersUrl, {}).pipe();
   }
 
-  getUser() {
+  getUser(userId: string) {
     const getUserUrl = 'http://127.0.0.1:8000/api/get_user/';
-    return this.http.post<any[]>(getUserUrl, this.httpOptions).pipe();
+    return this.http.post<any[]>(getUserUrl, {user_id: userId}, this.httpOptions).pipe();
   }
 
-  updateUser(formData: any) {
-    const updateUserUrl = 'http://127.0.0.1:8000/api/update_user/';
-    return this.http.post<any[]>(updateUserUrl, formData, this.httpOptions).pipe(
+  updateUser(userId: string, body: any) {
+    const updateUserUrl = 'http://127.0.0.1:8000/api/edit_user/';
+    return this.http.post<any[]>(updateUserUrl, {user_id: userId, ...body}, this.httpOptions).pipe(
 
     );
   }

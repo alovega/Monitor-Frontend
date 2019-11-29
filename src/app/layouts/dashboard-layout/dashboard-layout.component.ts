@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, ChangeDetectorRef, ElementRef, ViewChild, Renderer2 } from '@angular/core';
+import { Component, OnInit, AfterViewInit, HostListener, ElementRef, ViewChild, Renderer2, ChangeDetectorRef } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import {map, shareReplay } from 'rxjs/operators';
 import {VERSION} from '@angular/material';
@@ -6,11 +6,12 @@ import {NavItem} from './nav-item';
 import {NavService} from './nav.service';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
-import { } from 'rxjs/operators';
 import { SystemService } from '../../shared/system.service';
+import { System, SystemsResponse } from '../../shared/models/system';
 import { AuthenticationService } from '../../shared/auth/authentication.service';
 import Swal from 'sweetalert2';
 import { NgbTypeaheadWindow } from '@ng-bootstrap/ng-bootstrap/typeahead/typeahead-window';
+import { ToastrService } from 'ngx-toastr';
 declare var $: any;
 @Component({
   selector: 'hm-dashboard-layout',
@@ -18,13 +19,13 @@ declare var $: any;
   styleUrls: ['./dashboard-layout.component.scss']
 })
 export class DashboardLayoutComponent implements OnInit, AfterViewInit {
-  isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset).pipe(
+  isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
+  .pipe(
     map(result => result.matches),
     shareReplay(1),
   );
-  systems: any;
-  currentSystem: any;
-  currentSystemId: any;
+  systems: System[];
+  currentSystem: System;
   currentUser: any;
   sideBarOpen = true;
   @ViewChild('appDrawer',  {static: true}) appDrawer: ElementRef;
@@ -91,29 +92,34 @@ export class DashboardLayoutComponent implements OnInit, AfterViewInit {
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private authService: AuthenticationService,
+    private renderer: Renderer2,
+    private toastr: ToastrService,
     private breakpointObserver: BreakpointObserver,
     private navService: NavService,
-    private renderer: Renderer2,
     private cd: ChangeDetectorRef
-  ) {
-    this.navService.appDrawer = this.appDrawer;
-   }
+  ) { }
 
   ngOnInit() {
     // this.navService.openNav();
     this.currentSystem = this.systemService.getCurrentSystem();
     if (this.currentSystem) {
-      this.currentSystemId = this.currentSystem.id;
-      // this.router.navigate(['dashboard']);
     } else {
-      this.systemService.setSystem().subscribe(
-        (system) => {
-          this.currentSystem = system;
-          this.currentSystemId = this.currentSystem.id;
+      this.systemService.getSystems<SystemsResponse>()
+      .subscribe(response => {
+        if (response.ok) {
+          if (response.body.code === '800.200.001') {
+            this.currentSystem = response.body.data[0];
+            localStorage.setItem('currentSystem', JSON.stringify(this.currentSystem));
+            this.systemService.currentSystemSubject.next(this.currentSystem);
+          } else {
+            this.toastr.error('An error occurred. Try again later', 'Error!');
+          }
           window.location.reload();
-          // this.router.navigate(['dashboard']);
+        } else {
+          // TODO: Add error checks
         }
-      );
+
+      });
     }
     this.authService.currentUser.subscribe(
       (user) => {
@@ -125,17 +131,26 @@ export class DashboardLayoutComponent implements OnInit, AfterViewInit {
     setInterval(() => {
       this.now = new Date();
       if (this.expiresAt > this.now && (Math.abs(this.expiresAt - this.now)) < 60000) {
-        this.authService.verifyToken(this.token).subscribe(
-          () => console.log('Verify token complete')
-        );
+        this.authService.verifyToken(this.token).subscribe();
       } else {
-        // console.log (this.expiresAt);
         // console.log('Token still has time.. keep alive');
       }
-    }, 1000);
+    }, 30000);
   }
 
-  public inactiveTime() {
+  ngAfterViewInit() {
+    this.navService.appDrawer = this.appDrawer;
+    this.navService.openNav();
+    this.loaded = true;
+    this.cd.detectChanges();
+  }
+
+  sideBarToggler() {
+    this.sideBarOpen = !this.sideBarOpen;
+  }
+
+  /***
+    public inactiveTime() {
     let time;
     let authService = this.authService;
     let router = this.router;
@@ -176,7 +191,6 @@ export class DashboardLayoutComponent implements OnInit, AfterViewInit {
         if (countDown < 0) {
           clearInterval(timer);
         }
-        console.log(countDown);
         $('#swal2-content').text(displayText.replace(/#1/, countDown));
       }, 1000);
     }
@@ -193,4 +207,5 @@ export class DashboardLayoutComponent implements OnInit, AfterViewInit {
     this.loaded = true;
     console.log('loaded');
   }
+  **/
 }

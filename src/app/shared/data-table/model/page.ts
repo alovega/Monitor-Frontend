@@ -16,3 +16,20 @@ export class Page {
     // the url for fetching data
     url = '';
   }
+
+export class DataSource {
+  range: string;
+  totalPages: number;
+  size: number;
+  totalElements: number;
+  row: [];
+}
+
+export class TableResponse {
+    code: string;
+    data?: DataSource;
+    message?: string;
+}
+
+
+

@@ -3,10 +3,10 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Location } from '@angular/common';
 import { ToastrService } from 'ngx-toastr';
 
-import { EscalationRule } from '../../escalation-rules/escalation-rule';
 import { EscalationRuleService } from '../../escalation-rules/escalation-rule.service';
 import { LookUpService } from 'src/app/shared/look-up.service';
 import { SetupService } from '../setup.service';
+import { EscalationRule, EscalationRulesResponse, EscalationRuleResponse } from 'src/app/shared/models/escalation-rule';
 
 @Component({
   selector: 'hm-add-rules',
@@ -20,7 +20,8 @@ export class AddRulesComponent implements OnInit {
   escalationRule: EscalationRule;
   escalationRules: EscalationRule[];
   ruleId: string;
-  escalationLevels: any;
+  escalationLevels: any[];
+  eventTypes: any[];
   loading = true;
   @ViewChild('closeUpdateModal', { static: false }) closeUpdateModal: ElementRef;
   @ViewChild('closeAddModal', { static: false }) closeAddModal: ElementRef;
@@ -34,106 +35,128 @@ export class AddRulesComponent implements OnInit {
     private lookupService: LookUpService,
     private toastr: ToastrService,
     private setupService: SetupService) {
-    this.escalationRule = new EscalationRule();
     // this.setupService.nextUrl.next(null);
     // this.setupService.previousUrl.next('endpoints');
-   }
+    this.addRuleForm = this.formBuilder.group({
+      name: ['', Validators.required],
+      description: ['', Validators.required],
+      nth_event: ['', [Validators.required, Validators.minLength(1)]],
+      duration: ['', [Validators.required, Validators.minLength(1)]],
+      escalation_level: ['', Validators.required],
+      event_type: ['', Validators.required]
+    });
+
+    this.editRuleForm = this.formBuilder.group({
+      name: ['', Validators.required],
+      description: ['', Validators.required],
+      nth_event: ['', [Validators.required, Validators.minLength(1)]],
+      duration: ['', [Validators.required, Validators.minLength(1)]],
+      escalation_level: ['', Validators.required],
+      event_type: ['', Validators.required]
+    });
+  }
+
   ngOnInit() {
     this.setupService.nextUrl.next('/dashboard');
     this.setupService.previousUrl.next('endpoints');
     this.lookupService.getEscalationLevel().subscribe(
       (levels) => this.escalationLevels = levels
     );
+    this.lookupService.getEventType().subscribe(
+      (res) => this.eventTypes = res
+    );
     this.getRules();
-    this.addRuleForm = this.formBuilder.group({
-      ruleName: ['', Validators.required],
-      ruleDescription: ['', Validators.required],
-      nEvents: ['', [Validators.required, Validators.minLength(1)]],
-      duration: ['', [Validators.required, Validators.minLength(1)]],
-      escalationLevel: ['', Validators.required],
-      eventType: ['', Validators.required]
-    });
-
-    this.editRuleForm = this.formBuilder.group({
-      ruleName: ['', Validators.required],
-      ruleDescription: ['', Validators.required],
-      nEvents: ['', [Validators.required, Validators.minLength(1)]],
-      duration: ['', [Validators.required, Validators.minLength(1)]],
-      escalationLevel: ['', Validators.required],
-      eventType: ['', Validators.required]
-    });
     this.loading = false;
   }
 
   getRules() {
-    this.ruleService.getRules().subscribe(
-      (rules) => {
-        this.escalationRules = rules
-        if (!this.escalationRules.length) {
-          this.setupService.disabledNext.next(true);
+    this.ruleService.getRules<EscalationRulesResponse>()
+    .subscribe(response => {
+      if (response.ok) {
+        if (response.body.code === '800.200.001') {
+          this.escalationRules = response.body.data;
+          if (!this.escalationRules.length) {
+            this.setupService.disabledNext.next(true);
+          }
         }
+      } else {
+        // TODO: Add error checks
       }
-    );
+    });
   }
 
   addRule() {
     this.escalationRule = new EscalationRule();
-    console.log(this.escalationRule);
     this.openAddModal.nativeElement.click();
   }
 
   editRule(ruleId: string) {
-    console.log(this.escalationRules);
-    this.ruleService.getRule(ruleId).subscribe(
-      (rule) => {
-        this.escalationRule = rule;
-        console.log(this.escalationRule);
-        this.openBtn.nativeElement.click();
-      });
+    this.ruleService.getRule<EscalationRuleResponse>(ruleId).
+    subscribe(response => {
+      if (response.ok) {
+        if (response.body.code === '800.200.001') {
+          this.escalationRule = response.body.data;
+          this.editRuleForm.patchValue({
+            name: this.escalationRule.name,
+            description: this.escalationRule.description,
+            nth_event: this.escalationRule.nth_event,
+            duration: this.escalationRule.duration,
+            escalation_level: this.escalationLevels.filter(item => item.name === this.escalationRule.escalation_level_name)[0].id,
+            event_type: this.eventTypes.filter(item => item.name === this.escalationRule.event_type_name)[0].id,
+          });
+          this.openBtn.nativeElement.click();
+        } else {
+          this.toastr.error('Escalation rule could not be retrieved', 'Edit escalation rule error');
+        }
+      } else {
+        // TODO: Add error checks
+      }
+
+    });
   }
 
   onSubmitAddRule() {
     this.submitted = true;
     if (this.addRuleForm.invalid) {
-      console.log('Invalid');
       return;
     }
 
-    this.escalationRule.state = 'Active';
-    // console.log(this.escalationRule);
-    console.log(this.addRuleForm.controls.escalationLevel.value);
-    this.ruleService.createRule(this.escalationRule).subscribe(
-      response => {
+    this.ruleService.createRule<EscalationRuleResponse>(this.addRuleForm.value)
+    .subscribe(response => {
+      if (response.ok) {
         this.submitted = false;
-        this.closeAddModal.nativeElement.click();
-        if (response.code === '800.200.001') {
+        if (response.body.code === '800.200.001') {
           this.getRules();
           this.toastr.success('Escalation rule created successfully!');
+          this.closeAddModal.nativeElement.click();
         } else {
-          this.toastr.error('Escalation rule could not be created!', 'Error');
+          this.toastr.error('Escalation rule creation failed! Try again later', 'Escalation rule creation error');
         }
-      });
+      } else {
+        // TODO: Add error checks
+      }
+    });
   }
 
   onSubmitEditRule() {
     this.submitted = true;
     if (this.editRuleForm.invalid) {
-      console.log('Invalid');
       return;
     }
-    // console.log(this.escalationRule);
-    this.escalationRule.event_type = this.escalationRule.eventtype;
-    this.escalationRule.state = 'Active';
-    this.ruleService.updateRule(this.escalationRule).subscribe(
-      response => {
+    this.ruleService.updateRule<EscalationRuleResponse>(this.escalationRule.id, this.editRuleForm.value)
+    .subscribe(response => {
+      if (response.ok) {
         this.submitted = false;
-        this.closeUpdateModal.nativeElement.click();
-        if (response.code === '800.200.001') {
+        if (response.body.code === '800.200.001') {
           this.getRules();
           this.toastr.success('Escalation rule updated successfully!');
+          this.closeUpdateModal.nativeElement.click();
         } else {
-          this.toastr.error('Escalation rule could not be updated!', 'Error');
+          this.toastr.error('Escalation rule edit failed! Try again later', 'Edit Escalation rule error');
         }
-      });
+      } else {
+        // TODO: Add error checks
+      }
+    });
   }
 }

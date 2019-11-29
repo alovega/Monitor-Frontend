@@ -1,28 +1,26 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { tap, map } from 'rxjs/operators';
 
-import { environment } from '../../environments/environment';
+import { HttpWrapperService } from './helpers/http-wrapper.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class GraphsService {
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+    private httpWrapper: HttpWrapperService
   ) { }
 
-  getErrorRates(): Observable<any> {
-    return this.http.post<any>(environment.apiEndpoint + 'get_error_rates/', {}).pipe(
-      map(response => response.data)
-    );
+  getErrorRates<T>(startDate, endDate): Observable<HttpResponse<T>> {
+    return this.httpWrapper.post<T>('get_error_rates/', {
+      start_date: startDate, end_date: endDate
+    });
   }
 
-  getResponseTimes(systemId): Observable<any> {
-    return this.http.post<any>(environment.apiEndpoint + 'get_response_time_data/', {systemId}).pipe(
-      tap(res => console.log(res)),
-      map(response => response.data)
-    );
+  getResponseTimes<T>(): Observable<HttpResponse<T>> {
+    return this.httpWrapper.post<T>('get_response_time_data/');
   }
 }

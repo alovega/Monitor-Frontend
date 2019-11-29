@@ -3,9 +3,11 @@ import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms'
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 
-import { EscalationRule } from '../escalation-rule';
+import { EscalationRule, EscalationRuleResponse } from '../../../shared/models/escalation-rule';
 import { EscalationRuleService } from '../escalation-rule.service';
 import { ToastrService } from 'ngx-toastr';
+import { LookUpService } from 'src/app/shared/look-up.service';
+import { DropdownItem } from 'src/app/layout/top-nav-bar/dropdown-item';
 
 @Component({
   selector: 'hm-create-rule',
@@ -15,31 +17,38 @@ import { ToastrService } from 'ngx-toastr';
 export class CreateRuleComponent implements OnInit {
   escalationRuleForm: FormGroup;
   submitted = false;
-  escalationRule: EscalationRule;
-  ruleId: string;
+  escalationLevels: DropdownItem[];
+  eventTypes: any;
 
   constructor(
     private formBuilder: FormBuilder,
     private ruleService: EscalationRuleService,
     private activatedRoute: ActivatedRoute,
     private location: Location,
-    private toastr: ToastrService) {
-
-    this.escalationRule = new EscalationRule();
-    this.ruleId = this.activatedRoute.snapshot.params['rule-id'];
-   }
+    private toastr: ToastrService,
+    private lookupService: LookUpService) { }
   ngOnInit() {
+    this.lookupService.getEscalationLevel().subscribe(
+      res => {
+        this.escalationLevels = res.map((rule) => ({id: rule.id, text: rule.name}));
+      }
+    );
+    this.lookupService.getEventType().subscribe(
+      res => {
+        this.eventTypes = res.map((type) => ({id: type.id, text: type.name}));
+      }
+    );
     this.createEscalationRuleForm();
   }
 
   createEscalationRuleForm() {
     this.escalationRuleForm = this.formBuilder.group({
-      ruleName: ['', Validators.required],
-      ruleDescription: ['', Validators.required],
-      nEvents: ['', [Validators.required, Validators.minLength(1)]],
+      name: ['', Validators.required],
+      description: ['', Validators.required],
+      nth_event: ['', [Validators.required, Validators.minLength(1)]],
       duration: ['', [Validators.required, Validators.minLength(1)]],
-      escalationLevel: ['High', Validators.required],
-      eventType: ['Error', Validators.required]
+      escalation_level: ['', Validators.required],
+      event_type: ['', Validators.required]
     });
   }
 
@@ -53,20 +62,20 @@ export class CreateRuleComponent implements OnInit {
       console.log('Invalid');
       return;
     }
-
-    this.escalationRule.event_type = this.escalationRule.eventtype;
-    this.escalationRule.escalation_level = this.escalationRule.escalation;
-    this.escalationRule.status = 'Active';
-    this.escalationRule.state = this.escalationRule.status;
-
-    this.ruleService.createRule(this.escalationRule).subscribe(
-      response => {
-        if (response.code === '800.200.001') {
-          this.toastr.success('Escalation rule was created successfully', 'Create rule success');
+    // this.escalationRule.state = this.escalationRule.status;
+    console.log(this.escalationRuleForm.value);
+    this.ruleService.createRule<EscalationRuleResponse>(this.escalationRuleForm.value)
+    .subscribe(response => {
+      if (response.ok) {
+        if (response.body.code === '800.200.001') {
+          this.toastr.success('Escalation rule was created successfully', 'Rule creationsuccess');
           this.location.back();
         } else {
-          this.toastr.error('Escalation rule could not be created', 'Create rule error');
+          this.toastr.error('Escalation rule could not be created', 'Rule creation error');
         }
-      });
+      } else {
+        // TODO: Add error checks
+      }
+    });
   }
 }

@@ -31,7 +31,9 @@ export class UsersComponent implements OnInit, AfterViewInit {
     private activatedRoute: ActivatedRoute,
     private systemService: SystemService,
     private usersService: UsersService,
-    private cdRef: ChangeDetectorRef) { }
+    private cdRef: ChangeDetectorRef) {
+      this.users = [];
+    }
 
   ngOnInit() {
     this.currentSystem = this.systemService.getCurrentSystem();
@@ -39,7 +41,6 @@ export class UsersComponent implements OnInit, AfterViewInit {
 
     this.usersService.getUsers().subscribe(
       result => {
-        console.log(result);
         if (result.code === '800.200.001') {
           this.users = result.data;
           this.mdbTable.setDataSource(this.users);
@@ -102,10 +103,8 @@ export class UsersComponent implements OnInit, AfterViewInit {
       cancelButtonText: 'No, keep the user'
     }).then((result) => {
       if (result.value) {
-        console.log('User deleted');
         this.usersService.deleteUser(userId).subscribe(
           response => {
-            console.log(response);
             if (response.code === '800.200.001') {
               Swal.fire(
                 'Deleted!',

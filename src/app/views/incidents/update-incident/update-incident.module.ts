@@ -10,6 +10,7 @@ import { UpdateIncidentComponent } from './update-incident.component';
 import { UpdateHistoryComponent } from './update-history/update-history.component';
 import { IncidentEventsComponent } from './incident-events/incident-events.component';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { NgSelect2Module } from 'ng-select2';
 
 
 @NgModule({
@@ -22,7 +23,8 @@ import { SharedModule } from 'src/app/shared/shared.module';
     HttpClientModule,
     SharedModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgSelect2Module
   ],
   schemas: [
     NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA

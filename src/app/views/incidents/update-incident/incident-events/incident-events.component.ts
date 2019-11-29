@@ -47,6 +47,7 @@ export class IncidentEventsComponent implements OnInit, AfterViewInit {
       this.activatedRoute.parent.params.subscribe(params => {
         this.incidentId = params['incident-id'];
       });
+      this.events = [];
     }
 
   ngOnInit() {
@@ -59,27 +60,24 @@ export class IncidentEventsComponent implements OnInit, AfterViewInit {
         this.mdbTable.setDataSource(this.events);
         this.events = this.mdbTable.getDataSource();
         this.previous = this.mdbTable.getDataSource();
-        console.log(result);
         this.loading = false;
       })
     );
   }
 
   ngAfterViewInit() {
-    this.mdbTablePagination.setMaxVisibleItemsNumberTo(5);
+    this.mdbTablePagination.setMaxVisibleItemsNumberTo(this.visibleItems);
     this.mdbTablePagination.calculateFirstItemIndex();
     this.mdbTablePagination.calculateLastItemIndex();
     if (this.events.length > this.visibleItems) {
       this.mdbTablePagination.nextShouldBeDisabled = false;
     }
     this.cdRef.detectChanges();
-    console.log(this.mdbTablePagination.firstItemIndex);
   }
 
   changeVisibleItems(maxNumber: number) {
     this.visibleItems = maxNumber;
     if (!maxNumber) {
-      console.log(maxNumber);
       this.visibleItemsInput.nativeElement.value = 1;
       this.visibleItems = 1;
     }
@@ -119,10 +117,6 @@ export class IncidentEventsComponent implements OnInit, AfterViewInit {
       this.events = this.mdbTable.searchLocalDataBy(search);
       this.mdbTable.setDataSource(prev);
     }
-  }
-
-  onOpen(event: any) {
-    console.log(event);
   }
 
   public showEventInfo(eventId: string) {

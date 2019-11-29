@@ -1,55 +1,40 @@
 import { Injectable, Output, EventEmitter } from '@angular/core';
 import { Observable } from 'rxjs';
 import { catchError, filter, tap, map } from 'rxjs/operators';
-import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpParams, HttpHeaders, HttpResponse } from '@angular/common/http';
 
-import { Incident } from './incident';
+import { Incident, IncidentResponse } from './incident';
 import { environment } from '../../../environments/environment';
+import { HttpWrapperService } from 'src/app/shared/helpers/http-wrapper.service';
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class IncidentService {
-  incidentsUrl = 'assets/demo-incidents.json';
-
-  httpOptions = {
-    headers: new HttpHeaders({'Content-Type' : 'application/x-www-form-urlencoded'})
-  };
-  token = 'MmVmZWQzYTdhNGY2ZjMxNTE4NGQ1ZWZlOTk5MDA3';
-  clientId = '3cd49364-721a-4d3f-8bfa-141d93d6a8f7';
-
-  @Output() changeSystem: EventEmitter<boolean> = new EventEmitter();
 
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+    private httpWrapper: HttpWrapperService
   ) {}
 
-  createIncident(incident: any): Observable<Incident> {
-    return this.http.post<Incident>(environment.apiEndpoint + 'create_incident/', incident).pipe(
-      tap(result => console.log(result))
-    );
+  createIncident<T>(incidentType: string, body: any): Observable<HttpResponse<T>> {
+    return this.httpWrapper.post<T>('create_incident/', {incident_type: incidentType, ...body});
   }
 
-  getIncidents(): Observable<Incident[]> {
-    return this.http.post<any>(environment.apiEndpoint + 'get_incidents/', {
-    }).pipe(
-      tap(incidents => console.log(incidents)),
-      map(incidents => incidents.data),
-    );
+  getIncidents<T>(options?: any): Observable<HttpResponse<T>> {
+    return this.httpWrapper.post<T>('get_incidents/', options);
   }
 
-  getOpenIncidents(currentSystem: any): Observable<Incident[]> {
-    // console.log(currentSystem);
-    return this.http.post<any>(environment.apiEndpoint + 'get_incidents/', {
-    }).pipe(
-      tap(incidents => console.log(incidents)),
-      map(incidents => incidents.data.filter(incident => incident.status !== 'Completed').filter(
-        incident => incident.status !== 'Resolved'
-      )),
-      // tap(incidents => console.log(incidents))
-    );
-  }
+  // getOpenIncidents<T>(): Observable<HttpResponse<T>> {
+  //   return this.httpWrapper.post<T>('get_incidents/');
+  //   .pipe(
+  //     map(incidents => incidents.data.filter(incident => incident.status !== 'Completed').filter(
+  //       incident => incident.status !== 'Resolved'
+  //     )),
+  //     // tap(incidents => console.log(incidents))
+  //   );
+  // }
 
   searchIncidents(searchKey: string): Observable<any> {
     return this.http.post<any>(environment.apiEndpoint + 'get_incidents/', {
@@ -62,7 +47,6 @@ export class IncidentService {
   getRealtimeIncidents(): Observable<any> {
     return this.http.post<any>(environment.apiEndpoint + 'get_incidents/', {
     }).pipe(
-      tap(incidents => console.log(incidents)),
       map(incidents => incidents.data.filter(incident => incident.type === 'Realtime')),
     );
   }
@@ -75,19 +59,12 @@ export class IncidentService {
     );
   }
 
-  getIncident(incidentId: string, currentSystem: any): Observable<any> {
-    return this.http.post<any>('http://127.0.0.1:8000/api/get_incident/', {
-      system: currentSystem.name,
-      incident_id: incidentId,
-    }).pipe(
-      map(incident => incident.data),
-    );
+  getIncident<T>(incidentId: string): Observable<HttpResponse<T>> {
+    return this.httpWrapper.post<T>('get_incident/', {incident_id: incidentId});
   }
 
-  updateIncident(incident: any): Observable<any> {
-    return this.http.post<any>(environment.apiEndpoint + 'update_incident/', incident).pipe(
-      tap(result => console.log(result) )
-    );
+  updateIncident<T>(incidentId: string, body: any): Observable<HttpResponse<T>> {
+    return this.httpWrapper.post<T>('update_incident/', {incident_id: incidentId, ...body});
   }
 
   deleteIncident(incidentId: string): Observable<any> {
@@ -96,9 +73,5 @@ export class IncidentService {
     }).pipe(
       // tap(result => console.log(result))
     );
-  }
-
-  getSystem() {
-    this.changeSystem.emit(JSON.parse(localStorage.getItem('currentSystem')));
   }
 }

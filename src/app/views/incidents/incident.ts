@@ -1,20 +1,45 @@
+export class IncidentUpdate {
+    id: string;
+    description: string;
+    priority_level: number;
+    escalation_level_id: string;
+    user_id: string;
+    username: string;
+    date_created: Date;
+    date_modified: Date;
+    state_name: string;
+    state_id: string;
+}
+
+
 export class Incident {
+    id: string;
     name: string;
     description: string;
-    incident_id: string;
+    priority_level: number;
     system_id: string;
-    priority_level: string;
-    type: string;
-    status: string;
-    state ?: string;
-    affected_system: string;
-    date_created: string;
-    date_modified: string;
-    scheduled_for ?: string;
-    scheduled_until ?: string;
-    eventtype ?: string;
-    incident_updates: any[];
-    escalation_level ?: any;
-    incident_type ?: any;
-    user ?: any;
+    system_name: string;
+    incident_type_name: string;
+    event_type_id: string;
+    state_id: string;
+    state_name: string;
+    incident_id: string;
+    incident_updates: IncidentUpdate[];
+    scheduled_for?: Date;
+    scheduled_until?: Date;
+    date_created: Date;
+    date_modified: Date;
 }
+
+export class IncidentResponse {
+    code: string;
+    data?: Incident;
+    message?: string;
+}
+
+export class IncidentsResponse {
+    code: string;
+    data?: Incident[];
+    message?: string;
+}
+

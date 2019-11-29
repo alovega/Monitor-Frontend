@@ -30,6 +30,7 @@ import { GraphsService } from './graphs.service';
 import { SystemStatusService } from './system-status.service';
 import { LoginComponent } from './auth/login/login.component';
 import { DateTransformPipe } from './pipes/date-transform.pipe';
+import { YesNoPipe } from './pipes/yes-no.pipe';
 import { DataTableComponent } from './data-table/data-table.component';
 
 @NgModule({
@@ -48,6 +49,7 @@ import { DataTableComponent } from './data-table/data-table.component';
     ComponentLoaderComponent,
     EndpointStatusComponent,
     DateTransformPipe,
+    YesNoPipe,
     DataTableComponent
   ],
   imports: [
@@ -76,6 +78,7 @@ import { DataTableComponent } from './data-table/data-table.component';
     ComponentLoaderComponent,
     EndpointStatusComponent,
     DateTransformPipe,
+    YesNoPipe,
     DataTableComponent
   ],
   providers: [SystemService,

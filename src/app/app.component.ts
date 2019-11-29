@@ -1,9 +1,10 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit, AfterViewInit} from '@angular/core';
 import { SystemService } from './shared/system.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 
 import { AuthenticationService } from './shared/auth/authentication.service';
+import { System } from './shared/models/system';
 
 
 @Component({
@@ -11,17 +12,12 @@ import { AuthenticationService } from './shared/auth/authentication.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit{
+export class AppComponent implements OnInit, AfterViewInit{
   title = 'helamonitor';
-  systems: any;
-  currentSystem: any;
-  currentSystemId: any;
+  currentSystem: System;
   currentUser: any;
+  loading = true;
 
-  // @HostListener('document:mousemove', ['$event'])
-  // onMouseMove(e) {
-  //   setTimeout(() => {console.log(e)}, 4000);
-  // }
   constructor(
     private systemService: SystemService,
     private router: Router,
@@ -38,13 +34,15 @@ export class AppComponent implements OnInit{
       }
     );
     this.currentSystem = this.systemService.getCurrentSystem();
-    this.currentSystem ? this.currentSystemId = this.currentSystem.id : this.currentSystemId = null;
-    // setTimeout(() => this.toastr.success('Hello world!', 'Toastr fun!'))
+  }
+
+  ngAfterViewInit() {
+    this.loading = false;
   }
 
   logout() {
     this.authService.logout();
-    this.router.navigate(['/login']);
+    this.router.navigate(['login']);
   }
 
 }

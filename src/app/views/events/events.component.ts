@@ -37,7 +37,9 @@ export class EventsComponent implements OnInit, AfterViewInit {
     private activatedRoute: ActivatedRoute,
     private systemService: SystemService,
     private eventsService: EventsService,
-    private cdRef: ChangeDetectorRef) { }
+    private cdRef: ChangeDetectorRef) {
+      this.events = [];
+  }
 
   ngOnInit() {
     this.currentSystem = this.systemService.getCurrentSystem();

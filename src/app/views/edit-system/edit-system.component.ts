@@ -1,13 +1,13 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-import { of } from 'rxjs';
 import { Location } from '@angular/common';
-import { System } from '../../shared/models/system';
+import { System, SystemResponse } from '../../shared/models/system';
 import Swal from 'sweetalert2';
 
 import { SystemService } from '../../shared/system.service';
 import { LookUpService } from 'src/app/shared/look-up.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'hm-edit-system',
@@ -30,23 +30,22 @@ export class EditSystemComponent implements OnInit {
     private lookupService: LookUpService,
     private location: Location,
     private activatedRoute: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private toastr: ToastrService
   ) {
     // this.system = new System();
+    this.system = this.currentSystem;
+    this.editSystemForm = this.formBuilder.group({
+      name: ['', Validators.required],
+      description: ['', Validators.required],
+      admin: ['', Validators.required],
+      version: ['', Validators.required]
+    });
    }
 
   ngOnInit() {
     this.currentSystem = this.systemService.getCurrentSystem();
-    this.system = this.currentSystem;
     this.currentSystemId = this.currentSystem.id;
-
-    this.editSystemForm = this.formBuilder.group({
-      name: ['', Validators.required],
-      description: ['', Validators.required],
-      status: ['', Validators.required],
-      admin: [''],
-      version: ['']
-    });
 
     this.lookupService.getStates().subscribe(
       (data) => {
@@ -56,21 +55,31 @@ export class EditSystemComponent implements OnInit {
     this.lookupService.getUsers().subscribe(
       (data) => {
         this.users = data;
-      });
+    });
+
+    this.editSystemForm.patchValue({
+      name: this.currentSystem.name,
+      description: this.currentSystem.description,
+      admin: this.currentSystem.admin_id,
+      version: this.currentSystem.version
+    });
   }
 
   onSubmit() {
-    // console.log(this.system);
+    console.log(this.editSystemForm.value);
     this.submitted = true;
     if (this.editSystemForm.invalid) {
       console.log('Invalid');
       return;
     }
 
-    return this.systemService.updateSystem(this.system).subscribe(
-      ((result: any) => {
-        console.log(result);
-        if (result) {
+    return this.systemService.updateSystem<SystemResponse>(this.currentSystem.id, this.editSystemForm.value)
+    .subscribe(response => {
+      if (response.ok) {
+        if (response.body.code === '800.200.001') {
+          this.currentSystem = response.body.data;
+          localStorage.setItem('currentSystem', JSON.stringify(this.currentSystem));
+          this.systemService.currentSystemSubject.next(this.currentSystem);
           Swal.fire({
             title: 'Success',
             text: 'System updated successfully!',
@@ -79,16 +88,12 @@ export class EditSystemComponent implements OnInit {
             window.location.reload();
           });
         } else {
-          Swal.fire({
-            title: 'Error',
-            text: 'System could not be updated!',
-            type: 'error',
-          }).then(() => {
-            window.location.reload();
-          });
+          this.toastr.error(response.body.message, 'System update error!');
         }
-      })
-    );
+      } else {
+        // TODO: Add error checks
+      }
+    });
   }
 
   public back(): void {

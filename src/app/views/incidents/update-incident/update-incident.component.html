@@ -5,7 +5,7 @@
 
     <!-- Grid column -->
     <div class="col-md-12">
-        <div class="page-header d-flex justify-content-between" *ngIf="incident.status !== 'Resolved' && incident.status !== 'Completed'; else Open">
+        <div class="page-header d-flex justify-content-between" *ngIf="incident.state_name !== 'Resolved' && incident.state_name !== 'Completed'; else Open">
             <div class="">{{ incident.name }}</div>
             <div class="">
                 <button class="back-button" (click)="back()"><i class="fas fa-angle-double-left"></i> Back</button>
@@ -37,7 +37,6 @@
                 </div>
             </div>
             <router-outlet></router-outlet>
-
         </div>
     </div>
 

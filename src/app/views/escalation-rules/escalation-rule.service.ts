@@ -1,58 +1,33 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
-import { map, tap} from 'rxjs/operators';
-
-import { environment } from '../../../environments/environment';
-import { EscalationRule } from './escalation-rule';
+import { HttpResponse } from '@angular/common/http';
+import { Observable} from 'rxjs';
+import { HttpWrapperService } from 'src/app/shared/helpers/http-wrapper.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class EscalationRuleService {
-  httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-  };
-
   constructor(
-    private http: HttpClient
+    private httpWrapperService: HttpWrapperService
   ) { }
 
-  createRule(escalationRule: any): Observable<any> {
-    const createRulesUrl = environment.apiEndpoint + 'create_rule/';
-    return this.http.post<any>(createRulesUrl, escalationRule).pipe(
-      tap(response => console.log(response))
-    );
+  createRule<T>(escalationRule: any): Observable<HttpResponse<T>> {
+    return this.httpWrapperService.post<T>('create_rule/', escalationRule);
   }
 
-  getRules(): Observable<any> {
-    const getRulesUrl = environment.apiEndpoint + 'get_rules/';
-    return this.http.post<any>(getRulesUrl, {}).pipe(
-      map(rule => rule.data),
-    );
+  getRules<T>(): Observable<HttpResponse<T>> {
+    return this.httpWrapperService.post<T>('get_rules/');
   }
 
-  getRule(ruleId: string) {
-    const getRuleUrl = environment.apiEndpoint + 'get_rule/';
-    return this.http.post<any>(getRuleUrl, {
-      rule_id: ruleId
-    }).pipe(
-      tap(rule => console.log(rule)),
-      map(rule => rule.data),
-    );
+  getRule<T>(ruleId: string): Observable<HttpResponse<T>> {
+    return this.httpWrapperService.post<T>('get_rule/', {rule_id: ruleId});
   }
 
-  updateRule(escalationRule: any) {
-    const updateRuleUrl = environment.apiEndpoint + 'update_rule/';
-    return this.http.post<any>(updateRuleUrl, escalationRule).pipe(
-      tap(response => console.log(response))
-    );
+  updateRule<T>(ruleId: string, body: any): Observable<HttpResponse<T>> {
+    return this.httpWrapperService.post<T>('update_rule/', {rule_id: ruleId, ...body});
   }
 
-  deleteRule(escalationRuleId: any) {
-    const deleteRuleUrl = environment.apiEndpoint + 'delete_rule/';
-    return this.http.post<any>(deleteRuleUrl, {rule_id: escalationRuleId}).pipe(
-      tap(response => console.log(response))
-    );
+  deleteRule<T>(ruleId: any): Observable<HttpResponse<T>> {
+    return this.httpWrapperService.post<T>('delete_rule/', {rule_id: ruleId});
   }
 }

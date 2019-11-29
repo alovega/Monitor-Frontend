@@ -7,6 +7,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { ToastrModule } from 'ngx-toastr';
+import { NgSelect2Module } from 'ng-select2';
 
 import { MaterialModule } from '../../material/material.module';
 import { TopNavBarComponent } from '../../layout/top-nav-bar/top-nav-bar.component';
@@ -47,6 +48,7 @@ import { MenuListItemComponent } from '../../layout/menu-list-item/menu-list-ite
     DashboardLayoutRoutingModule,
     SharedModule,
     IncidentsModule,
+    NgSelect2Module
   ],
   schemas: [NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA]
 })

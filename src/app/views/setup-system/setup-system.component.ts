@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewChecked, ViewChild } from '@angular/core';
+import { Component, OnInit, AfterViewChecked, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { SetupService } from './setup.service';
 import { ToastrService } from 'ngx-toastr';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -19,16 +19,13 @@ export class SetupSystemComponent implements OnInit, AfterViewChecked {
     private setupService: SetupService,
     private toastr: ToastrService,
     private router: Router,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private changeDetector: ChangeDetectorRef
   ) {
     this.activeTab = this.activatedRoute.snapshot.firstChild.url[0].path;
-    // this.setupService.previousUrl.next(null);
-    // this.setupService.nextUrl.next('rules');
   }
 
   ngOnInit() {
-    // console.log(this.activatedRoute.snapshot.firstChild.url[0].path);
-
     this.setupService.currentPreviousUrl.subscribe(
       (url) => this.previousUrl = url
     );
@@ -38,7 +35,6 @@ export class SetupSystemComponent implements OnInit, AfterViewChecked {
 
     this.setupService.disabledNext.subscribe(
       (status) => {
-        console.log(status);
         this.disabledStatus = status;
       }
     );
@@ -50,7 +46,8 @@ export class SetupSystemComponent implements OnInit, AfterViewChecked {
       if (this.tabs) {
         this.tabs.select(this.activeTab);
       }
-   });
+    });
+    this.changeDetector.detectChanges();
   }
 
   public finish() {
@@ -59,11 +56,9 @@ export class SetupSystemComponent implements OnInit, AfterViewChecked {
   }
 
   onTabChange($event: NgbTabChangeEvent) {
-    console.log($event.nextId);
     if (this.tabs) {
       this.activeTab = $event.nextId;
       this.router.navigate([`dashboard/quick-setup/${$event.nextId}`]);
     }
   }
-
 }

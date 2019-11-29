@@ -5,6 +5,9 @@ import { first } from 'rxjs/operators';
 import Swal from 'sweetalert2';
 
 import { AuthenticationService } from '../authentication.service';
+import { System, SystemsResponse } from '../../models/system';
+import { SystemService } from '../../system.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'hm-login',
@@ -18,12 +21,15 @@ export class LoginComponent implements OnInit {
   returnUrl: string;
   error: string;
   currentUser: any;
+  currentSystem: System;
 
   constructor(
     private authService: AuthenticationService,
     private route: ActivatedRoute,
     private router: Router,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private systemService: SystemService,
+    private toastr: ToastrService
   ) {
     if (this.authService.currentUserValue) {
       this.router.navigate(['/']);
@@ -31,6 +37,8 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.currentSystem = this.systemService.getCurrentSystem();
+    console.log(this.currentSystem);
     this.loginForm = this.formBuilder.group({
       username: ['', Validators.required],
       password: ['', Validators.required]
@@ -60,9 +68,29 @@ export class LoginComponent implements OnInit {
         .pipe(first())
         .subscribe(
             data => {
-              console.log('Logged in ' + data);
+              console.log(data);
               if (data) {
-                this.router.navigate([this.returnUrl]);
+                console.log(this.currentSystem);
+                if (!this.currentSystem) {
+                  this.systemService.getSystems<SystemsResponse>()
+                  .subscribe(response => {
+                    if (response.ok) {
+                      if (response.body.code === '800.200.001') {
+                        this.currentSystem = response.body.data[0];
+                        localStorage.setItem('currentSystem', JSON.stringify(this.currentSystem));
+                        this.systemService.currentSystemSubject.next(this.currentSystem);
+                        this.router.navigate([this.returnUrl]);
+                      } else {
+                        this.toastr.error('An error occurred. Try again later', 'Error!');
+                      }
+                    } else {
+                      // TODO: Add error checks
+                    }
+                      // window.location.reload();
+                  });
+                } else {
+                  this.router.navigate([this.returnUrl]);
+                }
               } else {
                 Swal.fire(
                   '',

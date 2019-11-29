@@ -1,6 +1,6 @@
 <div class="d-flex justify-content-between align-items-end">
     <h5>Add some endpoints </h5>
-    <div class="" *ngIf="endpoints.length">
+    <div class="" *ngIf="endpoints?.length">
         <button mdbBtn class="btn-sm blue-gradient lowercase-btn text-white" data-toggle="modal" data-target="#"
         (click)="frame.show()"><i class="fas fa-plus"></i> Add endpoint</button>
     </div>     
@@ -22,7 +22,7 @@
             <hm-loader></hm-loader>
             {{loading}}
         </div> 
-        <ul class="endpoints-list" *ngIf="endpoints.length; else noEndpoints">
+        <ul class="endpoints-list" *ngIf="endpoints?.length; else noEndpoints">
             <li *ngFor="let endpoint of endpoints">
               <div class="d-flex justify-content-between">
                <div class="endpoint-item" (click)="updateEndpoint(endpoint.id)">
