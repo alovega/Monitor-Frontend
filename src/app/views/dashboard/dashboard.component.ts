@@ -139,7 +139,6 @@ export class DashboardComponent implements OnInit, AfterViewChecked, AfterViewIn
     this.graphsService.getResponseTimes<GraphDataResponse>()
     .subscribe(response => {
       if (response.ok) {
-        console.log(response.body);
         if (response.body.code === '800.200.001') {
           Object.keys(response.body.data.datasets).forEach(key => {
             this.responseTimeGraph.chartDatasets.push(response.body.data.datasets[key]);

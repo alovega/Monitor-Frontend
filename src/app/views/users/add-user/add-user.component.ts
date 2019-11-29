@@ -1,11 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Location } from '@angular/common';
-import { ToastrService } from 'ngx-toastr'
+import { ToastrService } from 'ngx-toastr';
 
-import { User } from '../user';
-import { first } from 'rxjs/operators';
+import { User, UserResponse } from '../user';
 import { UsersService } from '../users.service';
 import { MustMatch } from '../../../shared/must-match.validator';
 
@@ -23,7 +21,6 @@ export class AddUserComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private location: Location,
-    private router: Router,
     private usersService: UsersService,
     private toastr: ToastrService
   ) {
@@ -47,25 +44,24 @@ export class AddUserComponent implements OnInit {
   onSubmit() {
     this.submitted = true;
     if (this.addUserForm.invalid) {
-      console.log('Invalid');
       return;
     }
-
-    // this.user.event_type = this.escalationRule.eventtype;
-    // this.escalationRule.escalation_level = this.escalationRule.escalation;
-    // this.user.status = 'Active';
-    // this.user.state = this.escalationRule.status;
-    console.log(this.user);
+    console.log(this.addUserForm.value);
     // if (t)
-    this.usersService.createUser(this.user).subscribe(
-      response => {
-        if (response.code === '800.200.001') {
+    this.usersService.createUser<UserResponse>(this.addUserForm.value)
+    .subscribe(response => {
+      console.log(response);
+      if (response.ok) {
+        if (response.body.code === '800.200.001') {
           this.toastr.success('User created successfully', 'User creation success');
           this.location.back();
         } else {
-          this.toastr.error(response.message, 'User creation error');
+          this.toastr.error(response.body.message, 'User creation error');
         }
-      });
+      } else {
+        // TODO: Add error checks
+      }
+    });
   }
 
   public back(): void {

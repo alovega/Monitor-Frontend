@@ -12,7 +12,7 @@ import { System } from './shared/models/system';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit, AfterViewInit{
+export class AppComponent implements OnInit {
   title = 'helamonitor';
   currentSystem: System;
   currentUser: any;
@@ -21,9 +21,7 @@ export class AppComponent implements OnInit, AfterViewInit{
   constructor(
     private systemService: SystemService,
     private router: Router,
-    private activatedRoute: ActivatedRoute,
     private authService: AuthenticationService,
-    private toastr: ToastrService,
   ) {
     this.authService.currentUser.subscribe(user => this.currentUser = user);
   }
@@ -36,13 +34,8 @@ export class AppComponent implements OnInit, AfterViewInit{
     this.currentSystem = this.systemService.getCurrentSystem();
   }
 
-  ngAfterViewInit() {
-    this.loading = false;
-  }
-
   logout() {
     this.authService.logout();
     this.router.navigate(['login']);
   }
-
 }

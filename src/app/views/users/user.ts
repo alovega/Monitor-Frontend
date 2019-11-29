@@ -11,3 +11,15 @@ export class User {
     id: number;
     date_joined: string;
 }
+
+export class UserResponse {
+    code: string;
+    data?: User;
+    message?: string;
+}
+
+export class UsersResponse {
+    code: string;
+    data?: User[];
+    message?: string;
+}
