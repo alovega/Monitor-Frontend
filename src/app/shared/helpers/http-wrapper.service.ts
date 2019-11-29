@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
-import { HttpClient, HttpHeaders, HttpResponse, HttpRequest, HttpErrorResponse, HttpParams} from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpResponse, HttpErrorResponse, HttpParams} from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
-import { map, tap, retry, catchError} from 'rxjs/operators';
 import { AuthenticationService } from '../auth/authentication.service';
 import { environment } from 'src/environments/environment';
 import { ToastrService } from 'ngx-toastr';
@@ -40,10 +38,6 @@ export class HttpWrapperService {
     if (!params) {
       params = new HttpParams();
     }
-    const options = {
-      headers,
-      params: new HttpParams()
-    };
     // console.log(options);
     if (method === 'GET') {
       return this.http.get<T>(targetUrl, {...headers, observe: 'response', ...params});

@@ -1,16 +1,14 @@
-import { Component, OnInit, AfterViewInit, ChangeDetectorRef, ElementRef, ViewChild, Renderer2 } from '@angular/core';
+import { Component, OnInit, AfterViewInit, HostListener, ElementRef, ViewChild, Renderer2, ChangeDetectorRef } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import {map, shareReplay } from 'rxjs/operators';
-import {VERSION} from '@angular/material';
-import {NavItem} from './nav-item';
-import {NavService} from './nav.service';
+import { NavItem } from './nav-item';
+import { NavService } from './nav.service';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { SystemService } from '../../shared/system.service';
 import { System, SystemsResponse } from '../../shared/models/system';
 import { AuthenticationService } from '../../shared/auth/authentication.service';
 import Swal from 'sweetalert2';
-import { NgbTypeaheadWindow } from '@ng-bootstrap/ng-bootstrap/typeahead/typeahead-window';
 import { ToastrService } from 'ngx-toastr';
 declare var $: any;
 @Component({
@@ -97,9 +95,7 @@ export class DashboardLayoutComponent implements OnInit, AfterViewInit {
     private breakpointObserver: BreakpointObserver,
     private navService: NavService,
     private cd: ChangeDetectorRef
-  ) {
-    this.navService.appDrawer = this.appDrawer;
-   }
+  ) { }
 
   ngOnInit() {
     // this.navService.openNav();

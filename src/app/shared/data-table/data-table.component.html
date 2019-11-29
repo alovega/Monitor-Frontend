@@ -1,14 +1,14 @@
 <div>
   <div id="table-header">
       <div class="pagination">
-        <p class="content">show</p>
+        <p class="content">Show</p>
         <select class="browser-default custom-select content" (change)= "changePagination($event)">
             <option *ngFor="let value of pagination" [ngValue]="value">{{value}}</option>
         </select>
         <p class="content">items</p>
       </div>
       <div class="search">
-          <label id="searchlabel">search :</label>
+          <label id="searchlabel">Search :</label>
           <input
             type="text"
             placeholder="search..."
@@ -17,13 +17,16 @@
       </div>
   </div>
   <ngx-datatable
-    class="material striped"
+    class="material striped expandable"
+    style="overflow-y: visible; max-height: 70vh; min-width: 768px; overflow-x: visible;"
     #myTable
     [rows]="rows"
     [columns]="columns"
     [columnMode]="ColumnMode.force"
     [headerHeight]="50"
     [footerHeight]="50"
+    [draggable]="false"
+    [reorder]
     rowHeight="auto"
     [externalPaging]="true"
     [externalSorting]="true"

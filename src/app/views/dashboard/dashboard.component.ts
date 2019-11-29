@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild, AfterViewChecked, AfterViewInit, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NgbTabChangeEvent, NgbTabset } from '@ng-bootstrap/ng-bootstrap';
+import { tap } from 'rxjs/operators';
 
 import { SystemService } from '../../shared/system.service';
 import { GraphsService } from '../../shared/graphs.service';

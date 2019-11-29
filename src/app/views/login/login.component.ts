@@ -84,7 +84,6 @@ export class LoginComponent implements OnInit {
         }
       },
       error => {
-        console.log(error);
         this.error = error;
         this.toastr.error('Could not login at this time. Try again later', 'Error');
         this.loading = false;
