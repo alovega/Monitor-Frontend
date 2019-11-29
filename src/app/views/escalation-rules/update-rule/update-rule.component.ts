@@ -2,11 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
+import { forkJoin } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
 
 import { EscalationRuleService } from '../escalation-rule.service';
-import { ToastrService } from 'ngx-toastr';
 import { LookUpService } from 'src/app/shared/look-up.service';
 import { EscalationRuleResponse, EscalationRule } from 'src/app/shared/models/escalation-rule';
+import { EventType } from 'src/app/shared/models/event-type';
+import { EscalationLevel } from 'src/app/shared/models/escalation-level';
 
 @Component({
   selector: 'hm-update-rule',
@@ -18,11 +21,11 @@ export class UpdateRuleComponent implements OnInit {
   submitted = false;
   escalationRule: EscalationRule;
   ruleId: string;
-  min: number = 5;
   escalationLevels: any[];
   eventTypes: any[];
   escalationLevelId: string;
   eventTypeId: string;
+  isdataReady = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -32,7 +35,6 @@ export class UpdateRuleComponent implements OnInit {
     private router: Router,
     private toastr: ToastrService,
     private lookupService: LookUpService) {
-
     this.ruleId = this.activatedRoute.snapshot.params['rule-id'];
   }
 
@@ -41,29 +43,31 @@ export class UpdateRuleComponent implements OnInit {
       name: ['', Validators.required],
       description: ['', Validators.required],
       nth_event: ['', [Validators.required, Validators.minLength(1)]],
-      duration: ['', [Validators.required, Validators.minLength(this.min)]],
+      duration: ['', [Validators.required, Validators.minLength(5)]],
       escalation_level: ['', Validators.required],
       event_type: ['', Validators.required]
     });
+    const eventTypes =  this.lookupService.getEventType();
+    const escalationLevels = this.lookupService.getEscalationLevel();
 
     this.ruleService.getRule<EscalationRuleResponse>(this.ruleId)
     .subscribe(response => {
       if (response.ok) {
         if (response.body.code === '800.200.001') {
           this.escalationRule = response.body.data;
-          this.lookupService.getEventType().subscribe(
-            res => {
-              this.eventTypes = res.map(type => ({id: type.id, text: type.name}));
+          forkJoin([eventTypes, escalationLevels])
+          .subscribe(results => {
+            if (results[0]) {
+              this.eventTypes = results[0].map((type: EventType) => ({id: type.id, text: type.name}));
               this.eventTypeId = this.eventTypes.filter(i => i.text === this.escalationRule.event_type_name)[0].id;
             }
-          );
-          this.lookupService.getEscalationLevel().subscribe(
-            res => {
-              this.escalationLevels = res.map(level => ({id: level.id, text: level.name}));
+            if (results[1]) {
+              this.escalationLevels = results[1].map((level: EscalationLevel) => ({id: level.id, text: level.name}));
               this.escalationLevelId = this.escalationLevels.filter(i => i.text === this.escalationRule.escalation_level_name)[0].id;
-              this.createEscalationRulesForm();
             }
-          );
+            this.populateEscalationRulesForm();
+            this.isdataReady = true;
+          });
         }
       } else {
         // TODO: Add error checks
@@ -75,7 +79,7 @@ export class UpdateRuleComponent implements OnInit {
     return this.escalationRuleForm.controls;
   }
 
-  createEscalationRulesForm() {
+  populateEscalationRulesForm() {
     this.escalationRuleForm.patchValue({
       name: this.escalationRule.name,
       description: this.escalationRule.description,
@@ -87,7 +91,6 @@ export class UpdateRuleComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.escalationRuleForm);
     this.escalationRuleForm.markAsPristine();
     this.submitted = true;
     if (this.escalationRuleForm.invalid) {
@@ -98,10 +101,10 @@ export class UpdateRuleComponent implements OnInit {
     .subscribe(response => {
       if (response.ok) {
         if (response.body.code === '800.200.001') {
-          this.toastr.success('Rule updated successfully', 'Success');
+          this.toastr.success('Rule updated successfully', 'Edit Rule success');
           this.location.back();
         } else {
-          this.toastr.error('Rule could not be updated', 'Error');
+          this.toastr.error('Rule could not be updated', 'Edit rule error');
         }
       } else {
         // TODO: Add error checks

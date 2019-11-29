@@ -16,8 +16,8 @@ export class HttpWrapperService {
     private authService: AuthenticationService,
     private toastr: ToastrService) { }
 
-  post<T>(url: string, body: any = {}, params?: HttpParams | {[param: string]: string | string[]}, headers?: HttpHeaders | {
-    [header: string]: string | string[]}) {
+  post<T>(url: string, body: any = {}, headers?: HttpHeaders | {[header: string]: string | string[]}, params?: HttpParams | {
+    [param: string]: string | string[]}) {
     return this.request<T>(url, 'POST', params, body, headers);
   }
 

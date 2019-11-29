@@ -58,7 +58,6 @@ export class TopNavBarComponent implements OnInit, OnChanges {
     }
 
   ngOnInit() {
-    console.log(this.addSystemForm);
     this.systemService.getSystems<SystemsResponse>()
     .subscribe(response => {
       if (response.ok) {

@@ -5,7 +5,10 @@ import Swal from 'sweetalert2';
 import { ModalDirective } from 'angular-bootstrap-md';
 
 import { SystemService } from '../../shared/system.service';
+import { Event, EventsResponse, EventResponse } from './event';
 import { EventsService } from './events.service';
+import { System } from 'src/app/shared/models/system';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'hm-events',
@@ -18,14 +21,13 @@ export class EventsComponent implements OnInit, AfterViewInit {
   @ViewChild('eventInfo', {static: false}) eventInfo: ModalDirective;
   @ViewChild('visibleItemsInput', { static: true }) visibleItemsInput;
 
-  currentSystemId: string;
-  currentSystem: any;
-  events: any[];
+  currentSystem: System;
+  events: Event[];
   previous: any = [];
   isLoaded = false;
   search = '';
-  event: any;
-  visibleItems: number = 5;
+  event: Event;
+  visibleItems = 5;
   headElements = [
     'eventtype', 'description', 'stack_trace', 'method', 'interface', 'request', 'response', 'code', 'date_created', 'action'];
   elements = {
@@ -34,7 +36,7 @@ export class EventsComponent implements OnInit, AfterViewInit {
   };
 
   constructor(
-    private activatedRoute: ActivatedRoute,
+    private toastr: ToastrService,
     private systemService: SystemService,
     private eventsService: EventsService,
     private cdRef: ChangeDetectorRef) {
@@ -43,17 +45,23 @@ export class EventsComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.currentSystem = this.systemService.getCurrentSystem();
-    this.currentSystemId = this.currentSystem.id;
 
-    this.eventsService.getEvents().subscribe(
-      (result => {
-        this.events = result;
-        this.mdbTable.setDataSource(this.events);
-        this.events = this.mdbTable.getDataSource();
-        this.previous = this.mdbTable.getDataSource();
+    this.eventsService.getEvents<EventsResponse>()
+    .subscribe(response => {
+      if (response.ok) {
+        if (response.body.code === '800.200.001') {
+          this.events = response.body.data;
+          this.mdbTable.setDataSource(this.events);
+          this.events = this.mdbTable.getDataSource();
+          this.previous = this.mdbTable.getDataSource();
+        } else {
+          this.toastr.error('Could not retrieve events at the moment', 'Error');
+        }
+      } else {
+        // TODO: Add error checks
+      }
         // console.log('Current events => ' + result);
-      })
-    );
+    });
     this.isLoaded = true;
   }
 
@@ -102,11 +110,18 @@ export class EventsComponent implements OnInit, AfterViewInit {
   }
 
   public showEventInfo(eventId: string) {
-    this.eventsService.getEvent(eventId).subscribe(
-      res => {
-        this.event = res;
-        this.eventInfo.show();
+    this.eventsService.getEvent<EventResponse>(eventId)
+    .subscribe(response => {
+      if (response.ok) {
+        if (response.body.code === '800.200.001') {
+          this.event = response.body.data;
+          this.eventInfo.show();
+        } else {
+          this.toastr.error('Incident information retrieval failed', 'Error');
+        }
+      } else {
+        // TODO: Add error checks
       }
-    );
+    });
   }
 }

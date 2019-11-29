@@ -1,4 +1,4 @@
-<div class="m-auto" style="position:fixed; right: 0; left: 0; z-index: 2; " [ngClass] = "{'d-none': isLoaded}">
+<div class="m-auto" style="position:fixed; right: 0; left: 0; z-index: 2; " *ngIf="!isLoaded">
     <hm-component-loader></hm-component-loader>
 </div>
 <div class="page-header d-flex flex-row justify-content-between">
@@ -41,7 +41,7 @@
             <mdb-icon fas icon="sort"></mdb-icon></th>
             </tr>
             </thead>
-            <tbody *ngIf="users.length; else noData">
+            <tbody *ngIf="users?.length; else noData">
             <tr *ngFor="let user of users; let i = index">
             <th *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{user.username}}</th>
             <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{user.email}}</td>
