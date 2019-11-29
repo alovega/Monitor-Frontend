@@ -1,9 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { tap, map } from 'rxjs/operators';
-
-import { environment } from '../.././../environments/environment';
+import { HttpWrapperService } from 'src/app/shared/helpers/http-wrapper.service';
 
 
 @Injectable({
@@ -12,19 +10,14 @@ import { environment } from '../.././../environments/environment';
 export class EventsService {
 
   constructor(
-    private http: HttpClient
+    private httpWrapper: HttpWrapperService
   ) { }
 
-  getEvents(): Observable<any> {
-    return this.http.post<any>(environment.apiEndpoint + 'get_events/', {}).pipe(
-      map(events => events.data)
-    );
+  getEvents<T>(): Observable<HttpResponse<T>> {
+    return this.httpWrapper.post<T>('get_events/');
   }
 
-  getEvent(eventId: string): Observable<any> {
-    return this.http.post<any>(environment.apiEndpoint + 'get_event/', {
-      event_id: eventId
-    }).pipe(
-      map(event => event.data));
+  getEvent<T>(eventId: string): Observable<HttpResponse<T>> {
+    return this.httpWrapper.post<T>('get_event/', {event_id: eventId});
   }
 }

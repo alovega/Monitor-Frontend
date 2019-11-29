@@ -1,10 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpErrorResponse, HttpResponse } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
-import { map, tap} from 'rxjs/operators';
-
-import { environment } from '../../../environments/environment';
-import { ToastrService } from 'ngx-toastr';
+import { HttpResponse } from '@angular/common/http';
+import { Observable } from 'rxjs';
 import { HttpWrapperService } from 'src/app/shared/helpers/http-wrapper.service';
 
 @Injectable({
@@ -12,16 +8,8 @@ import { HttpWrapperService } from 'src/app/shared/helpers/http-wrapper.service'
 })
 export class UsersService {
 
-  httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-  };
-
-  public users: any[] = [];
-
   constructor(
-    private http: HttpClient,
     private httpWrapper: HttpWrapperService,
-    private toastr: ToastrService
   ) { }
 
   createUser<T>(user: any): Observable<HttpResponse<T>> {
