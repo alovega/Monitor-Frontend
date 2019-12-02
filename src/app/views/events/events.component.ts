@@ -22,27 +22,14 @@ export class EventsComponent implements OnInit {
   @ViewChild('dateColumn', {static: true}) dateColumn: TemplateRef<any>;
 
   currentSystem: System;
-  events: Event[];
-  previous: any = [];
   isLoaded = false;
-  search = '';
   event: Event;
-  visibleItems = 5;
   dataSource = new DataSource();
-  // headElements = [
-  //   'eventtype', 'description', 'stack_trace', 'method', 'interface', 'request', 'response', 'code', 'date_created', 'action'];
-  // elements = {
-  //   eventtype: 'Event type', description: 'Description', stack_trace: 'Stack Trace', interface: 'Interface', request: 'Request',
-  //   response: 'Response', code: 'Code', date_created: 'Date Created', method: 'Method', action: 'Action'
-  // };
 
   constructor(
     private toastr: ToastrService,
     private systemService: SystemService,
-    private eventsService: EventsService,
-    private cdRef: ChangeDetectorRef) {
-      this.events = [];
-  }
+    private eventsService: EventsService) { }
 
   ngOnInit() {
     this.currentSystem = this.systemService.getCurrentSystem();
