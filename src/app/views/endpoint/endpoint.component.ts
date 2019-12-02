@@ -38,7 +38,6 @@ export class EndpointComponent implements OnInit, AfterViewInit {
       {name: 'Action', cellTemplate: this.buttonsTemplate, sortable: false}];
     this.currentSystem = this.systemService.getCurrentSystem();
     this.dataSource.url = 'get_endpoints_data/';
-    this.dataSource.systemId = this.currentSystem.id;
     this.endpointId = this.activatedRoute.snapshot.params.id;
   }
 

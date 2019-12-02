@@ -1,9 +1,9 @@
 import { Component, OnInit, ChangeDetectionStrategy, Input, TemplateRef,
    ViewChild, AfterViewInit, ElementRef, ChangeDetectorRef } from '@angular/core';
 import { ColumnMode} from '@swimlane/ngx-datatable';
-import { BehaviorSubject, fromEvent, Observable, of } from 'rxjs';
+import { BehaviorSubject, fromEvent, of } from 'rxjs';
 import { DataTableService} from './data-table.service';
-import { Page } from './model/page';
+import { Page, TableResponse } from './model/page';
 import { debounceTime, distinctUntilChanged, tap, catchError, finalize } from 'rxjs/operators';
 
 @Component({
@@ -28,8 +28,8 @@ export class DataTableComponent implements OnInit, AfterViewInit {
   public loading$ = this.loadingSubject.asObservable();
   load: boolean;
   public columns: any[];
-  pagination = [5, 10, 25, 50, 100]
-  page = new Page();
+  pagination = [5, 10, 25, 50, 100];
+  page: any = new Page();
   paginator: any;
   constructor(private dataService: DataTableService, private cd: ChangeDetectorRef) {
     this.page.offset = 0;
@@ -38,27 +38,24 @@ export class DataTableComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     console.log(this.dataSource);
-    this.loading$.subscribe((response) =>{
+    this.loading$.subscribe((response) => {
       this.load = response.valueOf();
       this.cd.detectChanges();
       console.log(response.valueOf());
     }
     );
     this.page.url = this.dataSource.url;
-    this.page.systemId = this.dataSource.systemId;
     this.columns = this.dataSource.columns;
     this.pageCallback({ offset: 0 });
   }
   ngAfterViewInit() {
-    fromEvent(this.input.nativeElement, 'keyup')
-            .pipe(
-                debounceTime(150),
-                distinctUntilChanged(),
-                tap(() => {
-                  this.updateFilter();
-                })
-            )
-            .subscribe();
+    fromEvent(this.input.nativeElement, 'keyup').pipe(
+      debounceTime(150),
+      distinctUntilChanged(),
+      tap(() => {
+        this.updateFilter();
+      })
+      ).subscribe();
   }
   pageCallback(pageInfo: { count?: number, pageSize?: number, size?: number, offset?: number }) {
     this.page.offset = pageInfo.offset;
@@ -76,16 +73,22 @@ export class DataTableComponent implements OnInit, AfterViewInit {
     this.page.searchQuery = this.input.nativeElement.value;
     this.getTableData(this.page);
   }
-  getTableData(page: Page) {
+  getTableData<T>(page: Page) {
     this.loadingSubject.next(true);
-    this.dataService.reloadTable(page).pipe(
-      catchError(() => of([])),
-      finalize(() => this.loadingSubject.next(false))
-    ).subscribe((response) => {
-      this.page.totalPages = response.totalPages;
-      this.page.totalElements = response.totalElements;
-      this.rows = response.row;
-      this.message = response.range;
+    this.dataService.reloadTable<TableResponse>(page)
+    .subscribe(response => {
+      console.log(response);
+      if (response.ok) {
+        if (response.body.code === '800.200.001') {
+          this.page.totalPages = response.body.data.totalPages;
+          this.page.totalElements = response.body.data.totalElements;
+          this.rows = response.body.data.row;
+          this.message = response.body.data.range;
+        } else {
+
+        }
+      }
+      this.loadingSubject.next(false);
       this.cd.detectChanges();
     });
   }

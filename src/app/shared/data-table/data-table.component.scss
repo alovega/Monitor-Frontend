@@ -52,3 +52,7 @@ p{
     word-wrap:break-word !important;
     width: 400px !important;
 }
+
+:host ::ng-deep .ngx-datatable .datatable-body .datatable-scroll {
+    display: inherit;
+  }

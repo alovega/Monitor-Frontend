@@ -35,7 +35,6 @@ export class SystemRecipientsComponent implements OnInit, AfterViewInit {
         {name: 'Action', cellTemplate: this.buttonsTemplate, sortable: false}
     ];
     this.currentSystem = this.systemService.getCurrentSystem();
-    this.dataSource.systemId = this.currentSystem.id;
     this.dataSource.url = 'get_system_recipient_data/';
     this.currentSystemId = this.currentSystem.id;
   }

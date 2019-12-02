@@ -1,16 +1,15 @@
-import { Component, OnInit, AfterViewInit, ChangeDetectorRef, ElementRef, ViewChild, Renderer2 } from '@angular/core';
+import { Component, OnInit, AfterViewInit, HostListener, ElementRef, ViewChild, Renderer2, ChangeDetectorRef } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import {map, shareReplay } from 'rxjs/operators';
-import {VERSION} from '@angular/material';
-import {NavItem} from './nav-item';
-import {NavService} from './nav.service';
+import { NavItem } from './nav-item';
+import { NavigationItems } from '../../shared/models/navigationItems';
+import { NavService } from './nav.service';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { SystemService } from '../../shared/system.service';
 import { System, SystemsResponse } from '../../shared/models/system';
 import { AuthenticationService } from '../../shared/auth/authentication.service';
 import Swal from 'sweetalert2';
-import { NgbTypeaheadWindow } from '@ng-bootstrap/ng-bootstrap/typeahead/typeahead-window';
 import { ToastrService } from 'ngx-toastr';
 declare var $: any;
 @Component({
@@ -27,61 +26,10 @@ export class DashboardLayoutComponent implements OnInit, AfterViewInit {
   systems: System[];
   currentSystem: System;
   currentUser: any;
+  navigationItems = new NavigationItems();
   sideBarOpen = true;
   @ViewChild('appDrawer',  {static: true}) appDrawer: ElementRef;
-  navItems: NavItem[] = [
-    {
-      displayName: 'Dashboard',
-      iconName: 'pie_chart',
-      routerLink: 'dashboard/metrics',
-    },
-    {
-      displayName: 'Events',
-      iconName: 'event',
-      routerLink: 'dashboard/events'
-    },
-    {
-      displayName: 'Incidents',
-      iconName: 'bug_report',
-      routerLink: 'dashboard/incidents'
-    },
-    {
-      displayName: 'Users',
-      iconName: 'account_box',
-      routerLink: 'dashboard/users'
-    },
-    {
-      displayName: 'Configurations',
-      iconName: 'group',
-      children: [
-        {
-          displayName: 'Recipients',
-          iconName: 'contacts',
-          routerLink: 'dashboard/recipients'
-        },
-        {
-          displayName: 'System Recipients',
-          iconName: 'accessibility',
-          routerLink: 'dashboard/system-recipients'
-        },
-        {
-          displayName: 'Endpoints',
-          iconName: 'data_usage',
-          routerLink: 'dashboard/endpoints'
-        },
-        {
-          displayName: 'Rules',
-          iconName: 'bookmark',
-          routerLink: 'dashboard/rules'
-        },
-      ]
-    },
-    {
-      displayName: 'Notifications',
-      iconName: 'notifications',
-      routerLink: 'dashboard/notifications/email-notification'
-    },
-  ];
+  navItems = this.navigationItems.navItems;
   loaded = false;
   time: any;
   token: string;
@@ -97,9 +45,7 @@ export class DashboardLayoutComponent implements OnInit, AfterViewInit {
     private breakpointObserver: BreakpointObserver,
     private navService: NavService,
     private cd: ChangeDetectorRef
-  ) {
-    this.navService.appDrawer = this.appDrawer;
-   }
+  ) { }
 
   ngOnInit() {
     // this.navService.openNav();
