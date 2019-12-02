@@ -5,7 +5,7 @@ import { of } from 'rxjs';
 import { Location } from '@angular/common';
 import { ToastrService } from 'ngx-toastr';
 
-import { Endpoint } from '../../endpoint/endpoint';
+import { Endpoint } from '../../endpoint/model/endpoint';
 import { State } from '../../../shared/models/state';
 import { System } from '../../../shared/models/system';
 import { EndpointType } from '../../../shared/models/endpoint-type';

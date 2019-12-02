@@ -1,82 +1,45 @@
 import { Injectable, Output, EventEmitter } from '@angular/core';
-import { Observable, throwError } from 'rxjs';
-import { HttpClient, HttpHeaders, HttpErrorResponse, HttpParams } from '@angular/common/http';
-import { Endpoint } from './endpoint';
-import { catchError, retry, map, tap} from 'rxjs/operators';
+import { Observable} from 'rxjs';
+import { HttpWrapperService } from '../../shared/helpers/http-wrapper.service';
+import { HttpResponse } from '@angular/common/http';
+import { HttpClient} from '@angular/common/http';
 import { LookUpService } from 'src/app/shared/look-up.service';
-import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class EndpointService {
-  endpointUrl = 'http://localhost:8000/api';
-  httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-  };
   @Output() changeSystem: EventEmitter<boolean> = new EventEmitter();
 
-  constructor(private http: HttpClient, private lookUpService: LookUpService) {
+  constructor(private lookUpService: LookUpService, public httpWrapperService: HttpWrapperService) {
+  }
+  public addEndpoints<T>(item): Observable<HttpResponse<T>> {
+    const url = 'create_endpoints/';
+    return this.httpWrapperService.post<T>(url, item);
+  }
+  // tslint:disable-next-line: variable-name
+  public deleteItem<T>(endpoint_id): Observable<HttpResponse<T>> {
+    // return this.http.post<Endpoint>(this.endpointUrl + '/delete_endpoint/', {endpoint_id}, this.httpOptions).pipe(
+    //   retry(2),
+    //   catchError(this.handleError)
+    // );
+    const url = 'delete_endpoint/';
+    return this.httpWrapperService.post<T>(url, {endpoint_id});
   }
 
-  // Handle API errors
-  handleError(error: HttpErrorResponse) {
-    if (error.error instanceof ErrorEvent) {
-      // A client-side or network error occurred. Handle it accordingly.
-      console.error('An error occurred:', error.error.message);
-    } else {
-      // The backend returned an unsuccessful response code.
-      // The response body may contain clues as to what went wrong,
-      console.error(
-        `Backend returned code ${error.status}, ` +
-        `body was: ${error.error}`);
-    }
-    // return an observable with a user-facing error message
-    return throwError(
-      'Something bad happened; please try again later.');
-  }
-  public getEndpoints(systemId): Observable<any> {
-    const endpointUrl = environment.apiEndpoint + 'get_endpoints/';
-    return this.http.post<any>(endpointUrl, systemId).pipe (
-      map(response => response.data,
-      retry(2)
-    ),
-    catchError(this.handleError));
-  }
-  public addEndpoints(item): Observable<any> {
-    return this.http.post<any>(this.endpointUrl + '/create_endpoints/', item, this.httpOptions).pipe(
-      retry(2),
-      catchError(this.handleError)
-    );
-  }
-  public deleteItem(endpoint_id): Observable<any> {
-    return this.http.post<Endpoint>(this.endpointUrl + '/delete_endpoint/', {endpoint_id}, this.httpOptions).pipe(
-      retry(2),
-      catchError(this.handleError)
-    );
+  // tslint:disable-next-line: variable-name
+  public getItem<T>(endpoint_id): Observable<HttpResponse<T>> {
+    const url = 'get_endpoint/';
+    return this.httpWrapperService.post<T>(url, {endpoint_id});
   }
 
-  public getItem(endpoint_id): Observable<any> {
-    return this.http.post<any>(this.endpointUrl + '/get_endpoint/',  {endpoint_id}).pipe(
-      map(response => response,
-      retry(2)
-    ),
-      catchError(this.handleError)
-    );
+  public updateItem<T>(item): Observable<HttpResponse<T>> {
+    const url = 'update_endpoints/';
+    return this.httpWrapperService.post<T>(url, item);
   }
-
-  public updateItem(item): Observable<any> {
-    return this.http.post<Endpoint>(this.endpointUrl + '/update_endpoints/', item, this.httpOptions).pipe(
-      retry(2),
-      catchError(this.handleError)
-    );
-  }
-  public getStates(): Observable<any> {
-    return this.lookUpService.getStates();
-  }
-  public getEndpointTypes(): Observable<any> {
-    return this.lookUpService.getEndpointType();
-  }
+  // public getStates(): Observable<any> {
+  //   return this.lookUpService.getStates();
+  // }
   public getSystems(): Observable<any> {
     return this.lookUpService.getSystems();
   }

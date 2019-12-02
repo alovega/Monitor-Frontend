@@ -29,14 +29,17 @@
         <div *ngIf="updateForm.controls['Url'].errors.required">
           Url is required.
         </div>
+        <div *ngIf="updateForm.controls['Url'].errors.pattern">
+          Please enter a url  with correct formart
+        </div>
       </div>
     </div>
   </div>
   <div class="row">
     <div class="col">
       <!-- Optimal response time -->
-      <label>Optimal response time</label>
-      <input type="text" id="defaultContactFormEndpoint" class="form-control mb-4 grey lighten-4" placeholder="Optimal response time" formControlName="OptimalResponseTime">
+      <label>Optimal response time(seconds)</label>
+      <input type="number" id="defaultContactFormEndpoint" class="form-control mb-4 grey lighten-4" placeholder="3600" formControlName="OptimalResponseTime">
       <div *ngIf="updateForm.controls['OptimalResponseTime'].invalid && (updateForm.controls['OptimalResponseTime'].dirty || updateForm.controls['OptimalResponseTime'].touched)" class="invalid-feedback">
         <div *ngIf="updateForm.controls['OptimalResponseTime'].errors.required">
           Optimal response time is required.

@@ -1,16 +1,17 @@
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import {EndpointService} from '../endpoint.service';
-import { ActivatedRoute, Router } from '@angular/router';
-import {Endpoint} from '../endpoint';
+import {Router } from '@angular/router';
+import {Endpoint} from '../model/endpoint';
 import { Location } from '@angular/common';
 import { State } from 'src/app/shared/models/state';
 import { System } from 'src/app/shared/models/system';
 import { EndpointType } from 'src/app/shared/models/endpoint-type';
 import { of } from 'rxjs';
-import { SystemService } from 'src/app/shared/system.service';
 import { LookUpService } from 'src/app/shared/look-up.service';
 import { ToastrService } from 'ngx-toastr';
+import { LookUpResponse } from 'src/app/shared/models/look-up-response';
+import { EndpointResponse } from '../model/endpoint-response';
 
 
 @Component({
@@ -21,8 +22,6 @@ import { ToastrService } from 'ngx-toastr';
 export class EndpointFormComponent implements OnInit {
   endpointForm: FormGroup;
   submitted = false;
-  currentSystem: any;
-  currentSystemId: any;
   data: Endpoint;
   states: State;
   systems: System;
@@ -30,7 +29,6 @@ export class EndpointFormComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private endpointService: EndpointService,
-    private systemService: SystemService,
     private location: Location,
     private router: Router,
     private lookupService: LookUpService,
@@ -47,18 +45,17 @@ export class EndpointFormComponent implements OnInit {
    }
 
    public back(): void {
-    this.router.navigate(['dashboard/endpoints']);
+    this.router.navigate(['dashboard', 'endpoints']);
   }
 
   ngOnInit() {
-    this.currentSystem = this.systemService.getCurrentSystem();
-    this.currentSystemId = this.currentSystem.id;
   }
   createForm() {
+    const urlRegex = '(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?';
     this.endpointForm = this.fb.group({
         EndpointName: ['', Validators.required],
         Description: ['', [Validators.required, Validators.minLength(10)]],
-        URL: ['', Validators.required],
+        URL: ['', [Validators.required, Validators.pattern(urlRegex)]],
         OptimalResponseTime: ['', Validators.required],
         EndpointType: ['', Validators.required],
         State: ['', Validators.required]
@@ -80,21 +77,26 @@ export class EndpointFormComponent implements OnInit {
   }
 
   addEndpoint() {
-    this.data.system_id = this.currentSystemId;
-    this.endpointService.addEndpoints(this.data).subscribe(response => {
-      if (response.code === '800.200.001') {
-        this.data = response.data;
-        this.toastr.success( response.message);
-        this.location.back();
-      } else {
-        this.toastr.error(response.message);
+    this.endpointService.addEndpoints<EndpointResponse>(this.data).subscribe(response => {
+      if (response.ok) {
+        if (response.body.code === '800.200.001') {
+          this.toastr.success( response.body.message);
+          this.location.back();
+        } else {
+          this.toastr.error(response.body.message);
+        }
       }
     });
   }
   getStates() {
-    this.lookupService.getEndpointStates().subscribe((data) => {
-      console.log(data)
-      this.states = data;
+    this.lookupService.getEndpointStates<LookUpResponse>().subscribe((response) => {
+      if (response.ok) {
+        if (response.body.code === '800.200.001') {
+          this.states = response.body.data.endpoint_states.filter(state => state.name === 'Operational');
+        } else {
+          this.toastr.error(response.body.code, 'Error while retrieving endpoint states');
+        }
+      }
     });
   }
   getSystems() {
@@ -103,8 +105,14 @@ export class EndpointFormComponent implements OnInit {
     });
   }
   getEndpointTypes() {
-    this.endpointService.getEndpointTypes().subscribe((data) => {
-      this.endpointTypes = data;
+    this.lookupService.getEndpointType<LookUpResponse>().subscribe((response) => {
+      if (response.ok) {
+        if (response.body.code === '800.200.001') {
+          this.endpointTypes = response.body.data.endpoint_types;
+        } else {
+          this.toastr.error(response.body.code, 'Error while retrieving endpoint states');
+        }
+      }
     });
   }
 }

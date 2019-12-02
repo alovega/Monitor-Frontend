@@ -3,7 +3,6 @@ import {  throwError } from 'rxjs';
 import { HttpClient, HttpHeaders, HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { catchError, map, retry, tap} from 'rxjs/operators';
-
 import { HttpWrapperService } from '../shared/helpers/http-wrapper.service';
 
 
@@ -11,7 +10,7 @@ import { HttpWrapperService } from '../shared/helpers/http-wrapper.service';
   providedIn: 'root'
 })
 export class LookUpService {
-  Url = 'http://localhost:8000/api/get_lookup';
+  Url = 'http://127.0.0.1:8000/api/get_lookup/';
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
@@ -45,20 +44,15 @@ export class LookUpService {
       map(response => {
         console.log('Fetching states..');
         console.log(response);
-        response.data.states.filter( state => state.name === 'Active' || state.name === 'Disabled')
+        response.data.states.filter( state => state.name === 'Active' || state.name === 'Disabled');
       }),
       retry(2),
       catchError(this.handleError)
     );
   }
 
-  public getEndpointType() {
-
-    return this.http.get<any>(this.Url).pipe(
-      map(response => response.data.endpoint_types),
-      retry(2),
-      catchError(this.handleError)
-    );
+  public getEndpointType<T>(): Observable<HttpResponse<T>> {
+    return this.httpWrapperService.get<T>('get_lookup/');
   }
   public getEscalationLevel() {
 
@@ -128,6 +122,6 @@ export class LookUpService {
   }
 
   public getEndpointStates<T>(): Observable<HttpResponse<T>> {
-    return this.httpWrapperService.get<T>(this.Url);
+    return this.httpWrapperService.get<T>('get_lookup/');
   }
 }

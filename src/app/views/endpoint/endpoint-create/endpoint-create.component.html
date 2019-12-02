@@ -27,10 +27,13 @@
     <div class="col">
       <!-- Endpoint -->
       <label>URL</label>
-      <input type="text" id="defaultContactFormEndpoint" class="form-control mb-4" placeholder="URL" formControlName="URL" [(ngModel)]="data.url" >
+      <input type="url" id="defaultContactFormEndpoint" class="form-control mb-4" placeholder="URL" formControlName="URL" [(ngModel)]="data.url" >
       <div *ngIf="endpointForm.controls['URL'].invalid && (endpointForm.controls['URL'].dirty || endpointForm.controls['URL'].touched)" class="invalid-feedback">
         <div *ngIf="endpointForm.controls['URL'].errors.required">
           A URL is required.
+        </div>
+        <div *ngIf="endpointForm.controls['URL'].errors.pattern">
+          Please enter a url  with correct formart
         </div>
       </div>
     </div>
@@ -38,8 +41,8 @@
   <div class="row">
     <div class="col">
       <!-- Optimal response time -->
-      <label>Optimal response time</label>
-      <input type="text" id="defaultContactFormEndpoint" class="form-control mb-4" placeholder="Optimal response time" formControlName="OptimalResponseTime" [(ngModel)]="data.optimal_response_time" >
+      <label>Optimal response time(seconds)</label>
+      <input type="number" id="defaultContactFormEndpoint" class="form-control mb-4" placeholder="3600" formControlName="OptimalResponseTime" [(ngModel)]="data.optimal_response_time" >
       <div *ngIf="endpointForm.controls['OptimalResponseTime'].invalid && (endpointForm.controls['OptimalResponseTime'].dirty || endpointForm.controls['OptimalResponseTime'].touched)" class="invalid-feedback">
         <div *ngIf="endpointForm.controls['OptimalResponseTime'].errors.required">
           Optimal response time is required.
@@ -87,7 +90,7 @@
           Description is required.
         </div>
         <div *ngIf="endpointForm.controls['Description'].errors.minlength">
-            Description is should be more than 10.
+            Description should be more than 10 characters.
           </div>
       </div>
     </div>

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, throwError} from 'rxjs';
+import { Observable} from 'rxjs';
 import { Page } from './model/page';
 import { HttpWrapperService } from '../helpers/http-wrapper.service';
 import { HttpResponse } from '@angular/common/http';
