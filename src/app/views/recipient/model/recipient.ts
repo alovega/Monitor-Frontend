@@ -4,3 +4,9 @@ export class Recipient {
     phoneNumber: string;
     stateId: string;
 }
+
+export class RecipientData {
+    code: string;
+    data: Recipient;
+    message: string;
+}

@@ -19,10 +19,6 @@ export class EndpointService {
   }
   // tslint:disable-next-line: variable-name
   public deleteItem<T>(endpoint_id): Observable<HttpResponse<T>> {
-    // return this.http.post<Endpoint>(this.endpointUrl + '/delete_endpoint/', {endpoint_id}, this.httpOptions).pipe(
-    //   retry(2),
-    //   catchError(this.handleError)
-    // );
     const url = 'delete_endpoint/';
     return this.httpWrapperService.post<T>(url, {endpoint_id});
   }
@@ -37,9 +33,6 @@ export class EndpointService {
     const url = 'update_endpoints/';
     return this.httpWrapperService.post<T>(url, item);
   }
-  // public getStates(): Observable<any> {
-  //   return this.lookUpService.getStates();
-  // }
   public getSystems(): Observable<any> {
     return this.lookUpService.getSystems();
   }

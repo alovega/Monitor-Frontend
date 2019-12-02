@@ -1,5 +1,6 @@
 import { NgModule, NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgSelect2Module } from 'ng-select2';
 
 import { RecipientRoutingModule } from './recipient-routing.module';
 import { RecipientComponent } from './recipient.component';
@@ -16,6 +17,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
     CommonModule,
     TableModule,
     FormsModule,
+    NgSelect2Module,
     ReactiveFormsModule,
     RecipientRoutingModule,
     MDBBootstrapModule.forRoot(),

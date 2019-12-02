@@ -15,24 +15,23 @@
           <div class="col">
               <!-- Phone Number -->
               <label style="position: relative; right: 180px;">Phone Number</label>
-              <input type="text" id="defaultContactFormPhoneNumber" class="form-control mb-4" placeholder="Phone Number"
+              <input type="text" id="defaultContactFormPhoneNumber" class="form-control mb-4" placeholder="+2547XX7XXXX"
               [ngClass]="{ 'is-invalid': submitted && f.EnpointName.errors }" formControlName="PhoneNumber" 
                 [(ngModel)]="data.phoneNumber" >
                 <div *ngIf="recipientsForm.controls['PhoneNumber'].invalid && (recipientsForm.controls['PhoneNumber'].dirty || recipientsForm.controls['PhoneNumber'].touched)" class="invalid-feedback">
                   <div *ngIf="recipientsForm.controls['PhoneNumber'].errors.required">
                       Phone Number is required.
                   </div>
-                  <div *ngIf="recipientsForm.controls['PhoneNumber'].errors.minlength">Phone Number must be more than 10 characters</div>
+                  <div *ngIf="recipientsForm.controls['PhoneNumber'].errors.pattern">Phone Number Entered must be of the correct format</div>
                 </div>
               </div>
             <div class="col">
                 <!-- User -->
                 <label style="position: relative; right: 215px;">User</label>
-                <select class="browser-default custom-select form-control mb-4" formControlName="userId" [(ngModel)]="data.userId">
-                  <option *ngFor="let user of users; let i = index" [value]="user.id" >
-                        {{user.username}}
-                  </option>
-                </select>
+                <div *ngIf="users?.length">
+                  <ng-select2 style="width:100%;" class=" custom-select-dropdown" formControlName="userId" [(ngModel)]="data.userId" [data]="users">
+                  </ng-select2>
+                </div>
                 <div *ngIf="recipientsForm.controls['userId'].invalid && (recipientsForm.controls['userId'].dirty || recipientsForm.controls['userId'].touched)" class="invalid-feedback">
                     <div *ngIf="recipientsForm.controls['userId'].errors.required">
                         Please Select a User.
@@ -44,11 +43,10 @@
         <div class="col-6">
           <!-- State -->
         <label style="position: relative; right: 215px;">State</label>
-        <select class="browser-default custom-select form-control mb-4" formControlName="stateId" [(ngModel)]="data.stateId">
-          <option *ngFor="let type of states; let i = index" [value]="type.id">
-            {{type.name}}
-          </option>
-        </select>
+        <div *ngIf="states?.length">
+          <ng-select2 style="width:100%;" class=" custom-select-dropdown" formControlName="stateId" [(ngModel)]="data.stateId" [data]="states">
+          </ng-select2>
+        </div>
         <div *ngIf="recipientsForm.controls['stateId'].invalid && (recipientsForm.controls['stateId'].dirty || recipientsForm.controls['stateId'].touched)" class="invalid-feedback">
           <div *ngIf="recipientsForm.controls['stateId'].errors.required">
               Please Select a State.

@@ -15,23 +15,21 @@
         <div class="col">
             <!-- Phone Number -->
             <label style="position: relative; right: 185px;">Phone Number</label>
-            <input type="text" id="defaultContactFormPhoneNumber" class="form-control mb-4" placeholder="Phone Number"
+            <input type="text" id="defaultContactFormPhoneNumber" class="form-control mb-4" placeholder="+2547xx7xxxxx"
             [ngClass]="{ 'is-invalid': submitted && f.EnpointName.errors }" formControlName="PhoneNumber">
               <div *ngIf="updateForm.controls['PhoneNumber'].invalid && (updateForm.controls['PhoneNumber'].dirty || updateForm.controls['PhoneNumber'].touched)" class="invalid-feedback">
                 <div *ngIf="updateForm.controls['PhoneNumber'].errors.required">
                     Phone Number is required.
                 </div>
-                <div *ngIf="updateForm.controls['PhoneNumber'].errors.minlength">Phone Number must be more than 10 characters</div>
+                <div *ngIf="updateForm.controls['PhoneNumber'].errors.pattern">Phone Number Entered must be of the correct format</div>
+
               </div>
         </div>
         <div class="col">
             <!-- State -->
             <label style="position: relative; right: 215px;">State</label>
-            <select class="browser-default custom-select form-control mb-4" formControlName="State">
-              <option *ngFor="let type of states; let i = index" [value]="type.id">
-                {{type.name}}
-              </option>
-            </select>
+              <ng-select2 style="width: 100%" class="custom-select-dropdown" formControlName="State" [data]="states">
+              </ng-select2>
             <div *ngIf="updateForm.controls['State'].invalid && (updateForm.controls['State'].dirty || updateForm.controls['State'].touched)" class="invalid-feedback">
               <div *ngIf="updateForm.controls['State'].errors.required">
                   Please Select a State.

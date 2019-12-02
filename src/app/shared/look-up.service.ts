@@ -39,13 +39,8 @@ export class LookUpService {
     );
   }
   public getStates() {
-
     return this.http.get<any>(this.Url).pipe(
-      map(response => {
-        console.log('Fetching states..');
-        console.log(response);
-        response.data.states.filter( state => state.name === 'Active' || state.name === 'Disabled');
-      }),
+      map(response => response.data.states.filter(state => state.name === 'Active' || state.name === 'Disabled')),
       retry(2),
       catchError(this.handleError)
     );
