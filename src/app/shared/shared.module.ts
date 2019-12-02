@@ -32,6 +32,7 @@ import { LoginComponent } from './auth/login/login.component';
 import { DateTransformPipe } from './pipes/date-transform.pipe';
 import { YesNoPipe } from './pipes/yes-no.pipe';
 import { DataTableComponent } from './data-table/data-table.component';
+import { RelativeTimePipe } from './pipes/relative-time.pipe';
 
 @NgModule({
   declarations: [
@@ -50,7 +51,8 @@ import { DataTableComponent } from './data-table/data-table.component';
     EndpointStatusComponent,
     DateTransformPipe,
     YesNoPipe,
-    DataTableComponent
+    DataTableComponent,
+    RelativeTimePipe
   ],
   imports: [
     CommonModule,
@@ -79,7 +81,8 @@ import { DataTableComponent } from './data-table/data-table.component';
     EndpointStatusComponent,
     DateTransformPipe,
     YesNoPipe,
-    DataTableComponent
+    DataTableComponent,
+    RelativeTimePipe
   ],
   providers: [SystemService,
     {
