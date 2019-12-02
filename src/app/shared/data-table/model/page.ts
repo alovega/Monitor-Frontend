@@ -15,6 +15,21 @@ export class Page {
     searchQuery = '';
     // the url for fetching data
     url = '';
-    // the id of the system the data belongs to
-    systemId = '';
   }
+
+export class DataSource {
+  range: string;
+  totalPages: number;
+  size: number;
+  totalElements: number;
+  row: [];
+}
+
+export class TableResponse {
+    code: string;
+    data?: DataSource;
+    message?: string;
+}
+
+
+

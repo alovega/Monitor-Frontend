@@ -3,6 +3,7 @@ import { Observable, throwError} from 'rxjs';
 import { Page } from './model/page';
 import { environment } from 'src/environments/environment';
 import { HttpWrapperService } from '../helpers/http-wrapper.service';
+import { HttpResponse } from '@angular/common/http';
 
 
 @Injectable({
@@ -11,16 +12,14 @@ import { HttpWrapperService } from '../helpers/http-wrapper.service';
 export class DataTableService {
   constructor(private httpWrapperService: HttpWrapperService) {
   }
-  public reloadTable(page: Page): Observable<any> {
+  public reloadTable<T>(page: Page): Observable<HttpResponse<T>> {
     const body = {
-      pageSize: `${page.size}`,
-      pageNumber: `${page.offset + 1}`,
-      orderColumn: `${page.orderBy}`,
-      searchQuery: `${page.searchQuery}`,
-      systemId: `${page.systemId}`,
-      orderDir: `${page.orderDir}`
+      page_size: `${page.size}`,
+      page_number: `${page.offset + 1}`,
+      order_column: `${page.orderBy}`,
+      search_query: `${page.searchQuery}`,
+      order_dir: `${page.orderDir}`
     };
-    return this.httpWrapperService.post(page.url, {body});
-
+    return this.httpWrapperService.post<T>(page.url, {body});
   }
 }
