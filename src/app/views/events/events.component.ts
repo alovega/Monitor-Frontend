@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, AfterViewInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit, ChangeDetectorRef, TemplateRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MdbTablePaginationComponent, MdbTableDirective, MdbTableSortDirective } from 'angular-bootstrap-md';
 import Swal from 'sweetalert2';
@@ -9,17 +9,17 @@ import { Event, EventsResponse, EventResponse } from './event';
 import { EventsService } from './events.service';
 import { System } from 'src/app/shared/models/system';
 import { ToastrService } from 'ngx-toastr';
+import { DataSource } from '../../shared/data-table/model/dataSource';
 
 @Component({
   selector: 'hm-events',
   templateUrl: './events.component.html',
   styleUrls: ['./events.component.scss']
 })
-export class EventsComponent implements OnInit, AfterViewInit {
-  @ViewChild(MdbTablePaginationComponent, { static: true }) mdbTablePagination: MdbTablePaginationComponent;
-  @ViewChild(MdbTableDirective, { static: true }) mdbTable: MdbTableDirective;
+export class EventsComponent implements OnInit {
   @ViewChild('eventInfo', {static: false}) eventInfo: ModalDirective;
-  @ViewChild('visibleItemsInput', { static: true }) visibleItemsInput;
+  @ViewChild('buttonsTemplate', {static: true}) buttonsTemplate: TemplateRef<any>;
+  @ViewChild('dateColumn', {static: true}) dateColumn: TemplateRef<any>;
 
   currentSystem: System;
   events: Event[];
@@ -28,12 +28,13 @@ export class EventsComponent implements OnInit, AfterViewInit {
   search = '';
   event: Event;
   visibleItems = 5;
-  headElements = [
-    'eventtype', 'description', 'stack_trace', 'method', 'interface', 'request', 'response', 'code', 'date_created', 'action'];
-  elements = {
-    eventtype: 'Event type', description: 'Description', stack_trace: 'Stack Trace', interface: 'Interface', request: 'Request',
-    response: 'Response', code: 'Code', date_created: 'Date Created', method: 'Method', action: 'Action'
-  };
+  dataSource = new DataSource();
+  // headElements = [
+  //   'eventtype', 'description', 'stack_trace', 'method', 'interface', 'request', 'response', 'code', 'date_created', 'action'];
+  // elements = {
+  //   eventtype: 'Event type', description: 'Description', stack_trace: 'Stack Trace', interface: 'Interface', request: 'Request',
+  //   response: 'Response', code: 'Code', date_created: 'Date Created', method: 'Method', action: 'Action'
+  // };
 
   constructor(
     private toastr: ToastrService,
@@ -45,68 +46,14 @@ export class EventsComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.currentSystem = this.systemService.getCurrentSystem();
-
-    this.eventsService.getEvents<EventsResponse>()
-    .subscribe(response => {
-      if (response.ok) {
-        if (response.body.code === '800.200.001') {
-          this.events = response.body.data;
-          this.mdbTable.setDataSource(this.events);
-          this.events = this.mdbTable.getDataSource();
-          this.previous = this.mdbTable.getDataSource();
-        } else {
-          this.toastr.error('Could not retrieve events at the moment', 'Error');
-        }
-      } else {
-        // TODO: Add error checks
-      }
-        // console.log('Current events => ' + result);
-    });
+    this.dataSource.columns = [
+      {prop: 'item_index', name: 'Index'},
+      {prop: 'event_type_name', name: 'Event Type', sortable: true}, {prop: 'description', name: 'Description', sortable: true},
+      {prop: 'code', name: 'Code', sortable: true}, {prop: 'method', name: 'Method', sortable: false},
+      { prop: 'date_created', cellTemplate: this.dateColumn, name: 'Date Created', sortable: true},
+      {name: 'Action', cellTemplate: this.buttonsTemplate, sortable: false}];
+    this.dataSource.url = 'events_data/';
     this.isLoaded = true;
-  }
-
-  ngAfterViewInit() {
-    this.mdbTablePagination.setMaxVisibleItemsNumberTo(this.visibleItems);
-    this.mdbTablePagination.calculateFirstItemIndex();
-    this.mdbTablePagination.calculateLastItemIndex();
-    if (this.events.length > this.visibleItems) {
-      this.mdbTablePagination.nextShouldBeDisabled = false;
-    }
-    this.cdRef.detectChanges();
-  }
-
-  changeVisibleItems(maxNumber: number) {
-    this.visibleItems = maxNumber;
-    if (!maxNumber) {
-      console.log(maxNumber);
-      this.visibleItemsInput.nativeElement.value = 1;
-      this.visibleItems = 1;
-    }
-    this.mdbTablePagination.setMaxVisibleItemsNumberTo(this.visibleItems);
-    this.mdbTablePagination.calculateFirstItemIndex();
-    this.mdbTablePagination.calculateLastItemIndex();
-    if (this.events.length > this.visibleItems) {
-      this.mdbTablePagination.nextShouldBeDisabled = false;
-    }
-    this.cdRef.detectChanges();
-  }
-
-  searchItems(search: string) {
-    const prev = this.mdbTable.getDataSource();
-
-    if (!search) {
-      this.mdbTable.setDataSource(this.previous);
-      this.events = this.mdbTable.getDataSource();
-    }
-
-    if (search) {
-      this.events = this.mdbTable.searchLocalDataBy(search);
-      this.mdbTable.setDataSource(prev);
-    }
-  }
-
-  onOpen(event: any) {
-    console.log(event);
   }
 
   public showEventInfo(eventId: string) {
@@ -117,7 +64,7 @@ export class EventsComponent implements OnInit, AfterViewInit {
           this.event = response.body.data;
           this.eventInfo.show();
         } else {
-          this.toastr.error('Incident information retrieval failed', 'Error');
+          this.toastr.error('Information get failed', 'Get incident error');
         }
       } else {
         // TODO: Add error checks
