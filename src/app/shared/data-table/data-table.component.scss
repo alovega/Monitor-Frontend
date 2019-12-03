@@ -56,3 +56,7 @@ p{
 :host ::ng-deep .ngx-datatable .datatable-body .datatable-scroll {
     display: inherit;
   }
+
+  ::ng-deep .ngx-datatable{
+    margin-bottom: 20px;
+  }
