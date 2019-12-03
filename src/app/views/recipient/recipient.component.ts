@@ -3,6 +3,7 @@ import {DataSource} from '../../shared/data-table/model/dataSource';
 import Swal from 'sweetalert2';
 import { RecipientService } from './recipient.service';
 import { ActivatedRoute } from '@angular/router';
+import { RecipientResponse } from './model/recipient-response';
 
 @Component({
   selector: 'hm-recipient-view',
@@ -16,8 +17,6 @@ export class RecipientComponent implements OnInit, AfterViewInit {
 
   elements: any;
   public dataSource = new DataSource();
-  currentSystem: any;
-  currentSystemId: any;
   recipientId: any;
 
   constructor(private recipientService: RecipientService, private activatedRoute: ActivatedRoute) { }
@@ -44,9 +43,9 @@ export class RecipientComponent implements OnInit, AfterViewInit {
       cancelButtonText: 'No, keep the recipient'
     }).then((result) => {
       if (result.value) {
-        this.recipientService.deleteItem(recipientId).subscribe(
+        this.recipientService.deleteItem<RecipientResponse>(recipientId).subscribe(
           response => {
-            if (response.code === '800.200.001') {
+            if (response.body.code === '800.200.001') {
               Swal.fire(
                 'Deleted!',
                 'This recipient has been deleted.',
@@ -59,11 +58,6 @@ export class RecipientComponent implements OnInit, AfterViewInit {
                 'error'
               );
             }
-          }
-        );
-        this.recipientService.getRecipients().subscribe(
-          (response) => {
-            this.elements = response;
           }
         );
       } else if (result.dismiss === Swal.DismissReason.cancel) {

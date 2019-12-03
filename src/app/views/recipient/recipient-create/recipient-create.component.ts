@@ -34,7 +34,6 @@ export class RecipientCreateComponent implements OnInit {
                   console.log(results);
                   if (results[0]) {
                     this.users = results[0].map((type: User) => ({id: type.id, text: type.username}));
-                    console.log(this.users);
                   }
                   if (results[1]) {
                     this.states = results[1].map((state: State) => ({id: state.id, text: state.name}));

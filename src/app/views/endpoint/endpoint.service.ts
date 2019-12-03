@@ -2,7 +2,6 @@ import { Injectable, Output, EventEmitter } from '@angular/core';
 import { Observable} from 'rxjs';
 import { HttpWrapperService } from '../../shared/helpers/http-wrapper.service';
 import { HttpResponse } from '@angular/common/http';
-import { HttpClient} from '@angular/common/http';
 import { LookUpService } from 'src/app/shared/look-up.service';
 
 @Injectable({

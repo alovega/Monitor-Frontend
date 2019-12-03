@@ -7,7 +7,7 @@ import { Location } from '@angular/common';
 import { State } from 'src/app/shared/models/state';
 import { System } from 'src/app/shared/models/system';
 import { EndpointType } from 'src/app/shared/models/endpoint-type';
-import { of } from 'rxjs';
+import { of, forkJoin } from 'rxjs';
 import { LookUpService } from 'src/app/shared/look-up.service';
 import { ToastrService } from 'ngx-toastr';
 import { LookUpResponse } from 'src/app/shared/models/look-up-response';
@@ -23,9 +23,10 @@ export class EndpointFormComponent implements OnInit {
   endpointForm: FormGroup;
   submitted = false;
   data: Endpoint;
-  states: State;
+  states: State[];
   systems: System;
-  endpointTypes: EndpointType;
+  endpointTypes: EndpointType[];
+  isdataReady = false;
   constructor(
     private fb: FormBuilder,
     private endpointService: EndpointService,
@@ -35,12 +36,24 @@ export class EndpointFormComponent implements OnInit {
     private toastr: ToastrService) {
     this.createForm();
     this.data = new Endpoint();
-    this.getStates();
-    of(this.getSystems()).subscribe((data: any) => {
-      this.systems = data;
-    });
-    of(this.getEndpointTypes()).subscribe((data: any) => {
-      this.endpointTypes = data;
+    // this.getStates();
+    // of(this.getSystems()).subscribe((data: any) => {
+    //   this.systems = data;
+    // });
+    // of(this.getEndpointTypes()).subscribe((data: any) => {
+    //   this.endpointTypes = data;
+    // });
+    const endpointTypes = this.lookupService.getEndpointStates<LookUpResponse>();
+    const states = this.lookupService.getEndpointStates<LookUpResponse>();
+    forkJoin([endpointTypes, states]).subscribe(results => {
+      console.log(results);
+      if (results[0]) {
+        this.endpointTypes = results[0].map((type: EndpointType) => ({id: type.id, text: type.name}));
+      }
+      if (results[1]) {
+        this.states = results[1].map((state: State) => ({id: state.id, text: state.name}));
+      }
+      this.isdataReady = true;
     });
    }
 
