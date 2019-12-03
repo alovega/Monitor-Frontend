@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
+import { Component, OnInit, ViewChild, TemplateRef, ChangeDetectorRef } from '@angular/core';
 import Swal from 'sweetalert2';
 import { ToastrService } from 'ngx-toastr';
 
@@ -16,7 +16,7 @@ import { DataSource } from 'src/app/shared/data-table/model/dataSource';
 export class EscalationRulesComponent implements OnInit {
   @ViewChild('buttonsTemplate', {static: true}) buttonsTemplate: TemplateRef<any>;
   @ViewChild('dateColumn', {static: true}) dateColumn: TemplateRef<any>;
-  @ViewChild('activeColumn', {static: true}) activeColumn: TemplateRef<any>;
+  @ViewChild('durationColumn', {static: true}) durationColumn: TemplateRef<any>;
 
   currentSystem: System;
   rules: EscalationRule[];
@@ -25,19 +25,21 @@ export class EscalationRulesComponent implements OnInit {
   constructor(
     private systemService: SystemService,
     private rulesService: EscalationRuleService,
-    private toastr: ToastrService) {
+    private toastr: ToastrService,
+    private cd: ChangeDetectorRef) {
       this.rules = [];
     }
 
   ngOnInit() {
     this.dataSource.columns = [
       {prop: 'item_index', name: 'Index'},
-      {prop: 'username', name: 'Username', sortable: true}, {prop: 'first_name', name: 'First Name', sortable: true},
-      {prop: 'last_name', name: 'Last Name', sortable: true}, {prop: 'email', name: 'Email', sortable: true},
-      { prop: 'is_active', cellTemplate: this.activeColumn, name: 'Active', sortable: true},
+      {prop: 'name', name: 'Name', sortable: true}, {prop: 'description', name: 'Description', sortable: true},
+      {prop: 'nth_event', name: 'Nth Event', sortable: true},
+      {prop: 'escalation_level_name', name: 'Escalation Level'}, {prop: 'event_type_name', name: 'Event Type'},
+      { prop: 'duration', cellTemplate: this.durationColumn, name: 'Duration', sortable: true},
       { prop: 'date_created', cellTemplate: this.dateColumn, name: 'Date Created', sortable: true},
-      {name: 'Action', cellTemplate: this.buttonsTemplate, sortable: false}];
-    this.dataSource.url = 'active_users/';
+      { name: 'Action', cellTemplate: this.buttonsTemplate, sortable: false}];
+    this.dataSource.url = 'escalation_rules/';
     this.currentSystem = this.systemService.getCurrentSystem();
     this.isLoading = false;
   }
@@ -56,21 +58,16 @@ export class EscalationRulesComponent implements OnInit {
         .subscribe(response => {
           if (response.ok) {
             if (response.body.code === '800.200.001') {
-              this.toastr.success('Rule deleted successfully', 'Delete Rule Success');
+              Swal.fire('Rule deleted successfully').then(
+                (confirm) => {
+                  if (confirm) {
+                    window.location.reload();
+                  }
+              });
+              this.dataSource = this.dataSource;
+              this.cd.detectChanges();
             } else {
               this.toastr.error('Rule could not be deleted', 'Delete Rule Error');
-            }
-          } else {
-            // TODO: Add error checks
-          }
-        });
-        this.rulesService.getRules<EscalationRulesResponse>()
-        .subscribe(response => {
-          if (response.ok) {
-            if (response.body.code === '800.200.001') {
-              this.rules = response.body.data;
-            } else {
-              this.toastr.error('Could not retrieve escalation rules', 'Get escalation rules error!');
             }
           } else {
             // TODO: Add error checks

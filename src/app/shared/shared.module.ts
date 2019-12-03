@@ -33,6 +33,7 @@ import { DateTransformPipe } from './pipes/date-transform.pipe';
 import { YesNoPipe } from './pipes/yes-no.pipe';
 import { DataTableComponent } from './data-table/data-table.component';
 import { RelativeTimePipe } from './pipes/relative-time.pipe';
+import { TimeBreakdownPipe } from './pipes/time-breakdown.pipe';
 
 @NgModule({
   declarations: [
@@ -52,7 +53,8 @@ import { RelativeTimePipe } from './pipes/relative-time.pipe';
     DateTransformPipe,
     YesNoPipe,
     DataTableComponent,
-    RelativeTimePipe
+    RelativeTimePipe,
+    TimeBreakdownPipe
   ],
   imports: [
     CommonModule,
@@ -82,7 +84,8 @@ import { RelativeTimePipe } from './pipes/relative-time.pipe';
     DateTransformPipe,
     YesNoPipe,
     DataTableComponent,
-    RelativeTimePipe
+    RelativeTimePipe,
+    TimeBreakdownPipe
   ],
   providers: [SystemService,
     {
