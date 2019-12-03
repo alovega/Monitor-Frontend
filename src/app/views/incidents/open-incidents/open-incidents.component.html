@@ -1,8 +1,8 @@
 <div class="full-page">
-  <div [ngClass]="{'d-none': !loading}">
+  <!-- <div [ngClass]="{'d-none': !loading}">
     <hm-loader></hm-loader>
-  </div> 
-<div *ngIf="incidents?.length; else noIncidents">
+  </div>  -->
+<!-- <div *ngIf="incidents?.length; else noIncidents">
     <a *ngFor="let incident of incidents" routerLink="/dashboard/incidents/update/{{incident.id}}" routerLinkActive="active">
         <mdb-card class="open-incident mb-4">
             <mdb-card-body>
@@ -39,9 +39,122 @@
             </mdb-card-body>
         </mdb-card>
     </a>
+</div> -->
+
+<div class="open-incidents">
+    <div id="table-header">
+        <div class="pagination">
+          <p class="content">Show</p>
+          <select class="browser-default custom-select content" (change)= "changePagination($event)">
+              <option *ngFor="let value of pagination" [ngValue]="value">{{value}}</option>
+          </select>
+          <p class="content">items</p>
+        </div>
+        <div class="search">
+            <label id="searchlabel">Search :</label>
+            <input type="text" placeholder="search..." #input/>
+        </div>
+    </div>
+
+  <ngx-datatable 
+  class="material" 
+  #incidentsDataTable 
+  [rows]="rows"
+  [columns]="columns"
+  [columnMode]="ColumnMode.force"
+  [headerHeight]="50"
+  [footerHeight]="50"
+  [draggable]="false"
+  [reorder]
+  rowHeight="auto"
+  [externalPaging]="true"
+  [externalSorting]="true"
+  [count]="page.totalElements"
+  [offset]="page.offset"
+  [limit]="page.size"
+  (page)="pageCallback($event)"
+  (sort)="sortCallback($event)"
+  [loadingIndicator]="load">
+  </ngx-datatable>
+  <ng-template #hdrTpl let-column="column">{{column.name}}</ng-template>
+  <ng-template #openIncidents let-row="row" let-value="value">
+    <a routerLink="/dashboard/incidents/update/{{row.id}}" routerLinkActive="active" style="width: 100%;">
+      <mdb-card class="open-incident mb-4">
+          <mdb-card-body>
+          <a routerLink="/dashboard/incidents/update/{{row.id}}" routerLinkActive="active" class="update-incident-button float-right">
+              <button mdbBtn mdbWavesEffect color="info" size="sm">Update</button>
+          </a>
+          <h5 class="open-incident-title">{{ row.name }}</h5>
+          <div class="incident-info">
+            <!-- <span *ngIf="incident.incident_updates.length; else noUpdates">
+                <span *ngFor="let update of incident.incident_updates; let i=index">
+                  <span *ngIf="i<1" class="incident-status" color="info">{{ update.state_name }}</span>
+                  <div *ngIf="i<1" class="last-update-time"><small>Last updated on: {{ row.date_modified | date:'MMMM d, y' }} at {{ row.date_modified | date:'h:mm:ss a' }}</small></div>
+                </span> 
+            </span>                -->
+            <ng-template>
+              <span class="incident-status" color="info">
+                  {{ row.state_name }}
+              </span>
+              <div class="last-update-time"><small>Last updated on: {{ row.date_modified | date:'MM/dd/yyyy   hh:mm:ss a'}}</small></div>
+            </ng-template>
+          </div>
+            <div class="affected-systems">
+                <span class="affected-systems-title"><small>Affected System : </small></span> 
+                  <div class="system">
+                    {{ row.system_name }} 
+                    <mdb-icon fas icon="check-circle" class="green-text pr-3"></mdb-icon>
+              </div>
+            </div>
+            <!-- <div class="affected-systems" *ngIf="row.incident_updates">
+                <span *ngFor="let update of row.incident_updates; let i = index">
+                    <span *ngIf="update.username && i<1" class=""><small class="affected-systems-title">Assigned User : </small> {{update.username}}</span>
+                  </span>
+            </div> -->
+          </mdb-card-body>
+      </mdb-card>
+    </a>
+  </ng-template>
+  <ngx-datatable-footer *ngIf="true">
+    <ng-template
+      ngx-datatable-footer-template
+      let-rowCount="rowCount"
+      let-pageSize="pageSize"
+      let-selectedCount="selectedCount"
+      let-curPage="curPage"
+      let-offset="offset">
+      <div style="padding: 5px 10px">
+        <div><strong>{{message}}</strong></div>
+      </div>
+      <datatable-pager  
+      [pagerLeftArrowIcon]="'datatable-icon-left'" [pagerRightArrowIcon]="'datatable-icon-right'" [pagerPreviousIcon]="'datatable-icon-prev'"
+      [pagerNextIcon]="'datatable-icon-skip'" [page]="curPage" [size]="pageSize" [count]="rowCount" [hidden]="!((rowCount / pageSize) > 1)"
+      (change)="table.onFooterPage($event)">
+      </datatable-pager>
+    </ng-template>
+    </ngx-datatable-footer>  
 </div>
 
-<ng-template #noIncidents>
+
+<!-- <div class="row wow animated fadeIn" data-wow-delay="0.1s">
+  <div class="col-lg-12 col-md-12 text-left">
+    <div *ngIf="dataSource?.columns.length">
+        <hm-data-table [dataSource]="dataSource"></hm-data-table>
+    </div>    
+    <ng-template #dateColumn let-row="row" let-value="value" let-i="index">
+      {{value | date:'MM/dd/yyyy  hh:mm:ss a'}}
+    </ng-template>
+    <ng-template #buttonsTemplate let-row="row" let-value="value">
+        <a routerLink="/dashboard/incidents/update/{{row.id}}" class="mr-2" routerLinkActive="active">
+          <span mdbIcon class="fas fa-edit text-success"></span>
+        </a>        
+        <a (click)="deleteUser(row.id)">
+            <span mdbIcon class="fas fa-trash-alt mr-2 text-danger" ></span>
+        </a>
+    </ng-template>     
+  </div>
+</div> -->
+<!-- <ng-template #noIncidents>
   <hm-empty-data [ngClass]="{'d-none': loading}" header="No open incidents" description="New incidents and scheduled maintenances will be displayed here">
       <a action-button routerLink='/dashboard/incidents/new/realtime' routerlinkactive="active"> 
         <button id="create-button" size="sm" color="primary">
@@ -49,5 +162,5 @@
         </button>
       </a>
   </hm-empty-data>
-</ng-template>
+</ng-template> -->
 </div>

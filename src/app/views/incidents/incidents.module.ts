@@ -15,6 +15,7 @@ import { MaintenanceComponent } from './maintenance/maintenance.component';
 import { CreateIncidentComponent } from './create-incident/create-incident.component';
 import { SharedModule } from '../../shared/shared.module';
 import { SearchIncidentsComponent } from './search-incidents/search-incidents.component';
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 
 
 @NgModule({
@@ -35,7 +36,8 @@ import { SearchIncidentsComponent } from './search-incidents/search-incidents.co
     NgbModule,
     HttpClientModule,
     SharedModule,
-    NgSelect2Module
+    NgSelect2Module,
+    NgxDatatableModule
   ],
   schemas: [
     NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA
