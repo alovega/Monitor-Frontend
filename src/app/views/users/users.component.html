@@ -1,4 +1,4 @@
-<div class="m-auto" style="position:fixed; right: 0; left: 0; z-index: 2; " *ngIf="!isLoaded">
+<div class="m-auto" style="position:fixed; right: 0; left: 0; z-index: 2; " *ngIf="isLoading">
     <hm-component-loader></hm-component-loader>
 </div>
 <div class="page-header d-flex flex-row justify-content-between">
@@ -13,123 +13,26 @@
 </div>
 <hr class="page-header-divider">
 
-
-<div class="d-flex flex-sm-row mt-4 justify-content-lg-between justify-content-sm-between dt-controls">
-  <div class="mb-1">
-      <span>Show </span>
-      <input #visibleItemsInput class="view-entries"
-      type="number" min="1" (input)="changeVisibleItems($event.target.value)" [(ngModel)]="visibleItems">
-      <span> entries</span>
-  </div>
- 
-  <div class="">
-    <span>Search: </span>
-    <input class="search-entries" type="text" #searchText (input)="searchItems(searchText.value)" placeholder="Search">
-  </div> 
-</div>
-
-
 <!-- Grid Row -->
 <div class="row wow animated fadeIn" data-wow-delay="0.1s">
     <!-- Grid column -->
     <div class="col-lg-12 col-md-12 text-left">
-        <mdb-card class="table-responsive table-striped">
-        <table mdbTable #tableEl="mdbTable">
-            <thead class="text-white">
-            <tr>
-            <th *ngFor="let head of headElements; let i = index" style="white-space: nowrap;" scope="col" [mdbTableSort]="users" [sortBy]="headElements[i]">{{elements[head] | titlecase}} 
-            <mdb-icon fas icon="sort"></mdb-icon></th>
-            </tr>
-            </thead>
-            <tbody *ngIf="users?.length; else noData">
-            <tr *ngFor="let user of users; let i = index">
-            <th *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{user.username}}</th>
-            <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{user.email}}</td>
-            <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{user.first_name}}</td>
-            <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{user.last_name}}</td>
-            <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{user.is_active | yesNo}}</td>
-            <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex" style="white-space: nowrap">{{user.date_joined | date:'MM/dd/yyyy   hh:mm:ss a'}}</td>
-            <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">
-              <a routerLink="/dashboard/users/update/{{user.id}}" routerLinkActive="active">
-                <span mdbIcon class="fas fa-edit text-success"></span>
-              </a>
-              <a (click)="deleteUser(user.id)">
-                <span mdbIcon class="fas fa-trash-alt mr-2 text-danger" ></span>
-              </a>
-            </td>
-            </tr>
-            </tbody>
-            <tfoot class="w-100">
-            <ng-template #noData>
-              <td colspan="7">
-                <hm-empty-data header="No Existing Users" description="New Users will be displayed here">
-                  <div action-button>
-                  <a href="" routerLink="/dashboard/users/new">
-                    <button action-button type="button" mdbBtn size="sm" color="primary" class="text-white">Add new User</button>
-                  </a>
-                  </div>
-                </hm-empty-data>
-              </td>
-            </ng-template>            
-            <tr>
-            <td colspan="7">
-                <mdb-table-pagination [tableEl]="tableEl" [searchDataSource]="users" (nextPageClick)="onNextPageClick($event)"></mdb-table-pagination>
-            </td>
-            </tr>
-            </tfoot>
-        </table>
-        </mdb-card>
+      <div *ngIf="dataSource?.columns.length">
+          <hm-data-table [dataSource]="dataSource"></hm-data-table>
+      </div>
+      <ng-template #activeColumn let-row="row" let-value="value">
+        {{ value | yesNo }}
+      </ng-template>     
+      <ng-template #dateColumn let-row="row" let-value="value" let-i="index">
+        {{value | date:'MM/dd/yyyy  hh:mm:ss a'}}
+      </ng-template>
+      <ng-template #buttonsTemplate let-row="row" let-value="value">
+          <a routerLink="/dashboard/users/update/{{row.id}}" class="mr-2" routerLinkActive="active">
+            <span mdbIcon class="fas fa-edit text-success"></span>
+          </a>        
+          <a (click)="deleteUser(row.id)">
+              <span mdbIcon class="fas fa-trash-alt mr-2 text-danger" ></span>
+          </a>
+      </ng-template>     
     </div>
-</div>
-
-<!-- <mdb-card>
-    <mdb-card-body>
-        <table mdbTable>
-                <thead class="text-center">
-                    <tr>
-                    <th *ngFor="let head of headElements" scope="col">{{head}} </th>
-                    </tr>
-                </thead>
-                <tbody class="text-center">
-                    <tr mdbTableCol *ngFor="let el of elements">
-                    <th scope="row">{{el.username}}</th>
-                    <td>{{el.date_created}}</td>
-                    <td>{{el.email}}</td>
-                    <td>
-                        <div class="remove-button">
-                            <a id="update-p2jg8qhdzs4k" (click)="basicModal.show()" >Remove</a>
-                        </div>
-                        <div class="update-button">
-                            <a id="update-p2jg8qhdzs4k" routerLink="/users/update" routerLinkActive="active">Update</a>
-                        </div>
-                    </td>
-                    </tr>
-                </tbody>
-        </table>
-    </mdb-card-body>     
-</mdb-card> -->
-
-<!-- Delete User Confirmation Modal -->
-<div mdbModal #basicModal="mdbModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myBasicModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close pull-right" aria-label="Close" (click)="basicModal.hide()">
-          <span aria-hidden="true">×</span>
-        </button>
-        <h4 class="modal-title w-100" id="myModalLabel">Confirm Remove User</h4>
-      </div>
-      <div class="modal-body">
-        Are you sure you want to remove this user?
-      </div>
-      <div class="modal-footer">
-        <span class="update-button">
-            <a color="primary" aria-label="Close" (click)="basicModal.hide()" mdbWavesEffect>Close</a>
-        </span>
-        <span class="remove-button">
-        <a class="relative waves-light" mdbWavesEffect>Confirm</a>
-        </span>
-      </div>
-    </div>
-  </div>
 </div>

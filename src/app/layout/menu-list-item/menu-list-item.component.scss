@@ -35,3 +35,7 @@ mat-sidenav .mat-drawer-inner-container {
     margin-right: 20px !important;
   }
 }
+
+::ng-deep.mat-list-item-content{
+  padding-bottom: 16px !important;
+}
