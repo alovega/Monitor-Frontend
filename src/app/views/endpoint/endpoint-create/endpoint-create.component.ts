@@ -7,7 +7,7 @@ import { Location } from '@angular/common';
 import { State } from 'src/app/shared/models/state';
 import { System } from 'src/app/shared/models/system';
 import { EndpointType } from 'src/app/shared/models/endpoint-type';
-import { of, forkJoin } from 'rxjs';
+import { forkJoin } from 'rxjs';
 import { LookUpService } from 'src/app/shared/look-up.service';
 import { ToastrService } from 'ngx-toastr';
 import { LookUpResponse } from 'src/app/shared/models/look-up-response';
@@ -36,13 +36,6 @@ export class EndpointFormComponent implements OnInit {
     private toastr: ToastrService) {
     this.createForm();
     this.data = new Endpoint();
-    // this.getStates();
-    // of(this.getSystems()).subscribe((data: any) => {
-    //   this.systems = data;
-    // });
-    // of(this.getEndpointTypes()).subscribe((data: any) => {
-    //   this.endpointTypes = data;
-    // });
     const endpointTypes = this.lookupService.getEndpointStates<LookUpResponse>();
     const states = this.lookupService.getEndpointStates<LookUpResponse>();
     forkJoin([endpointTypes, states]).subscribe(results => {
@@ -102,31 +95,9 @@ export class EndpointFormComponent implements OnInit {
       }
     });
   }
-  getStates() {
-    this.lookupService.getEndpointStates<LookUpResponse>().subscribe((response) => {
-      if (response.ok) {
-        if (response.body.code === '800.200.001') {
-          this.states = response.body.data.endpoint_states.filter(state => state.name === 'Operational');
-        } else {
-          this.toastr.error(response.body.code, 'Error while retrieving endpoint states');
-        }
-      }
-    });
-  }
   getSystems() {
     this.endpointService.getSystems().subscribe((data) => {
       this.systems = data;
-    });
-  }
-  getEndpointTypes() {
-    this.lookupService.getEndpointType<LookUpResponse>().subscribe((response) => {
-      if (response.ok) {
-        if (response.body.code === '800.200.001') {
-          this.endpointTypes = response.body.data.endpoint_types;
-        } else {
-          this.toastr.error(response.body.code, 'Error while retrieving endpoint states');
-        }
-      }
     });
   }
 }
