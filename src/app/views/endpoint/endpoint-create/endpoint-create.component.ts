@@ -48,10 +48,11 @@ export class EndpointFormComponent implements OnInit {
     forkJoin([endpointTypes, states]).subscribe(results => {
       console.log(results);
       if (results[0]) {
-        this.endpointTypes = results[0].map((type: EndpointType) => ({id: type.id, text: type.name}));
+        this.endpointTypes = results[0].body.data.endpoint_types.map((type: EndpointType) => ({id: type.id, name: type.name}));
       }
       if (results[1]) {
-        this.states = results[1].map((state: State) => ({id: state.id, text: state.name}));
+        this.states = results[1].body.data.endpoint_states.filter(state => state.name === 'Operational')
+        .map((state: State) => ({id: state.id, name: state.name}));
       }
       this.isdataReady = true;
     });
