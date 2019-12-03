@@ -11,6 +11,7 @@ import { ToastrService } from 'ngx-toastr';
 import { DropdownItem } from 'src/app/layout/top-nav-bar/dropdown-item';
 import { LookUpService } from 'src/app/shared/look-up.service';
 import { RecipientResponse } from '../model/recipient-response';
+import { LookUpResponse } from 'src/app/shared/models/look-up-response';
 
 @Component({
   selector: 'hm-recipient-create',
@@ -27,16 +28,17 @@ export class RecipientCreateComponent implements OnInit {
 
   constructor(private recipientService: RecipientService, private location: Location, private fb: FormBuilder,
               private router: Router, private toastr: ToastrService, private lookUpService: LookUpService) {
-                const users = this.lookUpService.getUsers();
-                const states = this.lookUpService.getStates();
+                const users = this.lookUpService.getLookUpData<LookUpResponse>();
+                const states = this.lookUpService.getLookUpData<LookUpResponse>();
                 forkJoin([users, states])
                 .subscribe(results => {
                   console.log(results);
                   if (results[0]) {
-                    this.users = results[0].map((type: User) => ({id: type.id, text: type.username}));
+                    this.users = results[0].body.data.users.map((type: User) => ({id: type.id, text: type.username}));
                   }
                   if (results[1]) {
-                    this.states = results[1].map((state: State) => ({id: state.id, text: state.name}));
+                    this.states = results[1].body.data.states.filter(state => state.name === 'Active' || state.name === 'Disabled')
+                    .map((state: State) => ({id: state.id, text: state.name}));
                   }
                   this.isdataReady = true;
                 });

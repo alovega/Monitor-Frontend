@@ -1,6 +1,6 @@
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Endpoint, EndpointData } from '../model/endpoint';
-import { of } from 'rxjs';
+import { of, forkJoin } from 'rxjs';
 import { EndpointService } from '../endpoint.service';
 import { Location } from '@angular/common';
 import { Router, ActivatedRoute} from '@angular/router';
@@ -23,8 +23,10 @@ export class EndpointUpdateComponent implements OnInit {
   endpoint: any;
   updateForm: FormGroup;
   submitted = false;
-  States: State;
+  States: State[];
   endpointType: EndpointType;
+  stateId: string;
+  isdataReady = false;
   constructor(
     private fb: FormBuilder,
     private router: Router,
@@ -35,17 +37,27 @@ export class EndpointUpdateComponent implements OnInit {
     private toastr: ToastrService) {
       this.data = new Endpoint();
       this.createForm();
-      of(this.getStates()).subscribe((data: any) => {
-        this.States = data;
-      });
+      // of(this.getStates()).subscribe((data: any) => {
+      //   this.States = data;
+      // });
     }
 
   ngOnInit() {
     this.endpointId = this.activatedRoute.snapshot.params.id;
+    const states = this.lookupService.getLookUpData<LookUpResponse>();
     this.endpointService.getItem<EndpointData>(this.endpointId).subscribe(response => {
       if (response.ok) {
         if (response.body.code === '800.200.001') {
           this.data = response.body.data;
+          forkJoin(states)
+          .subscribe(results => {
+            console.log(results);
+            if (results[0]) {
+              this.States = results[0].body.data.states.map((state: State) => ({id: state.id, text: state.name}));
+              this.stateId = this.States.filter(i => i.id === this.data.state)[0].id;
+            }
+            this.isdataReady = true;
+          });
           this.updateForm.patchValue({
                 EndpointName: this.data.name,
                 Description: this.data.description,

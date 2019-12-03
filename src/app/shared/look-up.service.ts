@@ -116,7 +116,10 @@ export class LookUpService {
     );
   }
 
-  public getEndpointStates<T>(): Observable<HttpResponse<T>> {
-    return this.httpWrapperService.get<T>('get_lookup/');
+  public getEndpointStates<LookUpResponse>(): Observable<HttpResponse<LookUpResponse>> {
+    return this.httpWrapperService.get<LookUpResponse>('get_lookup/');
+  }
+  public getLookUpData<LookUpResponse>(): Observable<HttpResponse<LookUpResponse>> {
+    return this.httpWrapperService.get<LookUpResponse>('get_lookup/');
   }
 }

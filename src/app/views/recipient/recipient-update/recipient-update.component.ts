@@ -10,6 +10,7 @@ import { RecipientService } from '../recipient.service';
 import { ToastrService } from 'ngx-toastr';
 import { LookUpService } from 'src/app/shared/look-up.service';
 import { RecipientResponse } from '../model/recipient-response';
+import { LookUpResponse } from 'src/app/shared/models/look-up-response';
 
 @Component({
   selector: 'hm-recipient-update',
@@ -34,7 +35,7 @@ export class RecipientUpdateComponent implements OnInit {
 
   ngOnInit() {
     this.recipientId = this.activatedRoute.snapshot.params.id;
-    const states = this.lookUpService.getStates();
+    const states = this.lookUpService.getLookUpData<LookUpResponse>();
     this.recipientService.getRecipient<RecipientData>(this.recipientId).subscribe(response => {
       if (response.ok) {
         if (response.body.code === '800.200.001') {
@@ -43,7 +44,8 @@ export class RecipientUpdateComponent implements OnInit {
                 .subscribe(results => {
                   console.log(results);
                   if (results[0]) {
-                    this.states = results[0].map((state: State) => ({id: state.id, text: state.name}));
+                    this.states = results[0].body.data.states.filter(state => state.name === 'Active' || state.name === 'Disabled')
+                    .map((state: State) => ({id: state.id, text: state.name}));
                     this.stateId = this.states.filter(i => i.id === this.data.stateId)[0].id;
                   }
                   this.isdataReady = true;

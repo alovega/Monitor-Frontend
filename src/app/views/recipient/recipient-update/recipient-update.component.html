@@ -10,11 +10,11 @@
 
 <mdb-card>
     <!-- Default form contact -->
-    <form [formGroup]="updateForm" class="text-center border  p-5" (ngSubmit) = "onSubmit()">
+    <form [formGroup]="updateForm" class="text-center border  p-5" (ngSubmit) = "onSubmit()" *ngIf="isdataReady">
     <div class="row">
         <div class="col">
             <!-- Phone Number -->
-            <label style="position: relative; right: 185px;">Phone Number</label>
+            <label>Phone Number</label>
             <input type="text" id="defaultContactFormPhoneNumber" class="form-control mb-4" placeholder="+2547xx7xxxxx"
             [ngClass]="{ 'is-invalid': submitted && f.EnpointName.errors }" formControlName="PhoneNumber">
               <div *ngIf="updateForm.controls['PhoneNumber'].invalid && (updateForm.controls['PhoneNumber'].dirty || updateForm.controls['PhoneNumber'].touched)" class="invalid-feedback">
@@ -27,7 +27,7 @@
         </div>
         <div class="col">
             <!-- State -->
-            <label style="position: relative; right: 215px;">State</label>
+            <label>State</label>
               <ng-select2 style="width: 100%" class="custom-select-dropdown" formControlName="State" [data]="states">
               </ng-select2>
             <div *ngIf="updateForm.controls['State'].invalid && (updateForm.controls['State'].dirty || updateForm.controls['State'].touched)" class="invalid-feedback">

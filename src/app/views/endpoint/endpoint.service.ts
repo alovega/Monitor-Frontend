@@ -12,9 +12,9 @@ export class EndpointService {
 
   constructor(private lookUpService: LookUpService, public httpWrapperService: HttpWrapperService) {
   }
-  public addEndpoints<T>(item): Observable<HttpResponse<T>> {
+  public addEndpoints<EndpointResponse>(item): Observable<HttpResponse<EndpointResponse>> {
     const url = 'create_endpoints/';
-    return this.httpWrapperService.post<T>(url, item);
+    return this.httpWrapperService.post<EndpointResponse>(url, item);
   }
   // tslint:disable-next-line: variable-name
   public deleteItem<T>(endpoint_id): Observable<HttpResponse<T>> {

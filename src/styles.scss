@@ -383,9 +383,10 @@ mat-toolbar {
   z-index: auto !important; 
 }
 
-// @media(min-width: 960px) {
-//   .page-footer{
-//     position: relative !important;
-//     bottom: 0 !important;
-//   }
-// }
+.form-control{
+  background-color: #fafafa !important;
+}
+
+.text-center{
+  text-align: left !important;
+}

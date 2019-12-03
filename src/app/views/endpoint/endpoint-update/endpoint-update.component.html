@@ -7,7 +7,7 @@
 <hr>
 <mdb-card>
 <!-- Default form contact -->
-<form [formGroup]="updateForm" class="text-center border  p-5" (ngSubmit) = "onSubmit()">
+<form [formGroup]="updateForm" class="text-center border  p-5" (ngSubmit) = "onSubmit()" *ngIf="isdataReady">
   <div class="row">
     <div class="col">
       <!-- Name -->
@@ -49,11 +49,15 @@
     <div class="col">
       <!-- State -->
       <label>State</label>
-      <select class=" form-control browser-default custom-select mb-4 grey lighten-4" formControlName="State">
+      <!-- <select class=" form-control browser-default custom-select mb-4 grey lighten-4" formControlName="State">
         <option *ngFor="let type of States; let i = index" [value]="States[i].id">
           {{States[i].name}}
         </option>
-      </select>
+      </select> -->
+      <div *ngIf="States?.length">
+        <ng-select2 style="width:100%;" class=" custom-select-dropdown" formControlName="State" [data]="States">
+        </ng-select2>
+      </div>
       <div *ngIf="updateForm.controls['State'].invalid && (updateForm.controls['State'].dirty || updateForm.controls['State'].touched)" class="invalid-feedback">
           <div *ngIf="updateForm.controls['State'].errors.required">
               State is required.

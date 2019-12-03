@@ -31,9 +31,9 @@ constructor(private http: HttpClient, private httpWrapperService: HttpWrapperSer
     return throwError(
     'Something bad happened; please try again later.');
     }
-    public getRecipient<T>(recipientId): Observable<HttpResponse<T>> {
+    public getRecipient<RecipientData>(recipientId): Observable<HttpResponse<RecipientData>> {
       const url = 'get_recipient/';
-      return this.httpWrapperService.post<T>(url, {recipientId});
+      return this.httpWrapperService.post<RecipientData>(url, {recipientId});
     }
     public addRecipient<T>(item): Observable<HttpResponse<T>> {
       const url = 'create_recipient/';

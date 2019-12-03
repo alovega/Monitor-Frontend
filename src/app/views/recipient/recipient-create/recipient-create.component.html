@@ -10,11 +10,11 @@
 
 <mdb-card>
     <!-- Default form contact -->
-    <form [formGroup]="recipientsForm" class="text-center border  p-5" (ngSubmit) = "onSubmit()">
+    <form [formGroup]="recipientsForm" class="text-center border  p-5" (ngSubmit) = "onSubmit()"  *ngIf="isdataReady">
       <div class="row">
           <div class="col">
               <!-- Phone Number -->
-              <label style="position: relative; right: 180px;">Phone Number</label>
+              <label>Phone Number</label>
               <input type="text" id="defaultContactFormPhoneNumber" class="form-control mb-4" placeholder="+2547XX7XXXX"
               [ngClass]="{ 'is-invalid': submitted && f.EnpointName.errors }" formControlName="PhoneNumber" 
                 [(ngModel)]="data.phoneNumber" >
@@ -27,7 +27,7 @@
               </div>
             <div class="col">
                 <!-- User -->
-                <label style="position: relative; right: 215px;">User</label>
+                <label>User</label>
                 <div *ngIf="users?.length">
                   <ng-select2 style="width:100%;" class=" custom-select-dropdown" formControlName="userId" [(ngModel)]="data.userId" [data]="users">
                   </ng-select2>
@@ -42,7 +42,7 @@
       <div class="row">
         <div class="col-6">
           <!-- State -->
-        <label style="position: relative; right: 215px;">State</label>
+        <label>State</label>
         <div *ngIf="states?.length">
           <ng-select2 style="width:100%;" class=" custom-select-dropdown" formControlName="stateId" [(ngModel)]="data.stateId" [data]="states">
           </ng-select2>
