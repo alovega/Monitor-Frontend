@@ -2,6 +2,7 @@ import { Component, OnInit, AfterViewInit, HostListener, ElementRef, ViewChild, 
 import { Router, ActivatedRoute } from '@angular/router';
 import {map, shareReplay } from 'rxjs/operators';
 import { NavItem } from './nav-item';
+import { NavigationItems } from '../../shared/models/navigationItems';
 import { NavService } from './nav.service';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
@@ -25,61 +26,10 @@ export class DashboardLayoutComponent implements OnInit, AfterViewInit {
   systems: System[];
   currentSystem: System;
   currentUser: any;
+  navigationItems = new NavigationItems();
   sideBarOpen = true;
   @ViewChild('appDrawer',  {static: true}) appDrawer: ElementRef;
-  navItems: NavItem[] = [
-    {
-      displayName: 'Dashboard',
-      iconName: 'pie_chart',
-      routerLink: 'dashboard/metrics',
-    },
-    {
-      displayName: 'Events',
-      iconName: 'event',
-      routerLink: 'dashboard/events'
-    },
-    {
-      displayName: 'Incidents',
-      iconName: 'bug_report',
-      routerLink: 'dashboard/incidents'
-    },
-    {
-      displayName: 'Users',
-      iconName: 'account_box',
-      routerLink: 'dashboard/users'
-    },
-    {
-      displayName: 'Configurations',
-      iconName: 'group',
-      children: [
-        {
-          displayName: 'Recipients',
-          iconName: 'contacts',
-          routerLink: 'dashboard/recipients'
-        },
-        {
-          displayName: 'System Recipients',
-          iconName: 'accessibility',
-          routerLink: 'dashboard/system-recipients'
-        },
-        {
-          displayName: 'Endpoints',
-          iconName: 'data_usage',
-          routerLink: 'dashboard/endpoints'
-        },
-        {
-          displayName: 'Rules',
-          iconName: 'bookmark',
-          routerLink: 'dashboard/rules'
-        },
-      ]
-    },
-    {
-      displayName: 'Notifications',
-      iconName: 'notifications',
-      routerLink: 'dashboard/notifications/email-notification'
-    },
-  ];
+  navItems = this.navigationItems.navItems;
   loaded = false;
   time: any;
   token: string;

@@ -10,12 +10,6 @@
     background-color: mat-color($app-primary, 50);
     color: #3F51B5 !important
   }
-  // &:hover,
-  // &:focus {
-  //   >.mat-list-item:not(.expanded) {
-  //     background-color: mat-color($app-primary, 100) !important;
-  //   }
-  // }
 }
 
 .mat-list-item {
@@ -40,4 +34,8 @@ mat-sidenav .mat-drawer-inner-container {
     vertical-align: middle;
     margin-right: 20px !important;
   }
+}
+
+::ng-deep.mat-list-item-content{
+  padding-bottom: 16px !important;
 }
