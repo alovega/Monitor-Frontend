@@ -13,11 +13,15 @@
     <div class="col-6">
       <!-- Recipient -->
       <label for="recipient">Recipient</label>
-      <select id=recipient class="browser-default custom-select form-control mb-4" formControlName="Recipient">
-        <option *ngFor="let recipient of Recipients; let i = index" [value]="recipient.id">
-              {{recipient.userName}}
+      <!-- <select id=recipient class="browser-default custom-select form-control mb-4" formControlName="Recipient">
+        <option *ngFor="let recipient of recipients; let i = index" [value]="recipient.id">
+              {{recipient.name}}
         </option>
-      </select>
+      </select> -->
+      <div *ngIf="recipients?.length">
+          <ng-select2 style="width:100%;" class=" custom-select-dropdown" formControlName="Recipient" [data]="recipients">
+          </ng-select2>
+        </div>
       <div *ngIf="systemRecipientForm.controls['Recipient'].invalid && (systemRecipientForm.controls['Recipient'].dirty || systemRecipientForm.controls['Recipient'].touched)" class="invalid-feedback">
           <div *ngIf="systemRecipientForm.controls['Recipient'].errors.required">
               Please Select a Recipient.
@@ -35,35 +39,28 @@
         <div class="col-12"
         *ngFor="let escalation of escalationsArray.controls; let escalationIndex = index;"
         [formGroupName]="escalationIndex">
-        <div class="row">
-          <!-- <div class="col-8">
-            <h4>Escalations {{escalationIndex + 1}}</h4>
-          </div> -->
-        </div>
         <hr>
         <div class="row">
           <div class="col">
               <label>Escalation Level</label>
-              <select class="browser-default custom-select form-control mb-4" formControlName="EscalationLevel">
-              <option *ngFor="let level of EscalationLevels; let i = index" [value]="level.id">
-                    {{level.name}}
-              </option>
-            </select>
-            <div *ngIf="escalation.controls['EscalationLevel'].invalid && (escalation.controls['EscalationLevel.dirty'] || escalation.controls['EscalationLevel'].touched)" class="invalid-feedback">
-                <div *ngIf="escalation.controls['EscalationLevel'].errors.required">
+              <div *ngIf="escalationLevels?.length">
+                <ng-select2 style="width:100%;" class=" custom-select-dropdown" formControlName="EscalationLevel" [data]="escalationLevels">
+                </ng-select2>
+              </div>
+            <div *ngIf="escalation['controls']['EscalationLevel'].invalid && (escalation['controls']['EscalationLevel.dirty'] || escalation['controls']['EscalationLevel'].touched)" class="invalid-feedback">
+                <div *ngIf="escalation['controls']['EscalationLevel'].errors.required">
                     Please Select an escalation level.
                 </div>
             </div>
           </div>
           <div class="col">
               <label> Notification Type </label>
-              <select class="browser-default custom-select form-control mb-4" formControlName="NotificationType">
-              <option *ngFor="let type of NotificationTypes; let i = index" [value]="type.id">
-                    {{type.name}}
-              </option>
-            </select>
-            <div *ngIf="escalation.controls['NotificationType'].invalid && (escalation.controls['NotificationType'].dirty || escalation.controls['NotificationType'].touched)" class="invalid-feedback">
-                <div *ngIf="escalation.controls['NotificationType'].errors.required">
+              <div *ngIf="notificationTypes?.length">
+                <ng-select2 style="width:100%;" class=" custom-select-dropdown" formControlName="NotificationType"  [data]="notificationTypes">
+                </ng-select2>
+              </div>
+            <div *ngIf="escalation['controls']['NotificationType'].invalid && (escalation['controls']['NotificationType'].dirty || escalation['controls']['NotificationType'].touched)" class="invalid-feedback">
+                <div *ngIf="escalation['controls']['NotificationType'].errors.required">
                     Please Select a notification type.
                 </div>
             </div>
@@ -76,7 +73,7 @@
   <button mdbBtn type="submit" size="sm" class="btn float-right btn-primary waves-light"  mdbWavesEffect
   [disabled]="!systemRecipientForm.valid" (click)="addRecipient()">Save</button>
   <!--Add escalations button-->
-  <button [ngClass]="{disabled : escalationsArray.length >= EscalationLevels.length}" mdbBtn type="submit" size="sm" class="btn float-right btn-primary waves-light"  mdbWavesEffect
+  <button [ngClass]="{disabled : escalationsArray.length >= escalationLevels.length}" mdbBtn type="submit" size="sm" class="btn float-right btn-primary waves-light"  mdbWavesEffect
    (click)="addEscalations()">Add escalation</button>
 
 </form>

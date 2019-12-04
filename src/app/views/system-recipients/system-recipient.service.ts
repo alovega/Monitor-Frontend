@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, throwError, from } from 'rxjs';
-import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { catchError, tap, retry, map} from 'rxjs/operators';
 import { SystemRecipient } from './system-recipient';
 import { LookUpService } from 'src/app/shared/look-up.service';
@@ -49,20 +49,22 @@ public getSmsSystemRecipients(systemId): Observable<any> {
     catchError(this.handleError)
   );
 }
-public addSystemRecipient(item): Observable<any> {
-  const systemRecipientUrl = environment.apiEndpoint + 'create_system_recipient/';
-  return this.http.post<any>(systemRecipientUrl, item).pipe(
-    retry(2),
-    catchError(this.handleError)
-  );
+public addSystemRecipient<T>(item): Observable<HttpResponse<T>> {
+  // const systemRecipientUrl = environment.apiEndpoint + 'create_system_recipient/';
+  // return this.http.post<any>(systemRecipientUrl, item).pipe(
+  //   retry(2),
+  //   catchError(this.handleError)
+  // );
+  const url = 'create_system_recipient/';
+  return this.httpWrapperService.post<T>(url, item);
 }
 public deleteItem(systemRecipientId): Observable<any> {
   const systemRecipientUrl = environment.apiEndpoint + 'delete_system_recipient/';
   return this.http.post(systemRecipientUrl, {systemRecipientId});
 }
 
-public getItem(systemRecipientId): Observable<any> {
-  return this.httpWrapperService.post('get_system_recipient/', {systemRecipientId});
+public getItem<T>(recipientId): Observable<HttpResponse<T>> {
+  return this.httpWrapperService.post<T>('get_system_recipient/', {recipientId});
 }
 
 public updateItem(item): Observable<any> {
@@ -70,14 +72,6 @@ public updateItem(item): Observable<any> {
   const systemRecipientUrl = environment.apiEndpoint + 'update_system_recipient/';
   return this.http.post<any>(systemRecipientUrl, item).pipe(
     retry(2),
-    catchError(this.handleError)
-  );
-}
-public getSystemRecipients(systemId) {
-  const systemRecipientUrl = environment.apiEndpoint + 'get_system_recipients/';
-  return this.http.post<any>(systemRecipientUrl, {systemId}).pipe(
-    map(response => response.data,
-    retry(2)),
     catchError(this.handleError)
   );
 }

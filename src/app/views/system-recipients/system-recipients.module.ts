@@ -2,6 +2,7 @@ import { NgModule, CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/cor
 import { CommonModule } from '@angular/common';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { NgSelect2Module } from 'ng-select2';
 
 import { SystemRecipientsRoutingModule } from './system-recipients-routing.module';
 import { SystemRecipientsComponent } from './system-recipients.component';
@@ -15,6 +16,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
   imports: [
     CommonModule,
     FormsModule,
+    NgSelect2Module,
     ReactiveFormsModule,
     SystemRecipientsRoutingModule,
     SharedModule,

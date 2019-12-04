@@ -66,11 +66,6 @@ export class SystemRecipientsComponent implements OnInit, AfterViewInit {
             }
           }
         );
-        this.systemRecipientService.getSystemRecipients(this.currentSystemId).subscribe(
-          response => {
-            this.elements = response;
-          }
-        );
       } else if (result.dismiss === Swal.DismissReason.cancel) {
         Swal.fire(
           'Cancelled',

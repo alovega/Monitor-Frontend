@@ -17,6 +17,6 @@
 </ng-template>
 <ng-template #buttonsTemplate let-row="row" let-value="value">
     <a class="fas fa-edit text-success" routerLinkActive="active"
-      routerLink="/dashboard/system-recipients/system-recipient-update/{{row.systemRecipientId}}"></a>
+      routerLink="/dashboard/system-recipients/system-recipient-update/{{row.recipientId}}"></a>
     <a class="fas fa-trash-alt mr-2 text-danger" (click)="delete(row.systemRecipientId)"></a>
 </ng-template>

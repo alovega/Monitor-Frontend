@@ -48,3 +48,7 @@ button {
 hr{
     margin-top: -6px !important;
 }
+
+::ng-deep .select2-container{
+    margin-bottom: 20px;
+}

@@ -1,8 +1,12 @@
 export class SystemRecipient {
-    escalations: [];
+    escalationLevels: [];
     systemRecipientId: string;
-    notificationType: string;
     recipientId: string;
-    systemId: string;
-    state: string;
+    userName: string;
+}
+
+export class SystemRecipientResponse {
+    code: string;
+    data: SystemRecipient;
+    message: string;
 }
