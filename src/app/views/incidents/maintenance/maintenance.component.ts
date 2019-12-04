@@ -50,7 +50,6 @@ export class MaintenanceComponent implements OnInit, AfterViewInit {
     this.loading$.subscribe((response) => {
       this.load = response.valueOf();
       this.cd.detectChanges();
-      console.log(response.valueOf());
     });
     this.columns = [
       {
@@ -83,7 +82,6 @@ export class MaintenanceComponent implements OnInit, AfterViewInit {
     // there will always be one "sort" object if "sortType" is set to "single"
     this.page.orderDir = sortInfo.sorts[0].dir;
     this.page.orderBy = sortInfo.sorts[0].prop;
-    console.log(this.table.offset);
     this.getTableData(this.page);
   }
   updateFilter() {
