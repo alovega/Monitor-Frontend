@@ -1,7 +1,6 @@
-import { Component, OnInit, ViewChild, TemplateRef, ChangeDetectionStrategy, 
-  Input, ElementRef, ChangeDetectorRef, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild, TemplateRef, ChangeDetectionStrategy,
+  ElementRef, ChangeDetectorRef, AfterViewInit } from '@angular/core';
 import { ColumnMode} from '@swimlane/ngx-datatable';
-import { Incident, IncidentsResponse } from '../incident';
 import { SystemService } from '../../../shared/system.service';
 import { ToastrService } from 'ngx-toastr';
 import { System } from 'src/app/shared/models/system';
@@ -24,10 +23,7 @@ export class OpenIncidentsComponent implements OnInit, AfterViewInit {
   @ViewChild('hdrTpl', { static: true }) hdrTpl: TemplateRef<any>;
   @ViewChild('incidentsDataTable', { static: true }) table: any;
   @ViewChild('input', { static: true }) input: ElementRef;
-  @ViewChild('buttonsTemplate', {static: true}) buttonsTemplate: TemplateRef<any>;
-  @ViewChild('dateColumn', {static: true}) dateColumn: TemplateRef<any>;
 
-  incidents: Incident[];
   currentSystem: System;
   dataSource = new DataSource();
   isLoading = true;
@@ -98,7 +94,10 @@ export class OpenIncidentsComponent implements OnInit, AfterViewInit {
   }
   getTableData<T>(page: Page) {
     this.loadingSubject.next(true);
-    this.incidentService.getIncidentsTableData<TableResponse>(page)
+    const options = {
+      states: ['Investigating', 'Identified', 'Monitoring', 'Scheduled', 'InProgress']
+    };
+    this.incidentService.getIncidentsTableData<TableResponse>(page, options)
     .subscribe(response => {
       if (response.ok) {
         if (response.body.code === '800.200.001') {

@@ -387,33 +387,38 @@ mat-toolbar {
   background-color: #ffffff !important;
 }
 
-.open-incidents .ngx-datatable.material:not(.cell-selection) .datatable-body-row:hover, .open-incidents .ngx-datatable.material:not(.cell-selection) .datatable-body-row:hover .datatable-row-group {
+.incidents .ngx-datatable.material:not(.cell-selection) .datatable-body-row:hover, .incidents .ngx-datatable.material:not(.cell-selection) .datatable-body-row:hover .datatable-row-group {
   background-color: #ffffff !important;
   transition-property: background;
   transition-duration: 0.1s;
   transition-timing-function: linear;
 }
 
-.open-incidents .ngx-datatable.material:not(.cell-selection) .datatable-body-row:focus, .open-incidents .ngx-datatable.material:not(.cell-selection) .datatable-body-row:focus .datatable-row-group {
+.incidents .ngx-datatable.material:not(.cell-selection) .datatable-body-row:focus, .incidents .ngx-datatable.material:not(.cell-selection) .datatable-body-row:focus .datatable-row-group {
   background-color: #ffffff !important;
 }
 
-.open-incidents .datatable-row-center {
+.incidents .datatable-row-center {
   width: 100% !important;
 }
 
-.open-incidents .datatable-body-cell {
+.incidents .datatable-body-cell {
   width: 100% !important;
   padding: 20px !important;
-  
 }
 
-.open-incidents .ngx-datatable.material {
+.incidents.open .ngx-datatable.material {
   box-shadow: none !important;
 }
 
-.open-incidents .ngx-datatable.material .datatable-body .datatable-body-row .datatable-body-cell{
-  padding: 5px 5px !important;
+.incidents.open .ngx-datatable.material .datatable-body .datatable-body-row .datatable-body-cell{
+  padding: 5px 1px !important;
+}
+
+
+.incidents.realtime .ngx-datatable.material .datatable-body .datatable-body-row .datatable-body-cell{
+  padding: 15px 15px !important;
+  border-bottom: 1px solid rgb(222, 226, 230) !important;
 }
 
 

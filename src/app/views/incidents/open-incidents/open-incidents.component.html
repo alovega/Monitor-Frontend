@@ -41,7 +41,7 @@
     </a>
 </div> -->
 
-<div class="open-incidents">
+<div class="incidents open">
     <div id="table-header">
         <div class="pagination">
           <p class="content">Show</p>
@@ -62,7 +62,7 @@
   [rows]="rows"
   [columns]="columns"
   [columnMode]="ColumnMode.force"
-  [headerHeight]="50"
+  [headerHeight]="0"
   [footerHeight]="50"
   [draggable]="false"
   [reorder]
@@ -78,21 +78,21 @@
   </ngx-datatable>
   <ng-template #hdrTpl let-column="column">{{column.name}}</ng-template>
   <ng-template #openIncidents let-row="row" let-value="value">
-    <a routerLink="/dashboard/incidents/update/{{row.id}}" routerLinkActive="active" style="width: 100%;">
-      <mdb-card class="open-incident mb-4">
+      <a routerLink="/dashboard/incidents/update/{{row.id}}" routerLinkActive="active">
+        <mdb-card class="open-incident mb-4">
           <mdb-card-body>
           <a routerLink="/dashboard/incidents/update/{{row.id}}" routerLinkActive="active" class="update-incident-button float-right">
               <button mdbBtn mdbWavesEffect color="info" size="sm">Update</button>
           </a>
           <h5 class="open-incident-title">{{ row.name }}</h5>
           <div class="incident-info">
-            <!-- <span *ngIf="incident.incident_updates.length; else noUpdates">
-                <span *ngFor="let update of incident.incident_updates; let i=index">
+            <span *ngIf="row.incident_updates.length; else noUpdates">
+                <span *ngFor="let update of row.incident_updates; let i=index">
                   <span *ngIf="i<1" class="incident-status" color="info">{{ update.state_name }}</span>
                   <div *ngIf="i<1" class="last-update-time"><small>Last updated on: {{ row.date_modified | date:'MMMM d, y' }} at {{ row.date_modified | date:'h:mm:ss a' }}</small></div>
                 </span> 
-            </span>                -->
-            <ng-template>
+            </span>               
+            <ng-template #noUpdates>
               <span class="incident-status" color="info">
                   {{ row.state_name }}
               </span>
@@ -106,11 +106,11 @@
                     <mdb-icon fas icon="check-circle" class="green-text pr-3"></mdb-icon>
               </div>
             </div>
-            <!-- <div class="affected-systems" *ngIf="row.incident_updates">
+            <div *ngIf="row.incident_updates.length">
                 <span *ngFor="let update of row.incident_updates; let i = index">
-                    <span *ngIf="update.username && i<1" class=""><small class="affected-systems-title">Assigned User : </small> {{update.username}}</span>
+                    <span class="assigned-user" *ngIf="update.username && i<1" class=""><small class="affected-systems-title">Assigned User : </small> {{update.username}}</span>
                   </span>
-            </div> -->
+            </div>
           </mdb-card-body>
       </mdb-card>
     </a>
