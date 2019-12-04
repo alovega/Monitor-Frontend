@@ -1,11 +1,11 @@
 <div class="full-page">
   <div [ngClass]="{'d-none': !loading}">
     <hm-loader></hm-loader>
-  </div>  
+  </div> 
+<!--
 <div *ngIf="incidents?.length; else noIncidents">
   <table mdbTable id="incident-list">
     <tbody>
-      <!-- Incident Item -->
       <tr mdbTableCol class="incident-item" *ngFor="let incident of incidents">        
         <td scope="row">
             <div class="incident-description">
@@ -31,11 +31,94 @@
       </tr>
     </tbody>
   </table>
+</div> 
+-->
 
+<!-- Grid Row -->
+<div class="row wow animated fadeIn" data-wow-delay="0.1s">
+  <!-- Grid column -->
+  <div class="col-lg-12 col-md-12 text-left">
+      <div class="incidents realtime">
+        <div id="table-header">
+          <div class="pagination">
+            <p class="content">Show</p>
+            <select class="browser-default custom-select content" (change)= "changePagination($event)">
+                <option *ngFor="let value of pagination" [ngValue]="value">{{value}}</option>
+            </select>
+            <p class="content">items</p>
+          </div>
+          <div class="search">
+              <label id="searchlabel">Search :</label>
+              <input type="text" placeholder="search..." #input/>
+          </div>
+        </div>
+      
+        <ngx-datatable 
+        class="material" 
+        #incidentsDataTable 
+        [rows]="rows"
+        [columns]="columns"
+        [columnMode]="ColumnMode.force"
+        [headerHeight]="0"
+        [footerHeight]="50"
+        [draggable]="false"
+        [reorder]
+        rowHeight="auto"
+        [externalPaging]="true"
+        [externalSorting]="true"
+        [count]="page.totalElements"
+        [offset]="page.offset"
+        [limit]="page.size"
+        (page)="pageCallback($event)"
+        (sort)="sortCallback($event)"
+        [loadingIndicator]="load">
+        </ngx-datatable>
+        <ng-template #hdrTpl let-column="column">{{column.name}}</ng-template>
+          <ng-template #realtimeIncidents let-row="row" let-value="value">    
+            <div class="incident-description">
+              <div class="action-buttons float-right">
+                  <a id="update-{{row.id}}" routerLink="/dashboard/incidents/update/{{row.id}}" 
+                  routerLinkActive="active" *ngIf="row.state_name !== 'Resolved'; else Open">Update</a>
+                  <ng-template #Open>
+                      <a id="update-{{row.id}}" routerLink="/dashboard/incidents/update/{{row.id}}" routerLinkActive="active">View</a>
+                  </ng-template>
+              </div>
+              <strong>
+                  <a class="incident-view-link" routerLink="/dashboard/incidents/update/{{row.id}}" routerLinkActive="active">
+                  {{ row.name }}
+                  </a>
+              </strong><br>
+              <div class="last-updated">
+                  <small>Last updated <span class="ago"><span>{{ row.date_modified | relativeTime}}</span>. 
+                  </span>
+                  </small>
+              </div>
+            </div>
+        </ng-template>
+        <ngx-datatable-footer *ngIf="true">
+          <ng-template
+            ngx-datatable-footer-template
+            let-rowCount="rowCount"
+            let-pageSize="pageSize"
+            let-selectedCount="selectedCount"
+            let-curPage="curPage"
+            let-offset="offset">
+            <div style="padding: 5px 10px">
+              <div><strong>{{message}}</strong></div>
+            </div>
+            <datatable-pager  
+            [pagerLeftArrowIcon]="'datatable-icon-left'" [pagerRightArrowIcon]="'datatable-icon-right'" [pagerPreviousIcon]="'datatable-icon-prev'"
+            [pagerNextIcon]="'datatable-icon-skip'" [page]="curPage" [size]="pageSize" [count]="rowCount" [hidden]="!((rowCount / pageSize) > 1)"
+            (change)="table.onFooterPage($event)">
+            </datatable-pager>
+          </ng-template>
+          </ngx-datatable-footer>  
+      </div>
+  </div>
 </div>
 
 <!-- Zero Realtime Incidents For the system -->
-<ng-template #noIncidents>
+<!-- <ng-template #noIncidents>
     <hm-empty-data header="All Clear" description="You will see all realtime incidents here" [ngClass]="{'d-none': loading}">
       <a action-button routerLink='/dashboard/incidents/new/realtime' routerlinkactive="active"> 
         <button id="create-button" size="sm" color="primary">
@@ -43,6 +126,5 @@
         </button>
       </a>
     </hm-empty-data>
-</ng-template>
-
+</ng-template> -->
 </div>
