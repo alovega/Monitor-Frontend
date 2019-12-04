@@ -1,63 +1,16 @@
-<div class="d-flex flex-sm-row mt-4 justify-content-lg-between justify-content-sm-between dt-controls">
-  <div class="mb-1">
-      <span>Show </span>
-      <input #visibleItemsInput class="view-entries" type="number" min="1" (input)="changeVisibleItems($event.target.value)" [value]="visibleItems">
-      <span> entries</span>
-  </div>
- 
-  <div class="">
-    <span>Search: </span>
-    <input class="search-entries" type="text" #searchText (input)="searchItems(searchText.value)" placeholder="Search">
-  </div> 
-</div>
-
 <!-- Grid Row -->
 <div class="row mt-1 wow animated fadeIn">
   <!-- Grid column -->
   <div class="col-lg-12 col-md-12 text-left">
-      <mdb-card class="table-responsive table-striped">
-      <table mdbTable #tableEl="mdbTable">
-          <thead class="text-white">
-          <tr>
-          <th *ngFor="let head of headElements; let i = index" style="white-space: nowrap;" scope="col"[mdbTableSort]="events" [sortBy]="headElements[i]">{{elements[head] | titlecase}} 
-          <mdb-icon fas icon="sort"></mdb-icon></th>
-          </tr>
-          </thead>
-          <tbody *ngIf="events.length; else noData">
-          <div [ngClass] = "{'d-none': !loading}">
-            <hm-loader></hm-loader>
-          </div>
-          <tr *ngFor="let event of events; let i = index">
-          <th *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex"
-              scope="row">{{event.eventtype}}</th>
-          <td class="text-clip" *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{event.description}}</td>
-          <td class="text-clip" *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{event.stack_trace}}</td>
-          <td class="text-clip" *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{event.method}}</td>
-          <td class="text-clip" *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{event.interface}}</td>
-          <td class="text-clip" *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{event.request}}</td>
-          <td class="text-clip" *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{event.response}}</td>
-          <td class="text-clip" *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{event.code}}</td>
-          <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex" style = "white-space: nowrap;">{{event.date_created | date:'MMMM d, yyyy  hh:mm:ss'}}</td>
-          <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">
-            <a (click)="showEventInfo(event.id)"><i class="fas fa-info-circle text-info"></i></a>
-          </td>
-          </tr>
-          </tbody>
-          <tfoot class="w-100">
-          <ng-template #noData>
-            <td colspan="10">
-              <hm-empty-data header="No Logged Events" description="New Events will be displayed here">
-              </hm-empty-data>
-            </td>
-          </ng-template>            
-          <tr>
-          <td colspan="10">
-            <mdb-table-pagination [tableEl]="tableEl" [searchDataSource]="events"></mdb-table-pagination>
-          </td>
-          </tr>
-          </tfoot>
-      </table>
-      </mdb-card>
+      <div *ngIf="dataSource?.columns.length">
+        <hm-data-table [dataSource]="dataSource"></hm-data-table>
+      </div>
+      <ng-template #dateColumn let-row="row" let-value="value" let-i="index">
+        {{value | date:'MM/dd/yyyy  hh:mm:ss a'}}
+      </ng-template>
+      <ng-template #buttonsTemplate let-row="row" let-value="value">
+          <a (click)="showEventInfo(row.id)"><i class="fas fa-info-circle text-info"></i></a>
+      </ng-template>
   </div>
 </div>
 

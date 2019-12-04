@@ -271,8 +271,8 @@ a {
 }
 
 .view-entries {
-  max-width: 50px;
-  height: calc(1.2em + 0.5rem + 2px);
+  max-width: 80px;
+  height: calc(1.5em + 0.5rem + 2px);
   padding: 0.375rem 0.35rem 0.375rem 0.375rem;
   font-size: 1rem;
   font-weight: 400;
@@ -285,7 +285,7 @@ a {
 
 .search-entries {
   max-width: 200px;
-  height: calc(1.2em + 0.5rem + 2px);
+  height: calc(1.5em + 0.5rem + 2px);
   padding: 0.375rem 0.75rem;
   font-size: 1rem;
   font-weight: 400;
@@ -383,9 +383,63 @@ mat-toolbar {
   z-index: auto !important; 
 }
 
-// @media(min-width: 960px) {
-//   .page-footer{
+.ngx-datatable.material:not(.cell-selection) .datatable-body-row:focus, .ngx-datatable.material:not(.cell-selection) .datatable-body-row:focus .datatable-row-group {
+  background-color: #ffffff !important;
+}
+
+.incidents .ngx-datatable.material:not(.cell-selection) .datatable-body-row:hover, .incidents .ngx-datatable.material:not(.cell-selection) .datatable-body-row:hover .datatable-row-group {
+  background-color: #ffffff !important;
+  transition-property: background;
+  transition-duration: 0.1s;
+  transition-timing-function: linear;
+}
+
+.incidents .ngx-datatable.material:not(.cell-selection) .datatable-body-row:focus, .incidents .ngx-datatable.material:not(.cell-selection) .datatable-body-row:focus .datatable-row-group {
+  background-color: #ffffff !important;
+}
+
+.incidents .datatable-row-center {
+  width: 100% !important;
+}
+
+.incidents .datatable-body-cell {
+  width: 100% !important;
+  padding: 20px !important;
+}
+
+.incidents.open .ngx-datatable.material {
+  box-shadow: none !important;
+}
+
+.incidents.open .ngx-datatable.material .datatable-body .datatable-body-row .datatable-body-cell{
+  padding: 5px 1px !important;
+}
+
+
+.incidents.realtime .ngx-datatable.material .datatable-body .datatable-body-row .datatable-body-cell{
+  padding: 15px 15px !important;
+  border-bottom: 1px solid rgb(222, 226, 230) !important;
+}
+
+
+// ::ng-deep {
+//   .progress-linear {
 //     position: relative !important;
-//     bottom: 0 !important;
+
+//     .container {
+//       max-width: 100% !important;
+//     }
 //   }
+// }
+
+// ::ng-deep.datatable-header-cell {
+//   font-size: 0.8em !important;
+// }
+// ::ng-deep.datatable-body-cell {
+// word-wrap:break-word !important;
+// width: 400px !important;
+// }
+
+// :host ::ng-deep .ngx-datatable .datatable-body .datatable-scroll {
+// display: inherit;
 // }
