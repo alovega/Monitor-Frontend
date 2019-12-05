@@ -1,24 +1,20 @@
 import { Injectable } from '@angular/core';
-import { Observable, throwError, from } from 'rxjs';
-import { HttpClient, HttpHeaders, HttpErrorResponse, HttpResponse } from '@angular/common/http';
-import { catchError, tap, retry, map} from 'rxjs/operators';
-import { SystemRecipient } from './system-recipient';
+import { Observable} from 'rxjs';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { LookUpService } from 'src/app/shared/look-up.service';
-import { environment } from 'src/environments/environment';
 import { HttpWrapperService } from 'src/app/shared/helpers/http-wrapper.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SystemRecipientService {
-constructor(private http: HttpClient, private lookUpService: LookUpService, private httpWrapperService: HttpWrapperService) { }
+constructor(private httpWrapperService: HttpWrapperService) { }
   public addSystemRecipient<T>(item): Observable<HttpResponse<T>> {
     const url = 'create_system_recipient/';
     return this.httpWrapperService.post<T>(url, item);
   }
-  public deleteItem(systemRecipientId): Observable<any> {
-    const systemRecipientUrl = environment.apiEndpoint + 'delete_system_recipient/';
-    return this.http.post(systemRecipientUrl, {systemRecipientId});
+  public deleteItem<T>(systemRecipientId): Observable<HttpResponse<T>> {
+    return this.httpWrapperService.post<T>('delete_system_recipient/', {systemRecipientId});
   }
 
   public getItem<T>(recipientId): Observable<HttpResponse<T>> {
@@ -27,9 +23,5 @@ constructor(private http: HttpClient, private lookUpService: LookUpService, priv
 
   public updateItem<T>(item): Observable<HttpResponse<T>> {
     return this.httpWrapperService.post<T>('update_system_recipient/', item);
-    // const systemRecipientUrl = environment.apiEndpoint + 'update_system_recipient/';
-    // return this.http.post<any>(systemRecipientUrl, item).pipe(
-    //   retry(2),
-    // );
   }
 }

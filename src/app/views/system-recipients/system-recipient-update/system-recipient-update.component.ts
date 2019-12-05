@@ -4,7 +4,7 @@ import {SystemRecipientService} from '../system-recipient.service';
 import { Location } from '@angular/common';
 import { Router, ActivatedRoute } from '@angular/router';
 import {SystemRecipient, SystemRecipientResponse, SystemRecipientParams} from '../system-recipient';
-import { of, forkJoin } from 'rxjs';
+import { forkJoin } from 'rxjs';
 import { EscalationLevel } from 'src/app/shared/models/escalation-level';
 import { NotificationType } from 'src/app/shared/models/notification-type';
 import { State } from 'src/app/shared/models/state';
@@ -12,7 +12,6 @@ import { ToastrService } from 'ngx-toastr';
 import { LookUpService } from 'src/app/shared/look-up.service';
 import { LookUpResponse } from 'src/app/shared/models/look-up-response';
 import { Recipient, RecipientLookup } from '../../recipient/model/recipient';
-import { combineAll } from 'rxjs/operators';
 
 @Component({
   selector: 'hm-recipient-update',
@@ -45,8 +44,6 @@ export class SystemRecipientUpdateComponent implements OnInit {
     const notificationTypes = this.lookUpService.getLookUpData<LookUpResponse>();
     this.id = this.activatedRoute.snapshot.params.id;
     this.systemRecipientService.getItem<SystemRecipientResponse>(this.id).subscribe(response => {
-      console.log(response);
-      console.log(response.body.data.escalationLevels);
       if (response.ok) {
         if (response.body.code === '800.200.001') {
           this.data = response.body.data;
@@ -72,7 +69,7 @@ export class SystemRecipientUpdateComponent implements OnInit {
         });
           this.createForm();
           this.updateForm.patchValue({
-            recipient_id: this.data.escalationLevels,
+            recipient_id: this.data.recipientId,
             escalations: this.data.escalationLevels.forEach(item => this.addEscalations())
           });
       }
@@ -118,8 +115,6 @@ export class SystemRecipientUpdateComponent implements OnInit {
     }
   }
   updateRecipient() {
-    // this.params = this.updateForm.value;
-    console.log(this.updateForm.value);
     this.systemRecipientService.updateItem<SystemRecipientResponse>(this.updateForm.value).subscribe(response => {
       console.log(response);
       if (response.ok) {
