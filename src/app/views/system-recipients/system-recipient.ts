@@ -1,3 +1,5 @@
+import { EscalationLevel } from 'src/app/shared/models/escalation-level';
+
 export class SystemRecipient {
     escalationLevels: [];
     systemRecipientId: string;
@@ -9,4 +11,15 @@ export class SystemRecipientResponse {
     code: string;
     data: SystemRecipient;
     message: string;
+}
+
+export class Escalations {
+    escalationLevelId: string;
+    notificationTypeId: string;
+    stateId: string;
+}
+export class SystemRecipientParams {
+    recipientId: string;
+    systemRecipientId: string;
+    escalations: Escalations[];
 }

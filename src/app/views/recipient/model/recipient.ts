@@ -1,5 +1,6 @@
 export class Recipient {
     userId: string;
+    recipientId: string;
     phoneNumber: string;
     stateId: string;
 }

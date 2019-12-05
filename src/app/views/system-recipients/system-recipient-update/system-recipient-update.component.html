@@ -8,22 +8,17 @@
 <hr>
 <mdb-card>
 <!-- Default form contact -->
-<form [formGroup]="updateForm" class="text-center border  p-5" (ngSubmit) = "onSubmit()">
+<form [formGroup]="updateForm" class="text-center border  p-5" *ngIf="isdataReady" (ngSubmit) = "onSubmit()">
 <div class="row">
   <div class="col-6">
     <!-- Recipient -->
     <label for="recipient">Recipient</label>
-    <!-- <select id=recipient class="browser-default custom-select form-control mb-4" formControlName="Recipient">
-      <option *ngFor="let recipient of recipients; let i = index" [value]="recipient.id">
-            {{recipient.name}}
-      </option>
-    </select> -->
     <div *ngIf="recipients?.length">
-        <ng-select2 style="width:100%;" class=" custom-select-dropdown" formControlName="Recipient" [data]="recipients">
+        <ng-select2 style="width:100%;" class=" custom-select-dropdown" formControlName="recipient_id" [data]="recipients">
         </ng-select2>
       </div>
-    <div *ngIf="updateForm.controls['Recipient'].invalid && (updateForm.controls['Recipient'].dirty || updateForm.controls['Recipient'].touched)" class="invalid-feedback">
-        <div *ngIf="updateForm.controls['Recipient'].errors.required">
+    <div *ngIf="updateForm.controls['recipient_id'].invalid && (updateForm.controls['recipient_id'].dirty || updateForm.controls['recipient_id'].touched)" class="invalid-feedback">
+        <div *ngIf="updateForm.controls['recipient_id'].errors.required">
             Please Select a Recipient.
         </div>
     </div>
@@ -44,11 +39,11 @@
         <div class="col">
             <label>Escalation Level</label>
             <div *ngIf="escalationLevels?.length">
-              <ng-select2 style="width:100%;" class=" custom-select-dropdown" formControlName="EscalationLevel" [data]="escalationLevels">
+              <ng-select2 style="width:100%;" class=" custom-select-dropdown" formControlName="escalation_level_id" [data]="escalationLevels">
               </ng-select2>
             </div>
-          <div *ngIf="escalation['controls']['EscalationLevel'].invalid && (escalation['controls']['EscalationLevel.dirty'] || escalation['controls']['EscalationLevel'].touched)" class="invalid-feedback">
-              <div *ngIf="escalation['controls']['EscalationLevel'].errors.required">
+          <div *ngIf="escalation['controls']['escalation_level_id'].invalid && (escalation['controls']['escalation_level_id.dirty'] || escalation['controls']['escalation_level_id'].touched)" class="invalid-feedback">
+              <div *ngIf="escalation['controls']['escalation_level_id'].errors.required">
                   Please Select an escalation level.
               </div>
           </div>
@@ -56,11 +51,11 @@
         <div class="col">
             <label> Notification Type </label>
             <div *ngIf="notificationTypes?.length">
-              <ng-select2 style="width:100%;" class=" custom-select-dropdown" formControlName="NotificationType"  [data]="notificationTypes">
+              <ng-select2 style="width:100%;" class=" custom-select-dropdown" formControlName="notification_type_id"  [data]="notificationTypes">
               </ng-select2>
             </div>
-          <div *ngIf="escalation['controls']['NotificationType'].invalid && (escalation['controls']['NotificationType'].dirty || escalation['controls']['NotificationType'].touched)" class="invalid-feedback">
-              <div *ngIf="escalation['controls']['NotificationType'].errors.required">
+          <div *ngIf="escalation['controls']['notification_type_id'].invalid && (escalation['controls']['notification_type_id'].dirty || escalation['controls']['notification_type_id'].touched)" class="invalid-feedback">
+              <div *ngIf="escalation['controls']['notification_type_id'].errors.required">
                   Please Select a notification type.
               </div>
           </div>
@@ -68,15 +63,22 @@
         <div class="col">
           <label> State </label>
           <div *ngIf="notificationTypes?.length">
-            <ng-select2 style="width:100%;" class=" custom-select-dropdown" formControlName="State"  [data]="states">
+            <ng-select2 style="width:100%;" class=" custom-select-dropdown" formControlName="state_id"  [data]="states">
             </ng-select2>
           </div>
-        <div *ngIf="escalation['controls']['NotificationType'].invalid && (escalation['controls']['NotificationType'].dirty || escalation['controls']['NotificationType'].touched)" class="invalid-feedback">
-            <div *ngIf="escalation['controls']['NotificationType'].errors.required">
+        <div *ngIf="escalation['controls']['state_id'].invalid && (escalation['controls']['state_id'].dirty || escalation['controls']['state_id'].touched)" class="invalid-feedback">
+            <div *ngIf="escalation['controls']['state_id'].errors.required">
                 Please Select a notification type.
             </div>
         </div>
         <a [ngClass]="{'display-none': escalationIndex === 0}" id="remove"><img src="../../../../assets/icons/remove.svg" alt="" width="24" height="24" (click)="deleteEscalations(escalationIndex)"></a>
+      </div>
+      <div class="col" style="display: none;">
+        <div>
+          <label>System Recipient Id</label>
+          <input mdbInput MdbValidate type="text" id="defaultContactFormName" class="form-control mb-4"
+          placeholder="SystemRecipientId" formControlName="system_recipient_id">
+        </div>
       </div>
       </div>
       </div>

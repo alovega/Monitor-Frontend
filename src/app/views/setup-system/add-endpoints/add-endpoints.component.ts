@@ -1,26 +1,26 @@
-// import { Component, OnInit, ElementRef, ViewChild, ChangeDetectorRef, AfterViewInit } from '@angular/core';
-// import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-// import { Router } from '@angular/router';
-// import { of } from 'rxjs';
-// import { Location } from '@angular/common';
-// import { ToastrService } from 'ngx-toastr';
+import { Component, OnInit, ElementRef, ViewChild, ChangeDetectorRef, AfterViewInit } from '@angular/core';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { of } from 'rxjs';
+import { Location } from '@angular/common';
+import { ToastrService } from 'ngx-toastr';
 
-// import { Endpoint } from '../../endpoint/model/endpoint';
-// import { State } from '../../../shared/models/state';
-// import { System } from '../../../shared/models/system';
-// import { EndpointType } from '../../../shared/models/endpoint-type';
-// import { EndpointService } from '../../endpoint/endpoint.service';
-// import { SystemService } from 'src/app/shared/system.service';
-// import { SetupService } from '../setup.service';
-// import { LookUpService } from '../../../shared/look-up.service';
+import { Endpoint } from '../../endpoint/model/endpoint';
+import { State } from '../../../shared/models/state';
+import { System } from '../../../shared/models/system';
+import { EndpointType } from '../../../shared/models/endpoint-type';
+import { EndpointService } from '../../endpoint/endpoint.service';
+import { SystemService } from 'src/app/shared/system.service';
+import { SetupService } from '../setup.service';
+import { LookUpService } from '../../../shared/look-up.service';
 
 
-// @Component({
-//   selector: 'hm-add-endpoints',
-//   templateUrl: './add-endpoints.component.html',
-//   styleUrls: ['./add-endpoints.component.scss']
-// })
-// export class AddEndpointsComponent implements OnInit, AfterViewInit {
+@Component({
+  selector: 'hm-add-endpoints',
+  templateUrl: './add-endpoints.component.html',
+  styleUrls: ['./add-endpoints.component.scss']
+})
+export class AddEndpointsComponent implements OnInit, AfterViewInit {
 //   endpointForm: FormGroup;
 //   updateForm: FormGroup;
 //   submitted = false;
@@ -57,7 +57,7 @@
 //     this.data = new Endpoint();
 //    }
 
-//   ngOnInit() {
+  ngOnInit() {
 //     this.setupService.nextUrl.next('rules');
 //     this.setupService.previousUrl.next(null);
 //     this.currentSystem = this.systemService.getCurrentSystem();
@@ -83,11 +83,11 @@
 //       State: ['', Validators.required]
 //     });
 //     this.loading = false;
-//   }
+  }
 
-//   ngAfterViewInit() {
-//     this.changeDetector.detectChanges();
-//   }
+  ngAfterViewInit() {
+    // this.changeDetector.detectChanges();
+  }
 
 //   // public getEndpoints() {
 //   //   this.endpointService.getEndpoints(this.currentSystemId).subscribe(
@@ -169,4 +169,4 @@
 //   //     this.endpointTypes = data;
 //   //   });
 //   // }
-// }
+}

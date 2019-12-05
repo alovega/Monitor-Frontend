@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import {SystemRecipientService} from '../system-recipient.service';
 import { Location } from '@angular/common';
 import { Router, ActivatedRoute } from '@angular/router';
-import {SystemRecipient, SystemRecipientResponse} from '../system-recipient';
+import {SystemRecipient, SystemRecipientResponse, SystemRecipientParams} from '../system-recipient';
 import { of, forkJoin } from 'rxjs';
 import { EscalationLevel } from 'src/app/shared/models/escalation-level';
 import { NotificationType } from 'src/app/shared/models/notification-type';
@@ -24,7 +24,8 @@ export class SystemRecipientUpdateComponent implements OnInit {
   id: number;
   recipientId: string;
   submitted = false;
-  systemRecipient: SystemRecipient;
+  data: SystemRecipient;
+  params: SystemRecipientParams;
   recipients: Recipient[];
   states: State[];
   notificationTypes: NotificationType[];
@@ -34,7 +35,7 @@ export class SystemRecipientUpdateComponent implements OnInit {
   constructor(
     private fb: FormBuilder, private systemRecipientService: SystemRecipientService, public router: Router,
     public activatedRoute: ActivatedRoute, public location: Location, private toastr: ToastrService, public lookUpService: LookUpService) {
-    this.systemRecipient = new SystemRecipient();
+    this.data = new SystemRecipient();
    }
 
   ngOnInit() {
@@ -48,7 +49,7 @@ export class SystemRecipientUpdateComponent implements OnInit {
       console.log(response.body.data.escalationLevels);
       if (response.ok) {
         if (response.body.code === '800.200.001') {
-          this.systemRecipient = response.body.data;
+          this.data = response.body.data;
           forkJoin([escalationLevels, recipients, notificationTypes, states]).subscribe(results => {
           if (results[0]) {
             this.escalationLevels = results[0].body.data.escalation_levels
@@ -71,8 +72,8 @@ export class SystemRecipientUpdateComponent implements OnInit {
         });
           this.createForm();
           this.updateForm.patchValue({
-            Recipient: this.systemRecipient.recipientId,
-            escalations: this.systemRecipient.escalationLevels.forEach(item => this.addEscalations())
+            recipient_id: this.data.escalationLevels,
+            escalations: this.data.escalationLevels.forEach(item => this.addEscalations())
           });
       }
     }
@@ -83,15 +84,16 @@ export class SystemRecipientUpdateComponent implements OnInit {
   }
   createForm() {
     this.updateForm = this.fb.group({
-      Recipient: ['', Validators.required],
+      recipient_id: ['', Validators.required],
       escalations: this.fb.array([])
     });
   }
   addEscalationGroup() {
     return this.fb.group({
-      NotificationType: ['', Validators.required],
-      EscalationLevel: ['', Validators.required],
-      State: ['', Validators.required]
+      notification_type_id: ['', Validators.required],
+      escalation_level_id: ['', Validators.required],
+      state_id: ['', Validators.required],
+      system_recipient_id: ['', Validators.required]
     });
   }
   addEscalations() {
@@ -106,7 +108,7 @@ export class SystemRecipientUpdateComponent implements OnInit {
     return this.updateForm.get('escalations') as FormArray;
   }
   patchEscalationValues() {
-    this.escalationsArray.patchValue(this.systemRecipient.escalationLevels);
+    this.escalationsArray.patchValue(this.data.escalationLevels);
   }
   get f() { return this.updateForm.controls; }
   onSubmit() {
@@ -116,15 +118,18 @@ export class SystemRecipientUpdateComponent implements OnInit {
     }
   }
   updateRecipient() {
-    this.systemRecipient = this.updateForm.value;
-    this.systemRecipient.systemRecipientId = this.activatedRoute.snapshot.params.id;
-    this.systemRecipientService.updateItem(this.systemRecipient).subscribe(response => {
-      if (response.code === '800.200.001') {
-        this.toastr.success( response.message);
-        this.location.back();
-      } else {
-        this.toastr.error(response.message);
+    // this.params = this.updateForm.value;
+    console.log(this.updateForm.value);
+    this.systemRecipientService.updateItem<SystemRecipientResponse>(this.updateForm.value).subscribe(response => {
+      console.log(response);
+      if (response.ok) {
+        if (response.body.code === '800.200.001') {
+          this.toastr.success( response.body.message);
+          this.location.back();
+        } else {
+          this.toastr.error(response.body.message);
       }
+    }
   });
 }
 }

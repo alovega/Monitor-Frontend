@@ -8,16 +8,11 @@
 <hr>
 <mdb-card>
 <!-- Default form contact -->
-<form [formGroup]="systemRecipientForm" class="text-center border  p-5" (ngSubmit) = "onSubmit()">
+<form [formGroup]="systemRecipientForm" class="text-center border  p-5" *ngIf="isdataReady" (ngSubmit) = "onSubmit()">
   <div class="row">
     <div class="col-6">
       <!-- Recipient -->
       <label for="recipient">Recipient</label>
-      <!-- <select id=recipient class="browser-default custom-select form-control mb-4" formControlName="Recipient">
-        <option *ngFor="let recipient of recipients; let i = index" [value]="recipient.id">
-              {{recipient.name}}
-        </option>
-      </select> -->
       <div *ngIf="recipients?.length">
           <ng-select2 style="width:100%;" class=" custom-select-dropdown" formControlName="Recipient" [data]="recipients">
           </ng-select2>
