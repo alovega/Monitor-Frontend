@@ -48,7 +48,8 @@
     <div class="update-history-header">
       Add new update
     </div>
-    <mdb-card class="grey lighten-5 update-form">
+    <hm-loader *ngIf="!lookupsReady"></hm-loader>
+    <mdb-card class="grey lighten-5 update-form" *ngIf="lookupsReady">
       <form [formGroup]="updateIncidentForm" (ngSubmit)="onSubmit()">
         <div class="row">
           <div class="col">
@@ -74,15 +75,12 @@
 
           <div class="col form-group mb-4">
             <label class="form-label" for="">Priority Level</label>
-            <select formControlName="priority_level"
-              [ngClass]="{ 'is-invalid': submitted && updateIncidentForm.controls.priority_level.errors }"
-              class="browser-default custom-select grey lighten-5">
-              <option selected value="1">Level 1</option>
-              <option value="2">Level 2</option>
-              <option value="3">Level 3</option>
-              <option value="4">Level 4</option>
-              <option value="5">Level 5</option>
-            </select>
+            <div *ngIf="priorityLevels?.length">
+              <ng-select2 style="width:100%;" formControlName="state"
+                [ngClass]="{ 'is-invalid': submitted && updateIncidentForm.controls[priority_level].errors}"
+                class="custom-select-dropdown" [data]="priorityLevels">
+              </ng-select2>
+            </div>
           </div>
 
           <div class="col mb-4">

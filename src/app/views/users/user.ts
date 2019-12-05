@@ -1,4 +1,5 @@
 export class User {
+    id: string;
     username: string;
     first_name: string;
     last_name: string;
@@ -8,7 +9,6 @@ export class User {
     is_staff: string;
     last_login: string;
     password: string;
-    id: number;
     date_joined: string;
 }
 

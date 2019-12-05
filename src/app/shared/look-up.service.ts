@@ -1,12 +1,9 @@
 import { Injectable } from '@angular/core';
 import {  throwError } from 'rxjs';
-import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { catchError, map, retry, tap} from 'rxjs/operators';
-
-import { environment } from '../../environments/environment';
-import { System } from './models/system';
-
+import { HttpWrapperService } from './helpers/http-wrapper.service';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +14,11 @@ export class LookUpService {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private httpWrapper: HttpWrapperService) { }
+
+  getLookups<T>(): Observable<HttpResponse<T>> {
+    return this.httpWrapper.post<T>('get_lookup/');
+  }
 
   // Handle API errors
   handleError(error: HttpErrorResponse) {
@@ -41,7 +42,6 @@ export class LookUpService {
     );
   }
   public getStates() {
-
     return this.http.get<any>(this.Url).pipe(
       map(response => {
         console.log('Fetching states..');
