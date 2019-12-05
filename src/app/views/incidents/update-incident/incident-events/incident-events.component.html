@@ -33,7 +33,7 @@
                 <div class="col-md-4 info-group">
                     <div class="info-label">Event Type</div>
                     <div class="info-content">
-                      {{event.eventtype}}                 
+                      {{event.event_type_name}}                 
                     </div>
                 </div>
                 <div class="col-md-4 info-group">
@@ -56,7 +56,7 @@
                 <div class="col-md-6 info-group">
                     <div class="info-label">Interface</div>
                     <div class="info-content">
-                      <span *ngIf="event.interface; else noInterface">{{event.interface}}</span>
+                      <span *ngIf="event.interface_name; else noInterface">{{event.interface_name}}</span>
                       <ng-template #noInterface>N/A</ng-template>
                       </div>
                 </div>
