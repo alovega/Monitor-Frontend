@@ -72,6 +72,25 @@
         (page)="pageCallback($event)"
         (sort)="sortCallback($event)"
         [loadingIndicator]="load">
+
+          <ngx-datatable-footer *ngIf="true">
+            <ng-template
+              ngx-datatable-footer-template
+              let-rowCount="rowCount"
+              let-pageSize="pageSize"
+              let-selectedCount="selectedCount"
+              let-curPage="curPage"
+              let-offset="offset">
+              <div style="padding: 5px 10px">
+                <div><strong>{{message}}</strong></div>
+              </div>
+              <datatable-pager  
+              [pagerLeftArrowIcon]="'datatable-icon-left'" [pagerRightArrowIcon]="'datatable-icon-right'" [pagerPreviousIcon]="'datatable-icon-prev'"
+              [pagerNextIcon]="'datatable-icon-skip'" [page]="curPage" [size]="pageSize" [count]="rowCount" [hidden]="!((rowCount / pageSize) > 1)"
+              (change)="table.onFooterPage($event)">
+              </datatable-pager>
+            </ng-template>
+          </ngx-datatable-footer>
         </ngx-datatable>
         <ng-template #hdrTpl let-column="column">{{column.name}}</ng-template>
           <ng-template #realtimeIncidents let-row="row" let-value="value">    
@@ -95,24 +114,6 @@
               </div>
             </div>
         </ng-template>
-        <ngx-datatable-footer *ngIf="true">
-          <ng-template
-            ngx-datatable-footer-template
-            let-rowCount="rowCount"
-            let-pageSize="pageSize"
-            let-selectedCount="selectedCount"
-            let-curPage="curPage"
-            let-offset="offset">
-            <div style="padding: 5px 10px">
-              <div><strong>{{message}}</strong></div>
-            </div>
-            <datatable-pager  
-            [pagerLeftArrowIcon]="'datatable-icon-left'" [pagerRightArrowIcon]="'datatable-icon-right'" [pagerPreviousIcon]="'datatable-icon-prev'"
-            [pagerNextIcon]="'datatable-icon-skip'" [page]="curPage" [size]="pageSize" [count]="rowCount" [hidden]="!((rowCount / pageSize) > 1)"
-            (change)="table.onFooterPage($event)">
-            </datatable-pager>
-          </ng-template>
-          </ngx-datatable-footer>  
       </div>
   </div>
 </div>
