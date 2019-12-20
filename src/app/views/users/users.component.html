@@ -27,10 +27,10 @@
         {{value | date:'MM/dd/yyyy  hh:mm:ss a'}}
       </ng-template>
       <ng-template #buttonsTemplate let-row="row" let-value="value">
-          <a routerLink="/dashboard/users/update/{{row.id}}" class="mr-2" routerLinkActive="active">
+          <a ngbTooltip="Update user" placement="bottom" routerLink="/dashboard/users/update/{{row.id}}" class="mr-2" routerLinkActive="active">
             <span mdbIcon class="fas fa-edit text-success"></span>
           </a>        
-          <a (click)="deleteUser(row.id)">
+          <a ngbTooltip="Delete user" placement="bottom" (click)="deleteUser(row.id)">
               <span mdbIcon class="fas fa-trash-alt mr-2 text-danger" ></span>
           </a>
       </ng-template>     

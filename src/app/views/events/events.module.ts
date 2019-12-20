@@ -7,7 +7,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { EventsRoutingModule } from './events-routing.module';
 import { EventsComponent } from './events.component';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { from } from 'rxjs';
 
 
 @NgModule({

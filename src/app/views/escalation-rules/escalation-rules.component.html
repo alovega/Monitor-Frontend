@@ -27,11 +27,11 @@
         {{value | date:'MM/dd/yyyy  hh:mm:ss a'}}
       </ng-template>
       <ng-template #buttonsTemplate let-row="row" let-value="value">
-        <a routerLink="/dashboard/rules/edit/{{row.id}}" class="mr-2" routerLinkActive="active">
-          <span mdbIcon class="fas fa-edit text-success"></span>  
+        <a ngbTooltip="Update rule" placement="bottom" routerLink="/dashboard/rules/edit/{{row.id}}" class="mr-2" routerLinkActive="active">
+          <i mdbIcon class="fas fa-edit text-success"></i>  
         </a>
         <a>
-          <span mdbIcon class="fas fa-trash-alt mr-2 text-danger" (click)="removeRule(row.id)"></span>          
+          <span ngbTooltip="Delete rule" placement="bottom" mdbIcon class="fas fa-trash-alt mr-2 text-danger" (click)="removeRule(row.id)"></span>          
         </a>
       </ng-template>
   </div>

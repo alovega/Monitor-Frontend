@@ -9,7 +9,7 @@
         {{value | date:'MM/dd/yyyy  hh:mm:ss a'}}
       </ng-template>
       <ng-template #buttonsTemplate let-row="row" let-value="value">
-          <a (click)="showEventInfo(row.id)"><i class="fas fa-info-circle text-info"></i></a>
+          <a ngbTooltip="Event Details" placement="bottom" (click)="showEventInfo(row.id)"><i class="fas fa-info-circle text-info"></i></a>
       </ng-template>
   </div>
 </div>
