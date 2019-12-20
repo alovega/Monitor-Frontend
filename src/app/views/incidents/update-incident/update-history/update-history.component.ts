@@ -1,16 +1,21 @@
 import { Component, OnInit } from '@angular/core';
 import {  FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Location } from '@angular/common';
+import { forkJoin  } from 'rxjs';
 import Swal from 'sweetalert2';
+import { Select2OptionData } from 'ng-select2';
 
 import { IncidentService } from '../../incident.service';
 import { Incident, IncidentResponse } from '../../incident';
 import { SystemService } from 'src/app/shared/system.service';
 import { LookUpService } from 'src/app/shared/look-up.service';
 import { ToastrService } from 'ngx-toastr';
-import { DropdownItem } from 'src/app/layout/top-nav-bar/dropdown-item';
 import { System } from 'src/app/shared/models/system';
+import { User } from 'src/app/views/users/user';
+import { EscalationLevel } from 'src/app/shared/models/escalation-level';
+import { State } from 'src/app/shared/models/state';
+import { HttpResponse } from '@angular/common/http';
+import { LookupDataResponse, LookupData } from 'src/app/shared/models/lookup-data';
 
 @Component({
   selector: 'hm-update-history',
@@ -23,11 +28,13 @@ export class UpdateHistoryComponent implements OnInit {
   incident: Incident;
   incidentId: string;
   currentSystem: System;
-  users: DropdownItem[];
-  escalationLevels: DropdownItem[];
+  users: Select2OptionData[];
+  escalationLevels: Select2OptionData[];
   loading = true;
-  realtimeStates: DropdownItem[];
-  scheduledStates: DropdownItem[];
+  lookupsReady = false;
+  realtimeStates: Select2OptionData[];
+  scheduledStates: Select2OptionData[];
+  priorityLevels: Select2OptionData[];
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,
@@ -55,19 +62,29 @@ export class UpdateHistoryComponent implements OnInit {
     if (this.currentSystem) {
       this.showIncident();
     }
-    this.lookupService.getUsers().subscribe(
-      (res) => this.users = res.map(i => ({id: i.id, text: i.username}))
-    );
-    this.lookupService.getEscalationLevel().subscribe(
-      (res) => this.escalationLevels = res.map(i => ({id: i.id, text: i.name}))
-    );
-    this.lookupService.getRealtimeIncidentStates().subscribe(
-      (res) => this.realtimeStates = res.map(i => ({id: i.id, text: i.name}))
-    );
-    this.lookupService.getScheduledIncidentStates().subscribe(
-      (res) => this.scheduledStates = res.map(i => ({id: i.id, text: i.name}))
-    );
-    this.showIncident();
+    this.priorityLevels = [
+      {id: '1', text: 'Priority 1'},
+      {id: '2', text: 'Priority 2'},
+      {id: '3', text: 'Priority 3'},
+      {id: '4', text: 'Priority 4'},
+      {id: '5', text: 'Priority 5'}
+    ];
+    this.lookupService.getLookups<LookupDataResponse>()
+    .subscribe(response => {
+      if (response.ok) {
+        if (response.body.code === '800.200.001') {
+          const lookupData: LookupData = response.body.data;
+          this.users = lookupData.users.map((i: User) => ({id: i.id, text: i.username}));
+          this.escalationLevels = lookupData.escalation_levels.map((i: EscalationLevel) => ({id: i.id, text: i.name}));
+          this.realtimeStates = lookupData.realtime_incident_states.map((i: State) => ({id: i.id, text: i.name}));
+          this.scheduledStates = lookupData.scheduled_incident_states.map((i: State) => ({id: i.id, text: i.name}));
+        } else {}
+      } else {
+        // TODO: Add error handling
+      }
+      this.showIncident();
+      this.lookupsReady = true;
+    });
   }
 
   public showIncident(): void {
@@ -79,7 +96,7 @@ export class UpdateHistoryComponent implements OnInit {
           console.log(this.incident);
           let escalationLevel = '';
           let userId = '';
-          let incidentState: string = '';
+          let incidentState = '';
           if (this.incident.incident_updates.length) {
             escalationLevel = this.incident.incident_updates[0].escalation_level_id;
             incidentState = this.incident.incident_updates[0].state_id;

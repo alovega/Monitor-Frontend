@@ -2,12 +2,15 @@ import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
+import { forkJoin } from 'rxjs';
 import { System, SystemResponse } from '../../shared/models/system';
 import Swal from 'sweetalert2';
 
 import { SystemService } from '../../shared/system.service';
 import { LookUpService } from 'src/app/shared/look-up.service';
 import { ToastrService } from 'ngx-toastr';
+import { DropdownItem } from 'src/app/layout/top-nav-bar/dropdown-item';
+import { User } from '../users/user';
 
 @Component({
   selector: 'hm-edit-system',
@@ -16,20 +19,15 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class EditSystemComponent implements OnInit {
   editSystemForm: FormGroup;
-  currentSystemId: any;
-  currentSystem: any;
-  @Input() name;
-  states: any;
+  currentSystem: System;
   system: System;
   submitted = false;
-  users: any;
+  users: DropdownItem[];
 
   constructor(
     private formBuilder: FormBuilder,
     private systemService: SystemService,
     private lookupService: LookUpService,
-    private location: Location,
-    private activatedRoute: ActivatedRoute,
     private router: Router,
     private toastr: ToastrService
   ) {
@@ -45,16 +43,9 @@ export class EditSystemComponent implements OnInit {
 
   ngOnInit() {
     this.currentSystem = this.systemService.getCurrentSystem();
-    this.currentSystemId = this.currentSystem.id;
-
-    this.lookupService.getStates().subscribe(
-      (data) => {
-        this.states = data;
-      });
-
     this.lookupService.getUsers().subscribe(
       (data) => {
-        this.users = data;
+        this.users = data.map((user: User) => ({id: user.id, text: user.username}));
     });
 
     this.editSystemForm.patchValue({
