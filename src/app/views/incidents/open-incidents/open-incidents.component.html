@@ -1,46 +1,4 @@
 <div class="full-page">
-  <!-- <div [ngClass]="{'d-none': !loading}">
-    <hm-loader></hm-loader>
-  </div>  -->
-<!-- <div *ngIf="incidents?.length; else noIncidents">
-    <a *ngFor="let incident of incidents" routerLink="/dashboard/incidents/update/{{incident.id}}" routerLinkActive="active">
-        <mdb-card class="open-incident mb-4">
-            <mdb-card-body>
-            <a routerLink="/dashboard/incidents/update/{{incident.incident_id}}" routerLinkActive="active" class="update-incident-button float-right">
-                <button mdbBtn mdbWavesEffect color="info" size="sm">Update</button>
-            </a>
-            <h5 class="open-incident-title">{{ incident.name }}</h5>
-            <div class="incident-info">
-              <span *ngIf="incident.incident_updates.length; else noUpdates">
-                  <span *ngFor="let update of incident.incident_updates; let i=index">
-                    <span *ngIf="i<1" class="incident-status" color="info">{{ update.state_name }}</span>
-                    <div *ngIf="i<1" class="last-update-time"><small>Last updated on: {{ incident.date_modified | date:'MMMM d, y' }} at {{ incident.date_modified | date:'h:mm:ss a' }}</small></div>
-                  </span> 
-              </span>               
-              <ng-template #noUpdates>
-                <span class="incident-status" color="info">
-                    {{ incident.state_name }}
-                </span>
-                <div class="last-update-time"><small>Last updated on: {{ incident.date_modified | date:'MM/dd/yyyy   hh:mm:ss a'}}</small></div>
-              </ng-template>
-            </div>
-              <div class="affected-systems">
-                  <span class="affected-systems-title"><small>Affected System : </small></span> 
-                    <div class="system">
-                      {{ incident.system_name }} 
-                      <mdb-icon fas icon="check-circle" class="green-text pr-3"></mdb-icon>
-                </div>
-              </div>
-              <div class="affected-systems" *ngIf="incident.incident_updates">
-                  <span *ngFor="let update of incident.incident_updates; let i = index">
-                      <span *ngIf="update.username && i<1" class=""><small class="affected-systems-title">Assigned User : </small> {{update.username}}</span>
-                    </span>
-              </div>
-            </mdb-card-body>
-        </mdb-card>
-    </a>
-</div> -->
-
 <div class="incidents open">
     <div id="table-header">
         <div class="pagination">
@@ -75,6 +33,24 @@
   (page)="pageCallback($event)"
   (sort)="sortCallback($event)"
   [loadingIndicator]="load">
+
+  <ngx-datatable-footer *ngIf="true">
+      <ng-template
+        ngx-datatable-footer-template
+        let-rowCount="rowCount"
+        let-pageSize="pageSize"
+        let-selectedCount="selectedCount"
+        let-curPage="curPage"
+        let-offset="offset">
+        <div style="padding: 5px 10px">
+          <div><strong>{{message}}</strong></div>
+        </div>
+        <datatable-pager  [pagerLeftArrowIcon]="'datatable-icon-left'" [pagerRightArrowIcon]="'datatable-icon-right'" [pagerPreviousIcon]="'datatable-icon-prev'"
+        [pagerNextIcon]="'datatable-icon-skip'" [page]="curPage" [size]="pageSize" [count]="rowCount" [hidden]="!((rowCount / pageSize) > 1)"
+        (change)="table.onFooterPage($event)">
+        </datatable-pager>
+      </ng-template>
+    </ngx-datatable-footer>
   </ngx-datatable>
   <ng-template #hdrTpl let-column="column">{{column.name}}</ng-template>
   <ng-template #openIncidents let-row="row" let-value="value">
@@ -115,25 +91,9 @@
       </mdb-card>
     </a>
   </ng-template>
-  <ngx-datatable-footer *ngIf="true">
-    <ng-template
-      ngx-datatable-footer-template
-      let-rowCount="rowCount"
-      let-pageSize="pageSize"
-      let-selectedCount="selectedCount"
-      let-curPage="curPage"
-      let-offset="offset">
-      <div style="padding: 5px 10px">
-        <div><strong>{{message}}</strong></div>
-      </div>
-      <datatable-pager  
-      [pagerLeftArrowIcon]="'datatable-icon-left'" [pagerRightArrowIcon]="'datatable-icon-right'" [pagerPreviousIcon]="'datatable-icon-prev'"
-      [pagerNextIcon]="'datatable-icon-skip'" [page]="curPage" [size]="pageSize" [count]="rowCount" [hidden]="!((rowCount / pageSize) > 1)"
-      (change)="table.onFooterPage($event)">
-      </datatable-pager>
-    </ng-template>
-    </ngx-datatable-footer>  
 </div>
+
+<!-- <div>Text</div> -->
 
 
 <!-- <div class="row wow animated fadeIn" data-wow-delay="0.1s">
