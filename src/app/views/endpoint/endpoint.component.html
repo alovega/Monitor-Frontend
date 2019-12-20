@@ -13,7 +13,8 @@
   {{value | date:'MM/dd/yyyy'}}
 </ng-template>
 <ng-template #buttonsTemplate let-row="row" let-value="value">
-    <a class="fas fa-edit text-success" routerLinkActive="active"
-      routerLink="/dashboard/endpoints/endpoint-update/{{row.Id}}"></a>
-    <a class="fas fa-trash-alt mr-2 text-danger" (click)="delete(row.id)"></a>
+    <a ngbTooltip="Update endpoint" placement="bottom" class="fas fa-edit text-success" routerLinkActive="active"
+      routerLink="/dashboard/endpoints/endpoint-update/{{row.Id}}">
+    </a>
+    <a ngbTooltip="Delete endpoint" placement="bottom" class="fas fa-trash-alt mr-2 text-danger" (click)="delete(row.id)"></a>
 </ng-template>

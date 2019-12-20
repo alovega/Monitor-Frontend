@@ -16,7 +16,7 @@
   {{value | date:'MM/dd/yyyy'}}
 </ng-template>
 <ng-template #buttonsTemplate let-row="row" let-value="value">
-    <a class="fas fa-edit text-success" routerLinkActive="active"
+    <a ngbTooltip="Update recipient" placement="bottom" class="fas fa-edit text-success" routerLinkActive="active"
       routerLink="/dashboard/recipients/recipient-update/{{row.recipientId}}"></a>
-    <a class="fas fa-trash-alt mr-2 text-danger" (click)="delete(row.recipientId)"></a>
+    <a ngbTooltip="Delete recipient" placement="bottom" class="fas fa-trash-alt mr-2 text-danger" (click)="delete(row.recipientId)"></a>
 </ng-template>
