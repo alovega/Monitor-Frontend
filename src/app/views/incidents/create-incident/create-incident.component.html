@@ -15,14 +15,12 @@
       <div class="new-incident">
         <mdb-card>
           <form [formGroup]="realtimeIncidentForm" (ngSubmit)="onSubmitRealtime()" class="text-center">
-
             <div class="form-group row">
               <div class="col-md-6 mb-3">
                 <!-- Name -->
                 <label class="form-label">Incident Name</label>
                 <input [ngClass]="{ 'is-invalid': submitted && realtimeIncidentForm.controls.name.errors }" type="text" 
                   id="incidentName" formControlName="name" class="grey lighten-5 form-control" placeholder="Incident name">
-
                 <!-- Incident Name Validation errors -->
                 <div *ngIf="realtimeIncidentForm.controls['name'].invalid && (realtimeIncidentForm.controls['name'].dirty || realtimeIncidentForm.controls['name'].touched)" class="invalid-feedback">
                     <div *ngIf="realtimeIncidentForm.controls['name'].errors.required">Incident name is required</div>
@@ -47,14 +45,12 @@
             <div class="form-group row">
                 <div class="col-md-6 mb-3">
                     <label class="form-label" for="">Priority Level</label>
-                    <select formControlName="priority_level" [ngClass]="{ 'is-invalid': submitted && realtimeIncidentForm.controls['priority_level'].errors }" 
-                    class="grey lighten-5 browser-default custom-select">
-                      <option selected value="1">Level 1</option>
-                      <option value="2">Level 2</option>
-                      <option value="3">Level 3</option>
-                      <option value="4">Level 4</option>
-                      <option value="5">Level 5</option>
-                    </select>
+                    <div *ngIf="priorityLevels?.length">
+                      <ng-select2 style="width:100%;" formControlName="priority_level"
+                        [ngClass]="{ 'is-invalid': submitted && realtimeIncidentForm.controls['priority_level'].errors}"
+                        class="custom-select-dropdown" [data]="priorityLevels">
+                      </ng-select2>
+                    </div>
                     <!-- Priority level validation errors -->
                     <div *ngIf="realtimeIncidentForm.controls['priority_level'].invalid && (realtimeIncidentForm.controls['priority_level'].dirty || realtimeIncidentForm.controls['priority_level'].touched)" class="invalid-feedback">
                         <div *ngIf="realtimeIncidentForm.controls['priority_level'].errors.required">Priority level is required</div>
@@ -130,15 +126,12 @@
 
               <div class="col-md-6 mb-3">
                   <label class="form-label" for="">Priority Level</label>
-                  <select formControlName="priority_level" [ngClass]="{ 'is-invalid': submitted && scheduledMaintenanceForm.controls.priority_level.errors }" 
-                  class="grey lighten-5 browser-default custom-select">
-                    <option selected value="1">Level 1</option>
-                    <option value="2">Level 2</option>
-                    <option value="3">Level 3</option>
-                    <option value="4">Level 4</option>
-                    <option value="5">Level 5</option>
-                  </select>
-
+                  <div *ngIf="priorityLevels?.length">
+                    <ng-select2 style="width:100%;" formControlName="priority_level"
+                      [ngClass]="{ 'is-invalid': submitted && scheduledMaintenanceForm.controls['priority_level'].errors}"
+                      class="custom-select-dropdown" [data]="priorityLevels">
+                    </ng-select2>
+                  </div>
                   <div *ngIf="scheduledMaintenanceForm.controls['priority_level'].invalid && (scheduledMaintenanceForm.controls['priority_level'].dirty || scheduledMaintenanceForm.controls['priority_level'].touched)" class="invalid-feedback">
                       <div *ngIf="scheduledMaintenanceForm.controls['priority_level'].errors.required">
                           Priority level is required
@@ -244,7 +237,7 @@
 
             <!-- Create button -->
             <div class="create-button">
-                <button [disabled]="scheduledMaintenanceForm.invalid" type="submit" mdbBtn class="btn-sm blue-gradient lowercase-btn text-white float-right">Schedule</button>
+                <button type="submit" [disabled]="scheduledMaintenanceForm.invalid" mdbBtn class="btn-sm blue-gradient lowercase-btn text-white float-right">Schedule</button>
             </div>
           </form>
         </div>
