@@ -116,7 +116,6 @@ export class SystemRecipientUpdateComponent implements OnInit {
   }
   updateRecipient() {
     this.systemRecipientService.updateItem<SystemRecipientResponse>(this.updateForm.value).subscribe(response => {
-      console.log(response);
       if (response.ok) {
         if (response.body.code === '800.200.001') {
           this.toastr.success( response.body.message);

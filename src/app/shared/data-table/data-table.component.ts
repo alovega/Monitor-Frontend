@@ -1,7 +1,7 @@
 import { Component, OnInit, ChangeDetectionStrategy, Input, TemplateRef,
    ViewChild, AfterViewInit, ElementRef, ChangeDetectorRef } from '@angular/core';
 import { ColumnMode} from '@swimlane/ngx-datatable';
-import { BehaviorSubject, fromEvent, of } from 'rxjs';
+import { BehaviorSubject, fromEvent, of, merge } from 'rxjs';
 import { DataTableService} from './data-table.service';
 import { Page, TableResponse } from './model/page';
 import { debounceTime, distinctUntilChanged, tap, catchError, finalize } from 'rxjs/operators';
@@ -48,7 +48,7 @@ export class DataTableComponent implements OnInit, AfterViewInit {
   }
   ngAfterViewInit() {
     fromEvent(this.input.nativeElement, 'keyup').pipe(
-      debounceTime(150),
+      debounceTime(800),
       distinctUntilChanged(),
       tap(() => {
         this.updateFilter();

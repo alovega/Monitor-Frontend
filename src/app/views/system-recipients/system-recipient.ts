@@ -1,4 +1,3 @@
-import { EscalationLevel } from 'src/app/shared/models/escalation-level';
 
 export class SystemRecipient {
     escalationLevels: [];

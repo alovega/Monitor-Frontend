@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable} from 'rxjs';
-import { HttpClient, HttpResponse } from '@angular/common/http';
-import { LookUpService } from 'src/app/shared/look-up.service';
+import { HttpResponse } from '@angular/common/http';
 import { HttpWrapperService } from 'src/app/shared/helpers/http-wrapper.service';
 
 @Injectable({
