@@ -39,10 +39,15 @@
         <div class="form-group mb-4 row">
             <div class="col-md-6">
                 <label class="form-label">Admin</label>
-                <select formControlName="admin" [ngClass]="{ 'is-invalid': submitted && editSystemForm.controls['admin'].errors}"
+                <div *ngIf="users?.length">
+                  <ng-select2 style="width:100%;" formControlName="admin" [ngClass]="{ 'is-invalid': submitted && editSystemForm.controls['admin'].errors}"
+                  class="custom-select-dropdown" [data]="users" > 
+                  </ng-select2>
+                </div>                
+                <!-- <select formControlName="admin" [ngClass]="{ 'is-invalid': submitted && editSystemForm.controls['admin'].errors}"
                 class="grey lighten-5 browser-default custom-select form-control">
                   <option *ngFor="let user of users" value="{{user.id}}">{{user.username}}</option>
-                </select>
+                </select> -->
                 <!-- Incident status validation errors -->
                 <div *ngIf="editSystemForm.controls['admin'].invalid && (editSystemForm.controls['admin'].dirty || editSystemForm.controls['admin'].touched)" class="invalid-feedback">
                     <div *ngIf="editSystemForm.controls['admin'].errors.required">System admin is required</div>

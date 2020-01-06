@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { Incident, IncidentResponse } from '../incident';
 import { IncidentService } from '../incident.service';
+import { Select2OptionData } from 'ng-select2';
 import Swal from 'sweetalert2';
 
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
@@ -10,6 +11,10 @@ import { SystemService } from 'src/app/shared/system.service';
 import { LookUpService } from 'src/app/shared/look-up.service';
 import { ToastrService } from 'ngx-toastr';
 import { DropdownItem } from 'src/app/layout/top-nav-bar/dropdown-item';
+import { System } from 'src/app/shared/models/system';
+import { LookupData, LookupDataResponse } from 'src/app/shared/models/lookup-data';
+import { State } from 'src/app/shared/models/state';
+import { EscalationLevel } from 'src/app/shared/models/escalation-level';
 // import { EndpointService } from '../../endpoint/endpoint.service';
 
 @Component({
@@ -22,19 +27,16 @@ export class CreateIncidentComponent implements OnInit {
   scheduledMaintenanceForm: FormGroup;
   affectedEndpoints: FormGroup;
   submitted = false;
-  datePicker: any;
-  timePicker: any;
   realtimeUrl: string;
   maintenanceUrl: string;
-  systemId: string;
-  currentSystem: any;
+  currentSystem: System;
   incident: Incident;
-  escalationLevels: DropdownItem[];
-  realtimeStatuses: DropdownItem[];
-  scheduledStates: DropdownItem[];
+  priorityLevels: Select2OptionData[];
+  escalationLevels: Select2OptionData[];
+  realtimeStatuses: Select2OptionData[];
+  scheduledStates: Select2OptionData[];
   constructor(
     public router: Router,
-    private activatedRoute: ActivatedRoute,
     private location: Location,
     private incidentService: IncidentService,
     private formBuilder: FormBuilder,
@@ -55,10 +57,10 @@ export class CreateIncidentComponent implements OnInit {
       this.scheduledMaintenanceForm = this.formBuilder.group ({
         name: ['', Validators.required],
         state: ['', Validators.required],
-        startDate: [this.datePicker, Validators.required],
-        endDate: [this.datePicker, Validators.required],
-        startTime: [this.timePicker, Validators.required],
-        endTime: [this.timePicker, Validators.required],
+        startDate: ['', Validators.required],
+        endDate: ['', Validators.required],
+        startTime: ['', Validators.required],
+        endTime: ['', Validators.required],
         description: ['', Validators.required],
         escalation_level: ['', Validators.required],
         priority_level: ['', Validators.required],
@@ -69,21 +71,27 @@ export class CreateIncidentComponent implements OnInit {
 
   ngOnInit() {
     this.currentSystem = this.systemService.getCurrentSystem();
-    this.systemId = this.currentSystem.id;
     this.realtimeUrl = '/dashboard/incidents/new/realtime';
     this.maintenanceUrl = '/dashboard/incidents/new/maintenance';
-    this.lookupService.getEscalationLevel().subscribe(
-      (res) => {
-        this.escalationLevels = res.map(level => ({id: level.id, text: level.name}));
+    this.priorityLevels = [
+      {id: '1', text: 'Priority 1'},
+      {id: '2', text: 'Priority 2'},
+      {id: '3', text: 'Priority 3'},
+      {id: '4', text: 'Priority 4'},
+      {id: '5', text: 'Priority 5'}
+    ];
+    this.lookupService.getLookups<LookupDataResponse>()
+    .subscribe(response => {
+      if (response.ok) {
+        if (response.body.code === '800.200.001') {
+          const lookupData: LookupData = response.body.data;
+          this.escalationLevels = lookupData.escalation_levels.map((i: EscalationLevel) => ({id: i.id, text: i.name}));
+          this.realtimeStatuses = lookupData.realtime_incident_states.map((i: State) => ({id: i.id, text: i.name}));
+          this.scheduledStates = lookupData.scheduled_incident_states.map((i: State) => ({id: i.id, text: i.name}));
+        } else {}
+      } else {
+        // TODO: Add error handling
       }
-    );
-    this.lookupService.getRealtimeIncidentStates().subscribe(
-      (res) => {
-        this.realtimeStatuses = res.map(level => ({id: level.id, text: level.name}));
-      });
-    this.lookupService.getScheduledIncidentStates().subscribe(
-      (res) => {
-        this.scheduledStates = res.map(level => ({id: level.id, text: level.name}));
     });
   }
 
@@ -126,6 +134,10 @@ export class CreateIncidentComponent implements OnInit {
     this.router.navigate(['dashboard/incidents']);
   }
 
+  get maintenanceForm() {
+    return this.scheduledMaintenanceForm.controls;
+  }
+
   onSubmitScheduled() {
     this.submitted = true;
     if (this.scheduledMaintenanceForm.invalid) {
@@ -133,18 +145,18 @@ export class CreateIncidentComponent implements OnInit {
     }
     this.scheduledMaintenanceForm.patchValue({
       scheduled_for: new Date(
-        this.scheduledMaintenanceForm.controls.startDate.value.year,
-        this.scheduledMaintenanceForm.controls.startDate.value.month - 1,
-        this.scheduledMaintenanceForm.controls.startDate.value.day,
-        this.scheduledMaintenanceForm.controls.startTime.value.hour,
-        this.scheduledMaintenanceForm.controls.startTime.value.minute
+        this.maintenanceForm.startDate.value.year,
+        this.maintenanceForm.startDate.value.month - 1,
+        this.maintenanceForm.startDate.value.day,
+        this.maintenanceForm.startTime.value.hour,
+        this.maintenanceForm.startTime.value.minute
       ).toISOString(),
       scheduled_until: new Date(
-        this.scheduledMaintenanceForm.controls.endDate.value.year,
-        this.scheduledMaintenanceForm.controls.endDate.value.month - 1,
-        this.scheduledMaintenanceForm.controls.endDate.value.day,
-        this.scheduledMaintenanceForm.controls.endTime.value.hour,
-        this.scheduledMaintenanceForm.controls.endTime.value.minute
+        this.maintenanceForm.endDate.value.year,
+        this.maintenanceForm.endDate.value.month - 1,
+        this.maintenanceForm.endDate.value.day,
+        this.maintenanceForm.endTime.value.hour,
+        this.maintenanceForm.endTime.value.minute
       ).toISOString()
     });
 

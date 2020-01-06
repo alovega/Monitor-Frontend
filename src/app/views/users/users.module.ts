@@ -4,6 +4,7 @@ import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 import { UsersRoutingModule } from './users-routing.module';
@@ -20,6 +21,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
     UsersRoutingModule,
     MDBBootstrapModule.forRoot(),
     FormsModule,
+    NgbModule,
     ReactiveFormsModule,
     SharedModule,
     HttpClientModule,

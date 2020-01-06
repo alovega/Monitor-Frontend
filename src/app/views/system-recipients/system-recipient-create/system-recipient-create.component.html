@@ -59,7 +59,10 @@
                     Please Select a notification type.
                 </div>
             </div>
-            <a [ngClass]="{'display-none': escalationIndex === 0}" id="remove"><img src="../../../../assets/icons/remove.svg" alt="" width="24" height="24" (click)="deleteEscalations(escalationIndex)"></a>
+            <div class="action-icons">
+              <a [ngClass]="{disabled : escalationsArray.length >= escalationLevels.length}"  id="remove"><img src="../../../../assets/icons/add.svg" alt="" width="24" height="24" (click)="addEscalations()"></a>
+              <a [ngClass]="{'display-none': escalationIndex === 0}" id="remove"><img src="../../../../assets/icons/remove.svg" alt="" width="24" height="24" (click)="deleteEscalations(escalationIndex)"></a>
+            </div>
           </div>
         </div>
         </div>
@@ -67,9 +70,6 @@
   <!-- Send button -->
   <button mdbBtn type="submit" size="sm" class="btn float-right btn-primary waves-light"  mdbWavesEffect
   [disabled]="!systemRecipientForm.valid" (click)="addRecipient()">Save</button>
-  <!--Add escalations button-->
-  <button [ngClass]="{disabled : escalationsArray.length >= escalationLevels.length}" mdbBtn type="submit" size="sm" class="btn float-right btn-primary waves-light"  mdbWavesEffect
-   (click)="addEscalations()">Add escalation</button>
 
 </form>
   <!-- Default form contact -->

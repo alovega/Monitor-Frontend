@@ -104,7 +104,7 @@ export class OpenIncidentsComponent implements OnInit, AfterViewInit {
           this.rows = response.body.data.row;
           this.message = response.body.data.range;
         } else {
-
+          // TODO: Add error checks
         }
       }
       this.loadingSubject.next(false);

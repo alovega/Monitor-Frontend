@@ -41,6 +41,19 @@ button {
     bottom: 56px;
     left: 34px;
 }
+#add{
+    position: relative;
+    bottom: 56px;
+    left: 34px;
+}
+
+.action-icons{
+    position: relative;
+    left: 13px;
+}
+.disabled{
+    opacity: 0.5;
+}
 
 .display-none{
     display: none;

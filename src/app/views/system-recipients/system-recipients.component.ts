@@ -4,6 +4,7 @@ import { SystemRecipientService } from './system-recipient.service';
 import { SystemService } from 'src/app/shared/system.service';
 import { of } from 'rxjs';
 import {DataSource} from '../../shared/data-table/model/dataSource';
+import { SystemRecipientResponse } from './system-recipient';
 
 @Component({
   selector: 'hm-system-recipients-view',
@@ -49,9 +50,9 @@ export class SystemRecipientsComponent implements OnInit, AfterViewInit {
       cancelButtonText: 'No, keep the recipient'
     }).then((result) => {
       if (result.value) {
-        this.systemRecipientService.deleteItem(systemRecipientId).subscribe(
+        this.systemRecipientService.deleteItem<SystemRecipientResponse>(systemRecipientId).subscribe(
           response => {
-            if (response.code === '800.200.001') {
+            if (response.body.code === '800.200.001') {
               Swal.fire(
                 'Deleted!',
                 'This recipient has been deleted.',

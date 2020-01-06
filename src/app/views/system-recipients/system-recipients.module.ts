@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { NgSelect2Module } from 'ng-select2';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { SystemRecipientsRoutingModule } from './system-recipients-routing.module';
 import { SystemRecipientsComponent } from './system-recipients.component';
@@ -17,6 +18,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
     CommonModule,
     FormsModule,
     NgSelect2Module,
+    NgbModule,
     ReactiveFormsModule,
     SystemRecipientsRoutingModule,
     SharedModule,

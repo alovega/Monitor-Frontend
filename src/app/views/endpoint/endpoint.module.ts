@@ -2,6 +2,8 @@ import { NgModule, NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core
 import { CommonModule } from '@angular/common';
 import { MDBBootstrapModule, TableModule } from 'angular-bootstrap-md';
 import { NgSelect2Module } from 'ng-select2';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+
 
 import { EndpointRoutingModule } from './endpoint-routing.module';
 import { EndpointComponent } from './endpoint.component';
@@ -18,6 +20,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
     TableModule,
     FormsModule,
     NgSelect2Module,
+    NgbModule,
     ReactiveFormsModule,
     EndpointRoutingModule,
     MDBBootstrapModule.forRoot(),

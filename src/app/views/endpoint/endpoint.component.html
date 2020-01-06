@@ -17,4 +17,8 @@
     <a class="fas fa-edit text-success" routerLinkActive="active"
       routerLink="/dashboard/endpoints/endpoint-update/{{row.Id}}"></a>
     <a class="fas fa-trash-alt mr-2 text-danger" (click)="delete(row.Id)"></a>
+    <a ngbTooltip="Update endpoint" placement="bottom" class="fas fa-edit text-success mr-2" routerLinkActive="active"
+      routerLink="/dashboard/endpoints/endpoint-update/{{row.Id}}">
+    </a>
+    <a ngbTooltip="Delete endpoint" placement="bottom" class="fas fa-trash-alt text-danger" (click)="delete(row.id)"></a>
 </ng-template>

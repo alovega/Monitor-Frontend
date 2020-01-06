@@ -3,8 +3,7 @@ import {  throwError } from 'rxjs';
 import { HttpClient, HttpHeaders, HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { catchError, map, retry, tap} from 'rxjs/operators';
-import { HttpWrapperService } from '../shared/helpers/http-wrapper.service';
-
+import { HttpWrapperService } from './helpers/http-wrapper.service';
 
 @Injectable({
   providedIn: 'root'
