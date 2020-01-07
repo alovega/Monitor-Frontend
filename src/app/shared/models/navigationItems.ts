@@ -52,5 +52,10 @@ export class NavigationItems {
           iconName: 'notifications',
           routerLink: 'dashboard/notifications/email-notification'
         },
+        {
+          displayName: 'Setup-User',
+          iconName: 'add',
+          routerLink: 'dashboard/setup-user'
+        },
       ];
 }

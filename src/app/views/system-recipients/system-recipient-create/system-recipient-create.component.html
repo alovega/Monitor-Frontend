@@ -61,7 +61,7 @@
             </div>
             <div class="action-icons">
               <a [ngClass]="{disabled : escalationsArray.length >= escalationLevels.length}"  id="remove"><img src="../../../../assets/icons/add.svg" alt="" width="24" height="24" (click)="addEscalations()"></a>
-              <a [ngClass]="{'display-none': escalationIndex === 0}" id="remove"><img src="../../../../assets/icons/remove.svg" alt="" width="24" height="24" (click)="deleteEscalations(escalationIndex)"></a>
+              <a [ngClass]="{'disabled': escalationIndex === 0}" id="remove"><img src="../../../../assets/icons/remove.svg" alt="" width="24" height="24" (click)="deleteEscalations(escalationIndex)"></a>
             </div>
           </div>
         </div>

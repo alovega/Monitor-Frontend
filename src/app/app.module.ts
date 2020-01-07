@@ -20,6 +20,7 @@ import { AuthenticationService } from './shared/auth/authentication.service';
 import { ShowHidePasswordModule } from 'ngx-show-hide-password';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { DashboardLayoutModule } from './layouts/dashboard-layout/dashboard-layout.module';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -48,7 +49,7 @@ import { DashboardLayoutModule } from './layouts/dashboard-layout/dashboard-layo
       preventDuplicates: true,
     }),
     DashboardLayoutModule,
-    NgSelect2Module
+    NgSelect2Module,
   ],
   providers: [AuthenticationService, AuthGuardService],
   schemas: [NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA],

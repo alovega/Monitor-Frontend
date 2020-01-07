@@ -31,7 +31,7 @@ export class SystemRecipientCreateComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder, private systemRecipientService: SystemRecipientService, public location: Location,
-    public activatedRoute: ActivatedRoute, public router: Router, private toastr: ToastrService, 
+    public activatedRoute: ActivatedRoute, public router: Router, private toastr: ToastrService,
     private lookUpService: LookUpService) {
       this.systemRecipient = new SystemRecipient();
       const escalationLevels = this.lookUpService.getLookUpData<LookUpResponse>();
