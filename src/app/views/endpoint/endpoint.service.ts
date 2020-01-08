@@ -21,6 +21,7 @@ export class EndpointService {
     const url = 'delete_endpoint/';
     return this.httpWrapperService.post<T>(url, {endpoint_id});
   }
+  public getEndpoints<T>() {}
 
   // tslint:disable-next-line: variable-name
   public getItem<T>(endpoint_id): Observable<HttpResponse<T>> {

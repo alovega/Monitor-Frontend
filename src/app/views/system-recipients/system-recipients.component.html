@@ -16,10 +16,7 @@
   {{value | date:'MM/dd/yyyy  hh:mm:ss a'}}
 </ng-template>
 <ng-template #buttonsTemplate let-row="row" let-value="value">
-    <a class="fas fa-edit text-success" routerLinkActive="active"
-      routerLink="/dashboard/system-recipients/system-recipient-update/{{row.recipientId}}"></a>
-    <a class="fas fa-trash-alt mr-2 text-danger" (click)="delete(row.systemRecipientId)"></a>
-    <a ngbTooltip="Update system recipient" placement="bottom" class="fas fa-edit text-success mr-2" routerLinkActive="active"
-      routerLink="/dashboard/system-recipients/system-recipient-update/{{row.systemRecipientId}}"></a>
-    <a ngbTooltip="Delete system recipient" placement="bottom" class="fas fa-trash-alt text-danger" (click)="delete(row.systemRecipientId)"></a>
+  <a ngbTooltip="Update system recipient" placement="bottom" class="fas fa-edit text-success mr-2" routerLinkActive="active"
+    routerLink="/dashboard/system-recipients/system-recipient-update/{{row.recipientId}}"></a>
+  <a ngbTooltip="Delete system recipient" placement="bottom" class="fas fa-trash-alt text-danger" (click)="delete(row.systemRecipientId)"></a>
 </ng-template>
