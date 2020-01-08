@@ -5,6 +5,7 @@ import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgSelect2Module } from 'ng-select2';
+import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 
 import { SetupUserRoutingModule } from './setup-user-routing.module';
 import { SetupUserComponent } from './setup-user.component';
@@ -24,6 +25,7 @@ import { MatStepperModule } from '@angular/material';
     ReactiveFormsModule,
     MDBBootstrapModule.forRoot(),
     HttpClientModule,
+    SweetAlert2Module.forRoot(),
     SharedModule,
     MatStepperModule
   ],

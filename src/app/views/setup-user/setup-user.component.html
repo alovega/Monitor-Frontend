@@ -1,6 +1,6 @@
 
 <mat-horizontal-stepper [linear]= isLinear #stepper>
-  <mat-step [stepControl]="addUserForm" [editable]="isEditable">
+  <mat-step [stepControl]="addUserForm" [editable]="true">
       <ng-template matStepLabel>Fill out user details</ng-template>
       <form [formGroup]="addUserForm" class="text-center border row" style="padding: 3rem;">
         <div class="col-md-6 mb-4">
@@ -83,7 +83,7 @@
         <div class="col-md-12">
         <!-- Next button -->
           <button mdbBtn type="button" class="btn-sm  lowercase-btn text-white float-right" mdbWavesEffect
-          [disabled]="!addUserForm.valid" matStepperNext> Next</button>
+          [disabled]="!addUserForm.valid" (click)="createUser()" matStepperNext> Next</button>
         </div>
       </form>
   </mat-step>
@@ -95,7 +95,7 @@
                 <!-- Phone Number -->
                 <label>Phone Number</label>
                 <input type="text" id="defaultContactFormPhoneNumber" class="form-control mb-4" placeholder="+2547XX7XXXX"
-                [ngClass]="{ 'is-invalid': submitted && f.EnpointName.errors }" formControlName="PhoneNumber" 
+                [ngClass]="{ 'is-invalid': submitted && recipientsForm.errors }" formControlName="PhoneNumber" 
                   [(ngModel)]="data.phoneNumber" >
                   <div *ngIf="recipientsForm.controls['PhoneNumber'].invalid && (recipientsForm.controls['PhoneNumber'].dirty || recipientsForm.controls['PhoneNumber'].touched)" class="invalid-feedback">
                     <div *ngIf="recipientsForm.controls['PhoneNumber'].errors.required">

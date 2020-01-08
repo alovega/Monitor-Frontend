@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators, FormArray} from '@angular/forms';
 import { forkJoin } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
+import { UsersService } from '../users/users.service';
 import { User, UserResponse } from '../users/user';
 import { SystemRecipient, SystemRecipientResponse } from '../system-recipients/system-recipient';
 import { RecipientLookup } from '../recipient/model/recipient';
@@ -32,10 +34,15 @@ export class SetupUserComponent implements OnInit {
   notificationTypes: NotificationType[];
   recipients: RecipientLookup[];
   states: State[];
-  isLinear = true;
+  isLinear = false;
+  iscompleted = true;
   confirmPassword: any;
   isdataReady = false;
-  constructor(private formBuilder: FormBuilder,  private lookUpService: LookUpService) {
+  constructor(
+    private formBuilder: FormBuilder,
+    private lookUpService: LookUpService,
+    private usersService: UsersService,
+    private toastr: ToastrService) {
     const users = this.lookUpService.getLookUpData<LookUpResponse>();
     const states = this.lookUpService.getLookUpData<LookUpResponse>();
     forkJoin([users, states])
@@ -113,5 +120,27 @@ export class SetupUserComponent implements OnInit {
   }
   get escalationsArray() {
     return this.systemRecipientForm.get('escalations') as FormArray;
+  }
+  createUser() {
+    this.submitted = true;
+    if (this.addUserForm.invalid) {
+      return;
+    }
+    console.log(this.addUserForm.value);
+    // if (t)
+    this.usersService.createUser<UserResponse>(this.addUserForm.value)
+    .subscribe(response => {
+      console.log(response);
+      if (response.ok) {
+        if (response.body.code === '800.200.001') {
+          this.toastr.success('User created successfully', 'User creation success');
+          this.iscompleted = true;
+        } else {
+          this.toastr.error(response.body.message, 'User creation error');
+        }
+      } else {
+        // TODO: Add error checks
+      }
+    });
   }
 }
