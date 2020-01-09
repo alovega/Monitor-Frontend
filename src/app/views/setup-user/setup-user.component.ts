@@ -3,6 +3,8 @@ import {FormBuilder, FormGroup, Validators, FormArray} from '@angular/forms';
 import { forkJoin } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 import { UsersService } from '../users/users.service';
+import { RecipientService } from '../recipient/recipient.service';
+import {SystemRecipientService} from '../system-recipients/system-recipient.service';
 import { User, UserResponse } from '../users/user';
 import { SystemRecipient, SystemRecipientResponse } from '../system-recipients/system-recipient';
 import { RecipientLookup } from '../recipient/model/recipient';
@@ -13,6 +15,8 @@ import { State } from '../../shared/models/state';
 import { LookUpService } from 'src/app/shared/look-up.service';
 import { MustMatch } from '../../shared/must-match.validator';
 import { LookUpResponse } from 'src/app/shared/models/look-up-response';
+import { MatStepper } from '@angular/material';
+import { RecipientResponse } from '../recipient/model/recipient-response';
 @Component({
   selector: 'hm-setup-user',
   templateUrl: './setup-user.component.html',
@@ -34,7 +38,7 @@ export class SetupUserComponent implements OnInit {
   notificationTypes: NotificationType[];
   recipients: RecipientLookup[];
   states: State[];
-  isLinear = false;
+  isLinear = true;
   iscompleted = true;
   confirmPassword: any;
   isdataReady = false;
@@ -42,17 +46,16 @@ export class SetupUserComponent implements OnInit {
     private formBuilder: FormBuilder,
     private lookUpService: LookUpService,
     private usersService: UsersService,
+    private recipientService: RecipientService,
+    private systemRecipientService: SystemRecipientService,
     private toastr: ToastrService) {
     const users = this.lookUpService.getLookUpData<LookUpResponse>();
     const states = this.lookUpService.getLookUpData<LookUpResponse>();
-    forkJoin([users, states])
+    forkJoin([states])
       .subscribe(results => {
         console.log(results);
         if (results[0]) {
-          this.users = results[0].body.data.users.map((type: User) => ({id: type.id, text: type.username}));
-        }
-        if (results[1]) {
-          this.states = results[1].body.data.states.filter(state => state.name === 'Active' || state.name === 'Disabled')
+          this.states = results[0].body.data.states.filter(state => state.name === 'Active' || state.name === 'Disabled')
             .map((state: State) => ({id: state.id, text: state.name}));
         }
         this.isdataReady = true;
@@ -89,7 +92,8 @@ export class SetupUserComponent implements OnInit {
       lastname: [''],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(8)]],
-      confirmPassword: ['', Validators.required]
+      confirmPassword: ['', Validators.required],
+      x: ['', Validators.required]
     },
     {
       validator: MustMatch('password', 'confirmPassword')
@@ -98,10 +102,12 @@ export class SetupUserComponent implements OnInit {
     this.recipientsForm = this.formBuilder.group({
         userId: ['', Validators.required],
         PhoneNumber: ['', [Validators.required, Validators.pattern(phoneNumber)]],
-        stateId: ['', Validators.required]
+        stateId: ['', Validators.required],
+        x: ['', Validators.required]
     });
     this.systemRecipientForm = this.formBuilder.group({
       Recipient: ['', Validators.required],
+      x: ['', Validators.required],
       escalations: this.formBuilder.array([this.addEscalationGroup()])
     });
   }
@@ -121,22 +127,79 @@ export class SetupUserComponent implements OnInit {
   get escalationsArray() {
     return this.systemRecipientForm.get('escalations') as FormArray;
   }
-  createUser() {
+  createUser(stepper?: MatStepper) {
     this.submitted = true;
-    if (this.addUserForm.invalid) {
-      return;
-    }
     console.log(this.addUserForm.value);
-    // if (t)
     this.usersService.createUser<UserResponse>(this.addUserForm.value)
     .subscribe(response => {
       console.log(response);
       if (response.ok) {
         if (response.body.code === '800.200.001') {
           this.toastr.success('User created successfully', 'User creation success');
-          this.iscompleted = true;
+          if (stepper !== undefined) {
+            this.addUserForm.removeControl('x');
+            const users = this.lookUpService.getLookUpData<LookUpResponse>();
+            forkJoin([users]).subscribe(results => {
+              console.log(results);
+              if (results[0]) {
+                this.users = results[0].body.data.users.map((type: User) => ({id: type.id, text: type.username}));
+              }
+              this.isdataReady = true;
+            });
+            stepper.next();
+          }
         } else {
           this.toastr.error(response.body.message, 'User creation error');
+        }
+      } else {
+        // TODO: Add error checks
+      }
+    });
+  }
+  createRecipient(stepper?: MatStepper) {
+    this.submitted = true;
+    console.log(this.recipientsForm.value);
+    this.recipientService.addRecipient<RecipientResponse>(this.data)
+    .subscribe(response => {
+      console.log(response);
+      if (response.ok) {
+        if (response.body.code === '800.200.001') {
+          this.toastr.success('Recipient created successfully', 'Recipient creation success');
+          if (stepper !== undefined) {
+            this.recipientsForm.removeControl('x');
+            const recipients = this.lookUpService.getLookUpData<LookUpResponse>();
+            forkJoin([recipients]).subscribe(results => {
+              if (results[0]) {
+                this.recipients = results[0].body.data.recipients
+                .map((recipient: RecipientLookup) => ({id: recipient.id, text: recipient.userName}));
+              }
+              this.isdataReady = true;
+            });
+            stepper.next();
+          }
+        } else {
+          this.toastr.error(response.body.message, 'Recipient creation error');
+        }
+      } else {
+        // TODO: Add error checks
+      }
+    });
+  }
+  createSystemRecipient(stepper?: MatStepper) {
+    this.submitted = true;
+    console.log(this.systemRecipientForm.value);
+    this.systemRecipientService.addSystemRecipient<SystemRecipientResponse>(this.systemRecipientForm.value)
+    .subscribe(response => {
+      console.log(response);
+      if (response.ok) {
+        if (response.body.code === '800.200.001') {
+          this.toastr.success('System Recipient created successfully', 'System Recipient creation success');
+          if (stepper !== undefined) {
+            this.addUserForm.removeControl('x');
+            stepper.next();
+          }
+        } else {
+          this.toastr.error(response.body.message, 'System Recipient creation error');
         }
       } else {
         // TODO: Add error checks
