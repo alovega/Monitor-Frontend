@@ -17,6 +17,7 @@ import { MustMatch } from '../../shared/must-match.validator';
 import { LookUpResponse } from 'src/app/shared/models/look-up-response';
 import { MatStepper } from '@angular/material';
 import { RecipientResponse } from '../recipient/model/recipient-response';
+import { Router } from '@angular/router';
 @Component({
   selector: 'hm-setup-user',
   templateUrl: './setup-user.component.html',
@@ -46,6 +47,7 @@ export class SetupUserComponent implements OnInit {
     private formBuilder: FormBuilder,
     private lookUpService: LookUpService,
     private usersService: UsersService,
+    private router: Router,
     private recipientService: RecipientService,
     private systemRecipientService: SystemRecipientService,
     private toastr: ToastrService) {
@@ -84,6 +86,9 @@ export class SetupUserComponent implements OnInit {
     this.systemRecipient = new SystemRecipient();
     }
   ngOnInit() {
+  }
+  public navigateToUsers(): void {
+    this.router.navigate(['dashboard', 'users']);
   }
   createForm() {
     this.addUserForm = this.formBuilder.group({

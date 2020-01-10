@@ -205,9 +205,10 @@
   </mat-step>
   <mat-step>
     <ng-template matStepLabel>Done</ng-template>
-    You are now done.
+    Successfully created a User recipient
     <div>
       <button mdbBtn type="button" class="btn-sm  lowercase-btn text-white float-right" mdbWavesEffect mat-button (click)="stepper.reset()">Reset</button>
+      <button mdbBtn type="button" class="btn-sm  lowercase-btn text-white float-right" mdbWavesEffect mat-button (click)="navigateToUsers()">Navigate To Users</button>
     </div>
   </mat-step>
 </mat-horizontal-stepper>
