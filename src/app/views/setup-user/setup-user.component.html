@@ -82,7 +82,7 @@
         </div>    
         <div class="col-md-12">
         <!-- Next button -->
-          <button mdbBtn type="button" class="btn-sm  lowercase-btn text-white float-right" mdbWavesEffect
+          <button mdbBtn [disabled] = "!addUserForm.valid" type="button" class="btn-sm  lowercase-btn text-white float-right" mdbWavesEffect
           (click)="createUser(stepper)"> save </button>
         </div>
       </form>
@@ -134,11 +134,11 @@
           </div>
         </div>
           <!-- Send button -->
-          <button mdbBtn type="button" class="btn-sm  lowercase-btn text-white float-right" mdbWavesEffect
+          <button mdbBtn type="button" class="btn-sm  lowercase-btn text-white float-right" mdbWavesEffect [disabled]="!recipientsForm.valid"
           (click)="createRecipient(stepper)">save</button>
       </form>
   </mat-step>
-  <mat-step [stepControl]="recipientsForm" [editable]="isEditable">
+  <mat-step [stepControl]="systemRecipientForm" [editable]="isEditable">
       <ng-template matStepLabel>Fill out escalation level details</ng-template>
       <form [formGroup]="systemRecipientForm" class="text-center border  p-5" *ngIf="isdataReady">
               <div class="row">
@@ -200,7 +200,7 @@
                     </div>
                 </div>
               <!-- Send button -->
-              <button mdbBtn type="button" class="btn-sm  lowercase-btn text-white float-right" mdbWavesEffect (click)="createSystemRecipient(stepper)">save</button>
+              <button mdbBtn type="button" class="btn-sm  lowercase-btn text-white float-right" mdbWavesEffect [disabled]="!systemRecipientForm.valid" (click)="createSystemRecipient(stepper)">save</button>
       </form>
   </mat-step>
   <mat-step>

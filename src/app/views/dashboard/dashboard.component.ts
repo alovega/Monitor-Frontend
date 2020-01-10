@@ -132,23 +132,6 @@ export class DashboardComponent implements OnInit, AfterViewChecked, AfterViewIn
       (data) => {
         this.message = data;
     });
-
-    this.graphsService.getResponseTimes<GraphDataResponse>()
-    .subscribe(response => {
-      if (response.ok) {
-        if (response.body.code === '800.200.001') {
-          Object.keys(response.body.data.datasets).forEach(key => {
-            this.responseTimeGraph.chartDatasets.push(response.body.data.datasets[key]);
-            this.responseTimeGraph.chartLabels.push(response.body.data.datasets[key].data);
-          });
-          this.responseTimeGraph.chartLabels = response.body.data.labels;
-        } else {
-          this.toastr.error('Failed to retrieve Response times graph data', 'Get graph data error');
-        }
-      } else {
-        // TODO: Add error checks
-      }
-    });
   }
 
 
@@ -191,6 +174,22 @@ export class DashboardComponent implements OnInit, AfterViewChecked, AfterViewIn
           this.loading = false;
         } else {
           this.toastr.error('Failed to retrieve Error rates graph data', 'Get graph data error');
+        }
+      } else {
+        // TODO: Add error checks
+      }
+    });
+    this.graphsService.getResponseTimes<GraphDataResponse>(this.startDate, this.endDate)
+    .subscribe(response => {
+      if (response.ok) {
+        if (response.body.code === '800.200.001') {
+          Object.keys(response.body.data.datasets).forEach(key => {
+            this.responseTimeGraph.chartDatasets.push(response.body.data.datasets[key]);
+            this.responseTimeGraph.chartLabels.push(response.body.data.datasets[key].data);
+          });
+          this.responseTimeGraph.chartLabels = response.body.data.labels;
+        } else {
+          this.toastr.error('Failed to retrieve Response times graph data', 'Get graph data error');
         }
       } else {
         // TODO: Add error checks

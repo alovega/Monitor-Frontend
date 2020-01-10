@@ -98,7 +98,6 @@ export class SetupUserComponent implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(8)]],
       confirmPassword: ['', Validators.required],
-      x: ['', Validators.required]
     },
     {
       validator: MustMatch('password', 'confirmPassword')
@@ -108,11 +107,9 @@ export class SetupUserComponent implements OnInit {
         userId: ['', Validators.required],
         PhoneNumber: ['', [Validators.required, Validators.pattern(phoneNumber)]],
         stateId: ['', Validators.required],
-        x: ['', Validators.required]
     });
     this.systemRecipientForm = this.formBuilder.group({
       Recipient: ['', Validators.required],
-      x: ['', Validators.required],
       escalations: this.formBuilder.array([this.addEscalationGroup()])
     });
   }
@@ -142,7 +139,6 @@ export class SetupUserComponent implements OnInit {
         if (response.body.code === '800.200.001') {
           this.toastr.success('User created successfully', 'User creation success');
           if (stepper !== undefined) {
-            this.addUserForm.removeControl('x');
             const users = this.lookUpService.getLookUpData<LookUpResponse>();
             forkJoin([users]).subscribe(results => {
               console.log(results);
@@ -171,7 +167,6 @@ export class SetupUserComponent implements OnInit {
         if (response.body.code === '800.200.001') {
           this.toastr.success('Recipient created successfully', 'Recipient creation success');
           if (stepper !== undefined) {
-            this.recipientsForm.removeControl('x');
             const recipients = this.lookUpService.getLookUpData<LookUpResponse>();
             forkJoin([recipients]).subscribe(results => {
               if (results[0]) {
@@ -200,7 +195,6 @@ export class SetupUserComponent implements OnInit {
         if (response.body.code === '800.200.001') {
           this.toastr.success('System Recipient created successfully', 'System Recipient creation success');
           if (stepper !== undefined) {
-            this.addUserForm.removeControl('x');
             stepper.next();
           }
         } else {
