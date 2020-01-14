@@ -1,0 +1,70 @@
+form {
+    background-color: #ffffff
+}
+.text-center{
+    text-align: left !important;
+}
+
+// .h4{
+//     text-align: center;
+// }
+label{
+    font-weight: 500;
+    font-size: 0.9em;
+}
+input select{
+    width: 375px;
+}
+img{
+    float: right;
+}
+.invalid-feedback{
+    text-align: left;
+    display: block;
+    position: relative;
+    top:-11px
+}
+
+button {
+    font-size: 14px;
+    background-color: #0052CC !important;
+    border: 1px solid #0052CC;
+    border-radius: 4px;
+    color: #ffffff;
+    right: 0;
+    padding: 3px 7px 3px 7px;
+    font-weight: 500;
+}
+
+#remove{
+    position: relative;
+    bottom: 56px;
+    left: 34px;
+}
+#add{
+    position: relative;
+    bottom: 56px;
+    left: 34px;
+}
+
+.action-icons{
+    position: relative;
+    left: 13px;
+}
+.disabled{
+    opacity: 0.5;
+}
+
+.display-none{
+    display: none;
+}
+hr{
+    margin-top: -6px !important;
+}
+
+::ng-deep .select2-container{
+    margin-bottom: 20px;
+}
+mdb-card{
+    margin-bottom: 20px;
+}

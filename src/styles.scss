@@ -1,14 +1,448 @@
-body{
-  font-size: 14px !important; 
+@import "./node_modules/bootstrap/scss/bootstrap.scss";
+
+.logged-out, .logged-out > * {
+  padding-left: 0px !important;
 }
-@media (min-width: 1200px) {
-  .navbar,
-  .page-footer,
-  main {
-    padding-left: 250px; 
+
+@media (min-width: 1200px){
+  .container {
+     max-width: 1335px !important;
   }
 }
 
 @media (max-width: 1199.98px) {
   .sidebar-fixed {
-    display: none; } }
+    display: block; 
+    width: 200px !important;
+    padding: 0.5rem !important;
+  }
+  .modal-size {
+    margin: auto;
+    width: auto;
+    max-width: 100% !important;
+  }
+  .form {
+    padding: 5px;
+  }
+}
+
+html, body { height: 100%; }
+body { 
+  margin: 0; 
+  font-size: 15px;
+  font-family: -apple-system, 
+  BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif; 
+}
+
+.main-body {
+  min-height: 90vh;
+}
+
+/* You can add global styles to this file, and also import other style files */
+
+.form-control.ng-touched.ng-invalid{
+  border-color: #dc3545;
+}
+
+.custom-control-input.ng-invalid.ng-touched + label.custom-control-label{
+  color: #dc3545;
+}
+
+.custom-control-input.ng-invalid.ng-touched + label.custom-control-label:before,
+.custom-control-input.ng-invalid.ng-touched + label.custom-control-label:after
+{
+  border-color: #dc3545;
+}
+.custom-control-input.ng-invalid.ng-touched:focus~label.custom-control-label:before{
+   box-shadow: 0 0 0 0.2rem rgba(220,53,69,.25);
+}
+
+/* You can add global styles to this file, and also import other style files */
+
+.form-control.ng-touched.ng-invalid{
+  border-color: #dc3545;
+}
+
+.custom-control-input.ng-invalid.ng-touched + label.custom-control-label{
+  color: #dc3545;
+}
+
+.custom-control-input.ng-invalid.ng-touched + label.custom-control-label:before,
+.custom-control-input.ng-invalid.ng-touched + label.custom-control-label:after
+{
+  border-color: #dc3545;
+}
+.custom-control-input.ng-invalid.ng-touched:focus~label.custom-control-label:before{
+   box-shadow: 0 0 0 0.2rem rgba(220,53,69,.25);
+}
+
+.full-page {
+  min-height: 50vh;
+}
+
+.loader {
+  height: 100%;
+  width: 100%;
+  padding-top: 25vh;
+  transition: opacity .8s ease-out;
+  margin: auto; 
+}
+// .full-page {
+//   min-height: 50vh;
+// }
+
+.app-root {
+  margin-left: 1rem;
+  margin-right: 1rem;
+}
+
+.back-button{
+  font-size: 14px;
+  background-color: #0052CC !important;
+  border: 1px solid #0052CC;
+  border-radius: 4px;
+  color: #ffffff;
+  right: 0;
+  padding: 3px 7px 3px 7px;
+  font-weight: 500;
+}
+
+
+.btn:disabled, .back-button:disabled{
+  opacity: .45;
+}
+
+
+.lowercase-btn {
+  font-size: 14px !important;
+  color: #ffffff !important;
+  text-transform: unset !important;
+  border-radius: 4px !important;
+  // right: 0 ;
+  padding: 5px 10px 5px 10px !important;
+  font-weight: 500 !important;
+}
+
+.lowercase-btn:hover {
+  color: #ffffff !important;
+}
+
+/* default .loading styles, .loading should be invisible, opacity: 0, z-index: -1 */
+.loading {
+  opacity: 0;
+  transition: opacity 0 ease-in-out 1s;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  display: none;
+}
+
+/* .loading screen is visible when app is not bootstrapped yet, my-app is empty */
+hm-root:empty + .loading {
+  opacity: 1;
+  z-index: 100;
+  transition: opacity 0 ease-in-out 1s;
+  display: block;
+}
+
+th {
+  cursor: pointer;
+}
+
+.toast-top-right {
+  top: 70px !important;
+  right: 12px;
+}
+
+
+.invalid-feedback{
+  display: inline-block;
+  margin-top: 0px;
+  text-align: left;
+}
+
+.custom-tabs .nav-tabs .nav-link.active, .nav-tabs .nav-item.show .nav-link {
+  color: #495057;
+  background-color: #fff;
+  border-right: none !important;
+  border-left: none !important;
+  border-top: none !important;
+  border-bottom: 3px solid rgb(84, 84, 202) !important;
+  // border-color: #dee2e6 #dee2e6 #fff;
+  opacity: 0.5 !important;
+}
+// .nav-tabs .nav-link.active, .nav-tabs .nav-item.show .nav-link {
+//   color: #495057;
+//   background-color: #fff;
+//   border-bottom: 2px solid blue;
+//   opacity: 1 !important;
+// }
+.custom-tabs .nav-tabs .nav-link.active {
+  color: #495057 !important;
+  font-weight: 500 !important;
+  background-color: #fff;
+  border-bottom: 3px solid blue;
+  opacity: 1 !important;
+}
+
+.custom-tabs .nav-tabs .nav-link {
+  color: #495057;
+  border-right: none !important;
+  border-left: none !important;
+  border-top: none !important;
+  border-bottom: 3px solid rgb(84, 84, 202) !important;
+  opacity: 0.5 !important;
+
+  // border-color: #dee2e6 #dee2e6 #fff;
+
+}
+
+.custom-tabs .nav-link {
+  display: block;
+  padding: 0.5rem 1rem;
+}
+
+.custom-tabs .nav-link {
+  display: block;
+  padding: 0.5rem 1rem;
+}
+
+.custom-tabs .nav-link {
+  display: block;
+  padding: .5rem 1rem;
+}
+@import './app/theme';
+
+// Include the base styles for Angular Material core. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@include mat-core();
+
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component that you are using.
+@include angular-material-theme($app-theme);
+
+body {
+  margin: 0;
+  height: 100vh;
+  font-family: Roboto, Arial, sans-serif;
+  font-size: 16px;
+  color: #292a1d;
+}
+a {
+  text-decoration-color: mat-color($app-primary);
+  color: mat-color($app-primary);
+}
+
+.mat-icon-button {
+  padding: 0;
+  min-width: 0;
+  width: 100% !important;
+  height: 40px;
+  flex-shrink: 0;
+  line-height: 40px;
+  border-radius: 50%;
+}
+
+.mat-button, .mat-flat-button, .mat-icon-button, .mat-stroked-button {
+  box-sizing: border-box;
+  position: relative;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  cursor: pointer;
+  outline: 0;
+  border: none;
+  -webkit-tap-highlight-color: transparent;
+  display: inline-block;
+  white-space: nowrap;
+  text-decoration: none;
+  vertical-align: baseline;
+  text-align: center;
+  margin: 0;
+  min-width: 64px;
+  line-height: 36px;
+  padding: 0 16px;
+  border-radius: 4px;
+  overflow: visible;
+}
+
+.view-entries {
+  max-width: 80px;
+  height: calc(1.5em + 0.5rem + 2px);
+  padding: 0.375rem 0.35rem 0.375rem 0.375rem;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1;
+  color: #495057;
+  background-color: #fff;
+  border: 1px solid rgb(206, 212, 218);
+  border-radius: 0.2rem;
+}
+
+.search-entries {
+  max-width: 200px;
+  height: calc(1.5em + 0.5rem + 2px);
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1;
+  color: #495057;
+  background-color: #fff;
+  border: 1px solid rgb(206, 212, 218);
+  border-radius: 0.2rem;
+}
+
+.page-header-divider {
+  margin-top: 2px !important;
+}
+
+.content-width {
+  width: 50%;
+}
+
+@media (max-width: 576px){
+  .dt-controls {
+    flex-direction: column !important;
+  }
+  .flex-grid {
+    display: block !important;
+  }
+  .content-width{
+    width: 100% !important;
+  }
+}
+
+table {
+  width: 100%;
+}
+thead{
+  background-color: #007bff;
+}
+
+table.table td, table.table th {
+  width:224px;
+}
+
+thead{
+  background-color: #007bff;
+}
+
+.date-tabs .nav-item a{
+  color: #212529 !important;
+}
+
+.date-tabs .nav-item .active{
+  color: #ffffff !important;
+}
+
+.custom-select-dropdown, .system-select-dropdown{
+  font-size: 14px !important;
+}
+
+.custom-select-dropdown span.select2.select2-container{
+  width: 100% !important;
+  height: calc(1.5em + 0.75rem + 2px) !important;
+}
+
+.custom-select-dropdown .select2-container .select2-selection--single {
+  height: calc(1.5em + 0.75rem + 2px) !important;
+  font-size: 1rem;
+  font-weight: 400;
+  opacity: .9;
+  padding: 0.375rem 0.75rem;
+  background-color: #fafafa !important;
+  border: 1px solid rgb(206, 212, 218) !important;
+  border-radius: 4px !important;
+  outline: none;
+  // margin-bottom: 3px;
+} 
+
+.custom-select-dropdown .select2-container--default .select2-selection--single .select2-selection__rendered {
+  color: #444;
+  padding: 0px;
+  text-align: left;
+}
+
+.custom-select-dropdown .select2-container--default .select2-selection--single .select2-selection__arrow {
+  height: calc(1.5em + 0.75rem + 2px) !important;
+}
+
+mat-toolbar {
+  z-index: 5 !important;
+}
+
+.mat-drawer-container {
+  z-index: auto !important;
+}
+
+.mat-drawer-content {
+  z-index: auto !important; 
+}
+
+.form-control{
+  background-color: #fafafa !important;
+}
+.ngx-datatable.material:not(.cell-selection) .datatable-body-row:focus, .ngx-datatable.material:not(.cell-selection) .datatable-body-row:focus .datatable-row-group {
+  background-color: #ffffff !important;
+}
+
+.incidents .ngx-datatable.material:not(.cell-selection) .datatable-body-row:hover, .incidents .ngx-datatable.material:not(.cell-selection) .datatable-body-row:hover .datatable-row-group {
+  background-color: #ffffff !important;
+  transition-property: background;
+  transition-duration: 0.1s;
+  transition-timing-function: linear;
+}
+
+.incidents .ngx-datatable.material:not(.cell-selection) .datatable-body-row:focus, .incidents .ngx-datatable.material:not(.cell-selection) .datatable-body-row:focus .datatable-row-group {
+  background-color: #ffffff !important;
+}
+
+.incidents .datatable-row-center {
+  width: 100% !important;
+}
+
+.incidents .datatable-body-cell {
+  width: 100% !important;
+  padding: 20px !important;
+}
+
+.incidents.open .ngx-datatable.material {
+  box-shadow: none !important;
+}
+
+.incidents.open .ngx-datatable.material .datatable-body .datatable-body-row .datatable-body-cell{
+  padding: 5px 1px !important;
+}
+
+
+.incidents.realtime .ngx-datatable.material .datatable-body .datatable-body-row .datatable-body-cell{
+  padding: 15px 15px !important;
+  border-bottom: 1px solid rgb(222, 226, 230) !important;
+}
+
+
+// ::ng-deep {
+//   .progress-linear {
+//     position: relative !important;
+
+//     .container {
+//       max-width: 100% !important;
+//     }
+//   }
+// }
+
+// ::ng-deep.datatable-header-cell {
+//   font-size: 0.8em !important;
+// }
+// ::ng-deep.datatable-body-cell {
+// word-wrap:break-word !important;
+// width: 400px !important;
+// }
+
+// :host ::ng-deep .ngx-datatable .datatable-body .datatable-scroll {
+// display: inherit;
+// }

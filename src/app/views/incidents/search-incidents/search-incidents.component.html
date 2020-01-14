@@ -1,0 +1,6 @@
+<div class="results incident-results" *ngIf="incidents">
+    <div class="search-item" *ngFor="let incident of incidents" routerLink="/dashboard/incidents/update/{{incident.incident_id}}">
+        <div class="incident-name">{{incident.name}}</div>
+        <div class="incident-description">{{dateCreated | date: 'MMMM d, y'}} - {{incident.description}}</div>
+    </div>
+</div>

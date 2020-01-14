@@ -1,0 +1,23 @@
+
+  <div [formGroup]="parentForm" *ngIf="date == 'startDate'">
+    <div class="input-group">
+        <input class="form-control" placeholder="yyyy-mm-dd" name="dp"
+        ngbDatepicker #d="ngbDatepicker" [formControlName]="date" [ngClass]="{'is-invalid': submitted === 'true' && parentForm.controls.startDate.errors}">
+    <div class="input-group-append">
+      <button class="date-picker-button" (click)="d.toggle()" type="button">
+        <i class="fas fa-calendar-alt"></i>
+      </button>
+    </div>
+  </div> 
+  </div>
+
+<div [formGroup]="parentForm" *ngIf="date == 'endDate'" >
+  <div class="input-group">
+      <input class="form-control" placeholder="yyyy-mm-dd" name="dp"
+      ngbDatepicker #d="ngbDatepicker" [formControlName]="date" [ngClass]="{'is-invalid': submitted === 'true' && parentForm.controls.endDate.errors}">
+  <div class="input-group-append">
+    <button class="date-picker-button" (click)="d.toggle()" type="button">
+      <i class="fas fa-calendar-alt"></i>
+    </button>
+  </div>
+</div>

@@ -1,0 +1,90 @@
+<!-- Grid Row -->
+<div class="row wow animate fadeIn" data-wow-delay="0.1s">
+  <!-- Grid column -->
+  <div class="col-md-1"></div>
+    <!-- Grid column -->
+  <div class="col-md-12">
+    <div class="page-header d-flex row">
+      <div class="col-sm-6">
+          Update user
+      </div>
+      <div class="col-sm-6">
+        <button class="float-right back-button" (click)="back()"><i class="fas fa-angle-double-left"></i> Back</button>
+      </div>
+    </div>
+    <hr>
+    <div class="page-body">
+      <div class="new-rule">
+        <mdb-card class="card">
+          <form [formGroup]="updateUserForm" class="text-center row" (ngSubmit)="onSubmit()" *ngIf="updateUserForm.controls">
+            <!-- {{updateUserForm}} -->
+          <div class="col-md-6 mb-4">
+            <div class="form-group">
+                <!-- Name -->
+                <label class="form-label">User Name</label>
+                <input type="text" id="userName" formControlName="username" class="grey lighten-5 form-control"
+                placeholder="Username" [ngClass]="{'is-invalid': submitted && updateUserForm.controls['username'].errors}">
+              
+                <div *ngIf="updateUserForm.controls['username'].invalid && (updateUserForm.controls['username'].dirty || updateUserForm['controls'].username.touched)" class="invalid-feedback">
+                  <div *ngIf="updateUserForm.controls['username'].errors.required">Username is required</div>
+                  <div *ngIf="updateUserForm.controls['username'].errors.minlength">Username must be atleast 3 characters</div>
+                </div>
+            </div>
+          </div>
+
+          <div class="col-md-6 mb-4">
+              <div class="form-group">
+                  <!-- Name -->
+                  <label class="form-label">Email</label>
+                  <input type="email" id="email" formControlName="email" class="grey lighten-5 form-control"
+                  placeholder="Email" [ngClass]="{'is-invalid': submitted && updateUserForm.controls['email'].errors}" required>
+                
+                  <div *ngIf="updateUserForm.controls['email'].invalid && (updateUserForm.controls['email'].dirty || updateUserForm.controls['email'].touched)" class="invalid-feedback">
+                    <div *ngIf="updateUserForm.controls['email'].errors.required">Email is required</div>
+                    <div *ngIf="updateUserForm.controls['email'].errors.email">Email must be a valid email address</div>
+                  </div>
+              </div>
+            </div>
+
+          <div class="col-md-6 mb-4">
+              <div class="form-group">
+                  <!-- Name -->
+                  <label class="form-label">First Name</label>
+                  <input type="text" id="first_name" formControlName="first_name" class="grey lighten-5 form-control"
+                  placeholder="First name" [ngClass]="{'is-invalid': submitted && updateUserForm.controls['first_name'].errors}">
+                
+                  <div *ngIf="submitted && updateUserForm.controls['first_name'].errors" class="invalid-feedback">
+                    <div *ngIf="updateUserForm.controls['first_name'].errors.required">Firstname is required</div>
+                  </div>
+              </div>
+            </div>
+          
+            <div class="col-md-6 mb-4">
+              <div class="form-group">
+                  <!-- Name -->
+                  <label class="form-label">Last Name</label>
+                  <input type="text" id="last_name" formControlName="last_name" class="grey lighten-5 form-control"
+                  placeholder="Last name" [ngClass]="{'is-invalid': submitted && updateUserForm.controls['last_name'].errors}">
+                
+                  <div *ngIf="submitted && updateUserForm.controls['last_name'].errors" class="invalid-feedback">
+                    <div *ngIf="updateUserForm.controls['last_name'].errors.required">Lastname is required</div>
+                  </div>
+              </div>
+            </div>
+        
+            <div class="col-md-12">
+            <!-- Create button -->
+            <div class="create-button">
+                <button mdbBtn class="btn-sm blue-gradient lowercase-btn text-white float-right" mdbWavesEffect [disabled]="updateUserForm.invalid">Update user</button>
+            </div>
+            </div>
+          </form>
+        </mdb-card>
+      </div>
+    </div>
+  </div>
+
+  <!-- Grid column -->
+  <div class="col-md-1"></div>
+</div>
+<!-- Grid Row -->

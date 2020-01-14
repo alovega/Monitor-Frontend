@@ -2,18 +2,43 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>AngularMdbDashboard</title>
+  <title>HelaMonitor</title>
   <base href="/">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="./assets/favicon.ico">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" >
 </head>
-<body class="grey lighten-3">
-  <hm-root></hm-root>
-
+<body class="">
+<hm-root></hm-root>
+<div class="loading" style="background-color: rgb(204, 217, 221); height: 100vh">
+  <div style="padding-top: 48vh; padding-left: 47vw;">
+    <div class="spinner-border text-primary" role="status" style="width: 3rem; height: 3rem;">
+    </div>
+  </div>
+</div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.min.js"></script>
 <script>
 new WOW().init();
 </script>
 </body>
 </html>
+<style>
+    .btn-light {
+        background-color: #ffffff !important;
+        color: #000;
+    }
+    .btn-light:hover{
+      background-color: #e0e0e0 !important;
+    }
+      .btn-link {
+      margin: 0px !important;
+      padding: 0px !important;
+      }
+
+      table.table td, table.table th {
+        padding: 0.75rem !important;
+    }
+</style>

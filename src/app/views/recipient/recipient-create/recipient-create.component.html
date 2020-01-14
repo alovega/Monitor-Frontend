@@ -1,0 +1,65 @@
+<div class="d-flex justify-content-between">
+  <h4>Add recipient </h4>
+  <div>
+    <button class="float-right back-button" (click)="back()">
+      <i class="fas fa-angle-double-left"></i> Back 
+    </button>
+  </div>
+</div>
+<hr class="page-header-divider">
+
+<mdb-card>
+    <!-- Default form contact -->
+    <form [formGroup]="recipientsForm" class="text-center border  p-5" (ngSubmit) = "onSubmit()"  *ngIf="isdataReady">
+      <div class="row">
+          <div class="col">
+              <!-- Phone Number -->
+              <label>Phone Number</label>
+              <input type="text" id="defaultContactFormPhoneNumber" class="form-control mb-4" placeholder="+2547XX7XXXX"
+              [ngClass]="{ 'is-invalid': submitted && f.EnpointName.errors }" formControlName="PhoneNumber" 
+                [(ngModel)]="data.phoneNumber" >
+                <div *ngIf="recipientsForm.controls['PhoneNumber'].invalid && (recipientsForm.controls['PhoneNumber'].dirty || recipientsForm.controls['PhoneNumber'].touched)" class="invalid-feedback">
+                  <div *ngIf="recipientsForm.controls['PhoneNumber'].errors.required">
+                      Phone Number is required.
+                  </div>
+                  <div *ngIf="recipientsForm.controls['PhoneNumber'].errors.pattern">Phone Number Entered must be of the correct format</div>
+                </div>
+              </div>
+            <div class="col">
+                <!-- User -->
+                <label>User</label>
+                <div *ngIf="users?.length">
+                  <ng-select2 style="width:100%;" class=" custom-select-dropdown" formControlName="userId" [(ngModel)]="data.userId" [data]="users">
+                  </ng-select2>
+                </div>
+                <div *ngIf="recipientsForm.controls['userId'].invalid && (recipientsForm.controls['userId'].dirty || recipientsForm.controls['userId'].touched)" class="invalid-feedback">
+                    <div *ngIf="recipientsForm.controls['userId'].errors.required">
+                        Please Select a User.
+                    </div>
+                </div>
+          </div>      
+      </div>
+      <div class="row">
+        <div class="col-6">
+          <!-- State -->
+        <label>State</label>
+        <div *ngIf="states?.length">
+          <ng-select2 style="width:100%;" class=" custom-select-dropdown" formControlName="stateId" [(ngModel)]="data.stateId" [data]="states">
+          </ng-select2>
+        </div>
+        <div *ngIf="recipientsForm.controls['stateId'].invalid && (recipientsForm.controls['stateId'].dirty || recipientsForm.controls['stateId'].touched)" class="invalid-feedback">
+          <div *ngIf="recipientsForm.controls['stateId'].errors.required">
+              Please Select a State.
+          </div>
+        </div>
+        </div>
+      </div>
+      <!-- Send button -->
+          <button mdbBtn type="button" class="btn-sm blue-gradient lowercase-btn text-white float-right" mdbWavesEffect
+      [disabled]="!recipientsForm.valid" (click)="addRecipient()"> Save</button>
+    </form>
+      <!-- Default form contact -->
+    
+    </mdb-card>
+    
+    

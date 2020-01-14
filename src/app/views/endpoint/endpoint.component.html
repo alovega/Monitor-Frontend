@@ -1,0 +1,21 @@
+<div class="page-header d-flex flex-row justify-content-between">
+    <h3 class="page-header-title">Endpoints</h3>
+    <div class="add-endpoint-btn">
+      <button mdbBtn class="btn-sm blue-gradient lowercase-btn text-white" routerLink="/dashboard/endpoints/endpoint-form" mdbWavesEffect>
+        <i class="fas fa-plus"></i> Add Endpoint
+      </button>
+    </div>
+</div>
+<hr class="page-header-divider">
+<div *ngIf="dataSource?.columns.length">
+  <hm-data-table [dataSource]="dataSource"></hm-data-table>
+</div>
+<ng-template #dateColumn let-row="row" let-value="value" let-i="index">
+  {{value | date:'MM/dd/yyyy  hh:mm:ss a'}}
+</ng-template>
+<ng-template #buttonsTemplate let-row="row" let-value="value">
+    <a ngbTooltip="Update endpoint" placement="bottom" class="fas fa-edit text-success mr-2" routerLinkActive="active"
+      routerLink="/dashboard/endpoints/endpoint-update/{{row.Id}}">
+    </a>
+    <a ngbTooltip="Delete endpoint" placement="bottom" class="fas fa-trash-alt text-danger" (click)="delete(row.Id)"></a>
+</ng-template>

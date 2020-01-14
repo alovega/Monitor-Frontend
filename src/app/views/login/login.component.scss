@@ -1,0 +1,23 @@
+.login-wrapper { 
+    background-image: url("../../../assets/login_gb.png") !important;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    min-height: 100vh;
+    flex-direction: row;
+    box-sizing: border-box;
+    display: flex;
+    place-content: center;
+    align-items: center; 
+    height: 100%;
+}
+
+.login-wrapper mdb-card {
+    padding: 40px 30px 30px;
+    max-width: 400px;
+    margin: auto;
+}
+
+.login-wrapper .card-header-text {
+    text-align: center;
+}

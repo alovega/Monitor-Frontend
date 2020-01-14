@@ -1,20 +1,21 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { PagenotfoundComponent } from './errors/pagenotfound/pagenotfound.component';
-import { DashboardComponent } from './dashboard/dashboard.component';
+import { LoginComponent } from './shared/auth/login/login.component';
+import { AuthGuardService } from './shared/helpers/auth-guard.service';
 
 const routes: Routes = [
-  {path: '', pathMatch: 'full', redirectTo: 'dashboard'},
-  { path: 'profile', loadChildren: () => import('./profile/profile.module').then(m => m.ProfileModule) },
-  { path: 'tables', loadChildren: () => import('./tables/tables.module').then(m => m.TablesModule) },
-  { path: 'dashboard', component: DashboardComponent},
-  { path: 'maps', loadChildren: () => import('./maps/maps.module').then(m => m.MapsModule) },
-  { path: 'orders', loadChildren: () => import('./orders/orders.module').then(m => m.OrdersModule) },
-  { path: '**', component: PagenotfoundComponent }
+  { path: '', pathMatch: 'full', redirectTo: 'dashboard' },
+  { path: 'dashboard', loadChildren: () => import('./layouts/dashboard-layout/dashboard-layout.module').then(m => m.DashboardLayoutModule), canActivate: [AuthGuardService]},
+  { path: 'system', loadChildren: () => import('./layouts/public-layout/public-layout.module').then(m => m.PublicLayoutModule)},
+  { path: 'auth', loadChildren: () => import('./layouts/auth-layout/auth-layout.module').then(m => m.AuthLayoutModule) },
+  // { path: '', pathMatch: 'full', redirectTo: 'system', canActivate: [AuthGuardService]},
+  { path: '**', component: PagenotfoundComponent},
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
+
 export class AppRoutingModule { }

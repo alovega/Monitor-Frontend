@@ -1,0 +1,38 @@
+<div class="m-auto" style="position:fixed; right: 0; left: 0; z-index: 2; " *ngIf="isLoading">
+    <hm-component-loader></hm-component-loader>
+</div>
+<div class="page-header d-flex flex-row justify-content-between">
+    <h3 class="page-header-title">Escalation Rules</h3>
+    <div class="add-rule-btn">
+      <a routerLink="/dashboard/rules/new" routerLinkActive="active">
+        <button mdbBtn class="btn-sm blue-gradient lowercase-btn text-white">
+            <i class="fas fa-plus"></i> Add rule
+        </button>
+      </a>
+    </div>
+</div>
+<hr class="page-header-divider">
+
+<!-- Grid Row -->
+<div class="row wow animated fadeIn" data-wow-delay="0.1s">
+  <!-- Grid column -->
+  <div class="col-lg-12 col-md-12 text-left">
+      <div *ngIf="dataSource?.columns.length">
+          <hm-data-table [dataSource]="dataSource"></hm-data-table>
+      </div>  
+      <ng-template #durationColumn let-row="row" let-value="value" let-i="index">
+        {{value | timeBreakdown}}
+      </ng-template>
+      <ng-template #dateColumn let-row="row" let-value="value" let-i="index">
+        {{value | date:'MM/dd/yyyy  hh:mm:ss a'}}
+      </ng-template>
+      <ng-template #buttonsTemplate let-row="row" let-value="value">
+        <a ngbTooltip="Update rule" placement="bottom" routerLink="/dashboard/rules/edit/{{row.id}}" class="mr-2" routerLinkActive="active">
+          <i mdbIcon class="fas fa-edit text-success"></i>  
+        </a>
+        <a>
+          <span ngbTooltip="Delete rule" placement="bottom" mdbIcon class="fas fa-trash-alt text-danger" (click)="removeRule(row.id)"></span>          
+        </a>
+      </ng-template>
+  </div>
+</div>

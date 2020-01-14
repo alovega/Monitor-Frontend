@@ -1,0 +1,55 @@
+<div class="page-layout">
+    <div class="page-header d-flex row m-auto">
+        <h4>System Configuration</h4>
+    </div>
+    <hr class="page-header-divider">
+    <div class="custom-tabs mt-2">
+        <ngb-tabset justify="justified" #tabs (tabChange)="onTabChange($event)" [activeId]="activeTab">
+            <ngb-tab id="endpoints">
+            <ng-template ngbTabTitle>
+                <h6 class="tab-title">Endpoints</h6>
+            </ng-template>
+            <ng-template ngbTabContent>
+                <div class="tab-content">
+                </div>
+            </ng-template>
+            </ngb-tab>   
+            <ngb-tab id="rules" [disabled]="disabledStatus">
+            <ng-template ngbTabTitle>
+                <h6 class="tab-title">Escalation Rules</h6>
+            </ng-template>
+            <ng-template ngbTabContent>
+                <div class="tab-content">
+                </div>
+            </ng-template>
+            </ngb-tab>   
+        </ngb-tabset>
+    </div>
+    <router-outlet></router-outlet>
+
+    <div class="page-directions">
+        <div class="row d-flex">
+            <div class="col">
+                <a *ngIf="previousUrl" routerLink="{{previousUrl}}">
+                    <button class="back-button" >
+                        <i class="fas fa-angle-double-left"></i> Back
+                    </button>
+                </a>
+            </div>
+            <div class="col">
+                <a class="direction-link" *ngIf="nextUrl" routerLink="{{nextUrl}}">
+                <button [disabled]="disabledStatus" class="back-button float-right" (click)="finish()" *ngIf="nextUrl === '/dashboard'; else normalNext">
+                    Save and exit
+                    <!-- <i class="fas fa-angle-double-right"></i> -->
+                </button>
+                <ng-template #normalNext>
+                    <button [disabled]="disabledStatus" class="back-button float-right">Next 
+                        <i class="fas fa-angle-double-right"></i>
+                    </button>  
+                </ng-template>             
+                </a>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</div>

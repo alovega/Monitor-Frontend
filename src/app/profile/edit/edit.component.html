@@ -1,0 +1,98 @@
+<mdb-card>
+        <!-- Default form contact -->
+        <form [formGroup]="profileUpdateForm" class="text-center border  p-5" (ngSubmit) = "onSubmit()">
+            <div class="row" *ngIf="data">
+                <div class="col">
+                    <h6>Username</h6>
+                    <p>{{data.userName}}</p>
+                    <hr>
+                </div>
+                <div class="col">
+                    <h6>Role</h6>
+                    <P>{{data.role}}</P>
+                    <hr>
+                </div>
+            </div>
+            <div class="row" *ngIf="data">
+                <div class="col">
+                    <!-- Phone Number -->
+                    <label>First Name</label>
+                    <input type="text" id="defaultContactFirstName" class="form-control mb-4" placeholder="First Name"
+                    [ngClass]="{ 'is-invalid': submitted && f.FirstName.errors }" formControlName="FirstName" 
+                      [(ngModel)]="data.firstName" >
+                      <div *ngIf="profileUpdateForm.controls['FirstName'].invalid && (profileUpdateForm.controls['FirstName'].dirty || profileUpdateForm.controls['FirstName'].touched)" class="invalid-feedback">
+                        <div *ngIf="profileUpdateForm.controls['FirstName'].errors.required">
+                            First name is required.
+                        </div>
+                        <div *ngIf="profileUpdateForm.controls['FirstName'].errors.minlength">First name must be more than 3 characters</div>
+                      </div>
+                    </div>
+                    <div class="col">
+                        <!-- Last Name -->
+                        <label>Last Name</label>
+                        <input type="text" id="defaultContactFormLastName" class="form-control mb-4" placeholder="Last Name"
+                        [ngClass]="{ 'is-invalid': submitted && f.LastName.errors }" formControlName="LastName" 
+                            [(ngModel)]="data.lastName" >
+                        <div *ngIf="profileUpdateForm.controls['LastName'].invalid && (profileUpdateForm.controls['LastName'].dirty || profileUpdateForm.controls['LastName'].touched)" class="invalid-feedback">
+                            <div *ngIf="profileUpdateForm.controls['LastName'].errors.required">
+                                Last Name is required.
+                            </div>
+                            <div *ngIf="profileUpdateForm.controls['LastName'].errors.minlength">Last Name must be more than 3 characters</div>
+                        </div>
+                    </div>
+                    
+            </div>
+            <div class="row">
+                <div class="col" *ngIf="data.userName">
+                    <!-- Username -->
+                    <label>Username</label>
+                    <input  type="text" id="defaultContactFormUserName" class="form-control mb-4" placeholder="username"
+                        [ngClass]="{ 'is-invalid': submitted && f.UserName.errors }" formControlName="Username" 
+                        [(ngModel)]="data.userName" >
+                    <div *ngIf="profileUpdateForm.controls['Username'].invalid && (profileUpdateForm.controls['userName'].dirty || profileUpdateForm.controls['Username'].touched)" class="invalid-feedback">
+                        <div *ngIf="profileUpdateForm.controls['UserName'].errors.required">
+                            Username is required.
+                        </div>
+                        <div *ngIf="profileUpdateForm.controls['Username'].errors.minlength">Username must be more than 3 characters</div>
+                    </div>
+                </div>
+                <div class="col">
+                    <!-- Email -->
+                    <label>Email</label>
+                    <input type="text" id="defaultContactFormEmail" class="form-control mb-4" placeholder="Email"
+                    [ngClass]="{ 'is-invalid': submitted && f.Email.errors }" formControlName="Email" 
+                        [(ngModel)]="data.email" >
+                        <div *ngIf="profileUpdateForm.controls['Email'].invalid && (profileUpdateForm.controls['Email'].dirty || profileUpdateForm.controls['Email'].touched)" class="invalid-feedback">
+                            <div *ngIf="profileUpdateForm.controls['Email'].errors.required">
+                                Email is required.
+                            </div>
+                            <div *ngIf="profileUpdateForm.controls['Email'].errors.email">Must be of type email</div>
+                        </div>
+                </div>
+            </div>
+            
+            
+            <div class="row">
+                <div class="col-6">
+                    <!-- Phone Number -->
+                    <label>Phone Number</label>
+                    <input type="text" id="defaultContactFormPhoneNumber" class="form-control mb-4" placeholder="Phone Number"
+                        [ngClass]="{ 'is-invalid': submitted && f.EnpointName.errors }" formControlName="PhoneNumber" 
+                        [(ngModel)]="data.phoneNumber" >
+                    <div *ngIf="profileUpdateForm.controls['PhoneNumber'].invalid && (profileUpdateForm.controls['PhoneNumber'].dirty || profileUpdateForm.controls['PhoneNumber'].touched)" class="invalid-feedback">
+                        <div *ngIf="profileUpdateForm.controls['PhoneNumber'].errors.required">
+                            Phone Number is required.
+                        </div>
+                        <div *ngIf="profileUpdateForm.controls['PhoneNumber'].errors.minlength">Phone Number must be more than 10 characters</div>
+                    </div>
+                </div>
+            </div>
+          <!-- Send button -->
+          <div class="row float-right">
+              <button mdbBtn type="button" class="btn  btn-primary waves-light" color="primary" mdbWavesEffect
+          [disabled]="!profileUpdateForm.valid" (click)="update()" size="sm">Update</button>
+          </div>
+        </form>
+          <!-- Default form contact -->
+        
+        </mdb-card>

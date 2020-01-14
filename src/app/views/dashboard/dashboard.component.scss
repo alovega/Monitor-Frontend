@@ -1,0 +1,101 @@
+.status-container {
+
+}
+
+// .status-container .current-status{
+//     border-radius: 4px;
+// }
+
+.page-status {
+    color: white;
+    border: 1px solid rgba(0,0,0,0.1);
+    text-shadow: 0 1px 0 rgba(0,0,0,0.1);
+    margin-bottom: 70px;
+    padding: 0.75rem 1.25rem;
+    text-align: left;
+    font-weight: 500;
+    font-size: 1.25rem;
+    line-height: 1.8125rem;
+    border-radius: 4px;
+}
+
+.status-critical {
+    background-color: #e74c3c;
+}
+
+.status-minor{
+    background-color: #f1c40f;
+    
+}
+
+.status-major{
+    background-color: #e67e22;
+}
+
+.status-maintenance {
+    background-color: #3498DB;
+}
+
+.status-operational {
+    background-color: #2fc662;
+}
+h6{
+    position: relative;
+    padding: 0px 0px 11px 11px;
+    margin: auto;
+    color: #32325d;
+    font-size: 1.0625rem;
+}
+
+.maintenances-border:after {
+    content: '';
+    height: 5px;
+    width: 100%;
+    border-radius: 0 0 6px 6px;
+    background-color: #464dee;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+}
+
+.reported-events-border:after {
+    content: '';
+    height: 5px;
+    width: 100%;
+    border-radius: 0 0 6px 6px;
+    background-color: orange;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+}
+
+.open-incidents-border:after {
+    content: '';
+    height: 5px;
+    width: 100%;
+    border-radius: 0 0 6px 6px;
+    background-color: red;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+}
+
+.closed-incidents-border:after {
+    content: '';
+    height: 5px;
+    width: 100%;
+    border-radius: 0 0 6px 6px;
+    background-color: green;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+}
+
+
+table td:first-of-type{
+    border-top: none !important
+};
+
+.widget {
+    height: 170px;
+}

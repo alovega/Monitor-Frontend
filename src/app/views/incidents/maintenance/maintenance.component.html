@@ -1,0 +1,163 @@
+<div class="full-page">
+  <div [ngClass]="{'d-none': !loading}">
+    <hm-loader></hm-loader>
+  </div>
+
+<!-- <table mdbTable id="incident-list" *ngIf="incidents?.length; else noIncidents">
+  <tbody>
+    <tr mdbTableCol class="incident-item" *ngFor="let incident of incidents">
+      <td scope="row">
+          <div class="incident-description">
+            <div class="action-buttons float-right">
+                <a id="update-{{incident.id}}" routerLink="/incidents/update/{{incident.id}}" 
+                routerLinkActive="active" *ngIf="incident.state_name !== 'Completed'; else Open">Update</a>
+                <ng-template #Open>
+                    <a id="update-{{incident.id}}" routerLink="/dashboard/incidents/update/{{incident.id}}" routerLinkActive="active">View</a>
+                </ng-template>
+            </div>
+            <strong>
+                <a class="incident-view-link" routerLink="/dashboard/incidents/update/{{incident.id}}" routerLinkActive="active">
+                  <span *ngIf="incident?.incident_updates.length; else noUpdates">
+                      <span *ngFor="let update of incident.incident_updates; let i=index">
+                        <span *ngIf="update.state_name && i<1" class="incident-status" color="info">[{{ update.state_name }}] {{ incident.name }}</span>
+                      </span> 
+                  </span>               
+                  <ng-template #noUpdates>
+                    <span class="incident-status" color="info">
+                        [{{ incident.state_name }}] {{ incident.name }}
+                    </span>
+                  </ng-template>
+                </a>
+            </strong><br>
+            <div class="last-updated">
+                <small>Beginning <span>({{ incident.scheduled_for | date:'MM/dd/yyyy   hh:mm:ss a'}})</span>
+                </small>
+            </div>
+          </div>
+      </td>      
+    </tr>
+  </tbody>
+</table> -->
+
+
+<!-- Grid Row -->
+<div class="row wow animated fadeIn" data-wow-delay="0.1s">
+  <!-- Grid column -->
+  <div class="col-lg-12 col-md-12 text-left">
+      <div class="incidents realtime">
+        <div id="table-header">
+          <div class="pagination">
+            <p class="content">Show</p>
+            <select class="browser-default custom-select content" (change)= "changePagination($event)">
+                <option *ngFor="let value of pagination" [ngValue]="value">{{value}}</option>
+            </select>
+            <p class="content">items</p>
+          </div>
+          <div class="search">
+              <label id="searchlabel">Search :</label>
+              <input type="text" placeholder="search..." #input/>
+          </div>
+        </div>
+      
+        <ngx-datatable 
+        class="material" 
+        #incidentsDataTable 
+        [rows]="rows"
+        [columns]="columns"
+        [columnMode]="ColumnMode.force"
+        [headerHeight]="0"
+        [footerHeight]="50"
+        [draggable]="false"
+        [reorder]
+        rowHeight="auto"
+        [externalPaging]="true"
+        [externalSorting]="true"
+        [count]="page.totalElements"
+        [offset]="page.offset"
+        [limit]="page.size"
+        (page)="pageCallback($event)"
+        (sort)="sortCallback($event)"
+        [loadingIndicator]="load">
+        
+          <ngx-datatable-footer *ngIf="true">
+            <ng-template
+              ngx-datatable-footer-template
+              let-rowCount="rowCount"
+              let-pageSize="pageSize"
+              let-selectedCount="selectedCount"
+              let-curPage="curPage"
+              let-offset="offset">
+              <div style="padding: 5px 10px">
+                <div><strong>{{message}}</strong></div>
+              </div>
+              <datatable-pager  
+              [pagerLeftArrowIcon]="'datatable-icon-left'" [pagerRightArrowIcon]="'datatable-icon-right'" [pagerPreviousIcon]="'datatable-icon-prev'"
+              [pagerNextIcon]="'datatable-icon-skip'" [page]="curPage" [size]="pageSize" [count]="rowCount" [hidden]="!((rowCount / pageSize) > 1)"
+              (change)="table.onFooterPage($event)">
+              </datatable-pager>
+            </ng-template>
+          </ngx-datatable-footer>
+        </ngx-datatable>
+        <ng-template #hdrTpl let-column="column">{{column.name}}</ng-template>
+          <ng-template #scheduledIncidents let-row="row" let-value="value">    
+          <div class="incident-description">
+            <div class="action-buttons float-right">
+                <a id="update-{{row.id}}" routerLink="/incidents/update/{{row.id}}" 
+                routerLinkActive="active" *ngIf="row.state_name !== 'Completed'; else Open">Update</a>
+                <ng-template #Open>
+                    <a id="update-{{row.id}}" routerLink="/dashboard/incidents/update/{{row.id}}" routerLinkActive="active">View</a>
+                </ng-template>
+            </div>
+            <strong>
+                <a class="incident-view-link" routerLink="/dashboard/incidents/update/{{row.id}}" routerLinkActive="active">
+                  <span *ngIf="row?.incident_updates.length; else noUpdates">
+                      <span *ngFor="let update of row.incident_updates; let i=index">
+                        <span *ngIf="update.state_name && i<1" class="incident-status" color="info">[{{ update.state_name }}] {{ row.name }}</span>
+                      </span> 
+                  </span>               
+                  <ng-template #noUpdates>
+                    <span class="incident-status" color="info">
+                        [{{ row.state_name }}] {{ row.name }}
+                    </span>
+                  </ng-template>
+                </a>
+            </strong><br>
+            <div class="last-updated">
+                <small>Beginning <span>({{ row.scheduled_for | date:'MM/dd/yyyy   hh:mm:ss a'}})</span>
+                </small>
+            </div>
+          </div>
+        </ng-template>
+        <ngx-datatable-footer *ngIf="true">
+          <ng-template
+            ngx-datatable-footer-template
+            let-rowCount="rowCount"
+            let-pageSize="pageSize"
+            let-selectedCount="selectedCount"
+            let-curPage="curPage"
+            let-offset="offset">
+            <div style="padding: 5px 10px">
+              <div><strong>{{message}}</strong></div>
+            </div>
+            <datatable-pager  
+            [pagerLeftArrowIcon]="'datatable-icon-left'" [pagerRightArrowIcon]="'datatable-icon-right'" [pagerPreviousIcon]="'datatable-icon-prev'"
+            [pagerNextIcon]="'datatable-icon-skip'" [page]="curPage" [size]="pageSize" [count]="rowCount" [hidden]="!((rowCount / pageSize) > 1)"
+            (change)="table.onFooterPage($event)">
+            </datatable-pager>
+          </ng-template>
+          </ngx-datatable-footer>  
+      </div>
+  </div>
+</div>
+<!-- Zero Scheduled Incidents For the dashboard -->
+<!-- <ng-template #noIncidents>
+    <hm-empty-data [ngClass]="{'d-none': loading}" header="No Scheduled Maintenances" description="You will see all scheduled maintenances here">
+      <a action-button routerLink='/dashboard/incidents/new/maintenance' routerlinkactive="active"> 
+        <button id="create-button" size="sm" color="primary">
+          New maintenance 
+        </button>
+      </a>
+    </hm-empty-data>
+</ng-template> -->
+
+</div>

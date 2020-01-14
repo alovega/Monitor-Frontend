@@ -12,7 +12,7 @@
       },
       "root": "",
       "sourceRoot": "src",
-      "prefix": "app",
+      "prefix": "hm",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
@@ -34,12 +34,21 @@
               "node_modules/@fortawesome/fontawesome-free/scss/brands.scss",
               "node_modules/animate.css/animate.css",
               "node_modules/angular-bootstrap-md/assets/scss/bootstrap/bootstrap.scss",
+              "node_modules/sweetalert2/dist/sweetalert2.css",
               "node_modules/angular-bootstrap-md/assets/scss/mdb.scss",
+              "node_modules/ngx-toastr/toastr.css",
+              "node_modules/select2/dist/css/select2.min.css",
+              "node_modules/@swimlane/ngx-datatable/index.css",
+              "node_modules/@swimlane/ngx-datatable/themes/material.css",
+              "node_modules/@swimlane/ngx-datatable/themes/bootstrap.css",
+              "node_modules/@swimlane/ngx-datatable/assets/icons.css",
               "src/styles.scss"
             ],
             "scripts": [
               "node_modules/chart.js/dist/Chart.js",
-              "node_modules/hammerjs/hammer.min.js"
+              "node_modules/hammerjs/hammer.min.js",
+              "node_modules/jquery/dist/jquery.min.js",
+              "node_modules/select2/dist/js/select2.min.js"
             ]
           },
           "configurations": {
@@ -134,6 +143,7 @@
           }
         }
       }
-    }},
+    }
+  },
   "defaultProject": "angular-mdb-dashboard"
 }

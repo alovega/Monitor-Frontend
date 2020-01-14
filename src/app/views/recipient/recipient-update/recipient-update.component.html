@@ -1,0 +1,47 @@
+<div class="d-flex justify-content-between">
+  <h4>Update recipient </h4>
+  <div>
+    <button class="float-right back-button" (click)="back()">
+      <i class="fas fa-angle-double-left"></i> Back 
+    </button>
+  </div>
+</div>
+<hr class="page-header-divider">
+
+<mdb-card>
+    <!-- Default form contact -->
+    <form [formGroup]="updateForm" class="text-center border  p-5" (ngSubmit) = "onSubmit()" *ngIf="isdataReady">
+    <div class="row">
+        <div class="col">
+            <!-- Phone Number -->
+            <label>Phone Number</label>
+            <input type="text" id="defaultContactFormPhoneNumber" class="form-control mb-4" placeholder="+2547xx7xxxxx"
+            [ngClass]="{ 'is-invalid': submitted && f.EnpointName.errors }" formControlName="PhoneNumber">
+              <div *ngIf="updateForm.controls['PhoneNumber'].invalid && (updateForm.controls['PhoneNumber'].dirty || updateForm.controls['PhoneNumber'].touched)" class="invalid-feedback">
+                <div *ngIf="updateForm.controls['PhoneNumber'].errors.required">
+                    Phone Number is required.
+                </div>
+                <div *ngIf="updateForm.controls['PhoneNumber'].errors.pattern">Phone Number Entered must be of the correct format</div>
+
+              </div>
+        </div>
+        <div class="col">
+            <!-- State -->
+            <label>State</label>
+              <ng-select2 style="width: 100%" class="custom-select-dropdown" formControlName="State" [data]="states">
+              </ng-select2>
+            <div *ngIf="updateForm.controls['State'].invalid && (updateForm.controls['State'].dirty || updateForm.controls['State'].touched)" class="invalid-feedback">
+              <div *ngIf="updateForm.controls['State'].errors.required">
+                  Please Select a State.
+              </div>
+            </div>
+          </div>
+    </div>
+      <!-- Send button -->
+      <button mdbBtn type="button" class="btn-sm blue-gradient lowercase-btn text-white float-right"  mdbWavesEffect
+      [disabled]="!updateForm.valid" (click)="updateRecipient()">Save</button>
+    </form>
+      <!-- Default form contact -->
+    </mdb-card>
+    
+    

@@ -1,0 +1,102 @@
+<div class="d-flex justify-content-between">
+  <h4>Add endpoint</h4>
+  <div>
+    <button class="float-right back-button" (click)="back()">
+      <i class="fas fa-angle-double-left"></i> Back 
+    </button>
+  </div>
+</div>
+<hr class="page-header-divider">
+
+<mdb-card>
+<!-- Default form contact -->
+<form [formGroup]="endpointForm" class="text-center border  p-5" (ngSubmit) = "onSubmit()" *ngIf="isdataReady">
+  <div class="row">
+    <div class="col">
+      <!-- Name -->
+      <label>Endpoint Name</label>
+      <input mdbInput MdbValidate type="text" id="defaultContactFormName" class="form-control mb-4"
+      [ngClass]="{ 'is-invalid': submitted && f.EnpointName.errors }"
+      placeholder="Name" formControlName="EndpointName" [(ngModel)]="data.name" >
+      <div *ngIf="endpointForm.controls['EndpointName'].invalid && (endpointForm.controls['EndpointName'].dirty || endpointForm.controls['EndpointName'].touched)" class="invalid-feedback">
+        <div *ngIf="endpointForm.controls['EndpointName'].errors.required">
+            Endpoint Name is required.
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <!-- Endpoint -->
+      <label>URL</label>
+      <input type="url" id="defaultContactFormEndpoint" class="form-control mb-4" placeholder="URL" formControlName="URL" [(ngModel)]="data.url" >
+      <div *ngIf="endpointForm.controls['URL'].invalid && (endpointForm.controls['URL'].dirty || endpointForm.controls['URL'].touched)" class="invalid-feedback">
+        <div *ngIf="endpointForm.controls['URL'].errors.required">
+          A URL is required.
+        </div>
+        <div *ngIf="endpointForm.controls['URL'].errors.pattern">
+          Please enter a url  with correct formart
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <!-- Optimal response time -->
+      <label>Optimal response time(seconds)</label>
+      <input type="number" id="defaultContactFormEndpoint" class="form-control mb-4" placeholder="3600" formControlName="OptimalResponseTime" [(ngModel)]="data.optimal_response_time" >
+      <div *ngIf="endpointForm.controls['OptimalResponseTime'].invalid && (endpointForm.controls['OptimalResponseTime'].dirty || endpointForm.controls['OptimalResponseTime'].touched)" class="invalid-feedback">
+        <div *ngIf="endpointForm.controls['OptimalResponseTime'].errors.required">
+          Optimal response time is required.
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <!-- Endpoint type -->
+      <label>Endpoint type</label>
+      <div *ngIf="endpointTypes?.length">
+        <ng-select2 style="width:100%;" class=" custom-select-dropdown" placeholder="Endpoint Type" formControlName="EndpointType" [(ngModel)]="data.endpoint_type" [data]="endpointTypes">
+        </ng-select2>
+      </div>
+      <div *ngIf="endpointForm.controls['EndpointType'].invalid && (endpointForm.controls['EndpointType'].dirty || endpointForm.controls['EndpointType'].touched)" class="invalid-feedback">
+        <div *ngIf="endpointForm.controls['EndpointType'].errors.required">
+            EnpointType is required.
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <!-- State -->
+      <label>State</label>
+      <div *ngIf="states?.length">
+        <ng-select2 style="width:100%;" class=" custom-select-dropdown" formControlName="State" [(ngModel)]="data.state" [data]="states">
+        </ng-select2>
+      </div>
+      <div *ngIf="endpointForm.controls['State'].invalid && (endpointForm.controls['State'].dirty || endpointForm.controls['State'].touched)" class="invalid-feedback">
+        <div *ngIf="endpointForm.controls['State'].errors.required">
+            State is required.
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <!-- Message -->
+      <label>Description</label>
+      <div class="form-group">
+        <textarea class="form-control rounded-0" id="exampleFormControlTextarea2" rows="3" placeholder="Description" formControlName="Description" [(ngModel)]="data.description" ></textarea>
+      </div>
+      <div *ngIf="endpointForm.controls['Description'].invalid && (endpointForm.controls['Description'].dirty || endpointForm.controls['Description'].touched)" class="invalid-feedback">
+        <div *ngIf="endpointForm.controls['Description'].errors.required">
+          Description is required.
+        </div>
+        <div *ngIf="endpointForm.controls['Description'].errors.minlength">
+            Description should be more than 10 characters.
+          </div>
+      </div>
+    </div>
+  </div>
+    <!-- Send button -->
+    <button mdbBtn type="button" class="btn-sm blue-gradient lowercase-btn text-white float-right"
+       mdbWavesEffect  [disabled]="!endpointForm.valid" (click)="addEndpoint()" > Create</button>
+  
+  </form>
+    <!-- Default form contact -->
+</mdb-card>

@@ -1,0 +1,38 @@
+<div class="m-auto" style="position:fixed; right: 0; left: 0; z-index: 2; " *ngIf="isLoading">
+    <hm-component-loader></hm-component-loader>
+</div>
+<div class="page-header d-flex flex-row justify-content-between">
+    <h3 class="page-header-title">Users</h3>
+    <div class="add-rule-btn">
+      <a routerLink="/dashboard/users/new" routerLinkActive="active">
+        <button mdbBtn class="btn-sm blue-gradient lowercase-btn text-white">
+            <i class="fas fa-plus"></i> Add user
+        </button>
+      </a>
+    </div>
+</div>
+<hr class="page-header-divider">
+
+<!-- Grid Row -->
+<div class="row wow animated fadeIn" data-wow-delay="0.1s">
+    <!-- Grid column -->
+    <div class="col-lg-12 col-md-12 text-left">
+      <div *ngIf="dataSource?.columns.length">
+          <hm-data-table [dataSource]="dataSource"></hm-data-table>
+      </div>
+      <ng-template #activeColumn let-row="row" let-value="value">
+        {{ value | yesNo }}
+      </ng-template>     
+      <ng-template #dateColumn let-row="row" let-value="value" let-i="index">
+        {{value | date:'MM/dd/yyyy  hh:mm:ss a'}}
+      </ng-template>
+      <ng-template #buttonsTemplate let-row="row" let-value="value">
+          <a ngbTooltip="Update user" placement="bottom" routerLink="/dashboard/users/update/{{row.id}}" class="mr-2" routerLinkActive="active">
+            <span mdbIcon class="fas fa-edit text-success"></span>
+          </a>        
+          <a ngbTooltip="Delete user" placement="bottom" (click)="deleteUser(row.id)">
+              <span mdbIcon class="fas fa-trash-alt text-danger" ></span>
+          </a>
+      </ng-template>     
+    </div>
+</div>

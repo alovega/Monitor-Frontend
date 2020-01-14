@@ -1,0 +1,82 @@
+<div class="page">
+  <div class="page-header d-flex row">
+    <div class="col-md-6">
+      Edit system
+    </div>
+    <div class="col-md-6">
+      <button class="float-right back-button" (click)="back()"><i class="fas fa-angle-double-left"></i> Back</button>
+    </div>
+  </div>
+  <div class="clearfix"></div>
+  <hr>
+  <div class="page-body">
+    <mdb-card>
+      <form [formGroup]="editSystemForm" (ngSubmit) = "onSubmit()" class="text-center">
+        <div class="form-group mb-4 row">
+          <div class="col-md-6">
+              <label class="form-label">Name</label>
+              <input [ngClass]="{ 'is-invalid': submitted && editSystemForm.controls['name'].errors }" type="text" 
+                id="name" formControlName="name" class="grey lighten-5 form-control" placeholder="System name">
+
+              <!-- Incident Name Validation errors -->
+              <div *ngIf="editSystemForm.controls['name'].invalid && (editSystemForm.controls['name'].touched || editSystemForm.controls['name'].dirty)" class="invalid-feedback">
+                  <div *ngIf="editSystemForm.controls['name'].errors.required">System name is required</div>
+              </div>
+          </div>
+
+          <div class="col-md-6">
+              <label class="form-label">Version</label>
+              <input formControlName="version" [ngClass]="{ 'is-invalid': submitted && editSystemForm.controls['version'].errors }" type="text" 
+                id="version"  class="grey lighten-5 form-control" placeholder="Version">
+
+              <!-- Incident Name Validation errors -->
+              <div *ngIf="editSystemForm.controls['version'].invalid && (editSystemForm.controls['version'].errors.dirty || editSystemForm.controls['version'].errors.touched)" class="invalid-feedback">
+                  <div *ngIf="editSystemForm.controls['version'].errors.required">Version is required</div>
+              </div>
+          </div>          
+        </div>
+
+        <div class="form-group mb-4 row">
+            <div class="col-md-6">
+                <label class="form-label">Admin</label>
+                <div *ngIf="users?.length">
+                  <ng-select2 style="width:100%;" formControlName="admin" [ngClass]="{ 'is-invalid': submitted && editSystemForm.controls['admin'].errors}"
+                  class="custom-select-dropdown" [data]="users" > 
+                  </ng-select2>
+                </div>                
+                <!-- <select formControlName="admin" [ngClass]="{ 'is-invalid': submitted && editSystemForm.controls['admin'].errors}"
+                class="grey lighten-5 browser-default custom-select form-control">
+                  <option *ngFor="let user of users" value="{{user.id}}">{{user.username}}</option>
+                </select> -->
+                <!-- Incident status validation errors -->
+                <div *ngIf="editSystemForm.controls['admin'].invalid && (editSystemForm.controls['admin'].dirty || editSystemForm.controls['admin'].touched)" class="invalid-feedback">
+                    <div *ngIf="editSystemForm.controls['admin'].errors.required">System admin is required</div>
+                </div>
+            </div>       
+        </div>
+
+          <div class="form-group mb-4 row">
+          <div class="col-md-12">
+              <label class="form-label">Description</label>
+              <textarea [ngClass]="{ 'is-invalid': submitted && editSystemForm.controls['description'].errors }" type="text" 
+                id="description" formControlName="description" class="grey lighten-5 form-control" placeholder="System description">
+              </textarea>
+              <!-- Incident Name Validation errors -->
+              <div *ngIf="editSystemForm.controls['description'].invalid && (editSystemForm.controls['description'].dirty || editSystemForm.controls['description'].touched)" class="invalid-feedback">
+                  <div *ngIf="editSystemForm.controls['description'].errors.required">System description is required</div>
+              </div>
+          </div>          
+        </div>
+
+        <div>
+            <!-- Create button -->
+            <div class="create-button">
+                <button [disabled]="editSystemForm.invalid" type="submit" mdbBtn class="btn-sm blue-gradient lowercase-btn text-white float-right">
+                  Update
+                </button>
+            </div>
+        </div>
+      </form>
+    </mdb-card>
+  </div>
+</div>

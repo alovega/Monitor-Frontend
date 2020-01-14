@@ -1,0 +1,122 @@
+<!-- Grid Row -->
+<div class="row mt-1 wow animated fadeIn">
+  <!-- Grid column -->
+  <div class="col-lg-12 col-md-12 text-left">
+      <div *ngIf="dataSource?.columns.length">
+        <hm-data-table [dataSource]="dataSource"></hm-data-table>
+      </div>
+      <ng-template #dateColumn let-row="row" let-value="value" let-i="index">
+        {{value | date:'MM/dd/yyyy  hh:mm:ss a'}}
+      </ng-template>
+      <ng-template #buttonsTemplate let-row="row" let-value="value">
+          <a ngbTooltip="Event Details" placement="bottom" (click)="showEventInfo(row.id)"><i class="fas fa-info-circle text-info"></i></a>
+      </ng-template>
+  </div>
+</div>
+
+
+<div mdbModal #eventInfo="mdbModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myBasicModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-white bg-info">
+        <button type="button" class="close pull-right text-white" aria-label="Close" (click)="eventInfo.hide()">
+          <span aria-hidden="true">×</span>
+        </button>
+        <h4 class="modal-title w-100" id="myModalLabel">Event Details</h4>
+      </div>
+      <div class="modal-body">
+        <ngb-tabset *ngIf="event">
+          <ngb-tab>
+            <ng-template ngbTabTitle>Event Details</ng-template>
+            <ng-template ngbTabContent>
+              <div class="info-container row">
+                <div class="col-md-4 info-group">
+                    <div class="info-label">Event Type</div>
+                    <div class="info-content">
+                      {{event.event_type_name}}                 
+                    </div>
+                </div>
+                <div class="col-md-4 info-group">
+                    <div class="info-label">Code</div>
+                    <div class="info-content">
+                    <span *ngIf="event.code; else noCode">{{event.code}}</span></div>
+                    <ng-template #noCode>N/A</ng-template>
+                </div>
+                <div class="col-md-4 info-group">
+                    <div class="info-label">Created On</div>
+                    <div class="info-content">{{event.date_created | date: 'MM/dd/yyyy hh:mm:ss'}}</div>
+                </div>
+                <div class="col-md-6 info-group">
+                    <div class="info-label">Method</div>
+                    <div class="info-content">
+                      <span *ngIf="event.method; else noMethod">{{event.method}}</span>
+                      <ng-template #noMethod>N/A</ng-template>
+                      </div>
+                </div>
+                <div class="col-md-6 info-group">
+                    <div class="info-label">Interface</div>
+                    <div class="info-content">
+                      <span *ngIf="event.interface_name; else noInterface">{{event.interface_name}}</span>
+                      <ng-template #noInterface>N/A</ng-template>
+                      </div>
+                </div>
+                <div class="col-md-6 info-group">
+                    <div class="info-label">Description</div>
+                    <div class="info-content">
+                      <span *ngIf="event.description; else noDescription">{{event.description}}</span>
+                      <ng-template #noDescription>N/A</ng-template>
+                      </div>
+                </div>
+              </div>
+            </ng-template>
+          </ngb-tab>
+          <ngb-tab>
+            <ng-template ngbTabTitle>Stack trace</ng-template>
+            <ng-template ngbTabContent>
+                <div class="info-container row">
+                    <div class="col-md-12">
+                        <div class="info-label">Stack Trace</div>
+                        <div class="info-content">
+                          <pre *ngIf="event.stack_trace; else noStackTrace" class="code-info">{{event.stack_trace}}</pre>
+                          <ng-template #noStackTrace>N/A</ng-template>
+                        </div>
+                    </div>
+                  </div>
+            </ng-template>
+          </ngb-tab>
+          <ngb-tab>
+            <ng-template ngbTabTitle>Request</ng-template>
+            <ng-template ngbTabContent>
+                <div class="info-container row">
+                    <div class="col-md-12">
+                        <div class="info-label">Request</div>
+                        <div class="info-content">
+                          <pre *ngIf="event.request; else noRequest" class="code-info">{{event.request}}</pre>
+                          <ng-template #noRequest>N/A</ng-template>
+                        </div>
+                    </div>
+                </div>
+            </ng-template>
+          </ngb-tab>
+          <ngb-tab>
+            <ng-template ngbTabTitle>Response</ng-template>
+            <ng-template ngbTabContent>
+                <div class="info-container row">
+                    <div class="col-md-12">
+                        <div class="info-label">Response</div>
+                        <div class="info-content">
+                          <pre *ngIf="event.response; else noResponse" class="code-info">{{event.response}}</pre>
+                          <ng-template #noResponse>N/A</ng-template>
+                        </div>
+                    </div>
+                  </div>
+            </ng-template>
+          </ngb-tab>
+        </ngb-tabset>
+      </div>
+      <div class="modal-footer">
+        <button mdbBtn color="danger" class="waves-light text-white" aria-label="Close" (click)="eventInfo.hide()" mdbWavesEffect>Close</button>
+      </div>
+    </div>
+  </div>
+</div>

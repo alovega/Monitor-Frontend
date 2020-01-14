@@ -1,0 +1,126 @@
+.card{
+    padding: 0px;
+}
+#rules-list {
+    margin-top: 0px;
+}
+
+table th, .table td {
+    padding-left: 0px;
+    padding: 20px;
+
+}
+
+#rules-list tr:nth-child(1){
+    margin-top: 0px;
+}
+
+#rules-list tr:nth-child(1) td{
+    border-top: none;
+    margin-top: 0px;
+    padding-top: 0px;
+}
+
+#rules-list tr td {
+    padding-bottom: 10px;
+}
+
+.rule-view-link {
+    font-size: 16px;
+    font-weight: 500;
+    opacity: 0.9;
+}
+
+.rule-body {
+    font-size: 14px;
+    font-weight: 400;
+    color: #97A0AF !important;
+    margin-top: 10px;
+}
+
+.update-button a{
+    font-size: 16px;
+    font-weight: 500;
+    opacity: 0.9;
+    color: blue;
+}
+
+.remove-button a{
+    font-size: 16px;
+    font-weight: 500;
+    opacity: 0.9;
+    color: rgb(255, 0, 0);
+    margin-left: 10px;
+}
+
+#create-button{
+    font-size: 14px;
+    width: 100%;
+    background-color: #0052CC !important;
+    border: 1px solid #0052CC;
+    border-radius: 4px;
+    color: #ffffff;
+    padding: 7px 10px 7px 10px;
+    font-weight: 500;
+}
+
+.top-controls {
+    padding-left: 5px !important;
+}
+
+table {
+    width: 100%;
+  }
+  thead{
+    background-color: #007bff;
+  }
+  .btn{
+    box-shadow: 0 2px 5px 0 rgba(0,0,0,.16), 0 2px 10px 0 rgba(0,0,0,.12);
+    padding: 8px 20px 8px 20px;
+    font-size: .61rem;
+    transition: .2s ease-in-out;
+    margin: .375rem;
+    border: 0;
+    border-radius: .125rem;
+    cursor: pointer;
+    white-space: normal;
+    word-wrap: break-word;
+    color: inherit;
+  }
+
+  table.table td, table.table th {
+    width:224px;
+}
+
+.text-clip {
+    max-width: 80px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.info-container {
+    margin-top: 20px;
+}
+
+.info-group {
+    margin-bottom: 25px;
+}
+
+.info-container .info-label {
+    font-weight: 500;
+}
+
+.info-container .info-content {
+    // min-height: 20px;
+    opacity: 0.7;
+    padding-top: 10px;
+    border-bottom: 1px dotted rgb(196, 194, 194);
+}
+
+.code-info {
+    background-color: whitesmoke;
+    color: rgb(61, 61, 61);
+    padding: 10px;
+    border-radius: 4px;
+}
