@@ -23,4 +23,11 @@ export class GraphsService {
   getResponseTimes<T>(): Observable<HttpResponse<T>> {
     return this.httpWrapper.post<T>('get_response_time_data/');
   }
+
+  getSystemAvailabilityTrend<T>(systemId: string, intervalName: string): Observable<HttpResponse<T>> {
+    return this.httpWrapper.post<T>('get_availability_trend/', {
+      interval: intervalName,
+      system: systemId
+    });
+  }
 }

@@ -3,7 +3,7 @@
   <!--Navbar-->
   <mdb-navbar SideClass="navbar navbar-expand-lg navbar-light grey lighten-5" [containerInside]="false">
     <!-- Navbar brand -->
-    <mdb-navbar-brand><a class="navbar-brand">Helaplan</a></mdb-navbar-brand>
+    <mdb-navbar-brand><a class="navbar-brand">{{system.name}}</a></mdb-navbar-brand>
     <!-- Collapsible content -->
 
   </mdb-navbar>
@@ -16,17 +16,17 @@
     </div>
 
     <!-- Availability summary -->
-    <div class="availability-widget mb-4">
+    <div class="availability-widget mb-5">
       <div class="widget-header">
-        <span>Helaplan Status Page</span> <span style="font-size: smaller;" class="faded-text"> - Availability Summary</span>
+        <span class="mr-2">Availability Summary</span> <span class="fa fa-info-circle text-secondary" placement="bottom" ngbTooltip="View a summary of overall system availability information"></span>
       </div>
       <div class="widget-wrapper">
         <table class="status-page-table">
-          <tbody>
+          <tbody >
             <tr>
               <td align="center" width="33%">
                 <div class="mb-2">
-                  <span class="larger-font">100%</span>
+                  <span class="larger-font operational">100%</span>
                 </div>
                 <div>
                   <span>Availability</span>
@@ -34,7 +34,7 @@
               </td>
               <td align="center" width="33%" class="border-lr">
                 <div class="mb-2">
-                  <span class="larger-font">O Mins 0 Seconds</span>
+                  <span class="larger-font">0 Mins 0 Seconds</span>
                 </div>
                 <div>
                   <span>Total Outage Duration</span>
@@ -42,20 +42,20 @@
               </td>
               <td align="center">
                 <div class="mb-2">
-                  <span class="larger-font">0</span>
+                  <span class="larger-font major">0</span>
                 </div>
                 <div>
                   <span>Number of Incidents</span>
                 </div>
               </td>
             </tr>
-          </tbody>
+          </tbody >
         </table>
       </div>
     </div>
 
     <!-- Service status -->
-    <div class="services mb-4">
+    <div class="services mb-5">
       <div class="widget-header">
         <span class="mr-2">Services status</span> <span class="fa fa-info-circle text-secondary" placement="bottom" ngbTooltip="View realtime status of configured services"></span>
       </div>
@@ -64,34 +64,24 @@
         <!--Card content-->
         <mdb-card-body class="table-responsive">
           <!--Services list-->
-          <table mdbTable hover="true" small="true">
+          <table class="service-status-tb" mdbTable hover="true" small="true">
             <thead class="white">
-              <tr>
+              <tr class="service-status-tb-header">
                 <th scope="col">Service Name</th>
-                <th scope="col">Performance</th>
-                <th scope="col">Details</th>
+                <th scope="col" style="text-align: right; margin-right: 1rem;">Details</th>
               </tr>
             </thead>
-            <tbody striped="true">
-              <tr>
-                <td>Authentication</td>
-                <td>100 ms</td>
-                <td>Operational</td>
-              </tr>
-              <tr>
-                <td>Authentication</td>
-                <td>100 ms</td>
-                <td>Operational</td>
-              </tr>
-              <tr>
-                <td>Authentication</td>
-                <td>100 ms</td>
-                <td>Operational</td>
-              </tr>
-              <tr>
-                <td>Authentication</td>
-                <td>100 ms</td>
-                <td>Operational</td>
+            <tbody striped="true" *ngIf="endpoints">
+              <tr *ngFor="let endpoint of endpoints">
+                <td>
+                  <span class="mr-2">{{ endpoint.name }}</span> <span class="fa fa-info-circle text-secondary" placement="bottom" [ngbTooltip]="endpoint.description"></span>
+                </td>
+
+                <td>
+                  <div class="endpoint-column" style="text-align: right;">
+                    <hm-endpoint-status [status] = "endpoint.state_name"></hm-endpoint-status>
+                </div>
+                </td>
               </tr>
             </tbody>
           </table>
@@ -100,12 +90,15 @@
       <!-- Card -->
     </div>
 
+    <div class="widget-header">
+      <span class="mr-2">Metrics</span>
+    </div>
     <div class="metrics">
-      <div class="response-time mb-4">
-        <div class="widget-header">
-          <span class="mr-2">Service Response times</span> <span class="fa fa-info-circle text-secondary" placement="bottom" ngbTooltip="View response times of registered service endpoints"></span>
-        </div>
+      <div class="response-time mb-2">
         <mdb-card class="no-shadow-card">
+          <mdb-card-header>
+            <span class="mr-2">Services response times</span> <span class="fa fa-info-circle text-secondary" placement="bottom" ngbTooltip="View response times of registered service endpoints"></span>
+          </mdb-card-header>
           <mdb-card-body>
             <div style="display: block;">
               <canvas mdbChart style="height: 250px !important;" height="0"
@@ -123,27 +116,19 @@
           </mdb-card-body>
         </mdb-card>
       </div>
-
-      <div class="availability mb-4">
-        <div class="widget-header">
-          <span class="mr-2">Availability</span> <span class="fa fa-info-circle text-secondary" placement="bottom" ngbTooltip="View response times of registered service endpoints"></span>
-        </div>
+      <div class="availability mb-5">
         <mdb-card class="no-shadow-card">
+          <mdb-card-header>
+            <span class="mr-2">Availability</span> <span class="fa fa-info-circle text-secondary" placement="bottom" ngbTooltip="View response times of registered service endpoints"></span>
+          </mdb-card-header>
           <mdb-card-body>
-            <div style="display: block;">
-              <canvas mdbChart style="height: 250px !important;" height="0"
-                  [chartType]="chartType"
-                  [datasets]="chartDataset2"
-                  [labels]="chartLabels"
-                  [colors]="chartColors2"
-                  [options]="chartOptions2"
-                  [legend]="true"
-                  (chartHover)="chartHovered($event)"
-                  (chartClick)="chartClicked($event)">
-              </canvas>
-            </div>
+            <hm-line-graph [chartData]="availabilityTrendGraph" [graphChanges]="graphChanges"></hm-line-graph>
           </mdb-card-body>
         </mdb-card>
+      </div>
+
+      <div>
+
       </div>
     </div>
       <!-- <div class="row">
@@ -168,7 +153,7 @@
       </div> -->
 
     <!-- Incidents History -->
-    <div class="past-incidents mb-4">
+    <div class="past-incidents mb-5">
       <div class="widget-header">
         <span class="mr-2">Incident History</span> 
         <span class="fa fa-info-circle text-secondary" placement="bottom" ngbTooltip="View detailed incident record on the services' availability and announcements"></span>
@@ -210,7 +195,6 @@
     </div>
   </div>
 </div>
-
 
 <!-- <div class="page-layout" *ngIf="systemStatus">
     <div class="page-header">

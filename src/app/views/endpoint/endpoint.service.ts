@@ -1,10 +1,11 @@
 import { Injectable, Output, EventEmitter } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
-import { HttpClient, HttpHeaders, HttpErrorResponse, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpErrorResponse, HttpParams, HttpResponse } from '@angular/common/http';
 import { Endpoint } from './endpoint';
 import { catchError, retry, map, tap} from 'rxjs/operators';
 import { LookUpService } from 'src/app/shared/look-up.service';
 import { environment } from 'src/environments/environment';
+import { HttpWrapperService } from 'src/app/shared/helpers/http-wrapper.service';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +17,10 @@ export class EndpointService {
   };
   @Output() changeSystem: EventEmitter<boolean> = new EventEmitter();
 
-  constructor(private http: HttpClient, private lookUpService: LookUpService) {
+  constructor(
+    private http: HttpClient,
+    private lookUpService: LookUpService,
+    private httpWrapper: HttpWrapperService) {
   }
 
   // Handle API errors
@@ -35,14 +39,10 @@ export class EndpointService {
     return throwError(
       'Something bad happened; please try again later.');
   }
-  public getEndpoints(systemId): Observable<any> {
-    const endpointUrl = environment.apiEndpoint + 'get_endpoints/';
-    return this.http.post<any>(endpointUrl, systemId).pipe (
-      map(response => response.data,
-      retry(2)
-    ),
-    catchError(this.handleError));
+  getEndpoints<T>(systemId: string): Observable<HttpResponse<T>> {
+    return this.httpWrapper.post<T>('get_endpoints/', {system: systemId});
   }
+
   public addEndpoints(item): Observable<any> {
     return this.http.post<any>(this.endpointUrl + '/create_endpoints/', item, this.httpOptions).pipe(
       retry(2),

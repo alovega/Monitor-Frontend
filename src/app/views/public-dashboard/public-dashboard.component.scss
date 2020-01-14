@@ -1,6 +1,7 @@
 .status-page-content {
     margin: 2em 3em;
     font-size: 14px;
+    font-family: "ProximaNova", "Helvetica Neue", sans-serif !important;
 }
 
 .incident-status{
@@ -34,6 +35,21 @@
 .border-lr {
     border-left: 1px solid #d6d6d6!important;
     border-right: 1px solid #d6d6d6!important;
+}
+
+.service-status-tb .service-status-tb-header {
+    background: #cfdce2 !important; 
+    border-radius: 4px !important;
+    font-size: 1rem;
+}
+
+.service-status-tb .service-status-tb-header th{
+    font-weight: 600 !important;
+}
+
+.service-status-tb.table-hover tbody tr:hover {
+    transition: .5s;
+    background-color: #e3eff5;
 }
 
 .status-page-table .larger-font {
@@ -221,10 +237,6 @@
     font-weight: 400;
     font-size: 18px;
     // line-height: 1.8125rem;
-}
-
-.dsghfiujd{
-    color: rgb(5, 172, 5);
 }
 
 .priority-1 {
