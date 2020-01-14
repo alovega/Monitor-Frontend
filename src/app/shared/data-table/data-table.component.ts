@@ -4,7 +4,7 @@ import { ColumnMode} from '@swimlane/ngx-datatable';
 import { BehaviorSubject, fromEvent, of, merge } from 'rxjs';
 import { DataTableService} from './data-table.service';
 import { Page, TableResponse } from './model/page';
-import { debounceTime, distinctUntilChanged, tap, catchError, finalize } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, tap} from 'rxjs/operators';
 
 @Component({
   selector: 'hm-data-table',
