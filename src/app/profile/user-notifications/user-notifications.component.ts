@@ -13,7 +13,7 @@ import { DataSource } from '../../shared/data-table/model/dataSource';
   styleUrls: ['./user-notifications.component.scss']
 })
 export class UserNotificationsComponent implements OnInit, AfterViewInit {
-  @ViewChild('userlNotifications', { static: true }) userNotifications: TemplateRef<any>;
+  @ViewChild('userNotifications', { static: true }) userNotifications: TemplateRef<any>;
   @ViewChild('hdrTpl', { static: true }) hdrTpl: TemplateRef<any>;
   @ViewChild('notificationsDataTable', { static: true }) table: any;
   @ViewChild('input', { static: true }) input: ElementRef;
@@ -33,36 +33,75 @@ export class UserNotificationsComponent implements OnInit, AfterViewInit {
   private loadingSubject = new BehaviorSubject<boolean>(false);
   public loading$ = this.loadingSubject.asObservable();
 
-  constructor(private cdRef: ChangeDetectorRef, private profileService: ProfileService) { }
-  @HostListener('input') oninput() {
-    this.searchItems();
-  }
+  constructor(private cd: ChangeDetectorRef, private profileService: ProfileService) {
+    this.page.offset = 0;
+    this.page.size = 5;
+    this.dataSource.url = 'get_logged_in_user_notifications/';
+   }
 
   ngOnInit() {
-    this.profileService.getLoggedInuserNotifications().subscribe(
-      response => {
-        this.elements = response;
-        this.mdbTable.setDataSource(this.elements);
-        this.elements = this.mdbTable.getDataSource();
-        this.previous = this.mdbTable.getDataSource();
-      });
+    this.loading$.subscribe((response) => {
+      this.load = response.valueOf();
+      this.cd.detectChanges();
+    });
+    this.columns = [
+      {
+        cellTemplate: this.userNotifications,
+        headerTemplate: this.hdrTpl,
+        name: 'user Notifications'
+      }
+    ];
+    this.page.url = 'get_logged_in_user_notifications/';
+    this.pageCallback({ offset: 0 });
+    this.cd.detectChanges();
   }
   ngAfterViewInit() {
-    this.mdbTablePagination.setMaxVisibleItemsNumberTo(10);
-    this.mdbTablePagination.calculateFirstItemIndex();
-    this.mdbTablePagination.calculateLastItemIndex();
-    this.cdRef.detectChanges();
+    fromEvent(this.input.nativeElement, 'keyup').pipe(
+      debounceTime(150),
+      distinctUntilChanged(),
+      tap(() => {
+        this.updateFilter();
+      })
+      ).subscribe();
   }
-  searchItems() {
-    const prev = this.mdbTable.getDataSource();
-    if (!this.searchText) {
-      this.mdbTable.setDataSource(this.previous);
-      this.elements = this.mdbTable.getDataSource();
-    }
+  pageCallback(pageInfo: { count?: number, pageSize?: number, size?: number, offset?: number }) {
+    this.page.offset = pageInfo.offset;
+    this.getTableData(this.page);
+  }
 
-    if (this.searchText) {
-      this.elements = this.mdbTable.searchLocalDataBy(this.searchText);
-      this.mdbTable.setDataSource(prev);
-    }
+  sortCallback(sortInfo: { sorts: { dir: string, prop: string }[], column: {}, prevValue: string, newValue: string }) {
+    // there will always be one "sort" object if "sortType" is set to "single"
+    this.page.orderDir = sortInfo.sorts[0].dir;
+    this.page.orderBy = sortInfo.sorts[0].prop;
+    this.getTableData(this.page);
+  }
+  updateFilter() {
+    this.page.searchQuery = this.input.nativeElement.value;
+    this.getTableData(this.page);
+  }
+  getTableData<T>(page: Page) {
+    this.loadingSubject.next(true);
+    const options = {
+      notification_type: 'Email'
+    };
+    this.profileService.getLoggedInuserNotifications<TableResponse>(page, options)
+    .subscribe(response => {
+      if (response.ok) {
+        if (response.body.code === '800.200.001') {
+          this.page.totalPages = response.body.data.totalPages;
+          this.page.totalElements = response.body.data.totalElements;
+          this.rows = response.body.data.row;
+          this.message = response.body.data.range;
+        } else {
+          // TODO: Add error checks
+        }
+      }
+      this.loadingSubject.next(false);
+      this.cd.detectChanges();
+    });
+  }
+  changePagination(event) {
+    this.page.size = event.target.value;
+    this.getTableData(this.page);
   }
 }
