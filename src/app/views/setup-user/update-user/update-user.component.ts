@@ -79,6 +79,6 @@ export class UpdateUserComponent implements OnInit {
   }
   updateRecipient() {
   }
-  updateSystemRecipient(){
+  updateSystemRecipient() {
   }
 }

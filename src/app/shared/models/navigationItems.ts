@@ -19,18 +19,7 @@ export class NavigationItems {
         {
           displayName: 'Users',
           iconName: 'account_box',
-          children: [
-            {
-              displayName: 'Setup-User',
-              iconName: 'add',
-              routerLink: 'dashboard/setup-user'
-            },
-            {
-              displayName: 'Active-users',
-              iconName: 'check_circle_outline',
-              routerLink: 'dashboard/users',
-            }
-          ]
+          routerLink: 'dashboard/users',
         },
         {
           displayName: 'Configurations',
