@@ -11,6 +11,7 @@ import { SystemResponse } from 'src/app/shared/models/system';
 import { ToastrService } from 'ngx-toastr';
 import { GraphsService } from 'src/app/shared/graphs.service';
 import { GraphDataResponse } from 'src/app/shared/models/graph-data';
+import { AvailabilitySummary } from 'src/app/shared/models/availability-summary';
 
 @Component({
   selector: 'hm-public-dashboard',
@@ -21,6 +22,7 @@ export class PublicDashboardComponent implements OnInit {
   systemStatus: any;
   systemId: string;
   endpoints: any[];
+  availabilitySummary: AvailabilitySummary[];
   pastDates: any;
   graphChanges: any;
   public chartType: string = 'line';
@@ -200,6 +202,7 @@ export class PublicDashboardComponent implements OnInit {
     this.endpointsService.getEndpoints<any>(this.systemId)
     .subscribe(response => {
       if (response.ok) {
+        console.log(response.body);
         if (response.body.code === '800.200.001') {
           this.endpoints = response.body.data;
         } else {

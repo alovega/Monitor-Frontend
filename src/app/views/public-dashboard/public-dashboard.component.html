@@ -1,18 +1,17 @@
 <!-- Main page  -->
 <div class="pb-2" style="min-height: 100vh; background-color: white;">
   <!--Navbar-->
-  <mdb-navbar SideClass="navbar navbar-expand-lg navbar-light grey lighten-5" [containerInside]="false">
+  <mdb-navbar SideClass="navbar navbar-expand-lg navbar-light grey lighten-5 no-border-shadow" [containerInside]="false">
     <!-- Navbar brand -->
-    <mdb-navbar-brand><a class="navbar-brand">{{system.name}}</a></mdb-navbar-brand>
+    <mdb-navbar-brand><a class="navbar-brand" *ngIf="systemStatus">{{systemStatus.name}}</a></mdb-navbar-brand>
     <!-- Collapsible content -->
-
   </mdb-navbar>
   <!--/.Navbar-->
 
   <div class="status-page-content">
     <div class="top-description mb-5">
-      <h4>Helaplan Status</h4>
-      <p class="faded-text">Real-time availability and performance monitoring for Helaplan Services.</p>
+      <h4>{{systemStatus?.name}}</h4>
+    <p class="faded-text">{{systemStatus?.description}}</p>
     </div>
 
     <!-- Availability summary -->
@@ -68,17 +67,16 @@
             <thead class="white">
               <tr class="service-status-tb-header">
                 <th scope="col">Service Name</th>
-                <th scope="col" style="text-align: right; margin-right: 1rem;">Details</th>
+                <th scope="col" style="text-align: left;">Details</th>
               </tr>
             </thead>
             <tbody striped="true" *ngIf="endpoints">
               <tr *ngFor="let endpoint of endpoints">
-                <td>
+                <td align="left">
                   <span class="mr-2">{{ endpoint.name }}</span> <span class="fa fa-info-circle text-secondary" placement="bottom" [ngbTooltip]="endpoint.description"></span>
                 </td>
-
-                <td>
-                  <div class="endpoint-column" style="text-align: right;">
+                <td style="width: 15% !important;">
+                  <div class="" >
                     <hm-endpoint-status [status] = "endpoint.state_name"></hm-endpoint-status>
                 </div>
                 </td>

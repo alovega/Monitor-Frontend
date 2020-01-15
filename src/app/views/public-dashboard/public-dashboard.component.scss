@@ -4,6 +4,15 @@
     font-family: "ProximaNova", "Helvetica Neue", sans-serif !important;
 }
 
+.navbar-brand {
+    font-size: 1.6rem;
+    font-weight: 400;
+}
+
+nav.navbar.navbar-expand-lg.navbar-light.grey.lighten-5.no-border-shadow {
+    box-shadow: 0 1px 2px 0 rgba(0,0,0,.1) !important;
+}
+
 .incident-status{
     font-weight: 500;
 }
@@ -47,6 +56,11 @@
     font-weight: 600 !important;
 }
 
+.service-status-tb.table td {
+    padding-top: .6rem !important;
+    padding-bottom: .6rem !important;
+}
+
 .service-status-tb.table-hover tbody tr:hover {
     transition: .5s;
     background-color: #e3eff5;
@@ -56,6 +70,8 @@
     font-size: 18px;
     font-weight: 500;
 }
+
+
 
 .card.no-shadow-card {
     box-shadow: none;
