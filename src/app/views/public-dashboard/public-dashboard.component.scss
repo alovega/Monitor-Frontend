@@ -28,10 +28,10 @@ nav.navbar.navbar-expand-lg.navbar-light.grey.lighten-5.no-border-shadow {
     border: 1px solid #ececee;
 }
 
-.widget-header{
-    // opacity: .9; 
-    font-size: 16px;
-    margin-bottom: .25em;
+.widget-header{ 
+    font-size: 1.1rem;
+    font-weight: 500;
+    margin-bottom: .1em;
 }
 
 .summary{
@@ -70,8 +70,6 @@ nav.navbar.navbar-expand-lg.navbar-light.grey.lighten-5.no-border-shadow {
     font-size: 18px;
     font-weight: 500;
 }
-
-
 
 .card.no-shadow-card {
     box-shadow: none;

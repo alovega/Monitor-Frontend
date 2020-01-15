@@ -9,23 +9,40 @@
   <!--/.Navbar-->
 
   <div class="status-page-content">
-    <div class="top-description mb-5">
-      <h4>{{systemStatus?.name}}</h4>
+    <div class="top-description mb-4">
+      <h4 style="margin-bottom: 0px !important;">{{systemStatus?.name}} status page</h4>
     <p class="faded-text">{{systemStatus?.description}}</p>
     </div>
 
     <!-- Availability summary -->
-    <div class="availability-widget mb-5">
-      <div class="widget-header">
-        <span class="mr-2">Availability Summary</span> <span class="fa fa-info-circle text-secondary" placement="bottom" ngbTooltip="View a summary of overall system availability information"></span>
+    <div class="availability-widget mb-4">
+      <div class="widget-header d-flex justify-content-between align-items-baseline">
+        <span>Availability Summary
+          <span class="fa fa-info-circle text-secondary" placement="bottom" ngbTooltip="View a summary of overall system availability information"></span>
+        </span>
+        <div>
+          <ngb-tabset justify="end" class="mb-1 public-page-tabs" #metricTabs (tabChange)="onWidgetTabChange($event)" [activeId]="activeTab">
+            <ngb-tab id="day">
+                <ng-template ngbTabTitle>Today</ng-template>
+            </ngb-tab>
+            <ngb-tab id="week">
+                <ng-template ngbTabTitle>Week</ng-template>
+            </ngb-tab>
+            <ngb-tab id="month">
+                <ng-template ngbTabTitle>Month</ng-template>
+            </ngb-tab>         
+            </ngb-tabset>
+        </div>
       </div>
       <div class="widget-wrapper">
         <table class="status-page-table">
           <tbody >
             <tr>
               <td align="center" width="33%">
-                <div class="mb-2">
-                  <span class="larger-font operational">100%</span>
+                <div class="mb-2 text-center" >
+                  <span class="larger-font operational">
+                    {{availabilitySummary?.uptime_percentage}} %
+                  </span>
                 </div>
                 <div>
                   <span>Availability</span>
@@ -33,7 +50,9 @@
               </td>
               <td align="center" width="33%" class="border-lr">
                 <div class="mb-2">
-                  <span class="larger-font">0 Mins 0 Seconds</span>
+                  <span class="larger-font minor">
+                    {{availabilitySummary?.total_downtime | timeBreakdown}}
+                  </span>
                 </div>
                 <div>
                   <span>Total Outage Duration</span>
@@ -41,10 +60,12 @@
               </td>
               <td align="center">
                 <div class="mb-2">
-                  <span class="larger-font major">0</span>
+                  <span class="larger-font major">
+                    {{availabilitySummary?.incident_count}}
+                  </span>
                 </div>
                 <div>
-                  <span>Number of Incidents</span>
+                  <span>Incidents</span>
                 </div>
               </td>
             </tr>
@@ -88,11 +109,34 @@
       <!-- Card -->
     </div>
 
-    <div class="widget-header">
+    <div class="widget-header d-flex justify-content-between align-items-baseline">
       <span class="mr-2">Metrics</span>
+      <div>
+        <ngb-tabset justify="end" class="mb-1 public-page-tabs" #metricTabs (tabChange)="onMetricTabChange($event)" [activeId]="activeTab">
+          <ngb-tab id="day">
+              <ng-template ngbTabTitle>Today</ng-template>
+          </ngb-tab>
+          <ngb-tab id="week">
+              <ng-template ngbTabTitle>Week</ng-template>
+          </ngb-tab>
+          <ngb-tab id="month">
+              <ng-template ngbTabTitle>Month</ng-template>
+          </ngb-tab>         
+          </ngb-tabset>
+      </div>
     </div>
     <div class="metrics">
-      <div class="response-time mb-2">
+      <div class="availability mb-2">
+        <mdb-card class="no-shadow-card">
+          <mdb-card-header>
+            <span class="mr-2">Availability</span> <span class="fa fa-info-circle text-secondary" placement="bottom" ngbTooltip="View response times of registered service endpoints"></span>
+          </mdb-card-header>
+          <mdb-card-body>
+            <hm-line-graph [chartData]="availabilityTrendGraph" [graphChanges]="graphChanges"></hm-line-graph>
+          </mdb-card-body>
+        </mdb-card>
+      </div>
+      <div class="response-time mb-4">
         <mdb-card class="no-shadow-card">
           <mdb-card-header>
             <span class="mr-2">Services response times</span> <span class="fa fa-info-circle text-secondary" placement="bottom" ngbTooltip="View response times of registered service endpoints"></span>
@@ -106,25 +150,12 @@
                   distribution="series"
                   [colors]="chartColors"
                   [options]="chartOptions"
-                  [legend]="true"
-                  (chartHover)="chartHovered($event)"
-                  (chartClick)="chartClicked($event)">
+                  [legend]="true">
               </canvas>
             </div>
           </mdb-card-body>
         </mdb-card>
       </div>
-      <div class="availability mb-5">
-        <mdb-card class="no-shadow-card">
-          <mdb-card-header>
-            <span class="mr-2">Availability</span> <span class="fa fa-info-circle text-secondary" placement="bottom" ngbTooltip="View response times of registered service endpoints"></span>
-          </mdb-card-header>
-          <mdb-card-body>
-            <hm-line-graph [chartData]="availabilityTrendGraph" [graphChanges]="graphChanges"></hm-line-graph>
-          </mdb-card-body>
-        </mdb-card>
-      </div>
-
       <div>
 
       </div>

@@ -1,7 +1,11 @@
 export class AvailabilitySummary {
-    date_from: Date;
-    date_to: Date;
-    total_incidents: number;
-    total_outage: number;
-    availability: number;
+    start_date: Date;
+    end_date: Date;
+    total_period: string;
+    total_uptime: string;
+    total_downtime: number;
+    uptime_percentage: number;
+    downtime_percentage: number;
+    duration_since_downtime: number;
+    incident_count: number;
 }

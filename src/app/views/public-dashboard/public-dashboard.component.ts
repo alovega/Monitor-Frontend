@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit, AfterViewChecked, ChangeDetectorRef } from '@angular/core';
 import { forkJoin } from 'rxjs';
 import { SystemStatusService } from 'src/app/shared/system-status.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -12,21 +12,25 @@ import { ToastrService } from 'ngx-toastr';
 import { GraphsService } from 'src/app/shared/graphs.service';
 import { GraphDataResponse } from 'src/app/shared/models/graph-data';
 import { AvailabilitySummary } from 'src/app/shared/models/availability-summary';
+import { StatusPageService } from './status-page.service';
+import { NgbTabset, NgbTabChangeEvent } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'hm-public-dashboard',
   templateUrl: './public-dashboard.component.html',
   styleUrls: ['./public-dashboard.component.scss']
 })
-export class PublicDashboardComponent implements OnInit {
+export class PublicDashboardComponent implements OnInit, AfterViewInit, AfterViewChecked {
   systemStatus: any;
   systemId: string;
   endpoints: any[];
-  availabilitySummary: AvailabilitySummary[];
+  availabilitySummary: AvailabilitySummary;
   pastDates: any;
   graphChanges: any;
-  public chartType: string = 'line';
+  @ViewChild('metricTabs', {static: false}) tabs: NgbTabset;
+  activeTab: string;
 
+  public chartType: string = 'line';
   public availabilityTrendGraph = {
     chartType: 'line',
     chartDatasets: [
@@ -73,14 +77,6 @@ export class PublicDashboardComponent implements OnInit {
     { data: [28, 48, 40, 19, 86, 27, 90], label: 'My Second dataset' }
   ];
 
-  public chartDatasets3: Array<any> = [
-    { data: [55, 59, 50, 51, 56, 55, 40], label: 'My First dataset', borderWidth: 0},
-  ];
-
-  public chartDataset2: Array<any> = [
-    { data: [100, 100, 80, 100, 90, 100, 100, 65, 35, 67, 97, 100], label: 'Total Availability', lineTension: 0 },
-  ];
-
   public chartLabels: Array<any> = ['1', '', '2', '', '3', '', '4', '', '5', '', '6', ''];
 
   public chartColors: Array<any> = [
@@ -93,22 +89,6 @@ export class PublicDashboardComponent implements OnInit {
       backgroundColor: 'rgba(0, 137, 132, .2)',
       borderColor: 'rgba(0, 10, 130, .7)',
       borderWidth: 2,
-    }
-  ];
-
-  public chartColors2: Array<any> = [
-    {
-      backgroundColor: 'rgb(5, 197, 5)',
-      borderColor: 'rgb(5, 172, 5)',
-      borderWidth: 2,
-    }
-  ];
-
-  public chartColors3: Array<any> = [
-    {
-      backgroundColor: 'rgb(5, 197, 5)',
-      borderColor: 'rgb(5, 197, 5)',
-      borderWidth: 0,
     }
   ];
 
@@ -130,43 +110,19 @@ export class PublicDashboardComponent implements OnInit {
    }
   };
 
-  public chartOptions2: any = {
-    responsive: true,
-    scales: {
-      xAxes: [{
-              display: true,
-              scaleLabel: {
-                  display: true,
-                  labelString: 'Month'
-              }
-          }],
-      yAxes: [{
-              display: true,
-              ticks: {
-                  beginAtZero: true,
-                  steps: 10,
-                  stepValue: 5,
-                  max: 100
-              }
-          }]
-    },
-    title: {
-        display: true,
-        text: 'Availability Percentage trend'
-    }
-  };
-  public chartClicked(e: any): void { }
-  public chartHovered(e: any): void { }
-
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
+    private statusPageService: StatusPageService,
     private endpointsService: EndpointService,
     private systemService: SystemService,
     private httpWrapperService: HttpWrapperService,
     private toastr: ToastrService,
-    private graphsService: GraphsService
-  ) { }
+    private graphsService: GraphsService,
+    private changeDetector: ChangeDetectorRef
+  ) {
+    this.activeTab = 'week';
+  }
 
   ngOnInit() {
     this.systemId = this.activatedRoute.snapshot.paramMap.get('system-id');
@@ -199,10 +155,10 @@ export class PublicDashboardComponent implements OnInit {
           this.router.navigate(['error']);
         }
       });
+
     this.endpointsService.getEndpoints<any>(this.systemId)
     .subscribe(response => {
       if (response.ok) {
-        console.log(response.body);
         if (response.body.code === '800.200.001') {
           this.endpoints = response.body.data;
         } else {
@@ -211,7 +167,26 @@ export class PublicDashboardComponent implements OnInit {
       }
     });
 
-    this.graphsService.getSystemAvailabilityTrend<GraphDataResponse>(this.systemId, 'month')
+    this.getMetrics(this.activeTab);
+    this.getWidgetsData(this.activeTab);
+  }
+
+  public getWidgetsData(activeTab: string) {
+    this.statusPageService.getAvailabilitySummary<any>(this.systemId, activeTab)
+    .subscribe(response => {
+      if (response.ok) {
+        console.log(response);
+        if (response.body.code === '800.200.001') {
+          this.availabilitySummary = response.body.data;
+        } else {
+          // Error
+        }
+      }
+    });
+  }
+
+  public getMetrics(activeTab: string) {
+    this.graphsService.getSystemAvailabilityTrend<GraphDataResponse>(this.systemId, activeTab)
     .subscribe(response => {
       if (response.ok) {
         if (response.body.code === '800.200.001') {
@@ -226,5 +201,30 @@ export class PublicDashboardComponent implements OnInit {
         // TODO: Add error checks
       }
     });
+    // TODO: Add graphService call to fetch response times
+  }
+
+  ngAfterViewChecked(): void {
+    if (this.tabs) {
+      this.tabs.select(this.activeTab);
+    }
+  }
+
+  ngAfterViewInit() {
+    this.changeDetector.detectChanges();
+  }
+
+  onMetricTabChange($event: NgbTabChangeEvent) {
+    if (this.tabs) {
+      this.activeTab = $event.nextId;
+      this.getMetrics(this.activeTab);
+    }
+  }
+
+  onWidgetTabChange($event: NgbTabChangeEvent) {
+    if (this.tabs) {
+      this.activeTab = $event.nextId;
+      this.getWidgetsData(this.activeTab);
+    }
   }
 }
