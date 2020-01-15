@@ -1,13 +1,10 @@
 import { Component, OnInit, ViewChild, AfterViewInit, HostListener, ChangeDetectorRef, TemplateRef, ElementRef } from '@angular/core';
 import { ColumnMode} from '@swimlane/ngx-datatable';
-import { ToastrService } from 'ngx-toastr';
 import { System } from 'src/app/shared/models/system';
-import { BehaviorSubject, fromEvent, of } from 'rxjs';
+import { BehaviorSubject, fromEvent} from 'rxjs';
 import { Page, TableResponse } from '../../../shared/data-table/model/page';
 import { debounceTime, distinctUntilChanged, tap } from 'rxjs/operators';
 import {NotificationsService} from '../notifications.service';
-import { Notification } from '../notification';
-import { ActivatedRoute } from '@angular/router';
 import { SystemService } from '../../../shared/system.service';
 import { DataSource } from '../../../shared/data-table/model/dataSource';
 
@@ -42,7 +39,6 @@ export class EmailNotificationComponent implements OnInit, AfterViewInit {
 
   constructor(
     private notificationsService: NotificationsService, private cdRef: ChangeDetectorRef,
-    private activatedRoute: ActivatedRoute,
     private cd: ChangeDetectorRef,
     private systemService: SystemService
     ) {
