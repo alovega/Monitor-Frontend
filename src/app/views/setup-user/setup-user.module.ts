@@ -12,10 +12,11 @@ import { SetupUserComponent } from './setup-user.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 
 import { MatStepperModule } from '@angular/material';
+import { UpdateUserComponent } from './update-user/update-user.component';
 
 
 @NgModule({
-  declarations: [SetupUserComponent],
+  declarations: [SetupUserComponent, UpdateUserComponent],
   imports: [
     CommonModule,
     SetupUserRoutingModule,
@@ -31,6 +32,7 @@ import { MatStepperModule } from '@angular/material';
   ],
   schemas: [
     NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA
-  ]
+  ],
+  exports: [UpdateUserComponent]
 })
 export class SetupUserModule { }
