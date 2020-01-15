@@ -40,7 +40,6 @@ export class SetupUserComponent implements OnInit {
   recipients: RecipientLookup[];
   states: State[];
   isLinear = true;
-  iscompleted = true;
   confirmPassword: any;
   isdataReady = false;
   constructor(
