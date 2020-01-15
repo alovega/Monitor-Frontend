@@ -1,4 +1,218 @@
-<div class="page-layout" *ngIf="systemStatus">
+<!-- Main page  -->
+<div class="pb-2" style="min-height: 100vh; background-color: white;">
+  <!--Navbar-->
+  <mdb-navbar SideClass="navbar navbar-expand-lg navbar-light grey lighten-5" [containerInside]="false">
+    <!-- Navbar brand -->
+    <mdb-navbar-brand><a class="navbar-brand">Helaplan</a></mdb-navbar-brand>
+    <!-- Collapsible content -->
+
+  </mdb-navbar>
+  <!--/.Navbar-->
+
+  <div class="status-page-content">
+    <div class="top-description mb-5">
+      <h4>Helaplan Status</h4>
+      <p class="faded-text">Real-time availability and performance monitoring for Helaplan Services.</p>
+    </div>
+
+    <!-- Availability summary -->
+    <div class="availability-widget mb-4">
+      <div class="widget-header">
+        <span>Helaplan Status Page</span> <span style="font-size: smaller;" class="faded-text"> - Availability Summary</span>
+      </div>
+      <div class="widget-wrapper">
+        <table class="status-page-table">
+          <tbody>
+            <tr>
+              <td align="center" width="33%">
+                <div class="mb-2">
+                  <span class="larger-font">100%</span>
+                </div>
+                <div>
+                  <span>Availability</span>
+                </div>
+              </td>
+              <td align="center" width="33%" class="border-lr">
+                <div class="mb-2">
+                  <span class="larger-font">O Mins 0 Seconds</span>
+                </div>
+                <div>
+                  <span>Total Outage Duration</span>
+                </div>
+              </td>
+              <td align="center">
+                <div class="mb-2">
+                  <span class="larger-font">0</span>
+                </div>
+                <div>
+                  <span>Number of Incidents</span>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Service status -->
+    <div class="services mb-4">
+      <div class="widget-header">
+        <span class="mr-2">Services status</span> <span class="fa fa-info-circle text-secondary" placement="bottom" ngbTooltip="View realtime status of configured services"></span>
+      </div>
+      <!-- Card -->
+      <mdb-card class="no-shadow-card">
+        <!--Card content-->
+        <mdb-card-body class="table-responsive">
+          <!--Services list-->
+          <table mdbTable hover="true" small="true">
+            <thead class="white">
+              <tr>
+                <th scope="col">Service Name</th>
+                <th scope="col">Performance</th>
+                <th scope="col">Details</th>
+              </tr>
+            </thead>
+            <tbody striped="true">
+              <tr>
+                <td>Authentication</td>
+                <td>100 ms</td>
+                <td>Operational</td>
+              </tr>
+              <tr>
+                <td>Authentication</td>
+                <td>100 ms</td>
+                <td>Operational</td>
+              </tr>
+              <tr>
+                <td>Authentication</td>
+                <td>100 ms</td>
+                <td>Operational</td>
+              </tr>
+              <tr>
+                <td>Authentication</td>
+                <td>100 ms</td>
+                <td>Operational</td>
+              </tr>
+            </tbody>
+          </table>
+        </mdb-card-body>
+      </mdb-card>
+      <!-- Card -->
+    </div>
+
+    <div class="metrics">
+      <div class="response-time mb-4">
+        <div class="widget-header">
+          <span class="mr-2">Service Response times</span> <span class="fa fa-info-circle text-secondary" placement="bottom" ngbTooltip="View response times of registered service endpoints"></span>
+        </div>
+        <mdb-card class="no-shadow-card">
+          <mdb-card-body>
+            <div style="display: block;">
+              <canvas mdbChart style="height: 250px !important;" height="0"
+                  [chartType]="chartType"
+                  [datasets]="chartDatasets"
+                  [labels]="chartLabels"
+                  distribution="series"
+                  [colors]="chartColors"
+                  [options]="chartOptions"
+                  [legend]="true"
+                  (chartHover)="chartHovered($event)"
+                  (chartClick)="chartClicked($event)">
+              </canvas>
+            </div>
+          </mdb-card-body>
+        </mdb-card>
+      </div>
+
+      <div class="availability mb-4">
+        <div class="widget-header">
+          <span class="mr-2">Availability</span> <span class="fa fa-info-circle text-secondary" placement="bottom" ngbTooltip="View response times of registered service endpoints"></span>
+        </div>
+        <mdb-card class="no-shadow-card">
+          <mdb-card-body>
+            <div style="display: block;">
+              <canvas mdbChart style="height: 250px !important;" height="0"
+                  [chartType]="chartType"
+                  [datasets]="chartDataset2"
+                  [labels]="chartLabels"
+                  [colors]="chartColors2"
+                  [options]="chartOptions2"
+                  [legend]="true"
+                  (chartHover)="chartHovered($event)"
+                  (chartClick)="chartClicked($event)">
+              </canvas>
+            </div>
+          </mdb-card-body>
+        </mdb-card>
+      </div>
+    </div>
+      <!-- <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-4"></div>
+        <div class="col-md-4"></div>
+      </div> -->
+      
+      <!-- <div class="summary row w-100">
+        <div class="availability-box col-md-4">
+          <div class="mb-2">100%</div>
+          <div class="font-small">Availability</div>
+        </div>
+        <div class="outage-box col-md-4">
+          <div class="mb-2">O Minutes 0 Seconds</div>
+          <div class="font-small">Total outage duration</div>
+        </div>
+        <div class="incidents-count-box col-md-4">
+          <div class="mb-2">0</div>
+          <div class="font-small">Number of incidents</div>
+        </div>
+      </div> -->
+
+    <!-- Incidents History -->
+    <div class="past-incidents mb-4">
+      <div class="widget-header">
+        <span class="mr-2">Incident History</span> 
+        <span class="fa fa-info-circle text-secondary" placement="bottom" ngbTooltip="View detailed incident record on the services' availability and announcements"></span>
+      </div>
+      
+      <div *ngFor="let pastDate of pastDates" style="margin-bottom: 10px">
+        <mdb-card class="no-shadow-card">
+          <mdb-card-body>
+            <div style="margin-bottom: 10px; border-bottom: 1px solid rgba(0, 0, 0, 0.125); "> 
+            <h5 style="font-size: 16px; font-weight: 400;">{{ pastDate.date | date:'MMM dd, yyyy' }}</h5>
+            </div>
+            <div class="incidents" *ngIf="pastDate?.incidents?.length; else noIncidents">
+              <div *ngFor="let incident of pastDate.incidents" class="mb-3" style="font-size: 14px;">
+                  <a class="incident-name priority-{{incident.priority_level}}" [ngClass]="{'maintenance': incident.type == 'Scheduled'}">{{incident.name}}</a>
+                  <div class="update mb-3">
+                    <div *ngIf="incident.status == 'Completed' || incident.status == 'Resolved'" class="mb-2">
+                      <span class="incident-status">
+                        {{incident.status}}
+                      </span> - {{incident.description}}
+                      <div class="faded-text">{{incident.date_modified | date:'MMM dd,  hh:mm a'}}</div>
+                    </div>
+                    <!-- {{incident.incident_updates}} -->
+                    <div class="incident-update mb-2" *ngFor="let update of incident.incident_updates">
+                      <div *ngIf="update.status != 'Completed' && update.status != 'Resolved'">
+                        <span class="incident-status">{{update.status}}</span> - {{update.description}}
+                        <div class="faded-text">{{update.date_created | date:'MMM dd,  hh:mm a'}}</div>
+                      </div>
+                    </div>
+                  </div>
+              </div>
+            </div>
+    
+            <ng-template #noIncidents>
+              <div style="font-size: 14px;" class="faded-text">No incidents reported today</div>
+            </ng-template>
+          </mdb-card-body>
+        </mdb-card>
+      </div>   
+    </div>
+  </div>
+</div>
+
+
+<!-- <div class="page-layout" *ngIf="systemStatus">
     <div class="page-header">
     </div>
     <div class="status-container">
@@ -64,7 +278,6 @@
                   <span *ngIf="endpoint.status === 'Under Maintenance'" class="under-maintenance">
                       Under Maintenance
                   </span>
-                <!-- <hm-endpoint-status status="{{endpoint.status}}"></hm-endpoint-status> -->
               </div>
             </div>
           </li>
@@ -87,7 +300,6 @@
                         </span> - {{incident.description}}
                         <div class="faded-text">{{incident.date_modified | date:'MMM dd,  hh:mm a'}}</div>
                     </div>
-                    <!-- {{incident.incident_updates}} -->
                     <div class="incident-update mb-2" *ngFor="let update of incident.incident_updates">
                         <div *ngIf="update.status != 'Completed' && update.status != 'Resolved'">
                             <strong>{{update.status}}</strong> - {{update.description}}
@@ -103,4 +315,4 @@
           </ng-template>
         </div>
     </div>
-</div>
+</div> -->
