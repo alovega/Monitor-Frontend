@@ -1,13 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
-import { of } from 'rxjs';
+import {forkJoin } from 'rxjs';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Recipient } from '../recipient';
+import { Recipient, RecipientData } from '../model/recipient';
 import { State } from 'src/app/shared/models/state';
 import { User } from 'src/app/shared/models/user';
 import { RecipientService } from '../recipient.service';
 import { ToastrService } from 'ngx-toastr';
+import { LookUpService } from 'src/app/shared/look-up.service';
+import { RecipientResponse } from '../model/recipient-response';
+import { LookUpResponse } from 'src/app/shared/models/look-up-response';
 
 @Component({
   selector: 'hm-recipient-update',
@@ -19,35 +22,48 @@ export class RecipientUpdateComponent implements OnInit {
   recipientId: any;
   submitted = false;
   data: Recipient;
-  states: State;
+  states: State[];
   users: User;
+  isdataReady = false;
+  stateId: string;
 
   constructor(private recipientService: RecipientService, public activatedRoute: ActivatedRoute, private location: Location,
-              private fb: FormBuilder, private router: Router, private toastr: ToastrService) {
-    this.data = new Recipient();
-    this.createForm();
-    of(this.getStates()).subscribe((data: any) => {
-        this.states = data;
-      });
+              private fb: FormBuilder, private router: Router, private toastr: ToastrService, private lookUpService: LookUpService) {
+                this.data = new Recipient();
+                this.createForm();
   }
 
   ngOnInit() {
     this.recipientId = this.activatedRoute.snapshot.params.id;
-    this.recipientService.getRecipient(this.recipientId).subscribe(response => {
-      if (response.code === '800.200.001') {
-        this.data = response.data;
-        this.updateForm.patchValue({
-          PhoneNumber: this.data.phoneNumber,
-          State: this.data.stateId
-        });
-      } else {
-        this.toastr.error(response.message);
+    const states = this.lookUpService.getLookUpData<LookUpResponse>();
+    this.recipientService.getRecipient<RecipientData>(this.recipientId).subscribe(response => {
+      if (response.ok) {
+        if (response.body.code === '800.200.001') {
+          this.data = response.body.data;
+          forkJoin(states)
+                .subscribe(results => {
+                  console.log(results);
+                  if (results[0]) {
+                    this.states = results[0].body.data.states.filter(state => state.name === 'Active' || state.name === 'Disabled')
+                    .map((state: State) => ({id: state.id, text: state.name}));
+                    this.stateId = this.states.filter(i => i.id === this.data.stateId)[0].id;
+                  }
+                  this.isdataReady = true;
+                });
+          this.updateForm.patchValue({
+            PhoneNumber: this.data.phoneNumber,
+            State: this.data.stateId
+          });
+        } else {
+          this.toastr.error(response.body.message);
+        }
       }
     });
   }
   createForm() {
+    const phoneNumber = '^(\\+\\d{1,3}[- ]?)?\\d{10}$';
     this.updateForm = this.fb.group({
-        PhoneNumber: ['', Validators.required],
+        PhoneNumber: ['', [Validators.required, Validators.pattern(phoneNumber)]],
         State: ['', Validators.required]
     });
   }
@@ -68,20 +84,17 @@ export class RecipientUpdateComponent implements OnInit {
     this.submitted = false;
     this.updateForm.reset();
   }
-  getStates() {
-    this.recipientService.getStates().subscribe((data) => {
-      this.states = data;
-    });
-  }
   updateRecipient() {
     this.data = this.updateForm.value;
     this.data.recipientId = this.recipientId;
-    this.recipientService.updateRecipient(this.data).subscribe(response => {
-      if (response.code === '800.200.001') {
-        this.toastr.success(response.message);
-        this.location.back();
-      } else {
-        this.toastr.error(response.message);
+    this.recipientService.updateRecipient<RecipientResponse>(this.data).subscribe(response => {
+      if (response.ok) {
+        if (response.body.code === '800.200.001') {
+          this.toastr.success( response.body.message);
+          this.location.back();
+        } else {
+          this.toastr.error(response.body.message);
+        }
       }
     });
   }

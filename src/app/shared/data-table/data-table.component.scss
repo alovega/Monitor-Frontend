@@ -23,10 +23,10 @@ input[type='text']:focus{
 }
 #searchlabel{
     order: 0;
-    margin-top: 15px;
+    margin-top: 25px;
     padding-right: 10px;
     margin-bottom: 15px;
-    font-size: 1.2 em;
+    size: 1.2 em;
 }
 
 .pagination{
@@ -55,4 +55,8 @@ p{
 
 :host ::ng-deep .ngx-datatable .datatable-body .datatable-scroll {
     display: inherit;
+  }
+
+  ::ng-deep .ngx-datatable{
+    margin-bottom: 20px;
   }

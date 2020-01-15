@@ -9,16 +9,12 @@ import { HttpWrapperService } from './helpers/http-wrapper.service';
   providedIn: 'root'
 })
 export class LookUpService {
-  Url = 'http://localhost:8000/api/get_lookup';
+  Url = 'http://127.0.0.1:8000/api/get_lookup/';
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
 
-  constructor(private http: HttpClient, private httpWrapper: HttpWrapperService) { }
-
-  getLookups<T>(): Observable<HttpResponse<T>> {
-    return this.httpWrapper.post<T>('get_lookup/');
-  }
+  constructor(private http: HttpClient, private httpWrapperService: HttpWrapperService) { }
 
   // Handle API errors
   handleError(error: HttpErrorResponse) {
@@ -43,23 +39,14 @@ export class LookUpService {
   }
   public getStates() {
     return this.http.get<any>(this.Url).pipe(
-      map(response => {
-        console.log('Fetching states..');
-        console.log(response);
-        response.data.states.filter( state => state.name === 'Active' || state.name === 'Disabled')
-      }),
+      map(response => response.data.states.filter(state => state.name === 'Active' || state.name === 'Disabled')),
       retry(2),
       catchError(this.handleError)
     );
   }
 
-  public getEndpointType() {
-
-    return this.http.get<any>(this.Url).pipe(
-      map(response => response.data.endpoint_types),
-      retry(2),
-      catchError(this.handleError)
-    );
+  public getEndpointType<T>(): Observable<HttpResponse<T>> {
+    return this.httpWrapperService.get<T>('get_lookup/');
   }
   public getEscalationLevel() {
 
@@ -128,11 +115,10 @@ export class LookUpService {
     );
   }
 
-  public getEndpointStates() {
-    return this.http.get<any>(this.Url).pipe(
-      map(response => response.data.endpoint_states),
-      retry(2),
-      catchError(this.handleError)
-    );
+  public getEndpointStates<LookUpResponse>(): Observable<HttpResponse<LookUpResponse>> {
+    return this.httpWrapperService.get<LookUpResponse>('get_lookup/');
+  }
+  public getLookUpData<LookUpResponse>(): Observable<HttpResponse<LookUpResponse>> {
+    return this.httpWrapperService.get<LookUpResponse>('get_lookup/');
   }
 }

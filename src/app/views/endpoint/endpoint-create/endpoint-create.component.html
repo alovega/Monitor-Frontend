@@ -10,7 +10,7 @@
 
 <mdb-card>
 <!-- Default form contact -->
-<form [formGroup]="endpointForm" class="text-center border  p-5" (ngSubmit) = "onSubmit()">
+<form [formGroup]="endpointForm" class="text-center border  p-5" (ngSubmit) = "onSubmit()" *ngIf="isdataReady">
   <div class="row">
     <div class="col">
       <!-- Name -->
@@ -27,10 +27,13 @@
     <div class="col">
       <!-- Endpoint -->
       <label>URL</label>
-      <input type="text" id="defaultContactFormEndpoint" class="form-control mb-4" placeholder="URL" formControlName="URL" [(ngModel)]="data.url" >
+      <input type="url" id="defaultContactFormEndpoint" class="form-control mb-4" placeholder="URL" formControlName="URL" [(ngModel)]="data.url" >
       <div *ngIf="endpointForm.controls['URL'].invalid && (endpointForm.controls['URL'].dirty || endpointForm.controls['URL'].touched)" class="invalid-feedback">
         <div *ngIf="endpointForm.controls['URL'].errors.required">
           A URL is required.
+        </div>
+        <div *ngIf="endpointForm.controls['URL'].errors.pattern">
+          Please enter a url  with correct formart
         </div>
       </div>
     </div>
@@ -38,8 +41,8 @@
   <div class="row">
     <div class="col">
       <!-- Optimal response time -->
-      <label>Optimal response time</label>
-      <input type="text" id="defaultContactFormEndpoint" class="form-control mb-4" placeholder="Optimal response time" formControlName="OptimalResponseTime" [(ngModel)]="data.optimal_response_time" >
+      <label>Optimal response time(seconds)</label>
+      <input type="number" id="defaultContactFormEndpoint" class="form-control mb-4" placeholder="3600" formControlName="OptimalResponseTime" [(ngModel)]="data.optimal_response_time" >
       <div *ngIf="endpointForm.controls['OptimalResponseTime'].invalid && (endpointForm.controls['OptimalResponseTime'].dirty || endpointForm.controls['OptimalResponseTime'].touched)" class="invalid-feedback">
         <div *ngIf="endpointForm.controls['OptimalResponseTime'].errors.required">
           Optimal response time is required.
@@ -49,11 +52,10 @@
     <div class="col">
       <!-- Endpoint type -->
       <label>Endpoint type</label>
-      <select class=" form-control browser-default custom-select mb-4" placeholder="Endpoint type" formControlName="EndpointType" [(ngModel)]="data.endpoint_type">
-          <option *ngFor="let type of endpointTypes; let i = index" [value]="type.id">
-              {{type.name}}
-            </option>
-      </select>
+      <div *ngIf="endpointTypes?.length">
+        <ng-select2 style="width:100%;" class=" custom-select-dropdown" placeholder="Endpoint Type" formControlName="EndpointType" [(ngModel)]="data.endpoint_type" [data]="endpointTypes">
+        </ng-select2>
+      </div>
       <div *ngIf="endpointForm.controls['EndpointType'].invalid && (endpointForm.controls['EndpointType'].dirty || endpointForm.controls['EndpointType'].touched)" class="invalid-feedback">
         <div *ngIf="endpointForm.controls['EndpointType'].errors.required">
             EnpointType is required.
@@ -63,11 +65,10 @@
     <div class="col">
       <!-- State -->
       <label>State</label>
-      <select class=" form-control browser-default custom-select mb-4" placeholder="State" formControlName="State" [(ngModel)]="data.state">
-          <option *ngFor="let type of states; let i = index" [value]="type.id">
-              {{type.name}}
-            </option>
-      </select>
+      <div *ngIf="states?.length">
+        <ng-select2 style="width:100%;" class=" custom-select-dropdown" formControlName="State" [(ngModel)]="data.state" [data]="states">
+        </ng-select2>
+      </div>
       <div *ngIf="endpointForm.controls['State'].invalid && (endpointForm.controls['State'].dirty || endpointForm.controls['State'].touched)" class="invalid-feedback">
         <div *ngIf="endpointForm.controls['State'].errors.required">
             State is required.
@@ -87,7 +88,7 @@
           Description is required.
         </div>
         <div *ngIf="endpointForm.controls['Description'].errors.minlength">
-            Description is should be more than 10.
+            Description should be more than 10 characters.
           </div>
       </div>
     </div>

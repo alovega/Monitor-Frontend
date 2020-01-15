@@ -134,6 +134,6 @@
     <div class="mt-5" *ngIf="responseTimeGraph.chartDatasets[0]?.data?.length">
     <h4>Endpoint response times</h4> 
     <hr>
-        <hm-line-graph [chartData]="responseTimeGraph"></hm-line-graph>
+        <hm-line-graph [chartData]="responseTimeGraph" [graphChanges]="graphChanges"></hm-line-graph>
     </div>
 </div>

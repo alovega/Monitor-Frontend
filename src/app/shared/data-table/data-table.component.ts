@@ -1,10 +1,10 @@
 import { Component, OnInit, ChangeDetectionStrategy, Input, TemplateRef,
    ViewChild, AfterViewInit, ElementRef, ChangeDetectorRef } from '@angular/core';
 import { ColumnMode} from '@swimlane/ngx-datatable';
-import { BehaviorSubject, fromEvent, of } from 'rxjs';
+import { BehaviorSubject, fromEvent, of, merge } from 'rxjs';
 import { DataTableService} from './data-table.service';
 import { Page, TableResponse } from './model/page';
-import { debounceTime, distinctUntilChanged, tap, catchError, finalize } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, tap} from 'rxjs/operators';
 
 @Component({
   selector: 'hm-data-table',
@@ -37,11 +37,9 @@ export class DataTableComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-    console.log(this.dataSource);
     this.loading$.subscribe((response) => {
       this.load = response.valueOf();
       this.cd.detectChanges();
-      console.log(response.valueOf());
     }
     );
     this.page.url = this.dataSource.url;
@@ -50,7 +48,7 @@ export class DataTableComponent implements OnInit, AfterViewInit {
   }
   ngAfterViewInit() {
     fromEvent(this.input.nativeElement, 'keyup').pipe(
-      debounceTime(150),
+      debounceTime(800),
       distinctUntilChanged(),
       tap(() => {
         this.updateFilter();
@@ -66,7 +64,6 @@ export class DataTableComponent implements OnInit, AfterViewInit {
     // there will always be one "sort" object if "sortType" is set to "single"
     this.page.orderDir = sortInfo.sorts[0].dir;
     this.page.orderBy = sortInfo.sorts[0].prop;
-    console.log(this.table.offset);
     this.getTableData(this.page);
   }
   updateFilter() {
@@ -77,7 +74,6 @@ export class DataTableComponent implements OnInit, AfterViewInit {
     this.loadingSubject.next(true);
     this.dataService.reloadTable<TableResponse>(page)
     .subscribe(response => {
-      console.log(response);
       if (response.ok) {
         if (response.body.code === '800.200.001') {
           this.page.totalPages = response.body.data.totalPages;

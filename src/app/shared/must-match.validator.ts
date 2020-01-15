@@ -18,6 +18,5 @@ export function MustMatch(controlName: string, matchingControlName: string) {
         } else {
             matchingControl.setErrors(null);
         }
-    }
+    };
 }
-    
