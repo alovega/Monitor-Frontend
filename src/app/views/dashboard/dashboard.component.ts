@@ -188,6 +188,10 @@ export class DashboardComponent implements OnInit, AfterViewChecked, AfterViewIn
             this.responseTimeGraph.chartLabels.push(response.body.data.datasets[key].data);
           });
           this.responseTimeGraph.chartLabels = response.body.data.labels;
+          this.graphChanges = {
+            labels: this.responseTimeGraph.chartLabels,
+            datasets: this.responseTimeGraph.chartDatasets
+          };
         } else {
           this.toastr.error('Failed to retrieve Response times graph data', 'Get graph data error');
         }
