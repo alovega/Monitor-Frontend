@@ -1,0 +1,74 @@
+<!-- Incident History -->
+<div class="incident-history-content">
+    <div class="direction mr-2 mb-2" align="right">
+        <a routerLink="/status/{{systemStatus.system_id}}" routerLinkActive="active" (click)="back()">
+            <span class="fa fa-arrow-left" ngbTooltip = "Back to main status page" placement="bottom"></span>
+        <span class="direction-text"> Back</span>
+        </a>
+    </div>
+    <div class="incident-history-wrap">
+        <mdb-card class="no-shadow-card">
+            <mdb-card-header class="incident-name priority-{{incident?.priority_level}}" 
+                [ngClass]="{'maintenance': incident?.type == 'Scheduled'}">
+                <h2>{{incident?.name}}</h2>
+            </mdb-card-header>
+            <mdb-card-body>
+                <div class="heading">
+                    <h2>Incident Details</h2>
+                </div>
+                <div class="incident-details-body row">
+                    <div class="col-md-6 bdr-right">
+                        <div class="info-item">
+                            <div class="info-item-header">Status</div>
+                            <span class="info-item-body incident-status color-info">
+                                {{incident?.state_name}}
+                            </span>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-item-header">Type</div>
+                            <div class="info-item-body">
+                                {{incident?.incident_type_name}} Incident
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-item-header">Status</div>
+                            <div class="info-item-body">Resolved</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-item-header">Affected System</div>
+                            <div class="info-item-body">
+                                {{incident?.system_name}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="info-item">
+                            <div class="info-item-header">Incident Start Time</div>
+                            <div class="info-item-body">
+                                {{incident?.date_created | date:'MMM dd, yyyy HH:MM a'}}
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-item-header">Incident End Time</div>
+                            <div class="info-item-body">
+                                {{incident?.date_created | date:'MMM dd, yyyy HH:MM a'}}
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-item-header">Incident Duration</div>
+                            <div class="info-item-body">5 mins</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="heading">
+                    <h2>Update History</h2>
+                </div>
+                <div class="incident-details-body">
+                    <div class="incident-update-container">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestiae, neque.
+                    </div>
+                </div>
+            </mdb-card-body>
+        </mdb-card>
+    </div>
+</div>

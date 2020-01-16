@@ -1,0 +1,115 @@
+.incident-history-content {
+    margin: 2em 3em;
+    font-size: 14px;
+    font-weight: bold;
+    font-family: "ProximaNova", "Helvetica Neue", sans-serif !important;
+}
+
+.direction-text {
+    font-weight: bold;
+    opacity: .8;
+    cursor: default;
+}
+
+.card.no-shadow-card {
+    box-shadow: none;
+}
+
+.incident-name {
+    -webkit-tap-highlight-color: transparent;
+    -webkit-font-smoothing: antialiased;
+    -webkit-box-direction: normal;
+    // font-family: "ProximaNova-semibold", "Helvetica Neue", sans-serif;
+    font-weight: 400;
+    text-align: center;
+    word-break: break-word;
+    background: #ffffff;
+    border-bottom: none;
+    word-break: break-word;
+    padding: 0px;
+}
+
+.incident-name h2 {
+    font-size: 1.2rem;
+    font-weight: 500;
+    line-height: 1.5;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    opacity: .9;
+}
+
+.heading {
+    background-color: #fcfcfc;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+    border-top: 1px solid rgba(0, 0, 0, 0.125);
+    padding: 10px 0px 10px 10px;
+}
+
+.heading h2 {
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 0px;
+    color: #6c757d;
+}
+
+.card-body {
+    padding: 0px !important;
+}
+
+.incident-details-body {
+    padding: 15px;
+}
+
+.incident-details-body .bdr-right {
+    border-right: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+.incident-details-body .info-item {
+    margin-bottom: 1rem;
+}
+
+.incident-details-body .info-item .info-item-header {
+    margin-bottom: .15rem;
+    opacity: .8;
+    font-size: 13px;
+}
+
+.incident-details-body .info-item .info-item-body {
+    font-weight: 500;
+    opacity: 1;
+    font-size: 13px;
+}
+
+.incident-status {
+    font-size: 12px !important;
+    font-weight: 400;
+    text-transform: uppercase;
+    color: rgb(11, 11, 80) !important;
+    background-color: rgb(184, 228, 228);
+    padding: 3px;
+}
+
+.priority-1, .incident-name .priority-1{
+    color: black;
+    border-top: 5px solid black;
+}
+
+.priority-2, .priority-3, .incident-name .priority-2, .incident-name .priority-3 {
+    color: #FFC400 !important;
+    border-top: 5px solid #FFC400;
+}
+
+.priority-4, .incident-name .priority-4 {
+    color: #FF8B00 !important;
+    border-top: 5px solid #FF8B00;
+}
+
+.priority-5, .incident-name .priority-5 {
+    color: #DE350B !important;
+    border-top: 5px solid #DE350B;
+}
+
+.maintenance, .incident-name .maintenance{
+    border-top: 5px solid #3498DB;
+    color: #3498DB !important;
+}

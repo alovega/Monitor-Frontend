@@ -7,7 +7,7 @@ import { AuthGuardService } from './shared/helpers/auth-guard.service';
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'dashboard' },
   { path: 'dashboard', loadChildren: () => import('./layouts/dashboard-layout/dashboard-layout.module').then(m => m.DashboardLayoutModule), canActivate: [AuthGuardService]},
-  { path: 'system', loadChildren: () => import('./layouts/public-layout/public-layout.module').then(m => m.PublicLayoutModule)},
+  { path: 'status', loadChildren: () => import('./layouts/public-layout/public-layout.module').then(m => m.PublicLayoutModule)},
   { path: 'auth', loadChildren: () => import('./layouts/auth-layout/auth-layout.module').then(m => m.AuthLayoutModule) },
   // { path: '', pathMatch: 'full', redirectTo: 'system', canActivate: [AuthGuardService]},
   { path: '**', component: PagenotfoundComponent},

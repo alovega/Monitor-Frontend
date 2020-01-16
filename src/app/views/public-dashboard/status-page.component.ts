@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, AfterViewInit, AfterViewChecked, ChangeDetectorRef } from '@angular/core';
-import { forkJoin } from 'rxjs';
+import { forkJoin, BehaviorSubject } from 'rxjs';
 import { SystemStatusService } from 'src/app/shared/system-status.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EndpointService } from '../endpoint/endpoint.service';
@@ -7,7 +7,7 @@ import { IncidentService } from '../incidents/incident.service';
 import { SystemService } from 'src/app/shared/system.service';
 import { HttpWrapperService } from 'src/app/shared/helpers/http-wrapper.service';
 import { IncidentResponse } from '../incidents/incident';
-import { SystemResponse } from 'src/app/shared/models/system';
+import { SystemResponse, System } from 'src/app/shared/models/system';
 import { ToastrService } from 'ngx-toastr';
 import { GraphsService } from 'src/app/shared/graphs.service';
 import { GraphDataResponse } from 'src/app/shared/models/graph-data';
@@ -16,11 +16,11 @@ import { StatusPageService } from './status-page.service';
 import { NgbTabset, NgbTabChangeEvent } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
-  selector: 'hm-public-dashboard',
-  templateUrl: './public-dashboard.component.html',
-  styleUrls: ['./public-dashboard.component.scss']
+  selector: 'hm-status-page',
+  templateUrl: './status-page.component.html',
+  styleUrls: ['./status-page.component.scss']
 })
-export class PublicDashboardComponent implements OnInit, AfterViewInit, AfterViewChecked {
+export class StatusPageComponent implements OnInit, AfterViewInit, AfterViewChecked {
   systemStatus: any;
   systemId: string;
   endpoints: any[];
@@ -29,7 +29,8 @@ export class PublicDashboardComponent implements OnInit, AfterViewInit, AfterVie
   graphChanges: any;
   @ViewChild('metricTabs', {static: false}) tabs: NgbTabset;
   activeTab: string;
-
+  availabilitySummaryReady: boolean = false;
+  availabilityTrendGraphReady: boolean = false;
   public chartType: string = 'line';
   public availabilityTrendGraph = {
     chartType: 'line',
@@ -137,6 +138,7 @@ export class PublicDashboardComponent implements OnInit, AfterViewInit, AfterVie
               if (results[0].ok) {
                 if (results[0].body.code === '800.200.001') {
                   this.systemStatus = results[0].body.data;
+                  this.statusPageService.currentSystemSubject.next(results[0].body.data);
                 } else {
                   this.toastr.error('Could not fetch system status. Try again later', 'Error');
                 }
@@ -175,9 +177,9 @@ export class PublicDashboardComponent implements OnInit, AfterViewInit, AfterVie
     this.statusPageService.getAvailabilitySummary<any>(this.systemId, activeTab)
     .subscribe(response => {
       if (response.ok) {
-        console.log(response);
         if (response.body.code === '800.200.001') {
           this.availabilitySummary = response.body.data;
+          this.availabilitySummaryReady = true;
         } else {
           // Error
         }
@@ -193,6 +195,7 @@ export class PublicDashboardComponent implements OnInit, AfterViewInit, AfterVie
           this.availabilityTrendGraph.chartLabels = response.body.data.labels;
           this.availabilityTrendGraph.chartDatasets[0].data = response.body.data.datasets;
           this.graphChanges = response.body.data;
+          this.availabilityTrendGraphReady = true;
           // this.loading = false;
         } else {
           this.toastr.error('Failed to retrieve Error rates graph data', 'Get graph data error');
@@ -217,14 +220,20 @@ export class PublicDashboardComponent implements OnInit, AfterViewInit, AfterVie
   onMetricTabChange($event: NgbTabChangeEvent) {
     if (this.tabs) {
       this.activeTab = $event.nextId;
-      this.getMetrics(this.activeTab);
+      this.availabilityTrendGraphReady = false;
+      setTimeout(() => {
+        this.getMetrics(this.activeTab);
+      }, 500 );
     }
   }
 
   onWidgetTabChange($event: NgbTabChangeEvent) {
     if (this.tabs) {
       this.activeTab = $event.nextId;
-      this.getWidgetsData(this.activeTab);
+      this.availabilitySummaryReady = false;
+      setTimeout(() => {
+        this.getWidgetsData(this.activeTab);
+      }, 200);
     }
   }
 }

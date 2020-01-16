@@ -3,11 +3,11 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { PublicLayoutComponent } from './public-layout.component';
 import { LoginComponent } from 'src/app/views/login/login.component';
-import { PublicDashboardComponent } from 'src/app/views/public-dashboard/public-dashboard.component';
+import { StatusPageComponent } from 'src/app/views/public-dashboard/status-page.component';
 
 const routes: Routes = [
   { path: '', component: PublicLayoutComponent, children: [
-    { path: ':system-id', component: PublicDashboardComponent }
+    { path: ':system-id', loadChildren: () => import('src/app/views/public-dashboard/status-page.module').then(m => m.StatusPageModule) }
   ]},
 ];
 

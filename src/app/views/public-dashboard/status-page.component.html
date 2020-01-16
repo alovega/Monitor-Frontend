@@ -1,13 +1,3 @@
-<!-- Main page  -->
-<div class="pb-2" style="min-height: 100vh; background-color: white;">
-  <!--Navbar-->
-  <mdb-navbar SideClass="navbar navbar-expand-lg navbar-light grey lighten-5 no-border-shadow" [containerInside]="false">
-    <!-- Navbar brand -->
-    <mdb-navbar-brand><a class="navbar-brand" *ngIf="systemStatus">{{systemStatus.name}}</a></mdb-navbar-brand>
-    <!-- Collapsible content -->
-  </mdb-navbar>
-  <!--/.Navbar-->
-
   <div class="status-page-content">
     <div class="top-description mb-4">
       <h4 style="margin-bottom: 0px !important;">{{systemStatus?.name}} status page</h4>
@@ -36,9 +26,12 @@
       </div>
       <div class="widget-wrapper">
         <table class="status-page-table">
-          <tbody >
+          <tbody>
             <tr>
-              <td align="center" width="33%">
+              <td width="100%" class="mb-2" colspan="3" *ngIf="!availabilitySummaryReady">
+                <hm-component-loader></hm-component-loader>
+              </td>
+              <td align="center" width="33%" *ngIf="availabilitySummaryReady">
                 <div class="mb-2 text-center" >
                   <span class="larger-font operational">
                     {{availabilitySummary?.uptime_percentage}} %
@@ -48,7 +41,7 @@
                   <span>Availability</span>
                 </div>
               </td>
-              <td align="center" width="33%" class="border-lr">
+              <td align="center" width="33%" class="border-lr" *ngIf="availabilitySummaryReady">
                 <div class="mb-2">
                   <span class="larger-font minor">
                     {{availabilitySummary?.total_downtime | timeBreakdown}}
@@ -58,7 +51,7 @@
                   <span>Total Outage Duration</span>
                 </div>
               </td>
-              <td align="center">
+              <td align="center" *ngIf="availabilitySummaryReady">
                 <div class="mb-2">
                   <span class="larger-font major">
                     {{availabilitySummary?.incident_count}}
@@ -132,7 +125,8 @@
             <span class="mr-2">Availability</span> <span class="fa fa-info-circle text-secondary" placement="bottom" ngbTooltip="View response times of registered service endpoints"></span>
           </mdb-card-header>
           <mdb-card-body>
-            <hm-line-graph [chartData]="availabilityTrendGraph" [graphChanges]="graphChanges"></hm-line-graph>
+            <hm-component-loader *ngIf="!availabilityTrendGraphReady"></hm-component-loader>
+            <hm-line-graph *ngIf="availabilityTrendGraphReady" [chartData]="availabilityTrendGraph" [graphChanges]="graphChanges"></hm-line-graph>
           </mdb-card-body>
         </mdb-card>
       </div>
@@ -196,7 +190,8 @@
             </div>
             <div class="incidents" *ngIf="pastDate?.incidents?.length; else noIncidents">
               <div *ngFor="let incident of pastDate.incidents" class="mb-3" style="font-size: 14px;">
-                  <a class="incident-name priority-{{incident.priority_level}}" [ngClass]="{'maintenance': incident.type == 'Scheduled'}">{{incident.name}}</a>
+                  <a routerLink="incident/{{incident.id}}/" routerLinkActive="active" class="incident-name priority-{{incident.priority_level}}" 
+                  [ngClass]="{'maintenance': incident.type == 'Scheduled'}">{{incident.name}}</a>
                   <div class="update mb-3">
                     <div *ngIf="incident.status == 'Completed' || incident.status == 'Resolved'" class="mb-2">
                       <span class="incident-status">
@@ -223,7 +218,6 @@
       </div>   
     </div>
   </div>
-</div>
 
 <!-- <div class="page-layout" *ngIf="systemStatus">
     <div class="page-header">
