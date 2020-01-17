@@ -213,6 +213,35 @@ th {
   display: block;
   padding: .5rem 1rem;
 }
+
+.public-page-tabs .nav-tabs .nav-link.active, .nav-tabs .nav-item.show .nav-link {
+  opacity: 0.5 !important;
+  font-size: 1rem !important;
+  color: #292a1d !important;
+  border-bottom:  none !important;
+}
+
+.public-page-tabs .nav-tabs .nav-link.active {
+  font-size: 1rem !important;
+  border-bottom: none !important;
+  border-bottom: none !important;
+  color: #292a1d !important;
+}
+
+.public-page-tabs .nav-tabs .nav-link {
+  font-size: 1rem !important;
+  border-bottom: none !important;
+  color: #292a1d !important;
+}
+
+.public-page-tabs .nav-link {
+  display: block;
+  padding: 0.1rem 0.8rem;
+  border-bottom: none !important;
+  color: #292a1d !important;
+}
+
+
 @import './app/theme';
 
 // Include the base styles for Angular Material core. We include this here so that you only
