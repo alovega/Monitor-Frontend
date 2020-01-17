@@ -1,1 +1,11 @@
-<router-outlet></router-outlet>
+<!-- Main page  -->
+<div class="pb-2" style="min-height: 100vh; background-color: #EDEFF0;">
+    <!--Navbar-->
+    <mdb-navbar SideClass="navbar navbar-expand-lg navbar-light grey lighten-5 no-border-shadow" [containerInside]="false">
+      <!-- Navbar brand -->
+      <mdb-navbar-brand><a class="navbar-brand" *ngIf="systemStatus">{{systemStatus.name}}</a></mdb-navbar-brand>
+      <!-- Collapsible content -->
+    </mdb-navbar>
+    <!--/.Navbar-->
+    <router-outlet></router-outlet>
+</div>
