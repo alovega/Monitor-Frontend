@@ -20,8 +20,10 @@ export class GraphsService {
     });
   }
 
-  getResponseTimes<T>(): Observable<HttpResponse<T>> {
-    return this.httpWrapper.post<T>('get_response_time_data/');
+  getResponseTimes<T>(startDate, endDate): Observable<HttpResponse<T>> {
+    return this.httpWrapper.post<T>('get_response_time_data/', {
+      start_date: startDate, end_date: endDate
+    });
   }
 
   getSystemAvailabilityTrend<T>(systemId: string, intervalName: string): Observable<HttpResponse<T>> {

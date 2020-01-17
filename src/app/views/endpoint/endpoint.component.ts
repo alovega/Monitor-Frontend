@@ -1,9 +1,9 @@
-import { Component, OnInit, ViewChild, AfterViewInit, ChangeDetectorRef, TemplateRef } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit, TemplateRef } from '@angular/core';
 import {EndpointService} from './endpoint.service';
 import {DataSource} from '../../shared/data-table/model/dataSource';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import Swal from 'sweetalert2';
-import { SystemService } from 'src/app/shared/system.service';
+import { EndpointResponse } from './model/endpoint-response';
 
 
 @Component({
@@ -17,15 +17,12 @@ export class EndpointComponent implements OnInit, AfterViewInit {
   @ViewChild('dateColumn', {static: true}) dateColumn: TemplateRef<any>;
 
   elements: any;
-  currentSystem: any;
-  currentSystemId: any;
   endpointId: any;
   public dataSource = new DataSource();
 
   constructor(
     private endpointService: EndpointService,
-    private systemService: SystemService,
-    private cdRef: ChangeDetectorRef,
+    private router: Router,
     private activatedRoute: ActivatedRoute,
     ) {}
   ngOnInit() {
@@ -36,11 +33,12 @@ export class EndpointComponent implements OnInit, AfterViewInit {
       { prop: 'dateCreated', cellTemplate: this.dateColumn, name: 'Date Created', sortable: true},
       {prop: 'type', name: 'Type', sortable: false},
       {name: 'Action', cellTemplate: this.buttonsTemplate, sortable: false}];
-    this.currentSystem = this.systemService.getCurrentSystem();
     this.dataSource.url = 'get_endpoints_data/';
     this.endpointId = this.activatedRoute.snapshot.params.id;
   }
-
+  public back(): void {
+    this.router.navigate(['dashboard', 'endpoints']);
+  }
   ngAfterViewInit() { }
   delete(endpointId) {
     Swal.fire({
@@ -52,9 +50,9 @@ export class EndpointComponent implements OnInit, AfterViewInit {
       cancelButtonText: 'No, keep the endpoint'
     }).then((result) => {
       if (result.value) {
-        this.endpointService.deleteItem(endpointId).subscribe(
+        this.endpointService.deleteItem<EndpointResponse>(endpointId).subscribe(
           response => {
-            if (response.code === '800.200.001') {
+            if (response.body.code === '800.200.001') {
               Swal.fire(
                 'Deleted!',
                 'This endpoint has been deleted.',
@@ -67,11 +65,6 @@ export class EndpointComponent implements OnInit, AfterViewInit {
                 'error'
               );
             }
-          }
-        );
-        this.endpointService.getEndpoints(this.currentSystemId).subscribe(
-          response => {
-            this.elements = response;
           }
         );
       } else if (result.dismiss === Swal.DismissReason.cancel) {

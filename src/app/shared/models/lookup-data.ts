@@ -6,7 +6,7 @@ import { EndpointType } from './endpoint-type';
 import { EventType } from './event-type';
 import { User } from 'src/app/views/users/user';
 import { System } from './system';
-import { Recipient } from 'src/app/views/recipient/recipient';
+import { Recipient } from 'src/app/views/recipient/model/recipient';
 
 export class LookupData {
     states: State[];

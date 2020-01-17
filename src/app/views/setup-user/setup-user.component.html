@@ -1,0 +1,214 @@
+
+<mat-horizontal-stepper [linear]= isLinear #stepper>
+  <mat-step [stepControl]="addUserForm" [editable]="isEditable">
+      <ng-template matStepLabel>Fill out user details</ng-template>
+      <form [formGroup]="addUserForm" class="text-center border row" style="padding: 3rem;">
+        <div class="col-md-6 mb-4">
+          <div class="form-group">
+              <!-- Name -->
+              <label>User Name</label>
+              <input type="text" id="userName" formControlName="username" class="grey lighten-5 form-control"
+              placeholder="Username" [ngClass]="{'is-invalid': submitted && addUserForm.controls.username.errors}">
+            
+              <div *ngIf="addUserForm.controls['username'].invalid && (addUserForm.controls['username'].dirty || addUserForm.controls['username'].touched)" class="invalid-feedback">
+                <div *ngIf="addUserForm.controls['username'].errors.required">Username is required</div>
+                <div *ngIf="addUserForm.controls['username'].errors.minlength">Username should be alteast 3 characters</div>
+              </div>
+          </div>
+        </div>
+        <div class="col-md-6 mb-4">
+            <div class="form-group">
+                <!-- Name -->
+                <label>Email</label>
+                <input type="email" id="email" formControlName="email" class="grey lighten-5 form-control"
+                placeholder="Email" [ngClass]="{'is-invalid': submitted && addUserForm.controls.email.errors}" required>
+                <!-- {{(addUserForm.controls.email.touched || addUserForm.controls.email.dirty) && addUserForm.controls.email.invalid }} -->
+                <div *ngIf="addUserForm.controls['email'].invalid && (addUserForm.controls['email'].dirty || addUserForm.controls['email'].touched)" class="invalid-feedback">
+                  <div *ngIf="addUserForm.controls['email'].errors.required">Email is required</div>
+                  <div *ngIf="addUserForm.controls['email'].errors.email">Email must be a valid email address</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 mb-4">
+            <div class="form-group">
+                <!-- Name -->
+                <label>First Name</label>
+                <input type="text" id="firstname" formControlName="firstname" class="grey lighten-5 form-control"
+                placeholder="First name" [ngClass]="{'is-invalid': submitted && addUserForm.controls.firstname.errors}">
+              
+                <div *ngIf="addUserForm.controls['firstname'].invalid && (addUserForm.controls['firstname'].dirty || addUserForm.controls['firstname'].touched)" class="invalid-feedback">
+                  <div *ngIf="addUserForm.controls['firstname'].errors.required">Firstname is required</div>
+                </div>
+            </div>
+        </div> 
+        <div class="col-md-6 mb-4">
+          <div class="form-group">
+              <!-- Name -->
+              <label>Last Name</label>
+              <input type="text" id="lastname" formControlName="lastname" class="grey lighten-5 form-control"
+              placeholder="Last name" [ngClass]="{'is-invalid': submitted && addUserForm.controls.lastname.errors}">
+            
+              <div *ngIf="addUserForm.controls['lastname'].invalid && (addUserForm.controls['lastname'].dirty || addUserForm.controls['lastname'].touched)" class="invalid-feedback">
+                <div *ngIf="addUserForm.controls['lastname'].errors.required">Lastname is required</div>
+              </div>
+          </div>
+        </div>
+        <div class="col-md-6 mb-4">
+            <div class="form-group">
+                <!-- Name -->
+                <label>Password</label>
+                <input type="password" id="password" formControlName="password" class="grey lighten-5 form-control"
+                placeholder="Password" [ngClass]="{'is-invalid': submitted && addUserForm.controls.password.errors}" 
+                [(ngModel)] = "user.password">
+              
+              <div *ngIf="addUserForm.controls['password'].invalid && (addUserForm['controls'].password.dirty || addUserForm.controls['password'].touched)" class="invalid-feedback">
+                  <div *ngIf="addUserForm.controls['password'].errors.required">Password is required</div>
+                  <div *ngIf="addUserForm.controls['password'].errors.minlength">Password must be atleast 8 characters</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 mb-4">
+            <div class="form-group">
+                <!-- Name -->
+                <label>Confirm Password</label>
+                <input type="password" id="password" formControlName="confirmPassword" class="grey lighten-5 form-control"
+                placeholder="Password" [ngClass]="{'is-invalid': submitted && addUserForm.controls.confirmPassword.errors}" 
+                [(ngModel)] = "confirmPassword" pattern="{{ addUserForm.controls['password'].value }}">
+                <div *ngIf="addUserForm.controls['confirmPassword'].invalid && (addUserForm.controls['confirmPassword'].dirty || addUserForm.controls['confirmPassword'].touched)" class="invalid-feedback">
+                  <div *ngIf="addUserForm.controls['confirmPassword'].errors.required">Password confirmation is required</div>
+                  <div *ngIf="addUserForm.controls['confirmPassword'].errors.mustMatch"> Password & Confirm Password do not match.</div>
+                </div>
+            </div>
+        </div>    
+        <div class="col-md-12">
+        <!-- Next button -->
+          <button mdbBtn [disabled] = "!addUserForm.valid" type="button" class="btn-sm  lowercase-btn text-white float-right" mdbWavesEffect
+          (click)="createUser(stepper)"> save </button>
+        </div>
+      </form>
+  </mat-step>
+  <mat-step [stepControl]="recipientsForm" [editable]="isEditable">
+      <ng-template matStepLabel>Fill out recipient details</ng-template>
+      <form [formGroup]="recipientsForm" class="text-center border  p-5"   *ngIf="isdataReady">
+        <div class="row">
+            <div class="col">
+                <!-- Phone Number -->
+                <label>Phone Number</label>
+                <input type="text" id="defaultContactFormPhoneNumber" class="form-control mb-4" placeholder="+2547XX7XXXX"
+                [ngClass]="{ 'is-invalid': submitted && recipientsForm.errors }" formControlName="PhoneNumber" 
+                  [(ngModel)]="data.phoneNumber" >
+                  <div *ngIf="recipientsForm.controls['PhoneNumber'].invalid && (recipientsForm.controls['PhoneNumber'].dirty || recipientsForm.controls['PhoneNumber'].touched)" class="invalid-feedback">
+                    <div *ngIf="recipientsForm.controls['PhoneNumber'].errors.required">
+                        Phone Number is required.
+                    </div>
+                    <div *ngIf="recipientsForm.controls['PhoneNumber'].errors.pattern">Phone Number Entered must be of the correct format</div>
+                  </div>
+                </div>
+              <div class="col">
+                  <!-- User -->
+                  <label>User</label>
+                  <div *ngIf="users?.length">
+                    <ng-select2 style="width:100%;" class=" custom-select-dropdown" formControlName="userId" [(ngModel)]="data.userId" [data]="users">
+                    </ng-select2>
+                  </div>
+                  <div *ngIf="recipientsForm.controls['userId'].invalid && (recipientsForm.controls['userId'].dirty || recipientsForm.controls['userId'].touched)" class="invalid-feedback">
+                      <div *ngIf="recipientsForm.controls['userId'].errors.required">
+                          Please Select a User.
+                      </div>
+                  </div>
+            </div>      
+        </div>
+        <div class="row">
+          <div class="col-6">
+            <!-- State -->
+          <label>State</label>
+          <div *ngIf="states?.length">
+            <ng-select2 style="width:100%;" class=" custom-select-dropdown" formControlName="stateId" [(ngModel)]="data.stateId" [data]="states">
+            </ng-select2>
+          </div>
+          <div *ngIf="recipientsForm.controls['stateId'].invalid && (recipientsForm.controls['stateId'].dirty || recipientsForm.controls['stateId'].touched)" class="invalid-feedback">
+            <div *ngIf="recipientsForm.controls['stateId'].errors.required">
+                Please Select a State.
+            </div>
+          </div>
+          </div>
+        </div>
+          <!-- Send button -->
+          <button mdbBtn type="button" class="btn-sm  lowercase-btn text-white float-right" mdbWavesEffect [disabled]="!recipientsForm.valid"
+          (click)="createRecipient(stepper)">save</button>
+      </form>
+  </mat-step>
+  <mat-step [stepControl]="systemRecipientForm" [editable]="isEditable">
+      <ng-template matStepLabel>Fill out escalation level details</ng-template>
+      <form [formGroup]="systemRecipientForm" class="text-center border  p-5" *ngIf="isdataReady">
+              <div class="row">
+                <div class="col-6">
+                  <!-- Recipient -->
+                  <label for="recipient">Recipient</label>
+                  <div *ngIf="recipients?.length">
+                      <ng-select2 style="width:100%;" class=" custom-select-dropdown" formControlName="Recipient" [data]="recipients">
+                      </ng-select2>
+                    </div>
+                  <div *ngIf="systemRecipientForm.controls['Recipient'].invalid && (systemRecipientForm.controls['Recipient'].dirty || systemRecipientForm.controls['Recipient'].touched)" class="invalid-feedback">
+                      <div *ngIf="systemRecipientForm.controls['Recipient'].errors.required">
+                          Please Select a Recipient.
+                      </div>
+                  </div>
+                </div>
+              </div>
+              <!--separator-->
+              <div class="row">
+                <div class="col">
+                </div>
+              </div>
+                <!--Escalations form options-->
+                <div class="row"  formArrayName="escalations">
+                    <div class="col-12"
+                    *ngFor="let escalation of escalationsArray.controls; let escalationIndex = index;"
+                    [formGroupName]="escalationIndex">
+                    <hr>
+                    <div class="row">
+                      <div class="col">
+                          <label>Escalation Level</label>
+                          <div *ngIf="escalationLevels?.length">
+                            <ng-select2 style="width:100%;" class=" custom-select-dropdown" formControlName="EscalationLevel" [data]="escalationLevels">
+                            </ng-select2>
+                          </div>
+                        <div *ngIf="escalation['controls']['EscalationLevel'].invalid && (escalation['controls']['EscalationLevel.dirty'] || escalation['controls']['EscalationLevel'].touched)" class="invalid-feedback">
+                            <div *ngIf="escalation['controls']['EscalationLevel'].errors.required">
+                                Please Select an escalation level.
+                            </div>
+                        </div>
+                      </div>
+                      <div class="col">
+                          <label> Notification Type </label>
+                          <div *ngIf="notificationTypes?.length">
+                            <ng-select2 style="width:100%;" class=" custom-select-dropdown" formControlName="NotificationType"  [data]="notificationTypes">
+                            </ng-select2>
+                          </div>
+                        <div *ngIf="escalation['controls']['NotificationType'].invalid && (escalation['controls']['NotificationType'].dirty || escalation['controls']['NotificationType'].touched)" class="invalid-feedback">
+                            <div *ngIf="escalation['controls']['NotificationType'].errors.required">
+                                Please Select a notification type.
+                            </div>
+                        </div>
+                        <div class="action-icons">
+                          <a [ngClass]="{disabled : escalationsArray.length >= escalationLevels.length}"  id="remove"><img src="../../../../assets/icons/add.svg" alt="" width="24" height="24" (click)="addEscalations()"></a>
+                          <a [ngClass]="{'disabled': escalationIndex === 0}" id="remove"><img src="../../../../assets/icons/remove.svg" alt="" width="24" height="24" (click)="deleteEscalations(escalationIndex)"></a>
+                        </div>
+                      </div>
+                    </div>
+                    </div>
+                </div>
+              <!-- Send button -->
+              <button mdbBtn type="button" class="btn-sm  lowercase-btn text-white float-right" mdbWavesEffect [disabled]="!systemRecipientForm.valid" (click)="createSystemRecipient(stepper)">save</button>
+      </form>
+  </mat-step>
+  <mat-step>
+    <ng-template matStepLabel>Done</ng-template>
+    Successfully created a User recipient
+    <div>
+      <button mdbBtn type="button" class="btn-sm  lowercase-btn text-white float-right" mdbWavesEffect mat-button (click)="stepper.reset()">Reset</button>
+      <button mdbBtn type="button" class="btn-sm  lowercase-btn text-white float-right" mdbWavesEffect mat-button (click)="navigateToUsers()">Navigate To Users</button>
+    </div>
+  </mat-step>
+</mat-horizontal-stepper>

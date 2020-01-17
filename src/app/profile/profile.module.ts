@@ -11,6 +11,7 @@ import { SharedModule } from '../shared/shared.module';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { UpdatePasswordComponent } from './update-password/update-password.component';
 import { ShowHidePasswordModule } from 'ngx-show-hide-password';
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 
 
 @NgModule({
@@ -24,6 +25,7 @@ import { ShowHidePasswordModule } from 'ngx-show-hide-password';
     FormsModule,
     ReactiveFormsModule,
     SharedModule,
+    NgxDatatableModule,
     MDBBootstrapModule.forRoot()
   ],
   schemas: [ NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA ],

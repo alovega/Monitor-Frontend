@@ -64,8 +64,22 @@
                     <h2>Update History</h2>
                 </div>
                 <div class="incident-details-body">
-                    <div class="incident-update-container">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestiae, neque.
+                    <div class="incident-update-container mb-3">
+                        <div *ngIf="incident.state_name == 'Completed' || incident.state_name == 'Resolved'" class="mb-2">
+                        <span class="font-weight-bold">
+                            {{incident.state_name}}
+                        </span> - {{incident.description}}
+                        <div style="opacity: .8">{{incident.date_modified | date:'MMM dd,  hh:mm a'}}</div>
+                        </div>
+                    </div>
+
+                    <div class="incident-update-container mb-3">
+                        <div class="incident-update mb-2" *ngFor="let update of incident.incident_updates">
+                        <div *ngIf="update.state_name != 'Completed' && update.state_name != 'Resolved'">
+                            <span class="font-weight-bold">{{update.state_name}}</span> - {{update.description}}
+                            <div style="opacity: .8">{{update.date_created | date:'MMM dd,  hh:mm a'}}</div>
+                        </div>
+                        </div>
                     </div>
                 </div>
             </mdb-card-body>

@@ -1,9 +1,9 @@
 import { Injectable, Output, EventEmitter } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
-import { HttpClient, HttpHeaders, HttpErrorResponse, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpErrorResponse, HttpResponse} from '@angular/common/http';
 import { catchError, retry, map} from 'rxjs/operators';
-import { LookUpService } from 'src/app/shared/look-up.service';
-import { environment } from 'src/environments/environment';
+import { environment } from '../../../environments/environment';
+import { HttpWrapperService } from '../../shared/helpers/http-wrapper.service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +14,7 @@ export class RecipientService {
   };
   @Output() changeSystem: EventEmitter<boolean> = new EventEmitter();
 
-constructor(private http: HttpClient, private lookUpService: LookUpService) { }
+constructor(private http: HttpClient, private httpWrapperService: HttpWrapperService) { }
 
   handleError(error: HttpErrorResponse) {
     if (error.error instanceof ErrorEvent) {
@@ -31,47 +31,25 @@ constructor(private http: HttpClient, private lookUpService: LookUpService) { }
     return throwError(
     'Something bad happened; please try again later.');
     }
-
-    public getRecipients(): Observable<any> {
-      const RecipientUrl = environment.apiEndpoint + 'get_recipients/';
-      return this.http.post<any>(RecipientUrl, this.httpOptions).pipe (
-        map(response => response.data),
-        retry(2),
-        catchError(this.handleError));
+    public getRecipient<RecipientData>(recipientId): Observable<HttpResponse<RecipientData>> {
+      const url = 'get_recipient/';
+      return this.httpWrapperService.post<RecipientData>(url, {recipientId});
     }
-    public getRecipient(recipientId): Observable<any> {
-      const RecipientUrl = environment.apiEndpoint + 'get_recipient/';
-      return this.http.post<any>(RecipientUrl, {recipientId}, this.httpOptions).pipe (
-        map(response => response),
-        retry(2),
-        catchError(this.handleError));
+    public addRecipient<T>(item): Observable<HttpResponse<T>> {
+      const url = 'create_recipient/';
+      return this.httpWrapperService.post<T>(url, item);
     }
-    public addRecipient(item): Observable<any> {
-      const RecipientUrl = environment.apiEndpoint + 'create_recipient/';
-      return this.http.post<any>(RecipientUrl, item, this.httpOptions).pipe(
-        retry(2),
-        catchError(this.handleError)
-      );
+    public updateRecipient<T>(item): Observable<HttpResponse<T>> {
+      const url = 'update_recipient/';
+      return this.httpWrapperService.post<T>(url, item);
     }
-    public updateRecipient(item): Observable<any> {
-      const RecipientUrl = environment.apiEndpoint + 'update_recipient/';
-      return this.http.post<any>(RecipientUrl, item, this.httpOptions).pipe(
-        retry(2),
-        catchError(this.handleError)
-      );
+    public deleteItem<T>(recipientId): Observable<HttpResponse<T>> {
+      // const RecipientUrl = environment.apiEndpoint + 'delete_recipient/';
+      // return this.http.post<any>( RecipientUrl, {recipientId}, this.httpOptions).pipe(
+      //   retry(2),
+      //   catchError(this.handleError)
+      // );
+      const url = 'delete_recipient/';
+      return this.httpWrapperService.post<T>(url, {recipientId});
     }
-    public deleteItem(recipientId): Observable<any> {
-      const RecipientUrl = environment.apiEndpoint + 'delete_recipient/';
-      return this.http.post<any>( RecipientUrl, {recipientId}, this.httpOptions).pipe(
-        retry(2),
-        catchError(this.handleError)
-      );
-    }
-    public getUsers(): Observable<any> {
-      return this.lookUpService.getUsers();
-    }
-    public getStates(): Observable<any> {
-      return this.lookUpService.getStates();
-    }
-
 }

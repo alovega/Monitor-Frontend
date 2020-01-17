@@ -6,15 +6,16 @@
       </button>
     </div>
 </div>
+<hr class="page-header-divider">
 <div *ngIf="dataSource?.columns.length">
   <hm-data-table [dataSource]="dataSource"></hm-data-table>
 </div>
 <ng-template #dateColumn let-row="row" let-value="value" let-i="index">
-  {{value | date:'MM/dd/yyyy'}}
+  {{value | date:'MM/dd/yyyy  hh:mm:ss a'}}
 </ng-template>
 <ng-template #buttonsTemplate let-row="row" let-value="value">
     <a ngbTooltip="Update endpoint" placement="bottom" class="fas fa-edit text-success mr-2" routerLinkActive="active"
       routerLink="/dashboard/endpoints/endpoint-update/{{row.Id}}">
     </a>
-    <a ngbTooltip="Delete endpoint" placement="bottom" class="fas fa-trash-alt text-danger" (click)="delete(row.id)"></a>
+    <a ngbTooltip="Delete endpoint" placement="bottom" class="fas fa-trash-alt text-danger" (click)="delete(row.Id)"></a>
 </ng-template>

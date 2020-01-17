@@ -29,9 +29,9 @@ export class StatusPageComponent implements OnInit, AfterViewInit, AfterViewChec
   graphChanges: any;
   @ViewChild('metricTabs', {static: false}) tabs: NgbTabset;
   activeTab: string;
-  availabilitySummaryReady: boolean = false;
-  availabilityTrendGraphReady: boolean = false;
-  public chartType: string = 'line';
+  availabilitySummaryReady = false;
+  availabilityTrendGraphReady = false;
+  public chartType = 'line';
   public availabilityTrendGraph = {
     chartType: 'line',
     chartDatasets: [

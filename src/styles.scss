@@ -412,6 +412,9 @@ mat-toolbar {
   z-index: auto !important; 
 }
 
+.form-control{
+  background-color: #fafafa !important;
+}
 .ngx-datatable.material:not(.cell-selection) .datatable-body-row:focus, .ngx-datatable.material:not(.cell-selection) .datatable-body-row:focus .datatable-row-group {
   background-color: #ffffff !important;
 }

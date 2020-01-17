@@ -19,9 +19,8 @@ export class StatusPageService {
 
   getSystem() {
     this.currentSystem.subscribe(
-      (res) => console.log(res.value)
+      (res) => localStorage.setItem('system', res.system_id)
     );
-    console.log(this.currentSystemSubject.value);
     return this.currentSystemSubject.value;
   }
   getAvailabilitySummary<T>(systemId: string, activeTab: string): Observable<HttpResponse<T>> {

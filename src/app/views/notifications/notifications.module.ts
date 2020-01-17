@@ -8,6 +8,7 @@ import { EmailNotificationComponent } from './email-notification/email-notificat
 import { SmsNotificationsComponent } from './sms-notifications/sms-notifications.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { FormsModule } from '@angular/forms';
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 
 @NgModule({
   declarations: [NotificationsComponent, EmailNotificationComponent, SmsNotificationsComponent],
@@ -16,6 +17,7 @@ import { FormsModule } from '@angular/forms';
     NotificationsRoutingModule,
     FormsModule,
     SharedModule,
+    NgxDatatableModule,
     MDBBootstrapModule.forRoot()
   ],
   schemas: [ NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA],
