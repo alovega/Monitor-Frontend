@@ -1,8 +1,7 @@
-<div *ngIf="incident && currentSystem">
-  <div [ngClass]="{'d-none': !loading}">
-    <hm-loader></hm-loader>
-  </div>
-
+<div *ngIf="!incident || !currentSystem || !lookupsReady">
+  <hm-component-loader></hm-component-loader>
+</div>
+<div *ngIf="incident && currentSystem && lookupsReady">
   <div class="update-history">
     <mdb-card class="mb-4" *ngIf="incident.state_name == 'Completed' || incident.state_name == 'Resolved'">
       <div class="last-update-time"><strong>
@@ -48,7 +47,6 @@
     <div class="update-history-header">
       Add new update
     </div>
-    <hm-loader *ngIf="!lookupsReady"></hm-loader>
     <mdb-card class="grey lighten-5 update-form" *ngIf="lookupsReady">
       <form [formGroup]="updateIncidentForm" (ngSubmit)="onSubmit()">
         <div class="row">

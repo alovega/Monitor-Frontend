@@ -76,6 +76,6 @@ export class UpdateIncidentComponent implements OnInit {
   }
 
   back() {
-    this.router.navigate(['dashboard/incidents']);
+    this.location.back();
   }
 }
