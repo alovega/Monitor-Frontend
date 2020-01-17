@@ -185,11 +185,11 @@ export class DashboardComponent implements OnInit, AfterViewChecked, AfterViewIn
         if (response.body.code === '800.200.001') {
           Object.keys(response.body.data.datasets).forEach(key => {
             this.responseTimeGraph.chartDatasets.push(response.body.data.datasets[key]);
-            this.responseTimeGraph.chartLabels.push(response.body.data.datasets[key].data);
+            this.responseTimeGraph.chartLabels.push(...response.body.data.datasets[key].data);
           });
           this.responseTimeGraph.chartLabels = response.body.data.labels;
           this.graphChanges = {
-            labels: this.responseTimeGraph.chartLabels,
+            labels: response.body.data.labels,
             datasets: this.responseTimeGraph.chartDatasets
           };
         } else {

@@ -131,7 +131,7 @@
         <hm-line-graph [chartData]="errorRateGraph" [graphChanges]="graphChanges"></hm-line-graph>
     </div>
     
-    <div class="mt-5" *ngIf="responseTimeGraph.chartDatasets[0]?.data?.length">
+    <div class="mt-5" *ngIf="!loading">
     <h4>Endpoint response times</h4> 
     <hr>
         <hm-line-graph [chartData]="responseTimeGraph" [graphChanges]="graphChanges"></hm-line-graph>
