@@ -31,6 +31,7 @@ export class UsersComponent implements OnInit {
       {prop: 'item_index', name: 'Index'},
       {prop: 'username', name: 'Username', sortable: true}, {prop: 'first_name', name: 'First Name', sortable: true},
       {prop: 'last_name', name: 'Last Name', sortable: true}, {prop: 'email', name: 'Email', sortable: true},
+      {prop: 'phone_number', name: 'Phone Number', sortable: true},
       { prop: 'is_active', cellTemplate: this.activeColumn, name: 'Active', sortable: true},
       { prop: 'date_created', cellTemplate: this.dateColumn, name: 'Date Created', sortable: true},
       {name: 'Action', cellTemplate: this.buttonsTemplate, sortable: false}];
