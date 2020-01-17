@@ -25,4 +25,11 @@ export class GraphsService {
       start_date: startDate, end_date: endDate
     });
   }
+
+  getSystemAvailabilityTrend<T>(systemId: string, intervalName: string): Observable<HttpResponse<T>> {
+    return this.httpWrapper.post<T>('get_availability_trend/', {
+      interval: intervalName,
+      system: systemId
+    });
+  }
 }

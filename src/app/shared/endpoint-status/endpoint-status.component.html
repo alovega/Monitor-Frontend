@@ -1,18 +1,18 @@
-<span *ngIf="status === 'Operational'">
-    <i class="fas fa-check-circle pr-1 operational"></i>Operational
+<span *ngIf="status === 'Operational'" class="operational">
+    <i class="fas fa-check-circle pr-1 "></i>Operational
 </span>
-<span *ngIf="status === 'Degraded Performance'">
-    <i class="fas fa-minus-circle pr-1 degraded"></i>Degraded Performance
-</span>
-
-<span *ngIf="status === 'Minor Outage'">
-    <i class="fas fa-exclamation-circle pr-1 minor"></i>Minor Outage
+<span *ngIf="status === 'Degraded Performance'" class="degraded">
+    <i class="fas fa-minus-circle pr-1"></i>Degraded Performance
 </span>
 
-<span *ngIf="status === 'Major Outage'">
-    <i class="fas fa-times-circle pr-1 major"></i>Major Outage
+<span *ngIf="status === 'Minor Outage'" class="minor">
+    <i class="fas fa-exclamation-circle pr-1"></i>Minor Outage
 </span>
 
-<span *ngIf="status === 'Under Maintenance'">
-    <i class="fas fa-play-circle pr-1 under-maintenance"></i>Under Maintenance
+<span *ngIf="status === 'Major Outage'" class="major">
+    <i class="fas fa-times-circle pr-1"></i>Major Outage
+</span>
+
+<span *ngIf="status === 'Under Maintenance'" class="under-maintenance">
+    <i class="fas fa-play-circle pr-1"></i>Under Maintenance
 </span>
