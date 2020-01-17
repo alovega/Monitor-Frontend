@@ -12,6 +12,7 @@ export class EndpointService {
 
   constructor(private lookUpService: LookUpService, public httpWrapperService: HttpWrapperService) {
   }
+
   public addEndpoints<EndpointResponse>(item): Observable<HttpResponse<EndpointResponse>> {
     const url = 'create_endpoints/';
     return this.httpWrapperService.post<EndpointResponse>(url, item);
@@ -21,9 +22,8 @@ export class EndpointService {
     const url = 'delete_endpoint/';
     return this.httpWrapperService.post<T>(url, {endpoint_id});
   }
-  public getEndpoints<T>(systemId): Observable<any> {
-    const endpointUrl = 'get_endpoints/';
-    return this.httpWrapperService.post<any>(endpointUrl, systemId);
+  getEndpoints<T>(systemId: string): Observable<HttpResponse<T>> {
+    return this.httpWrapperService.post<T>('get_endpoints/', {system: systemId});
   }
   public getItem<T>(endpoint_id): Observable<HttpResponse<T>> {
     const url = 'get_endpoint/';

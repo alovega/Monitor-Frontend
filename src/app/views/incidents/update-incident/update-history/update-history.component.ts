@@ -69,7 +69,7 @@ export class UpdateHistoryComponent implements OnInit {
       {id: '4', text: 'Priority 4'},
       {id: '5', text: 'Priority 5'}
     ];
-    this.lookupService.getLookups<LookupDataResponse>()
+    this.lookupService.getLookUpData<LookupDataResponse>()
     .subscribe(response => {
       if (response.ok) {
         if (response.body.code === '800.200.001') {

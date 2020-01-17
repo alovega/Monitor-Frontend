@@ -9,11 +9,10 @@ import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { PublicLayoutRoutingModule } from './public-layout-routing.module';
 import { PublicLayoutComponent } from './public-layout.component';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { PublicDashboardComponent } from 'src/app/views/public-dashboard/public-dashboard.component';
 
 
 @NgModule({
-  declarations: [PublicLayoutComponent, PublicDashboardComponent],
+  declarations: [PublicLayoutComponent],
   imports: [
     CommonModule,
     MDBBootstrapModule.forRoot(),

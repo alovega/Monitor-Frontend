@@ -1,6 +1,7 @@
 .status-page-content {
     margin: 2em 3em;
     font-size: 14px;
+    font-family: "ProximaNova", "Helvetica Neue", sans-serif !important;
 }
 
 .incident-status{
@@ -14,14 +15,14 @@
 .widget-wrapper{
     padding: 15px 5px;
     // margin-bottom: 10px;
-    background-color: whitesmoke;
+    background-color: #ffffff;
     border: 1px solid #ececee;
 }
 
-.widget-header{
-    // opacity: .9; 
-    font-size: 16px;
-    margin-bottom: .25em;
+.widget-header{ 
+    font-size: 1.1rem;
+    font-weight: 500;
+    margin-bottom: .1em;
 }
 
 .summary{
@@ -34,6 +35,26 @@
 .border-lr {
     border-left: 1px solid #d6d6d6!important;
     border-right: 1px solid #d6d6d6!important;
+}
+
+.service-status-tb .service-status-tb-header {
+    background: #cfdce2 !important; 
+    border-radius: 4px !important;
+    font-size: 1rem;
+}
+
+.service-status-tb .service-status-tb-header th{
+    font-weight: 600 !important;
+}
+
+.service-status-tb.table td {
+    padding-top: .6rem !important;
+    padding-bottom: .6rem !important;
+}
+
+.service-status-tb.table-hover tbody tr:hover {
+    transition: .5s;
+    background-color: #e3eff5;
 }
 
 .status-page-table .larger-font {
@@ -221,10 +242,6 @@
     font-weight: 400;
     font-size: 18px;
     // line-height: 1.8125rem;
-}
-
-.dsghfiujd{
-    color: rgb(5, 172, 5);
 }
 
 .priority-1 {
