@@ -26,11 +26,6 @@ export class NavigationItems {
           iconName: 'group',
           children: [
             {
-              displayName: 'Recipients',
-              iconName: 'contacts',
-              routerLink: 'dashboard/recipients'
-            },
-            {
               displayName: 'System Recipients',
               iconName: 'accessibility',
               routerLink: 'dashboard/system-recipients'

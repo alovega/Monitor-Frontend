@@ -3,7 +3,6 @@ import {FormBuilder, FormGroup, Validators, FormArray} from '@angular/forms';
 import { forkJoin } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 import { UsersService } from '../users/users.service';
-import { RecipientService } from '../recipient/recipient.service';
 import {SystemRecipientService} from '../system-recipients/system-recipient.service';
 import { User, UserResponse } from '../users/user';
 import { SystemRecipient, SystemRecipientResponse } from '../system-recipients/system-recipient';
@@ -16,7 +15,6 @@ import { LookUpService } from 'src/app/shared/look-up.service';
 import { MustMatch } from '../../shared/must-match.validator';
 import { LookUpResponse } from 'src/app/shared/models/look-up-response';
 import { MatStepper } from '@angular/material';
-import { RecipientResponse } from '../recipient/model/recipient-response';
 import { Router } from '@angular/router';
 @Component({
   selector: 'hm-setup-user',
@@ -47,17 +45,19 @@ export class SetupUserComponent implements OnInit {
     private lookUpService: LookUpService,
     private usersService: UsersService,
     private router: Router,
-    private recipientService: RecipientService,
     private systemRecipientService: SystemRecipientService,
     private toastr: ToastrService) {
     const users = this.lookUpService.getLookUpData<LookUpResponse>();
     const states = this.lookUpService.getLookUpData<LookUpResponse>();
-    forkJoin([states])
+    forkJoin([states, users])
       .subscribe(results => {
         console.log(results);
         if (results[0]) {
           this.states = results[0].body.data.states.filter(state => state.name === 'Active' || state.name === 'Disabled')
             .map((state: State) => ({id: state.id, text: state.name}));
+        }
+        if (results[1]) {
+          this.users = results[1].body.data.users.map((type: User) => ({id: type.id, text: type.username}));
         }
         this.isdataReady = true;
       });
@@ -90,10 +90,12 @@ export class SetupUserComponent implements OnInit {
     this.router.navigate(['dashboard', 'users']);
   }
   createForm() {
+    const phoneNumber = '^(\\+\\d{1,3}[- ]?)?\\d{10}$';
     this.addUserForm = this.formBuilder.group({
       username: ['', [Validators.required, Validators.minLength(3)]],
       firstname: [''],
       lastname: [''],
+      phone_number: ['', [Validators.required, Validators.pattern(phoneNumber)]],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(8)]],
       confirmPassword: ['', Validators.required],
@@ -101,7 +103,6 @@ export class SetupUserComponent implements OnInit {
     {
       validator: MustMatch('password', 'confirmPassword')
     });
-    const phoneNumber = '^(\\+\\d{1,3}[- ]?)?\\d{10}$';
     this.recipientsForm = this.formBuilder.group({
         userId: ['', Validators.required],
         PhoneNumber: ['', [Validators.required, Validators.pattern(phoneNumber)]],
@@ -150,34 +151,6 @@ export class SetupUserComponent implements OnInit {
           }
         } else {
           this.toastr.error(response.body.message, 'User creation error');
-        }
-      } else {
-        // TODO: Add error checks
-      }
-    });
-  }
-  createRecipient(stepper?: MatStepper) {
-    this.submitted = true;
-    console.log(this.recipientsForm.value);
-    this.recipientService.addRecipient<RecipientResponse>(this.data)
-    .subscribe(response => {
-      console.log(response);
-      if (response.ok) {
-        if (response.body.code === '800.200.001') {
-          this.toastr.success('Recipient created successfully', 'Recipient creation success');
-          if (stepper !== undefined) {
-            const recipients = this.lookUpService.getLookUpData<LookUpResponse>();
-            forkJoin([recipients]).subscribe(results => {
-              if (results[0]) {
-                this.recipients = results[0].body.data.recipients
-                .map((recipient: RecipientLookup) => ({id: recipient.id, text: recipient.userName}));
-              }
-              this.isdataReady = true;
-            });
-            stepper.next();
-          }
-        } else {
-          this.toastr.error(response.body.message, 'Recipient creation error');
         }
       } else {
         // TODO: Add error checks

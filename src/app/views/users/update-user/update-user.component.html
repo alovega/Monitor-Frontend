@@ -71,6 +71,19 @@
                   </div>
               </div>
             </div>
+
+            <div class="col-md-6 mb-4">
+              <div class="form-group">
+                  <!-- Name -->
+                  <label>Phone Number</label>
+                  <input type="text" id="phone_number" formControlName="phone_number" class="grey lighten-5 form-control"
+                  placeholder="+2547XX7XXXX" [ngClass]="{'is-invalid': submitted && updateUserForm.controls.phone_number.errors}">
+                
+                  <div *ngIf="updateUserForm.controls['phone_number'].invalid && (updateUserForm.controls['phone_number'].dirty || updateUserForm.controls['phone_number'].touched)" class="invalid-feedback">
+                    <div *ngIf="updateUserForm.controls['phone_number'].errors.required">Phone number is required</div>
+                  </div>
+              </div>
+            </div>
         
             <div class="col-md-12">
             <!-- Create button -->
