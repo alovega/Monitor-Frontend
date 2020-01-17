@@ -54,12 +54,17 @@
   </ngx-datatable>
   <ng-template #hdrTpl let-column="column">{{column.name}}</ng-template>
   <ng-template #openIncidents let-row="row" let-value="value">
-      <a routerLink="/dashboard/incidents/update/{{row.id}}" routerLinkActive="active">
+      <a>
         <mdb-card class="open-incident mb-4">
           <mdb-card-body>
-          <a routerLink="/dashboard/incidents/update/{{row.id}}" routerLinkActive="active" class="update-incident-button float-right">
-              <button mdbBtn mdbWavesEffect color="info" size="sm">Update</button>
-          </a>
+            <div class="row float-right">
+              <a routerLink="/dashboard/incidents/update/{{row.id}}" routerLinkActive="active">
+                <button mdbBtn mdbWavesEffect color="info"class="btn-sm lowercase-btn">Update</button>
+              </a>
+              <a (click)="deleteIncident(row.id)">
+                <button mdbBtn mdbWavesEffect color="danger" class="btn-sm lowercase-btn">Delete</button>
+              </a>
+            </div>
           <h5 class="open-incident-title">{{ row.name }}</h5>
           <div class="incident-info">
             <span *ngIf="row.incident_updates.length; else noUpdates">

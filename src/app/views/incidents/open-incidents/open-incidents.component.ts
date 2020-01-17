@@ -5,6 +5,7 @@ import { SystemService } from '../../../shared/system.service';
 import { ToastrService } from 'ngx-toastr';
 import { System } from 'src/app/shared/models/system';
 import { DataSource } from 'src/app/shared/data-table/model/dataSource';
+import Swal from 'sweetalert2';
 
 import { BehaviorSubject, fromEvent, of } from 'rxjs';
 import { Page, TableResponse } from '../../../shared/data-table/model/page';
@@ -114,5 +115,31 @@ export class OpenIncidentsComponent implements OnInit, AfterViewInit {
   changePagination(event) {
     this.page.size = event.target.value;
     this.getTableData(this.page);
+  }
+
+  deleteIncident(incidentId: string) {
+    Swal.fire({
+      title: 'Confirm Incident deletion!',
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes',
+      cancelButtonText: 'No'
+    }).then((result) => {
+      if (result.value) {
+        this.incidentService.deleteIncident(incidentId).subscribe(
+          response => {
+            if (response.code === '800.200.001') {
+              this.getTableData(this.page);
+              this.toastr.success('Incident deleted successfully', 'Incident deletion success');
+            } else {
+              this.toastr.error('Incident could not be deleted', 'Incident delete error');
+            }
+          }
+        );
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        this.toastr.info('Incident deletion aborted');
+        // this.toastr.error('Incident could not be deleted', 'Incident delete error');
+      }
+    });
   }
 }

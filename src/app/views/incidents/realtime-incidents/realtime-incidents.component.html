@@ -1,7 +1,4 @@
 <div class="full-page">
-  <div [ngClass]="{'d-none': !loading}">
-    <hm-loader></hm-loader>
-  </div> 
 <!--
 <div *ngIf="incidents?.length; else noIncidents">
   <table mdbTable id="incident-list">
@@ -96,11 +93,12 @@
           <ng-template #realtimeIncidents let-row="row" let-value="value">    
             <div class="incident-description">
               <div class="action-buttons float-right">
-                  <a id="update-{{row.id}}" routerLink="/dashboard/incidents/update/{{row.id}}" 
+                  <a class = "mr-2" id="update-{{row.id}}" routerLink="/dashboard/incidents/update/{{row.id}}" 
                   routerLinkActive="active" *ngIf="row.state_name !== 'Resolved'; else Open">Update</a>
                   <ng-template #Open>
-                      <a id="update-{{row.id}}" routerLink="/dashboard/incidents/update/{{row.id}}" routerLinkActive="active">View</a>
+                      <a class = "mr-2" id="update-{{row.id}}" routerLink="/dashboard/incidents/update/{{row.id}}" routerLinkActive="active">View</a>
                   </ng-template>
+                  <a id="delete-{{row.id}}" (click)="deleteIncident(row.id)" class="text-danger">Delete</a>
               </div>
               <strong>
                   <a class="incident-view-link" routerLink="/dashboard/incidents/update/{{row.id}}" routerLinkActive="active">
