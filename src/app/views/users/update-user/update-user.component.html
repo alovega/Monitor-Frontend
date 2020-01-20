@@ -1,5 +1,8 @@
 <!-- Grid Row -->
-<div class="row wow animate fadeIn" data-wow-delay="0.1s">
+<div class="" *ngIf="loading">
+  <hm-component-loader></hm-component-loader>
+</div>
+<div class="row" *ngIf="!loading">
   <!-- Grid column -->
   <div class="col-md-1"></div>
     <!-- Grid column -->
@@ -75,7 +78,7 @@
             <div class="col-md-6 mb-4">
               <div class="form-group">
                   <!-- Name -->
-                  <label>Phone Number</label>
+                  <label class="form-label">Phone Number</label>
                   <input type="text" id="phone_number" formControlName="phone_number" class="grey lighten-5 form-control"
                   placeholder="+2547XX7XXXX" [ngClass]="{'is-invalid': submitted && updateUserForm.controls.phone_number.errors}">
                 

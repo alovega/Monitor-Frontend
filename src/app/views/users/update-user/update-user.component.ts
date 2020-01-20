@@ -16,6 +16,7 @@ export class UpdateUserComponent implements OnInit {
   public user: any;
   submitted = false;
   userId: string;
+  loading: boolean = true;
   constructor(
     public location: Location,
     private formBuilder: FormBuilder,
@@ -29,7 +30,7 @@ export class UpdateUserComponent implements OnInit {
       first_name: [''],
       last_name: [''],
       email: ['', [Validators.required, Validators.email]],
-      phone_number: ['', Validators.pattern(phoneNumber) ]
+      phone_number: ['', Validators.pattern(phoneNumber)]
     });
    }
 
@@ -47,6 +48,7 @@ export class UpdateUserComponent implements OnInit {
             phone_number: this.user.phone_number,
             email: this.user.email
           });
+          this.loading = false;
         } else {
 
         }

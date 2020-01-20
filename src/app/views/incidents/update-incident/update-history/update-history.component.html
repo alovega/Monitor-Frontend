@@ -74,8 +74,8 @@
           <div class="col form-group mb-4">
             <label class="form-label" for="">Priority Level</label>
             <div *ngIf="priorityLevels?.length">
-              <ng-select2 style="width:100%;" formControlName="state"
-                [ngClass]="{ 'is-invalid': submitted && updateIncidentForm.controls[priority_level].errors}"
+              <ng-select2 style="width:100%;" formControlName="priority_level"
+                [ngClass]="{'is-invalid': submitted && updateIncidentForm.controls['priority_level'].errors}"
                 class="custom-select-dropdown" [data]="priorityLevels">
               </ng-select2>
             </div>
