@@ -31,6 +31,7 @@ import { MatStepperModule } from '@angular/material';
   ],
   schemas: [
     NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA
-  ]
+  ],
+  exports: []
 })
 export class SetupUserModule { }

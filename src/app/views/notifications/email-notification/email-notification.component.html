@@ -58,7 +58,7 @@
         <mdb-card class="notification">
           <div class="row">
             <h6>
-              <strong>Email</strong> {{row.item_index}}
+              <strong>Message:</strong>
             </h6>
           </div>
           <div class="row">
@@ -66,9 +66,11 @@
           </div>
           <div class="row" >
               <div class="content">
-                  <span class="incident-status" color="info">
+                  <small class="recipient">
+                    <span class="incident-status" color="info">
                       {{ row.status }}
-                  </span>
+                    </span>
+                  </small>
                 <small class="date-created">Created on: {{ row.dateCreated | date:'MMMM d, y' }} at {{ row.dateCreated | date:'h:mm:ss a' }}</small>
               </div>
           </div>

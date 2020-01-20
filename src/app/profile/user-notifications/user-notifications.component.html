@@ -55,27 +55,30 @@
   
     <ng-template #hdrTpl let-column="column">{{column.name}}</ng-template>
     <ng-template #userNotifications let-row="row" let-value="value">
-          <mdb-card class="notification">
-            <div class="row">
-              <h6>
-                <strong>Notification</strong> {{row.item_index}}
-              </h6>
+      <mdb-card class="notification">
+        <div class="row">
+          <h6>
+            <strong>Message:</strong>
+          </h6>
+        </div>
+        <div class="row">
+          {{row.message}}
+        </div>
+        <div class="row" >
+            <div class="content">
+                <small class="recipient">
+                  Status:
+                  <span class="incident-status" color="info">
+                    {{ row.status }}
+                  </span>
+                </small>
+              <small class="date-created">Created on: {{ row.dateCreated | date:'MMMM d, y' }} at {{ row.dateCreated | date:'h:mm:ss a' }}</small>
             </div>
-            <div class="row">
-              {{row.message}}
-            </div>
-            <div class="row" >
-                <div class="content">
-                    <span class="incident-status" color="info">
-                        {{ row.status }}
-                    </span>
-                  <small class="date-created">Created on: {{ row.dateCreated | date:'MMMM d, y' }} at {{ row.dateCreated | date:'h:mm:ss a' }}</small>
-                </div>
-            </div>
-            <div class="row">
-              <small class="recipient"> Recipient : </small> <span>{{row.recipient}}</span>
-            </div>
-          </mdb-card>
+        </div>
+        <div class="row">
+          <small class="recipient"> Recipient : </small> <span>{{row.recipient}}</span>
+        </div>
+      </mdb-card>
     </ng-template>
     <router-outlet></router-outlet> 
   
