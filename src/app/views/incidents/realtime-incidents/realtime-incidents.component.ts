@@ -65,7 +65,7 @@ export class RealtimeIncidentsComponent implements OnInit, AfterViewInit {
     this.pageCallback({ offset: 0 });
     this.currentSystem = this.systemService.getCurrentSystem();
     this.cd.detectChanges();
-    this.loading = false;
+    this.isLoading = false;
   }
 
   ngAfterViewInit() {

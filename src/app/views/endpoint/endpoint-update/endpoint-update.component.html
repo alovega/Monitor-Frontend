@@ -5,9 +5,12 @@
   </div>
 </div>
 <hr>
-<mdb-card>
+<div *ngIf="!isdataReady">
+  <hm-component-loader></hm-component-loader>
+</div>
+<mdb-card *ngIf="isdataReady">
 <!-- Default form contact -->
-<form [formGroup]="updateForm" class="text-center border  p-5" (ngSubmit) = "onSubmit()" *ngIf="isdataReady">
+<form [formGroup]="updateForm" class="text-center border  p-5" (ngSubmit) = "onSubmit()">
   <div class="row">
     <div class="col">
       <!-- Name -->
