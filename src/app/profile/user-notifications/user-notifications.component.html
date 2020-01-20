@@ -1,18 +1,18 @@
 <div class="full-page">
   <div class="incidents open">
-      <div id="table-header">
-          <div class="pagination">
-            <p class="content">Show</p>
-            <select class="browser-default custom-select content" (change)= "changePagination($event)">
-                <option *ngFor="let value of pagination" [ngValue]="value">{{value}}</option>
-            </select>
-            <p class="content">items</p>
-          </div>
-          <div class="search">
-              <a ngbTooltip="search" placement="bottom" class="fas fa-search" id="searchlabel"></a>
-              <input type="text" placeholder="search..." #input/>
-          </div>
+    <div class="table-header">
+      <div class="dt-pagination">
+        <p class="content">Show</p>
+        <select class="browser-default custom-select content" (change)= "changePagination($event)">
+            <option *ngFor="let value of pagination" [ngValue]="value">{{value}}</option>
+        </select>
+        <p class="content">items</p>
       </div>
+      <div class="dt-search">
+          <a ngbTooltip="search" placement="bottom" class="fas fa-search" id="searchlabel"></a>
+          <input type="text" placeholder="Search" #input/>
+      </div>
+    </div>
   
     <ngx-datatable 
     class="material" 

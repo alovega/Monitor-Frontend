@@ -1,9 +1,12 @@
-<div id="container">
-    <div class="d-flex justify-content-between">
+<!-- <div class="m-auto" style="position:fixed; right: 0; left: 0; z-index: 2; " [ngClass] = "{'d-none': isLoaded}">
+    <hm-component-loader></hm-component-loader>
+</div> -->
+<div class="page">
+    <div class="page-header d-flex flex-row justify-content-between">
         <h4 class="page-header-title">Notifications</h4>
     </div>
-    
-    <ul class="list-group switch-tabs">
+    <hr class="page-header-divider">
+    <ul class="list-group switch-tabs mt-5">
         <div>
         <li class="tab-item">
             <a routerLink="email-notification" routerLinkActive="active">Email</a>

@@ -2,19 +2,17 @@
     <hm-component-loader></hm-component-loader>
 </div>
 <div class="page-header d-flex flex-row justify-content-between">
-    <h3 class="page-header-title">Escalation Rules</h3>
+    <h4 class="page-header-title">Escalation Rules</h4>
     <div class="add-rule-btn">
-      <a routerLink="/dashboard/rules/new" routerLinkActive="active">
-        <button mdbBtn class="btn-sm blue-gradient lowercase-btn text-white">
-            <i class="fas fa-plus"></i> Add rule
-        </button>
-      </a>
+      <button routerLink="/dashboard/rules/new" mdbBtn class="btn-sm blue-gradient lowercase-btn text-white">
+        <i class="fas fa-plus"></i> Add rule
+      </button>
     </div>
 </div>
 <hr class="page-header-divider">
 
 <!-- Grid Row -->
-<div class="row wow animated fadeIn" data-wow-delay="0.1s">
+<div class="row">
   <!-- Grid column -->
   <div class="col-lg-12 col-md-12 text-left">
       <div *ngIf="dataSource?.columns.length">

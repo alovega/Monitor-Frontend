@@ -23,7 +23,7 @@ export class EditSystemComponent implements OnInit {
   system: System;
   submitted = false;
   users: DropdownItem[];
-
+  isDataReady = false;
   constructor(
     private formBuilder: FormBuilder,
     private systemService: SystemService,
@@ -46,6 +46,7 @@ export class EditSystemComponent implements OnInit {
     this.lookupService.getUsers().subscribe(
       (data) => {
         this.users = data.map((user: User) => ({id: user.id, text: user.username}));
+        this.isDataReady = true;
     });
 
     this.editSystemForm.patchValue({

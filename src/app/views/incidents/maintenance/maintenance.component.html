@@ -40,17 +40,17 @@
   <!-- Grid column -->
   <div class="col-lg-12 col-md-12 text-left">
       <div class="incidents realtime">
-        <div id="table-header">
-          <div class="pagination">
+        <div class="table-header">
+          <div class="dt-pagination">
             <p class="content">Show</p>
             <select class="browser-default custom-select content" (change)= "changePagination($event)">
                 <option *ngFor="let value of pagination" [ngValue]="value">{{value}}</option>
             </select>
             <p class="content">items</p>
           </div>
-          <div class="search">
-              <label id="searchlabel">Search :</label>
-              <input type="text" placeholder="search..." #input/>
+          <div class="dt-search">
+            <input type="text" #input placeholder="Search"/>
+            <a ngbTooltip="search" placement="bottom" class="fas fa-search" id="searchlabel"></a>
           </div>
         </div>
       
