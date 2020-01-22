@@ -13,6 +13,7 @@ import { LookUpService } from 'src/app/shared/look-up.service';
 import { ProfileService } from 'src/app/profile/profile.service';
 import Swal from 'sweetalert2';
 import { DropdownItem } from './dropdown-item';
+import { ProfileResponse } from 'src/app/shared/models/profile-response';
 
 @Component({
   selector: 'hm-top-nav-bar',
@@ -70,10 +71,17 @@ export class TopNavBarComponent implements OnInit, OnChanges {
         // TODO: Add error checks
       }
     });
-    this.profileService.getLoggedInUserDetail().subscribe(
-      (data) => {
-          this.profile = data;
-      });
+    this.profileService.getLoggedInUserDetail<ProfileResponse>().subscribe(response => {
+      if (response.ok) {
+        if (response.body.code === '800.200.001') {
+          this.profile = response.body.data;
+        } else {
+          this.toastr.error('Profile get failed', 'Get Profile error');
+        }
+      } else {
+        // TODO: Add error checks
+      }
+    });
     this.currentSystem = this.systemService.getCurrentSystem();
     this.currentSystemId  = this.currentSystem ? this.currentSystem.id : null;
     this.authService.currentUser.subscribe(

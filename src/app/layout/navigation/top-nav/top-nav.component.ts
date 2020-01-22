@@ -11,6 +11,7 @@ import { AuthenticationService } from 'src/app/shared/auth/authentication.servic
 import { SideNavToggleService } from 'src/app/shared/side-nav-toggle.service';
 import { LookUpService } from 'src/app/shared/look-up.service';
 import { ProfileService } from 'src/app/profile/profile.service';
+import { ProfileResponse } from 'src/app/shared/models/profile-response';
 
 @Component({
   selector: 'hm-top-nav',
@@ -66,9 +67,16 @@ export class TopNavComponent implements OnInit, OnChanges {
       (data) => {
         this.users = data;
     });
-    this.profileService.getLoggedInUserDetail().subscribe(
-      (data) => {
-        this.profile = data;
+    this.profileService.getLoggedInUserDetail<ProfileResponse>().subscribe(response => {
+      if (response.ok) {
+        if (response.body.code === '800.200.001') {
+          this.profile = response.body.data;
+        } else {
+          this.toastr.error('Profile get failed', 'Get Profile error');
+        }
+      } else {
+        // TODO: Add error checks
+      }
     });
     this.currentSystem = this.systemService.getCurrentSystem();
     this.authService.currentUser.subscribe(
@@ -96,6 +104,7 @@ export class TopNavComponent implements OnInit, OnChanges {
         if (response.ok) {
           if (response.body.code === '800.200.001') {
             this.currentSystem = response.body.data;
+            console.log(this.profile);
             localStorage.setItem('currentSystem', JSON.stringify(this.currentSystem)),
             this.systemService.currentSystemSubject.next(this.currentSystem);
             window.location.reload();

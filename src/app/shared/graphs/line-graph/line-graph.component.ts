@@ -22,7 +22,7 @@ export class LineGraphComponent implements OnInit, OnChanges, AfterViewInit {
     this.chartLabels = this.chartData.chartLabels;
     this.chartColors = this.chartData.chartColors;
     this.chartOptions = this.chartData.chartOptions;
-    // console.log(this.graphChanges);
+    console.log(this.graphChanges);
   }
 
   ngAfterViewInit() {

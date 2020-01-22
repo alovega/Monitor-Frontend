@@ -14,25 +14,21 @@ export class EndpointService {
   }
 
   public addEndpoints<EndpointResponse>(item): Observable<HttpResponse<EndpointResponse>> {
-    const url = 'create_endpoints/';
-    return this.httpWrapperService.post<EndpointResponse>(url, item);
+    return this.httpWrapperService.post<EndpointResponse>('create_endpoints/', item);
   }
   // tslint:disable-next-line: variable-name
   public deleteItem<T>(endpoint_id): Observable<HttpResponse<T>> {
-    const url = 'delete_endpoint/';
-    return this.httpWrapperService.post<T>(url, {endpoint_id});
+    return this.httpWrapperService.post<T>('delete_endpoint/', {endpointId: endpoint_id});
   }
   getEndpoints<T>(systemId: string): Observable<HttpResponse<T>> {
     return this.httpWrapperService.post<T>('get_endpoints/', {system: systemId});
   }
   public getItem<T>(endpoint_id): Observable<HttpResponse<T>> {
-    const url = 'get_endpoint/';
-    return this.httpWrapperService.post<T>(url, {endpoint_id});
+    return this.httpWrapperService.post<T>('get_endpoint/', {endpointId: endpoint_id});
   }
 
   public updateItem<T>(item): Observable<HttpResponse<T>> {
-    const url = 'update_endpoints/';
-    return this.httpWrapperService.post<T>(url, item);
+    return this.httpWrapperService.post<T>('update_endpoints/', item);
   }
   public getSystems(): Observable<any> {
     return this.lookUpService.getSystems();

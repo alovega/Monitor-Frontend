@@ -6,6 +6,7 @@ import { Location } from '@angular/common';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { ProfileResponse } from 'src/app/shared/models/profile-response';
 
 @Component({
   selector: 'hm-update-password',
@@ -24,12 +25,21 @@ export class UpdatePasswordComponent implements OnInit {
     this.createForm();
    }
 
-  ngOnInit() {
-    this.profileService.getLoggedInUserDetail().subscribe(
-      (data) => {
-          this.data = data;
-        });
+   ngOnInit() {
+    this.profileService.getLoggedInUserDetail<ProfileResponse>().subscribe(response => {
+        if (response.ok) {
+          if (response.body.code === '800.200.001') {
+            console.log(response);
+            this.data = response.body.data;
+          } else {
+            this.toastr.error('Profile get failed', 'Get Profile error');
+          }
+        } else {
+          // TODO: Add error checks
+        }
+      });
   }
+
   createForm() {
     this.passwordUpdateForm = this.fb.group({
         CurrentPassword: ['', Validators.required],
@@ -63,9 +73,9 @@ export class UpdatePasswordComponent implements OnInit {
         cancelButtonText: 'No, cancel the update'
       }).then((result) => {
         if (result.value) {
-          this.profileService.UpdateLoggedInUserPassword(this.profile).subscribe(
+          this.profileService.UpdateLoggedInUserPassword<ProfileResponse>(this.profile).subscribe(
             response => {
-            if (response.code === '800.200.001') {
+            if (response.body.code === '800.200.001') {
                 Swal.fire(
                   'updated',
                   'Your password has been updated',
