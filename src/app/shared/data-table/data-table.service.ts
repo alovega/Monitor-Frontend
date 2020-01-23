@@ -17,7 +17,8 @@ export class DataTableService {
       page_number: `${page.offset + 1}`,
       order_column: `${page.orderBy}`,
       search_query: `${page.searchQuery}`,
-      order_dir: `${page.orderDir}`
+      order_dir: `${page.orderDir}`,
+      extra_kwargs: `${page.extraKwargs}`
     };
     return this.httpWrapperService.post<T>(page.url, {body});
   }

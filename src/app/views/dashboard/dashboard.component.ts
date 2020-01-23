@@ -26,6 +26,7 @@ export class DashboardComponent implements OnInit, AfterViewChecked, AfterViewIn
   endDate: Date;
   loading = true;
   graphChanges: any;
+  responseGraphChanges: any;
   systemStatus: SystemStatus;
   @ViewChild('tabs', {static: false}) tabs: NgbTabset;
 
