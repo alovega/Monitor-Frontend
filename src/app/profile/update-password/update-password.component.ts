@@ -78,7 +78,7 @@ export class UpdatePasswordComponent implements OnInit {
             if (response.body.code === '800.200.001') {
                 Swal.fire(
                   'updated',
-                  'Your password has been updated',
+                  'Your password has been updated successfully',
                   'success'
                 );
               } else {

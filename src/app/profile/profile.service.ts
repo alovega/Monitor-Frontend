@@ -14,19 +14,20 @@ export class ProfileService {
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
-constructor(private httpWrapper: HttpWrapperService) { }
+  user: any;
+constructor(private httpWrapper: HttpWrapperService) {
+  this.user = JSON.parse(localStorage.getItem('currentUser'));
+ }
 
   getLoggedInUserDetail<T>(): Observable<HttpResponse<T>>  {
-    const user = JSON.parse(localStorage.getItem('currentUser'));
-    return this.httpWrapper.post<T>('get_logged_in_user_details/', {token: JSON.stringify(user.token)});
+    return this.httpWrapper.post<T>('get_logged_in_user_details/', {token: JSON.stringify(this.user.token)});
   }
   updateLoggedInUser<T>(data): Observable<HttpResponse<T>> {
     return this.httpWrapper.post<T>('edit_logged_in_user/', data);
   }
 
   getLoggedInuserRecentNotifications<T>(): Observable<HttpResponse<T>> {
-    const user = JSON.parse(localStorage.getItem('currentUser'));
-    return this.httpWrapper.post<any>('get_logged_in_user_recent_notifications/', {token: JSON.stringify(user.token)});
+    return this.httpWrapper.post<any>('get_logged_in_user_recent_notifications/', {token: JSON.stringify(this.user.token)});
   }
   getLoggedInuserNotifications<T>(page: Page, options?: any): Observable<HttpResponse<T>> {
     const body = {

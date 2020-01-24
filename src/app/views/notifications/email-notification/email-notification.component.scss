@@ -86,6 +86,6 @@ input[type='text']:focus{
   margin-bottom: 8px;
 }
 
-::ng-deep .ngx-datatable .datatable-header {
-  display: None !important;
-}
+// :host ::ng-deep .ngx-datatable .datatable-header {
+//   display: None !important;
+// }

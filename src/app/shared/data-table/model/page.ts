@@ -16,7 +16,7 @@ export class Page {
     // the url for fetching data
     url = '';
     //
-    extraKwargs = '';
+    extraData = '';
   }
 
 export class DataSource {

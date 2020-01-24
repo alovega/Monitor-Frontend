@@ -48,7 +48,7 @@ export class SmsNotificationsComponent implements OnInit, AfterViewInit {
       }
     ];
     this.dataSource.url = 'get_notification_data/';
-    this.dataSource.extraKwargs = 'Sms';
+    this.dataSource.extraData = 'Sms';
   }
   ngAfterViewInit() {}
 }

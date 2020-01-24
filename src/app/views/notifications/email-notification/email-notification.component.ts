@@ -39,7 +39,7 @@ export class EmailNotificationComponent implements OnInit, AfterViewInit {
       }
     ];
     this.dataSource.url = 'get_notification_data/';
-    this.dataSource.extraKwargs = 'Email';
+    this.dataSource.extraData = 'Email';
   }
   ngAfterViewInit() {}
 }
