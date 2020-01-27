@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewChild, AfterViewChecked, AfterViewInit, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NgbTabChangeEvent, NgbTabset } from '@ng-bootstrap/ng-bootstrap';
-import { tap } from 'rxjs/operators';
 
 import { SystemService } from '../../shared/system.service';
 import { GraphsService } from '../../shared/graphs.service';
@@ -27,6 +26,7 @@ export class DashboardComponent implements OnInit, AfterViewChecked, AfterViewIn
   endDate: Date;
   loading = true;
   graphChanges: any;
+  responseGraphChanges: any;
   systemStatus: SystemStatus;
   @ViewChild('tabs', {static: false}) tabs: NgbTabset;
 
@@ -108,7 +108,6 @@ export class DashboardComponent implements OnInit, AfterViewChecked, AfterViewIn
     public systemService: SystemService,
     private systemStatusService: SystemStatusService,
     private profileService: ProfileService,
-    private activatedRoute: ActivatedRoute,
     private toastr: ToastrService,
     private cd: ChangeDetectorRef,
   ) {
@@ -188,10 +187,7 @@ export class DashboardComponent implements OnInit, AfterViewChecked, AfterViewIn
             this.responseTimeGraph.chartLabels.push(...response.body.data.datasets[key].data);
           });
           this.responseTimeGraph.chartLabels = response.body.data.labels;
-          this.graphChanges = {
-            labels: response.body.data.labels,
-            datasets: this.responseTimeGraph.chartDatasets
-          };
+          this.graphChanges = response.body.data;
         } else {
           this.toastr.error('Failed to retrieve Response times graph data', 'Get graph data error');
         }

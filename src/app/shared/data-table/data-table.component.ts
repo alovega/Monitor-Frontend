@@ -44,6 +44,7 @@ export class DataTableComponent implements OnInit, AfterViewInit {
     );
     this.page.url = this.dataSource.url;
     this.columns = this.dataSource.columns;
+    this.page.extraData = this.dataSource.extraData;
     this.pageCallback({ offset: 0 });
   }
   ngAfterViewInit() {

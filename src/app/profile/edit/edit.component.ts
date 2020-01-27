@@ -5,6 +5,8 @@ import { Profile } from '../profile';
 import { Location } from '@angular/common';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
+import { ProfileResponse } from 'src/app/shared/models/profile-response';
+import { ToastrService } from 'ngx-toastr';
 
 
 @Component({
@@ -16,18 +18,31 @@ export class EditComponent implements OnInit {
   profileUpdateForm: FormGroup;
   submitted = false;
   data: any;
-  constructor(private fb: FormBuilder, private profileService: ProfileService, private location: Location,
-              private router: Router) {
+  constructor(
+              private fb: FormBuilder,
+              private profileService: ProfileService,
+              private location: Location,
+              private router: Router,
+              private toastr: ToastrService
+              ) {
     this.data = new Profile();
     this.createForm();
    }
 
-  ngOnInit() {
-    this.profileService.getLoggedInUserDetail().subscribe(
-      (data) => {
-          this.data = data;
-        });
-  }
+   ngOnInit() {
+    this.profileService.getLoggedInUserDetail<ProfileResponse>().subscribe(response => {
+        if (response.ok) {
+          if (response.body.code === '800.200.001') {
+            console.log(response);
+            this.data = response.body.data;
+          } else {
+            this.toastr.error('Profile get failed', 'Get Profile error');
+          }
+        } else {
+          // TODO: Add error checks
+        }
+      });
+    }
   createForm() {
     this.profileUpdateForm = this.fb.group({
         FirstName: ['', [Validators.required, Validators.minLength(3)]],
@@ -68,9 +83,9 @@ export class EditComponent implements OnInit {
       cancelButtonText: 'No, cancel the update'
     }).then((result) => {
       if (result.value) {
-        this.profileService.updateLoggedInUser(this.data).subscribe(
+        this.profileService.updateLoggedInUser<ProfileResponse>(this.data).subscribe(
           response => {
-          if (response.code === '800.200.001') {
+          if (response.body.code === '800.200.001') {
               Swal.fire(
                 'updated',
                 'Your details has been updated',

@@ -16,30 +16,6 @@ export class NotificationsService {
   @Output() changeSystem: EventEmitter<boolean> = new EventEmitter();
   constructor(private http: HttpClient, private httpWrapper: HttpWrapperService) { }
 
-  // Handle API errors
-  handleError(error: HttpErrorResponse) {
-    if (error.error instanceof ErrorEvent) {
-      // A client-side or network error occurred. Handle it accordingly.
-      console.error('An error occurred:', error.error.message);
-    } else {
-      // The backend returned an unsuccessful response code.
-      // The response body may contain clues as to what went wrong,
-      console.error(
-        `Backend returned code ${error.status}, ` +
-        `body was: ${error.error}`);
-    }
-    // return an observable with a user-facing error message
-    return throwError(
-      'Something bad happened; please try again later.');
-  }
-  public getEmailNotifications(systemId): Observable<any> {
-
-    return this.http.post<any>(this.notificationUrl + '/get_notifications/', systemId).pipe(
-      map(response => response.data.filter(data => data.type === 'Email'),
-    ),
-    retry(2),
-    catchError(this.handleError));
-  }
   public getNotificationsTableData<T>(page: Page, options?: any): Observable<HttpResponse<T>> {
     const body = {
       page_size: `${page.size}`,
@@ -50,13 +26,5 @@ export class NotificationsService {
     };
     // return this.httpWrapperService.post<T>(page.url, {body});
     return this.httpWrapper.post<T>(page.url, {body: body, ...options});
-  }
-  public getSmsNotifications(systemId): Observable<any> {
-
-    return this.http.post<any>(this.notificationUrl + '/get_notifications/', systemId).pipe(
-      map(response => response.data.filter(data => data.type === 'Sms'),
-    ),
-    retry(2),
-    catchError(this.handleError));
   }
 }
