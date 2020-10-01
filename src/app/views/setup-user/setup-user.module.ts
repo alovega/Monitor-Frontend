@@ -11,7 +11,7 @@ import { SetupUserRoutingModule } from './setup-user-routing.module';
 import { SetupUserComponent } from './setup-user.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 
-import { MatStepperModule } from '@angular/material';
+import { MatStepperModule } from '@angular/material/stepper';
 
 
 @NgModule({

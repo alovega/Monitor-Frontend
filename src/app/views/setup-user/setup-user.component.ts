@@ -14,7 +14,7 @@ import { State } from '../../shared/models/state';
 import { LookUpService } from 'src/app/shared/look-up.service';
 import { MustMatch } from '../../shared/must-match.validator';
 import { LookUpResponse } from 'src/app/shared/models/look-up-response';
-import { MatStepper } from '@angular/material';
+import { MatStepper } from '@angular/material/stepper';
 import { Router } from '@angular/router';
 @Component({
   selector: 'hm-setup-user',
