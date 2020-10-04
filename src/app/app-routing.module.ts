@@ -9,7 +9,7 @@ const routes: Routes = [
   { path: 'dashboard', loadChildren: () => import('./layouts/dashboard-layout/dashboard-layout.module').then(m => m.DashboardLayoutModule)},
   { path: 'status', loadChildren: () => import('./layouts/public-layout/public-layout.module').then(m => m.PublicLayoutModule)},
   { path: 'auth', loadChildren: () => import('./layouts/auth-layout/auth-layout.module').then(m => m.AuthLayoutModule) },
-  // { path: '', pathMatch: 'full', redirectTo: 'system', canActivate: [AuthGuardService]},
+  { path: '', pathMatch: 'full', redirectTo: 'system', canActivate: [AuthGuardService]},
   { path: '**', component: PagenotfoundComponent},
 ];
 

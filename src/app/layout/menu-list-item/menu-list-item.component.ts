@@ -19,7 +19,7 @@ import {animate, state, style, transition, trigger} from '@angular/animations';
   ]
 })
 export class MenuListItemComponent implements OnInit {
-  expanded: boolean;
+  expanded = true;
   @HostBinding('attr.aria-expanded') ariaExpanded = this.expanded;
   @Input() item: NavItem;
   @Input() depth: number;

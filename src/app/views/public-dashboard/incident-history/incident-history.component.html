@@ -9,7 +9,7 @@
     <div class="incident-history-wrap">
         <mdb-card class="no-shadow-card">
             <mdb-card-header class="incident-name priority-{{incident?.priority_level}}" 
-                [ngClass]="{'maintenance': incident?.type == 'Scheduled'}">
+                [ngClass]="{'maintenance': incident?.incident_type_name == 'Scheduled'}">
                 <h2>{{incident?.name}}</h2>
             </mdb-card-header>
             <mdb-card-body>
