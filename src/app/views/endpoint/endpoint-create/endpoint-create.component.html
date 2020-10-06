@@ -8,7 +8,11 @@
 </div>
 <hr class="page-header-divider">
 
-<mdb-card>
+<div *ngIf="!isdataReady">
+  <hm-component-loader></hm-component-loader>
+</div>
+
+<mdb-card *ngIf="isdataReady">
 <!-- Default form contact -->
 <form [formGroup]="endpointForm" class="text-center border  p-5" (ngSubmit) = "onSubmit()" *ngIf="isdataReady">
   <div class="row">
@@ -34,6 +38,16 @@
         </div>
         <div *ngIf="endpointForm.controls['URL'].errors.pattern">
           Please enter a url  with correct formart
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <!--Endpoint color-->
+      <label>Graph Color</label>
+      <input class="form-control mb-4" [value]="data.color" [style.background]="data.color" [cpPosition]='position' [(colorPicker)]="data.color" formControlName="Color" [(ngModel)]="data.color">
+      <div *ngIf="endpointForm.controls['Color'].invalid && (endpointForm.controls['Color'].dirty || endpointForm.controls['Color'].touched)" class="invalid-feedback">
+        <div *ngIf="endpointForm.controls['Color'].errors.required">
+          A Color should be selected.
         </div>
       </div>
     </div>

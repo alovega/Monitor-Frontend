@@ -20,8 +20,10 @@ import { EndpointResponse } from '../model/endpoint-response';
 export class EndpointUpdateComponent implements OnInit {
   endpointId: any;
   data: any;
+  color: string;
   endpoint: any;
   updateForm: FormGroup;
+  position = 'bottom';
   submitted = false;
   States: State[];
   endpointType: EndpointType;
@@ -58,10 +60,12 @@ export class EndpointUpdateComponent implements OnInit {
             }
             this.isdataReady = true;
           });
+          this.color = this.data.color;
           this.updateForm.patchValue({
                 EndpointName: this.data.name,
                 Description: this.data.description,
                 Url: this.data.url,
+                Color: this.data.color,
                 OptimalResponseTime: this.data.optimal_response_time,
                 State: this.data.state
               });
@@ -78,6 +82,7 @@ export class EndpointUpdateComponent implements OnInit {
         Description: ['', [Validators.required, Validators.minLength(10)]],
         Url: ['', [Validators.required, Validators.pattern(urlRegex)]],
         OptimalResponseTime: ['', Validators.required],
+        Color: ['', Validators.required],
         State: ['', Validators.required]
     });
   }
@@ -98,6 +103,7 @@ onReset() {
     this.updateForm.reset();
 }
 update() {
+  console.log(this.updateForm.value);
   this.data = this.updateForm.value;
   this.data.endpoint_id = this.endpointId;
   this.endpointService.updateItem<EndpointResponse>(this.data).subscribe(response => {
@@ -121,6 +127,9 @@ getStates() {
       }
     }
   });
+}
+updateColor(event) {
+  console.log(event); // this is your selected color
 }
 }
 

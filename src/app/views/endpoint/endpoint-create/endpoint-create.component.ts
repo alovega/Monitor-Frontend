@@ -23,6 +23,7 @@ export class EndpointFormComponent implements OnInit {
   endpointForm: FormGroup;
   submitted = false;
   data: Endpoint;
+  position = 'bottom';
   states: State[];
   systems: System;
   endpointTypes: EndpointType[];
@@ -39,7 +40,6 @@ export class EndpointFormComponent implements OnInit {
       const endpointTypes = this.lookupService.getLookUpData<LookUpResponse>();
       const states = this.lookupService.getLookUpData<LookUpResponse>();
       forkJoin([endpointTypes, states]).subscribe(results => {
-        console.log(results);
         if (results[0]) {
           this.endpointTypes = results[0].body.data.endpoint_types.map((type: EndpointType) => ({id: type.id, text: type.name}));
         }
@@ -65,6 +65,7 @@ export class EndpointFormComponent implements OnInit {
         URL: ['', [Validators.required, Validators.pattern(urlRegex)]],
         OptimalResponseTime: ['', Validators.required],
         EndpointType: ['', Validators.required],
+        Color: ['', Validators.required],
         State: ['', Validators.required]
     });
   }

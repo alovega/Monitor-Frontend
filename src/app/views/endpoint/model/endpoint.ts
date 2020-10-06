@@ -11,6 +11,7 @@ export class Endpoint {
     optimal_response_time: number;
     // tslint:disable-next-line: variable-name
     endpoint_type: string;
+    color = '';
     state: string;
 }
 
