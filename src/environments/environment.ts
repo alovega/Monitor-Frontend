@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  apiEndpoint: 'http://127.0.0.1:8000/api/'
+  apiEndpoint: 'https://helamonitorapp.herokuapp.com/api/'
 };
 
 /*
