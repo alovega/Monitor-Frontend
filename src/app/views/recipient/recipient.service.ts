@@ -32,12 +32,10 @@ constructor(private http: HttpClient, private httpWrapperService: HttpWrapperSer
     'Something bad happened; please try again later.');
     }
     public getRecipient<RecipientData>(recipientId): Observable<HttpResponse<RecipientData>> {
-      const url = 'get_recipient/';
-      return this.httpWrapperService.post<RecipientData>(url, {recipientId});
+      return this.httpWrapperService.post<RecipientData>('get_recipient/', {recipient_id: recipientId});
     }
     public addRecipient<T>(item): Observable<HttpResponse<T>> {
-      const url = 'create_recipient/';
-      return this.httpWrapperService.post<T>(url, item);
+      return this.httpWrapperService.post<T>('create_recipient/', item);
     }
     public updateRecipient<T>(item): Observable<HttpResponse<T>> {
       const url = 'update_recipient/';

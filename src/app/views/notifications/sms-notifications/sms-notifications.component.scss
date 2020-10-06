@@ -38,9 +38,7 @@ input[type='text']:focus{
   display: flex;
   justify-content: space-between;
 }
-p{
-  padding: 10px;
-}
+
 .content{
   margin-bottom: 15px;
   margin-top: auto;
@@ -62,7 +60,7 @@ p{
 }
 
 .notification {
-  padding: 40px;
+  padding: 30px;
 }
 .incident-status {
   font-size: 12px;
@@ -85,3 +83,10 @@ p{
   opacity: 0.5;
   text-transform: uppercase;
 }
+.row{
+  margin-bottom: 8px;
+}
+
+// :host ::ng-deep .ngx-datatable .datatable-header {
+//   display: None !important;
+// }

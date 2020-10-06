@@ -1,8 +1,4 @@
 <div class="full-page">
-  <div [ngClass]="{'d-none': !loading}">
-    <hm-loader></hm-loader>
-  </div>
-
 <!-- <table mdbTable id="incident-list" *ngIf="incidents?.length; else noIncidents">
   <tbody>
     <tr mdbTableCol class="incident-item" *ngFor="let incident of incidents">
@@ -39,23 +35,22 @@
   </tbody>
 </table> -->
 
-
 <!-- Grid Row -->
 <div class="row wow animated fadeIn" data-wow-delay="0.1s">
   <!-- Grid column -->
   <div class="col-lg-12 col-md-12 text-left">
       <div class="incidents realtime">
-        <div id="table-header">
-          <div class="pagination">
+        <div class="table-header">
+          <div class="dt-pagination">
             <p class="content">Show</p>
             <select class="browser-default custom-select content" (change)= "changePagination($event)">
                 <option *ngFor="let value of pagination" [ngValue]="value">{{value}}</option>
             </select>
             <p class="content">items</p>
           </div>
-          <div class="search">
-              <label id="searchlabel">Search :</label>
-              <input type="text" placeholder="search..." #input/>
+          <div class="dt-search">
+            <input type="text" #input placeholder="Search"/>
+            <a ngbTooltip="search" placement="bottom" class="fas fa-search" id="searchlabel"></a>
           </div>
         </div>
       
@@ -102,11 +97,12 @@
           <ng-template #scheduledIncidents let-row="row" let-value="value">    
           <div class="incident-description">
             <div class="action-buttons float-right">
-                <a id="update-{{row.id}}" routerLink="/incidents/update/{{row.id}}" 
+                <a id="update-{{row.id}}" routerLink="/dashboard/incidents/update/{{row.id}}" 
                 routerLinkActive="active" *ngIf="row.state_name !== 'Completed'; else Open">Update</a>
                 <ng-template #Open>
                     <a id="update-{{row.id}}" routerLink="/dashboard/incidents/update/{{row.id}}" routerLinkActive="active">View</a>
                 </ng-template>
+                <a id="delete-{{row.id}}" (click)="deleteIncident(row.id)" class="text-danger ml-2" >Delete</a>
             </div>
             <strong>
                 <a class="incident-view-link" routerLink="/dashboard/incidents/update/{{row.id}}" routerLinkActive="active">

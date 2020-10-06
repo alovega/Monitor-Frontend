@@ -1,19 +1,15 @@
 <div>
-  <div id="table-header">
-      <div class="pagination">
+  <div class="table-header">
+      <div class="dt-pagination">
         <p class="content">Show</p>
         <select class="browser-default custom-select content" (change)= "changePagination($event)">
             <option *ngFor="let value of pagination" [ngValue]="value">{{value}}</option>
         </select>
         <p class="content">items</p>
       </div>
-      <div class="search">
+      <div class="dt-search">
         <a ngbTooltip="search" placement="bottom" class="fas fa-search" id="searchlabel"></a>
-          <input
-            type="text"
-            placeholder="search..."
-            #input
-          />
+        <input type="text" placeholder="Search" #input/>
       </div>
   </div>
   <ngx-datatable
@@ -24,11 +20,11 @@
     [columnMode]="ColumnMode.force"
     [headerHeight]="50"
     [footerHeight]="50"
-    [draggable]="false"
+    draggable="false"
     [reorder]
     rowHeight="auto"
-    [externalPaging]="true"
-    [externalSorting]="true"
+    [externalPaging]="'true'"
+    [externalSorting]="'true'"
     [count]="page.totalElements"
     [offset]="page.offset"
     [limit]="page.size"

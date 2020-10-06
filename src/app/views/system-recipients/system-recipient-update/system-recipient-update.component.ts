@@ -12,6 +12,7 @@ import { ToastrService } from 'ngx-toastr';
 import { LookUpService } from 'src/app/shared/look-up.service';
 import { LookUpResponse } from 'src/app/shared/models/look-up-response';
 import { Recipient, RecipientLookup } from '../../recipient/model/recipient';
+import { User } from '../../users/user';
 
 @Component({
   selector: 'hm-recipient-update',
@@ -25,7 +26,7 @@ export class SystemRecipientUpdateComponent implements OnInit {
   submitted = false;
   data: SystemRecipient;
   params: SystemRecipientParams;
-  recipients: Recipient[];
+  users: User[];
   states: State[];
   notificationTypes: NotificationType[];
   escalationLevels: EscalationLevel[];
@@ -40,21 +41,21 @@ export class SystemRecipientUpdateComponent implements OnInit {
   ngOnInit() {
     const escalationLevels = this.lookUpService.getLookUpData<LookUpResponse>();
     const states = this.lookUpService.getLookUpData<LookUpResponse>();
-    const recipients = this.lookUpService.getLookUpData<LookUpResponse>();
+    const users = this.lookUpService.getLookUpData<LookUpResponse>();
     const notificationTypes = this.lookUpService.getLookUpData<LookUpResponse>();
     this.id = this.activatedRoute.snapshot.params.id;
     this.systemRecipientService.getItem<SystemRecipientResponse>(this.id).subscribe(response => {
       if (response.ok) {
         if (response.body.code === '800.200.001') {
           this.data = response.body.data;
-          forkJoin([escalationLevels, recipients, notificationTypes, states]).subscribe(results => {
+          forkJoin([escalationLevels, users, notificationTypes, states]).subscribe(results => {
           if (results[0]) {
             this.escalationLevels = results[0].body.data.escalation_levels
               .map((escalationLevel: EscalationLevel) => ({id: escalationLevel.id, text: escalationLevel.name}));
           }
           if (results[1]) {
-            this.recipients = results[1].body.data.recipients
-            .map((recipient: RecipientLookup) => ({id: recipient.id, text: recipient.userName}));
+            this.users = results[1].body.data.users
+            .map((recipient: User) => ({id: recipient.id, text: recipient.username}));
           }
           if (results[2]) {
             this.notificationTypes = results[2].body.data.notification_types

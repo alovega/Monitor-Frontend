@@ -75,4 +75,16 @@ export class AuthenticationService {
     this.currentUserSubject.next(null);
     this.router.navigate(['auth', 'login']);
   }
+
+  signUp(data) {
+    return this.http.post<any>(`${environment.apiEndpoint}create_user/`, data).pipe(
+      map(result => {
+        if (result.code === '800.200.001') {
+          return result;
+        } else {
+          return result;
+        }
+      })
+    );
+  }
 }

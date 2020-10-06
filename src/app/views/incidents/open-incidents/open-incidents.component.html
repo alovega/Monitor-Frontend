@@ -1,16 +1,16 @@
 <div class="full-page">
 <div class="incidents open">
-    <div id="table-header">
-        <div class="pagination">
+    <div class="table-header">
+        <div class="dt-pagination">
           <p class="content">Show</p>
           <select class="browser-default custom-select content" (change)= "changePagination($event)">
               <option *ngFor="let value of pagination" [ngValue]="value">{{value}}</option>
           </select>
           <p class="content">items</p>
         </div>
-        <div class="search">
-            <label id="searchlabel">Search :</label>
-            <input type="text" placeholder="search..." #input/>
+        <div class="dt-search">
+          <input type="text" #input placeholder="Search"/>
+          <a ngbTooltip="search" placement="bottom" class="fas fa-search" id="searchlabel"></a>
         </div>
     </div>
 
@@ -54,12 +54,17 @@
   </ngx-datatable>
   <ng-template #hdrTpl let-column="column">{{column.name}}</ng-template>
   <ng-template #openIncidents let-row="row" let-value="value">
-      <a routerLink="/dashboard/incidents/update/{{row.id}}" routerLinkActive="active">
+      <a>
         <mdb-card class="open-incident mb-4">
           <mdb-card-body>
-          <a routerLink="/dashboard/incidents/update/{{row.id}}" routerLinkActive="active" class="update-incident-button float-right">
-              <button mdbBtn mdbWavesEffect color="info" size="sm">Update</button>
-          </a>
+            <div class="row float-right">
+              <a routerLink="/dashboard/incidents/update/{{row.id}}" routerLinkActive="active">
+                <button mdbBtn mdbWavesEffect color="info"class="btn-sm lowercase-btn">Update</button>
+              </a>
+              <a (click)="deleteIncident(row.id)">
+                <button mdbBtn mdbWavesEffect color="danger" class="btn-sm lowercase-btn">Delete</button>
+              </a>
+            </div>
           <h5 class="open-incident-title">{{ row.name }}</h5>
           <div class="incident-info">
             <span *ngIf="row.incident_updates.length; else noUpdates">

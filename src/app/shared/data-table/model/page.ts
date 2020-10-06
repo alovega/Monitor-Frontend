@@ -15,6 +15,8 @@ export class Page {
     searchQuery = '';
     // the url for fetching data
     url = '';
+    //
+    extraData = '';
   }
 
 export class DataSource {

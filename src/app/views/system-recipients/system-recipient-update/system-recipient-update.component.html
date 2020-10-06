@@ -13,8 +13,8 @@
   <div class="col-6">
     <!-- Recipient -->
     <label for="recipient">Recipient</label>
-    <div *ngIf="recipients?.length">
-        <ng-select2 style="width:100%;" class=" custom-select-dropdown" formControlName="recipient_id" [data]="recipients">
+    <div *ngIf="users?.length">
+        <ng-select2 style="width:100%;" class=" custom-select-dropdown" formControlName="recipient_id" [data]="users">
         </ng-select2>
       </div>
     <div *ngIf="updateForm.controls['recipient_id'].invalid && (updateForm.controls['recipient_id'].dirty || updateForm.controls['recipient_id'].touched)" class="invalid-feedback">
