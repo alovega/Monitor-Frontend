@@ -4,12 +4,13 @@ import { HttpClient, HttpHeaders, HttpErrorResponse, HttpResponse } from '@angul
 import { Observable } from 'rxjs';
 import { catchError, map, retry, tap} from 'rxjs/operators';
 import { HttpWrapperService } from './helpers/http-wrapper.service';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LookUpService {
-  Url = 'http://127.0.0.1:8000/api/get_lookup/';
+  Url = environment.apiEndpoint +'get_lookup/';
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };

@@ -68,6 +68,7 @@ export class SystemRecipientUpdateComponent implements OnInit {
 
           this.isdataReady = true;
         });
+          console.log(this.data.escalationLevels);
           this.createForm();
           this.updateForm.patchValue({
             recipient_id: this.data.recipientId,
