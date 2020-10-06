@@ -10,7 +10,6 @@ import { map } from 'rxjs/operators';
 })
 export class AuthenticationService {
   apiEndpoint = environment.apiEndpoint;
-  clientId = environment.clientId;
   private currentUserSubject: BehaviorSubject<any>;
   public currentUser: Observable<any>;
 
