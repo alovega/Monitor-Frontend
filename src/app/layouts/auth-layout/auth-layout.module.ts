@@ -9,11 +9,13 @@ import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 
 import { AuthLayoutRoutingModule } from './auth-layout-routing.module';
 import { AuthLayoutComponent } from './auth-layout.component';
+import { ShowHidePasswordModule } from 'ngx-show-hide-password';
 import { LoginComponent } from 'src/app/views/login/login.component';
+import { SignupComponent } from 'src/app/views/Signup/Signup.component';
 
 
 @NgModule({
-  declarations: [AuthLayoutComponent, LoginComponent],
+  declarations: [AuthLayoutComponent, LoginComponent, SignupComponent],
   imports: [
     CommonModule,
     MDBBootstrapModule.forRoot(),
@@ -23,6 +25,7 @@ import { LoginComponent } from 'src/app/views/login/login.component';
     HttpClientModule,
     NgbModule,
     FormsModule,
+    ShowHidePasswordModule,
     ReactiveFormsModule,
     SweetAlert2Module.forRoot(),
     AuthLayoutRoutingModule

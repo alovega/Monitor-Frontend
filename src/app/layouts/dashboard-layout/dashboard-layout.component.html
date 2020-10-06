@@ -15,7 +15,7 @@
   </mat-sidenav>
   <div>
     <main class="main-body">
-      <hm-top-nav-bar *ngIf="loaded" class="fixed-topnav" fxHide.gt-xs (toggleSideBarForMe)="sideBarToggler($event)"></hm-top-nav-bar>
+      <hm-top-nav-bar *ngIf="loaded" class="fixed-topnav" fxHide.gt-xs (toggleSideBarForMe)="sideBarToggler()"></hm-top-nav-bar>
       <div class="container mt-4">
         <router-outlet></router-outlet>
       </div>
