@@ -11,6 +11,7 @@ import { NotificationType } from 'src/app/shared/models/notification-type';
 import { EscalationLevel } from 'src/app/shared/models/escalation-level';
 import { LookUpService } from 'src/app/shared/look-up.service';
 import { LookUpResponse } from 'src/app/shared/models/look-up-response';
+import { User } from '../../users/user';
 
 @Component({
   selector: 'hm-recipient-form',
@@ -26,7 +27,7 @@ export class SystemRecipientCreateComponent implements OnInit {
   systemRecipient: SystemRecipient;
   escalationLevels: EscalationLevel[];
   notificationTypes: NotificationType[];
-  recipients: RecipientLookup[];
+  users: User[];
   isdataReady = false;
 
   constructor(
@@ -35,16 +36,16 @@ export class SystemRecipientCreateComponent implements OnInit {
     private lookUpService: LookUpService) {
       this.systemRecipient = new SystemRecipient();
       const escalationLevels = this.lookUpService.getLookUpData<LookUpResponse>();
-      const recipients = this.lookUpService.getLookUpData<LookUpResponse>();
+      const users = this.lookUpService.getLookUpData<LookUpResponse>();
       const notificationTypes = this.lookUpService.getLookUpData<LookUpResponse>();
-      forkJoin([escalationLevels, recipients, notificationTypes]).subscribe(results => {
+      forkJoin([escalationLevels, users, notificationTypes]).subscribe(results => {
         if (results[0]) {
           this.escalationLevels = results[0].body.data.escalation_levels
             .map((escalationLevel: EscalationLevel) => ({id: escalationLevel.id, text: escalationLevel.name}));
         }
         if (results[1]) {
-          this.recipients = results[1].body.data.recipients
-          .map((recipient: RecipientLookup) => ({id: recipient.id, text: recipient.userName}));
+          this.users = results[1].body.data.users
+          .map((recipient: User) => ({id: recipient.id, text: recipient.username}));
         }
         if (results[2]) {
           this.notificationTypes = results[2].body.data.notification_types

@@ -46,3 +46,5 @@ testem.log
 Thumbs.db
 src/assets/demo-endpoints.json
 src/assets/demo-recipients.json
+/package-lock.json
+/package.json

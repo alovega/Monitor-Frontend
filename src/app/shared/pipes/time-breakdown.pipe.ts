@@ -14,6 +14,9 @@ export class TimeBreakdownPipe implements PipeTransform {
       minute: 60,
       second: 1
     };
+    if (duration <= 0) {
+      return '0 hours, 0 minutes and 0 seconds';
+    }
     // console.log(timeBreakdown.year);
     const breakdowns = [];
     let breakdownText = '';

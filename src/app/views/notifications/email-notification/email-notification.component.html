@@ -1,64 +1,13 @@
-<div class="full-page">
 <div class="incidents open">
-    <div id="table-header">
-        <div class="pagination">
-          <p class="content">Show</p>
-          <select class="browser-default custom-select content" (change)= "changePagination($event)">
-              <option *ngFor="let value of pagination" [ngValue]="value">{{value}}</option>
-          </select>
-          <p class="content">items</p>
-        </div>
-        <div class="search">
-            <a ngbTooltip="search" placement="bottom" class="fas fa-search" id="searchlabel"></a>
-            <input type="text" placeholder="search..." #input/>
-        </div>
-    </div>
-
-  <ngx-datatable 
-  class="material" 
-  #notificationsDataTable 
-  [rows]="rows"
-  [columns]="columns"
-  [columnMode]="ColumnMode.force"
-  [headerHeight]="0"
-  [footerHeight]="50"
-  [draggable]="false"
-  [reorder]
-  rowHeight="auto"
-  [externalPaging]="true"
-  [externalSorting]="true"
-  [count]="page.totalElements"
-  [offset]="page.offset"
-  [limit]="page.size"
-  (page)="pageCallback($event)"
-  (sort)="sortCallback($event)"
-  [loadingIndicator]="load">
-
-  <ngx-datatable-footer *ngIf="true">
-      <ng-template
-        ngx-datatable-footer-template
-        let-rowCount="rowCount"
-        let-pageSize="pageSize"
-        let-selectedCount="selectedCount"
-        let-curPage="curPage"
-        let-offset="offset">
-        <div style="padding: 5px 10px">
-          <div><strong>{{message}}</strong></div>
-        </div>
-        <datatable-pager  [pagerLeftArrowIcon]="'datatable-icon-left'" [pagerRightArrowIcon]="'datatable-icon-right'" [pagerPreviousIcon]="'datatable-icon-prev'"
-        [pagerNextIcon]="'datatable-icon-skip'" [page]="curPage" [size]="pageSize" [count]="rowCount" [hidden]="!((rowCount / pageSize) > 1)"
-        (change)="table.onFooterPage($event)">
-        </datatable-pager>
-      </ng-template>
-    </ngx-datatable-footer>
-  </ngx-datatable>
-
+<div *ngIf="dataSource?.columns.length">
+  <hm-data-table [dataSource]="dataSource"></hm-data-table>
+</div>
   <ng-template #hdrTpl let-column="column">{{column.name}}</ng-template>
   <ng-template #emailNotifications let-row="row" let-value="value">
         <mdb-card class="notification">
           <div class="row">
             <h6>
-              <strong>Email</strong> {{row.item_index}}
+              <strong>Message:</strong>
             </h6>
           </div>
           <div class="row">
@@ -66,9 +15,11 @@
           </div>
           <div class="row" >
               <div class="content">
-                  <span class="incident-status" color="info">
+                  <small class="recipient">
+                    <span class="incident-status" color="info">
                       {{ row.status }}
-                  </span>
+                    </span>
+                  </small>
                 <small class="date-created">Created on: {{ row.dateCreated | date:'MMMM d, y' }} at {{ row.dateCreated | date:'h:mm:ss a' }}</small>
               </div>
           </div>
@@ -77,4 +28,3 @@
           </div>
         </mdb-card>
   </ng-template>
-

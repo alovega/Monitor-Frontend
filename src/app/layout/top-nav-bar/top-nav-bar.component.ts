@@ -2,7 +2,6 @@ import { Component, OnInit, ViewChild, ElementRef, Input, OnChanges, SimpleChang
 import { Router, ActivatedRoute, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
 import { ToastrService } from 'ngx-toastr';
-import * as jquery from 'jquery';
 
 import { NavService } from '../../layouts/dashboard-layout/nav.service';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
@@ -14,6 +13,7 @@ import { LookUpService } from 'src/app/shared/look-up.service';
 import { ProfileService } from 'src/app/profile/profile.service';
 import Swal from 'sweetalert2';
 import { DropdownItem } from './dropdown-item';
+import { ProfileResponse } from 'src/app/shared/models/profile-response';
 
 @Component({
   selector: 'hm-top-nav-bar',
@@ -71,10 +71,17 @@ export class TopNavBarComponent implements OnInit, OnChanges {
         // TODO: Add error checks
       }
     });
-    this.profileService.getLoggedInUserDetail().subscribe(
-      (data) => {
-          this.profile = data;
-      });
+    this.profileService.getLoggedInUserDetail<ProfileResponse>().subscribe(response => {
+      if (response.ok) {
+        if (response.body.code === '800.200.001') {
+          this.profile = response.body.data;
+        } else {
+          this.toastr.error('Profile get failed', 'Get Profile error');
+        }
+      } else {
+        // TODO: Add error checks
+      }
+    });
     this.currentSystem = this.systemService.getCurrentSystem();
     this.currentSystemId  = this.currentSystem ? this.currentSystem.id : null;
     this.authService.currentUser.subscribe(
@@ -132,21 +139,26 @@ export class TopNavBarComponent implements OnInit, OnChanges {
         this.submitted = false;
         if (response.body.code === '800.200.001') {
           this.closeBtn.nativeElement.click();
-          this.currentSystem = response.body.data;
-          localStorage.setItem('currentSystem', JSON.stringify(this.currentSystem)),
-          this.systemService.currentSystemSubject.next(this.currentSystem);
-          Swal.fire(
-            '',
-            'System created successfully!',
-            'success'
-          ).then(() => {
-            this.router.navigate(['dashboard', 'quick-setup']).then(
-              () => window.location.reload()
-            );
+          this.newSystem = response.body.data;
+          Swal.fire({
+            title: 'Success',
+            text: 'System added successfully. Confirm to switch to the new system',
+            type: 'success',
+            showCancelButton: true,
+            confirmButtonText: 'Switch',
+            cancelButtonText: 'Cancel'
+          }).then((result) => {
+            if (result.value) {
+              localStorage.setItem('currentSystem', JSON.stringify(this.newSystem)),
+              this.systemService.currentSystemSubject.next(this.newSystem);
+              window.location.reload();
+            } else {
+
+            }
           });
           // this.toastr.success('System creation success !', 'System created successfully');
         } else {
-          this.toastr.error(response.body.message, 'System creation error !');
+          this.toastr.error(response.body.message, 'Error system creation failed !');
         }
       } else {
         // TODO: Add error check
@@ -155,7 +167,13 @@ export class TopNavBarComponent implements OnInit, OnChanges {
   }
 
   public changed(nextSystem: any, previousSystem: string): void {
-    Swal.fire('', 'Click OK to confirm system switch', 'warning').then(
+    Swal.fire({
+      title: 'Confirm',
+      text: 'Are you sure you want to switch to another system?',
+      showCancelButton: true,
+      confirmButtonText: 'OK',
+      cancelButtonText: 'Cancel',
+    }).then(
       (confirm) => {
         if (confirm.value) {
           this.systemService.getSystem<SystemResponse>(nextSystem)

@@ -1,15 +1,15 @@
 <div class="page">
-  <div class="page-header d-flex row">
-    <div class="col-md-6">
-      Edit system
-    </div>
-    <div class="col-md-6">
-      <button class="float-right back-button" (click)="back()"><i class="fas fa-angle-double-left"></i> Back</button>
+  <div class="page-header d-flex flex-row justify-content-between">
+    <h4 class="page-header-title">Edit system</h4>
+    <div class="">
+      <button class="back-button" (click)="back()"><i class="fas fa-angle-double-left"></i> Back</button>
     </div>
   </div>
-  <div class="clearfix"></div>
-  <hr>
-  <div class="page-body">
+  <hr class="page-header-divider">
+  <div *ngIf="!isDataReady">
+    <hm-component-loader></hm-component-loader>
+  </div>
+  <div class="page-body" *ngIf="isDataReady">
     <mdb-card>
       <form [formGroup]="editSystemForm" (ngSubmit) = "onSubmit()" class="text-center">
         <div class="form-group mb-4 row">

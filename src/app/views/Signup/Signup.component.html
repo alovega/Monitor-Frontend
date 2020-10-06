@@ -1,0 +1,95 @@
+<div class="login-wrapper m-auto">
+  <div class="col-sm-12">
+      <mdb-card class="box">
+          <mdb-card-title>
+              <h2 class="card-header-text">Signup</h2>
+          </mdb-card-title>
+
+          <mdb-card-body>
+              <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+                  <div class="row">
+                    <div class="form-group col">
+                      <label for="firstName">First Name</label>
+                      <input type="text" formControlName="FirstName" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.FirstName.errors }" [(ngModel)]="user.firstName"/>
+                      <div *ngIf="submitted && f['FirstName'].errors || signupForm.controls['FirstName'].invalid && (signupForm.controls['FirstName'].dirty || signupForm.controls['FirstName'].touched)" class="invalid-feedback">
+                          <div *ngIf="f['FirstName'].errors.required">First name is required</div>
+                      </div>
+                    </div>
+                    <div class="form-group col">
+                      <label for="lastName">Last name</label>
+                      <input type="text" formControlName="LastName" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.LastName.errors }" [(ngModel)]="user.lastName"/>
+                      <div *ngIf="submitted && f['LastName'].errors || signupForm.controls['LastName'].invalid && (signupForm.controls['LastName'].dirty || signupForm.controls['LastName'].touched)" class="invalid-feedback">
+                          <div *ngIf="f['LastName'].errors.required">Last name is required</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="form-group col">
+                      <label for="userName">Username</label>
+                      <input type="text" formControlName="Username" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.Username.errors }" [(ngModel)]="user.userName"/>
+                      <div *ngIf="submitted && f['Username'].errors || signupForm.controls['Username'].invalid && (signupForm.controls['Username'].dirty || signupForm.controls['Username'].touched)" class="invalid-feedback">
+                          <div *ngIf="f['Username'].errors.required">Username is required</div>
+                      </div>
+                    </div>
+                    <div class="form-group col">
+                      <label for="email">Email</label>
+                      <input type="text" formControlName="Email" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.Email.errors }" [(ngModel)]="user.email"/>
+                      <div *ngIf="submitted && f['Email'].errors || signupForm.controls['Email'].invalid && (signupForm.controls['Email'].dirty || signupForm.controls['Email'].touched)" class="invalid-feedback">
+                          <div *ngIf="f['Email'].errors.required">Email is required</div>
+                      </div>
+                    </div>  
+                  </div>
+                  <div class="row">
+                    <div class="form-group col">
+                      <label for="phoneNumber">Mobile Number</label>
+                      <input type="text" formControlName="PhoneNumber" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.PhoneNumber.errors }"  [(ngModel)]="user.phoneNumber" />
+                      <div *ngIf="submitted && f['PhoneNumber'].errors || signupForm.controls['PhoneNumber'].invalid && (signupForm.controls['PhoneNumber'].dirty || signupForm.controls['PhoneNumber'].touched)" class="invalid-feedback">
+                          <div *ngIf="f['PhoneNumber'].errors.required">PhoneNumber is required</div>
+                      </div>
+                    </div>
+                  </div>
+                   <div class="row">
+                    <div class=" col">
+                      <label>Password</label>
+                      <input type="password" id="defaultContactFormPassword" class="form-control" placeholder="Password"
+                      [ngClass]="{ 'is-invalid': submitted && f.Password.errors }" formControlName="Password" 
+                          [(ngModel)]="user.password" showHideInput>
+                          <i matSuffix class="material-icons" showHideTrigger="defaultContactFormPassword"
+                          [showHideStatus]="{ materialIcon: true, id: 'defaultContactFormPassword' }" style="position: relative;top: -30px;margin-left: 545px;cursor: pointer;"></i>
+                      <div *ngIf="submitted && f['Password'].errors || signupForm.controls['Password'].invalid && (signupForm.controls['Password'].dirty || signupForm.controls['Password'].touched)" class="invalid-feedback">
+                          <div *ngIf="signupForm.controls['Password'].errors.required">
+                              Password is required.
+                          </div>
+                      </div>
+                    </div>
+                   </div>
+                   <div class="row">
+                    <div class="col">
+                      <label>Confirm Password</label>
+                      <input type="password" id="defaultContactFormconfirm" class="form-control" placeholder="Confirm Password"
+                      [ngClass]="{ 'is-invalid': submitted && f.ConfirmPassword.errors }" formControlName="ConfirmPassword" 
+                          pattern="{{ signupForm.controls['Password'].value }}" showHideInput>
+                          <i matSuffix class="material-icons" showHideTrigger="defaultContactFormconfirm"
+                    [showHideStatus]="{ materialIcon: true, id: 'defaultContactFormconfirm' }" style="position: relative; top: -30px; margin-left: 545px; cursor: pointer;"></i>
+                          <div *ngIf="submitted && f['ConfirmPassword'].errors || signupForm.controls['ConfirmPassword'].invalid && (signupForm.controls['ConfirmPassword'].dirty || signupForm.controls['ConfirmPassword'].touched)" class="invalid-feedback">
+                              <div *ngIf="signupForm.controls['ConfirmPassword'].errors.required">
+                                  Confirm Password is required.
+                              </div>
+                              <div *ngIf="signupForm.controls['ConfirmPassword'].errors.pattern">Password & Confirm Password do not match.</div>
+                      </div>
+                  </div>
+                   </div>
+                  <div class="form-group row">
+                      <div class="col-5">
+                          <button [disabled]="loading" class="btn btn-block btn-outline-success" size="sm"
+                          [disabled]="!signupForm.valid" (click)="signUp()">
+                            <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                              Signup
+                          </button>
+                      </div>
+                  </div>
+              </form>
+          </mdb-card-body>
+      </mdb-card>
+  </div>
+</div>

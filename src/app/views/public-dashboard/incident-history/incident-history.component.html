@@ -1,0 +1,88 @@
+<!-- Incident History -->
+<div class="incident-history-content">
+    <div class="direction mr-2 mb-2" align="right">
+        <a routerLink="/status/{{systemStatus.system_id}}" routerLinkActive="active" (click)="back()">
+            <span class="fa fa-arrow-left" ngbTooltip = "Back to main status page" placement="bottom"></span>
+        <span class="direction-text"> Back</span>
+        </a>
+    </div>
+    <div class="incident-history-wrap">
+        <mdb-card class="no-shadow-card">
+            <mdb-card-header class="incident-name priority-{{incident?.priority_level}}" 
+                [ngClass]="{'maintenance': incident?.incident_type_name == 'Scheduled'}">
+                <h2>{{incident?.name}}</h2>
+            </mdb-card-header>
+            <mdb-card-body>
+                <div class="heading">
+                    <h2>Incident Details</h2>
+                </div>
+                <div class="incident-details-body row">
+                    <div class="col-md-6 bdr-right">
+                        <div class="info-item">
+                            <div class="info-item-header">Status</div>
+                            <span class="info-item-body incident-status color-info">
+                                {{incident?.state_name}}
+                            </span>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-item-header">Type</div>
+                            <div class="info-item-body">
+                                {{incident?.incident_type_name}} Incident
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-item-header">Status</div>
+                            <div class="info-item-body">Resolved</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-item-header">Affected System</div>
+                            <div class="info-item-body">
+                                {{incident?.system_name}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="info-item">
+                            <div class="info-item-header">Incident Start Time</div>
+                            <div class="info-item-body">
+                                {{incident?.date_created | date:'MMM dd, yyyy HH:MM a'}}
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-item-header">Incident End Time</div>
+                            <div class="info-item-body">
+                                {{incident?.date_created | date:'MMM dd, yyyy HH:MM a'}}
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-item-header">Incident Duration</div>
+                            <div class="info-item-body">5 mins</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="heading">
+                    <h2>Update History</h2>
+                </div>
+                <div class="incident-details-body">
+                    <div class="incident-update-container mb-3">
+                        <div *ngIf="incident.state_name == 'Completed' || incident.state_name == 'Resolved'" class="mb-2">
+                        <span class="font-weight-bold">
+                            {{incident.state_name}}
+                        </span> - {{incident.description}}
+                        <div style="opacity: .8">{{incident.date_modified | date:'MMM dd,  hh:mm a'}}</div>
+                        </div>
+                    </div>
+
+                    <div class="incident-update-container mb-3">
+                        <div class="incident-update mb-2" *ngFor="let update of incident.incident_updates">
+                        <div *ngIf="update.state_name != 'Completed' && update.state_name != 'Resolved'">
+                            <span class="font-weight-bold">{{update.state_name}}</span> - {{update.description}}
+                            <div style="opacity: .8">{{update.date_created | date:'MMM dd,  hh:mm a'}}</div>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+            </mdb-card-body>
+        </mdb-card>
+    </div>
+</div>

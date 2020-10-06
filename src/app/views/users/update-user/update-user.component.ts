@@ -16,6 +16,7 @@ export class UpdateUserComponent implements OnInit {
   public user: any;
   submitted = false;
   userId: string;
+  loading: boolean = true;
   constructor(
     public location: Location,
     private formBuilder: FormBuilder,
@@ -23,11 +24,13 @@ export class UpdateUserComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private toastr: ToastrService
   ) {
+    const phoneNumber = '^(\\+\\d{1,3}[- ]?)?\\d{10}$';
     this.updateUserForm = this.formBuilder.group({
       username: ['', [Validators.required, Validators.minLength(3)]],
       first_name: [''],
       last_name: [''],
-      email: ['', [Validators.required, Validators.email]]
+      email: ['', [Validators.required, Validators.email]],
+      phone_number: ['', Validators.pattern(phoneNumber)]
     });
    }
 
@@ -40,10 +43,12 @@ export class UpdateUserComponent implements OnInit {
           this.user = response.body.data;
           this.updateUserForm.patchValue({
             username: this.user.username,
-            firs_tname: this.user.first_name,
+            first_name: this.user.first_name,
             last_name: this.user.last_name,
+            phone_number: this.user.phone_number,
             email: this.user.email
           });
+          this.loading = false;
         } else {
 
         }

@@ -10,6 +10,7 @@ export class User {
     last_login: string;
     password: string;
     date_joined: string;
+    phone_number: number;
 }
 
 export class UserResponse {
