@@ -4,7 +4,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 ##  To checkout version one of the app
 
-Navigate to **[View Live Preview](https://monitor-frontend.vercel.app/auth/login)**`. Resister/Login and try to navigate around.
+Navigate to **[View Live Preview](https://monitor-frontend.vercel.app/auth/login)**. Resister/Login and try to navigate around.
 
 ## Code scaffolding
 
